@@ -37,12 +37,18 @@ class ChoiceCardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String title = TestData.testTitles[level];
-    List<String> items = [];
+    List<dynamic> items = [];
     if (data is Map) {
       items = data.keys.toList();
+      try {
+        items = items.map<int>((e) => int.parse(e)).toList();
+      } catch(e){
+        //
+      }
     } else {
       items = List<String>.from(data);
     }
+    items.sort();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -55,14 +61,14 @@ class ChoiceCardList extends StatelessWidget {
           itemBuilder: (context, index) {
             dynamic nextData = [];
             if (data is Map) {
-              nextData = data[items[index]];
+              nextData = data[items[index].toString()];
             }
             return Card(
               child: ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6.0),
                 title: Text(
-                  items[index],
+                  '${items[index]}',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onTap: (nextData.isNotEmpty)
