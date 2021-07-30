@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 final ThemeData lightTheme = ThemeData(
-  focusColor: Colors.black,
-  primaryColor: Colors.blue,
+  focusColor: ConstantColors.focusColor,
+  scaffoldBackgroundColor: ConstantColors.scaffoldBackgroundColor,
+  disabledColor: ConstantColors.disabledColor,
   textTheme: const TextTheme(
-    bodyText1: TextStyle(
-      fontSize: 20,
-      fontWeight: FontWeight.w400,
+    subtitle1: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: ConstantColors.disabledColor,
     ),
   ),
 );
