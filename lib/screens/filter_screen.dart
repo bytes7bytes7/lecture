@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/screens/select_screen.dart';
+import 'package:lecture/test_data.dart';
 import 'package:lecture/widgets/rounded_button.dart';
 
 import '../widgets/select_item_row.dart';
@@ -15,18 +17,57 @@ class FilterScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
-            children:[
+            children: [
               const Spacer(
                 flex: 1,
               ),
-              const SelectItemRow(
+              SelectItemRow(
                 text: 'Физико-технический',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SelectScreen(
+                          title: 'Выберите факультет',
+                          items: TestData.testJson.keys.toList(),
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
-              const SelectItemRow(
+              SelectItemRow(
                 text: 'Бакалавриат, 1 Курс',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const SelectScreen(
+                          title: 'Выберите уровень высшего образования',
+                          items: TestData.testLevels,
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
-              const SelectItemRow(
+              SelectItemRow(
                 text: 'Математический анализ',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const SelectScreen(
+                          title: 'Выберите предмет',
+                          items: TestData.testSubjects,
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
               const Spacer(
                 flex: 10,

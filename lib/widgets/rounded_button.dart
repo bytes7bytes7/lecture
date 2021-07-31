@@ -16,6 +16,7 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Container(
+        height: 40.0,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,

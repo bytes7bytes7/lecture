@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/constants.dart';
 
 import 'rounded_button.dart';
 
@@ -6,9 +7,11 @@ class SelectItemRow extends StatelessWidget {
   const SelectItemRow({
     Key? key,
     required this.text,
+    required this.onPressed,
   }) : super(key: key);
 
   final String text;
+  final VoidFunction onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class SelectItemRow extends StatelessWidget {
           const SizedBox(width: 15.0),
           RoundedButton(
             data: Icons.search,
-            onPressed: () {},
+            onPressed: onPressed,
           ),
         ],
       ),
