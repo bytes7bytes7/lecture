@@ -32,7 +32,7 @@ class FilterScreen extends StatelessWidget {
                 flex: 10,
               ),
               RoundedButton(
-                data: 'Готово',
+                data: 'Обновить',
                 onPressed: () {
                   Navigator.pop(context);
                 },
