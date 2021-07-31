@@ -7,8 +7,13 @@ final ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: ConstantColors.scaffoldBackgroundColor,
   disabledColor: ConstantColors.disabledColor,
   textTheme: const TextTheme(
+    bodyText1: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      color: ConstantColors.focusColor,
+    ),
     subtitle1: TextStyle(
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: FontWeight.w500,
       color: ConstantColors.disabledColor,
     ),
