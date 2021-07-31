@@ -7,10 +7,12 @@ class SelectScreen extends StatelessWidget {
     Key? key,
     required this.title,
     required this.items,
+    required this.notifier,
   }) : super(key: key);
 
   final String title;
   final List<String> items;
+  final ValueNotifier<String> notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class SelectScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
+                          notifier.value = items[index];
                           Navigator.pop(context);
                         },
                         child: Container(

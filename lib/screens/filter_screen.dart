@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/global_parameters.dart';
 import 'package:lecture/screens/select_screen.dart';
 import 'package:lecture/test_data.dart';
 import 'package:lecture/widgets/rounded_button.dart';
@@ -22,7 +23,8 @@ class FilterScreen extends StatelessWidget {
                 flex: 1,
               ),
               SelectItemRow(
-                text: 'Физико-технический',
+                hintText: 'Факультет',
+                text: GlobalParameters.facultyNotifier,
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -31,6 +33,7 @@ class FilterScreen extends StatelessWidget {
                         return SelectScreen(
                           title: 'Выберите факультет',
                           items: TestData.testJson.keys.toList(),
+                          notifier: GlobalParameters.facultyNotifier,
                         );
                       },
                     ),
@@ -38,15 +41,17 @@ class FilterScreen extends StatelessWidget {
                 },
               ),
               SelectItemRow(
-                text: 'Бакалавриат, 1 Курс',
+                hintText: 'Уровень высшего образования',
+                text: GlobalParameters.levelNotifier,
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const SelectScreen(
+                        return SelectScreen(
                           title: 'Выберите уровень высшего образования',
                           items: TestData.testLevels,
+                          notifier: GlobalParameters.levelNotifier,
                         );
                       },
                     ),
@@ -54,15 +59,17 @@ class FilterScreen extends StatelessWidget {
                 },
               ),
               SelectItemRow(
-                text: 'Математический анализ',
+                hintText: 'Предмет',
+                text: GlobalParameters.subjectNotifier,
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const SelectScreen(
+                        return SelectScreen(
                           title: 'Выберите предмет',
                           items: TestData.testSubjects,
+                          notifier: GlobalParameters.subjectNotifier,
                         );
                       },
                     ),
