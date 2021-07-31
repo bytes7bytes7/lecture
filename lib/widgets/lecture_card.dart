@@ -23,11 +23,16 @@ class LectureCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return LectureScreen(
-              lecture: lecture,
-            );
-          }));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return LectureScreen(
+                  lecture: lecture,
+                );
+              },
+            ),
+          );
         },
         child: Container(
           padding: const EdgeInsets.all(18),
