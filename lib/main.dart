@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Lecture',
       theme: lightTheme,
+      debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
     );
   }
