@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: add pull_to_refresh package
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
