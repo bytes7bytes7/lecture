@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../global_parameters.dart';
 import '../models/lecture.dart';
 import '../repositories/lecture_repository.dart';
 
@@ -12,8 +13,21 @@ abstract class LectureBloc {
   }
 
   static Future<void> updateAllLectures() async {
+    Map<String, dynamic> data = {};
+    if (GlobalParameters.facultyNotifier.value.isNotEmpty) {
+      data['faculty'] = GlobalParameters.facultyNotifier.value;
+    }
+    if (GlobalParameters.levelNotifier.value.isNotEmpty) {
+      data['level'] = GlobalParameters.levelNotifier.value;
+    }
+    if (GlobalParameters.subjectNotifier.value.isNotEmpty) {
+      data['subject'] = GlobalParameters.subjectNotifier.value;
+    }
+    if (GlobalParameters.semesterNotifier.value.isNotEmpty) {
+      data['semester'] = GlobalParameters.semesterNotifier.value;
+    }
     _lectureStreamController.sink.add(LectureState._lectureLoading());
-    LectureRepository.getAllLectures().then((List<Lecture> lectureList) {
+    LectureRepository.getAllLectures(data).then((List<Lecture> lectureList) {
       if (!_lectureStreamController.isClosed) {
         _lectureStreamController.sink
             .add(LectureState._lectureData(lectureList));
@@ -30,8 +44,7 @@ abstract class LectureBloc {
 class LectureState {
   LectureState();
 
-  factory LectureState._lectureData(List<Lecture> lectures) =
-      LectureDataState;
+  factory LectureState._lectureData(List<Lecture> lectures) = LectureDataState;
 
   factory LectureState._lectureLoading() = LectureLoadingState;
 

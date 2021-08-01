@@ -5,7 +5,8 @@ import '../widgets/rounded_button.dart';
 import '../widgets/select_item_row.dart';
 import '../bloc/lecture_bloc.dart';
 import '../global_parameters.dart';
-import '../test_data.dart';
+
+// import '../test_data.dart';
 import 'select_screen.dart';
 
 class FilterScreen extends StatelessWidget {
@@ -34,7 +35,7 @@ class FilterScreen extends StatelessWidget {
                           builder: (context) {
                             return SelectScreen(
                               title: 'Выберите факультет',
-                              items: TestData.testJson.keys.toList(),
+                              items: GlobalParameters.faculties,
                               notifier: GlobalParameters.facultyNotifier,
                             );
                           },
@@ -52,7 +53,7 @@ class FilterScreen extends StatelessWidget {
                           builder: (context) {
                             return SelectScreen(
                               title: 'Выберите уровень высшего образования',
-                              items: TestData.testLevels,
+                              items: GlobalParameters.levels,
                               notifier: GlobalParameters.levelNotifier,
                             );
                           },
@@ -70,7 +71,7 @@ class FilterScreen extends StatelessWidget {
                           builder: (context) {
                             return SelectScreen(
                               title: 'Выберите предмет',
-                              items: TestData.testSubjects,
+                              items: GlobalParameters.subjects,
                               notifier: GlobalParameters.subjectNotifier,
                             );
                           },
@@ -81,7 +82,7 @@ class FilterScreen extends StatelessWidget {
                   PopupItemRow(
                     hintText: 'Семестр',
                     text: GlobalParameters.semesterNotifier,
-                    itemCount: 10,
+                    itemCount: GlobalParameters.semesters,
                   ),
                 ],
               ),

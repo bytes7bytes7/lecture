@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/global_parameters.dart';
+import 'package:lecture/services/server_service.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../bloc/lecture_bloc.dart';
@@ -26,6 +28,9 @@ class HomeScreen extends StatelessWidget {
             builder: (context, snapshot) {
               LectureDataState? state;
               if (snapshot.data is LectureInitState) {
+                if(GlobalParameters.semesters == 0){
+                  ServerService.getFilterData();
+                }
                 LectureBloc.updateAllLectures();
               } else if (snapshot.data is LectureDataState) {
                 state = snapshot.data as LectureDataState;

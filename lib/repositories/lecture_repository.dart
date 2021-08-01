@@ -1,8 +1,8 @@
-import '../services/lecture_service.dart';
+import '../services/server_service.dart';
 import '../models/lecture.dart';
 
 abstract class LectureRepository {
-  static Future<List<Lecture>> getAllLectures() async {
-    return await LectureService.getLecture();
+  static Future<List<Lecture>> getAllLectures(Map<String, dynamic> data) async {
+    return await ServerService.getLectures(data);
   }
 }
