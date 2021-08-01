@@ -510,13 +510,14 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     // bottom may be less than [_kMenuItemHeight] from the edge of the screen.
     // In this case, we want to change the menu limits to align with the top
     // or bottom edge of the button.
-    final double topLimit = math.min(_kMenuItemHeight, buttonTop);
-    final double bottomLimit =
-        math.max(availableHeight - _kMenuItemHeight, buttonBottom);
+    // final double topLimit = math.min(_kMenuItemHeight, buttonTop);
+    // final double bottomLimit =
+    //     math.max(availableHeight - _kMenuItemHeight, buttonBottom);
 
     // double menuTop = (buttonTop - selectedItemOffset) -
     //     (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
-    double menuTop = buttonTop;
+    // TODO: 8 is a padding of curtain object
+    double menuTop = buttonBottom + 8;
     double preferredMenuHeight = kMaterialListPadding.vertical;
     if (items.isNotEmpty) {
       preferredMenuHeight +=
@@ -533,14 +534,14 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     // than the button height and the button is at the very bottom or top of the
     // screen, the menu will be aligned with the bottom or top of the button
     // respectively.
-    if (menuTop < topLimit) {
-      menuTop = math.min(buttonTop, topLimit);
-    }
+    // if (menuTop < topLimit) {
+    //   menuTop = math.min(buttonTop, topLimit);
+    // }
 
-    if (menuBottom > bottomLimit) {
-      menuBottom = math.max(buttonBottom, bottomLimit) + 2*_kMenuItemHeight;
-      menuTop = menuBottom - menuHeight;
-    }
+    // if (menuBottom > bottomLimit) {
+    //   menuBottom = math.max(buttonBottom, bottomLimit) + _kMenuItemHeight;
+    //   menuTop = menuBottom - menuHeight;
+    // }
 
     double scrollOffset = 0;
     // If all of the menu items will not fit within availableHeight then

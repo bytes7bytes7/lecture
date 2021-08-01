@@ -36,7 +36,7 @@ class LectureScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(lecture.items.length, (index) {
-              String title = lecture.fields[index];
+              String title = lecture.fieldsRU[index];
               dynamic item = lecture.items[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),

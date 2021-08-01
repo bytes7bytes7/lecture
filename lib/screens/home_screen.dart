@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../bloc/lecture_bloc.dart';
 import '../widgets/sliver_search_bar.dart';
 import '../widgets/lecture_card.dart';
-import '../test_data.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -11,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add pull_to_refresh package
+    RefreshController _refreshController = RefreshController();
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -19,23 +20,54 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              const SliverSearchBar(),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return LectureCard(lecture: TestData.testLectures[index]);
-                  },
-                  childCount: TestData.testLectures.length,
+          child: StreamBuilder(
+            stream: LectureBloc.lecture,
+            initialData: LectureInitState(),
+            builder: (context, snapshot) {
+              LectureDataState? state;
+              if (snapshot.data is LectureInitState) {
+                LectureBloc.updateAllLectures();
+              } else if (snapshot.data is LectureDataState) {
+                state = snapshot.data as LectureDataState;
+                // TODO: does not work
+                _refreshController.refreshCompleted();
+              }
+              return SmartRefresher(
+                controller: _refreshController,
+                onRefresh: () {
+                  LectureBloc.updateAllLectures();
+                },
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    const SliverSearchBar(),
+                    if (state != null)
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return LectureCard(lecture: state!.lectures[index]);
+                          },
+                          childCount: state.lectures.length,
+                        ),
+                      )
+                    else
+                      SliverToBoxAdapter(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            'Загрузка...',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),
     );
   }
 }
-

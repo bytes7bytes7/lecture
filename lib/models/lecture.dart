@@ -9,35 +9,52 @@ class Lecture {
     required this.author,
   });
 
-  String subject;
-  String topic;
+  late String subject;
+  late String topic;
   dynamic content;
-  String lecturer;
-  String date;
-  double rating;
-  String author;
+  late String lecturer;
+  late String date;
+  late double rating;
+  late String author;
 
-  List<String> get fields {
-    return [
-      'Предмет',
-      'Тема',
-      'Контент',
-      'Лектор',
-      'Дата',
-      'Рейтинг',
-      'Автор',
-    ];
+  Lecture.fromMap(Map<String, dynamic> map) {
+    List<String> keys = fieldsEN;
+    subject = map[keys[0]];
+    topic = map[keys[1]];
+    content = map[keys[2]];
+    lecturer = map[keys[3]];
+    date = map[keys[4]];
+    rating = map[keys[5]];
+    author = map[keys[6]];
   }
 
-  List<dynamic> get items {
-    return [
-      subject,
-      topic,
-      content,
-      lecturer,
-      date,
-      rating,
-      author,
-    ];
-  }
+  List<String> get fieldsEN => [
+        'subject',
+        'topic',
+        'content',
+        'lecturer',
+        'date',
+        'rating',
+        'author',
+      ];
+
+  List<String> get fieldsRU => [
+        'Предмет',
+        'Тема',
+        'Контент',
+        'Лектор',
+        'Дата',
+        'Рейтинг',
+        'Автор',
+      ];
+
+  List<dynamic> get items => [
+        subject,
+        topic,
+        content,
+        lecturer,
+        date,
+        rating,
+        author,
+      ];
 }
