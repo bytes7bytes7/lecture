@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lecture/constants.dart';
 
 import 'rounded_button.dart';
+import 'sized_icon_button.dart';
 
 class SelectItemRow extends StatelessWidget {
   const SelectItemRow({
@@ -30,7 +31,7 @@ class SelectItemRow extends StatelessWidget {
           _style = Theme.of(context).textTheme.bodyText1!;
         }
         return Tooltip(
-          message: text.value,
+          message: _value,
           showDuration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           textStyle: Theme.of(context)
@@ -68,11 +69,26 @@ class SelectItemRow extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 20),
-                            child: Text(
-                              _value,
-                              style: _style,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    _value,
+                                    style: _style,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                if (_value != hintText)
+                                  SizedIconButton(
+                                    icon: Icons.close,
+                                    onPressed: () {
+                                      text.value = '';
+                                    },
+                                    message: 'Очистить',
+                                  ),
+                              ],
                             ),
                           ),
                         ),

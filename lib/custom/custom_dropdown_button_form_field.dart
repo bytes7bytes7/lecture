@@ -558,8 +558,6 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
       scrollOffset = math.min(scrollOffset, preferredMenuHeight - menuHeight);
     }
 
-    print(
-        '$selectedItemOffset, $menuTop, $menuBottom, $menuHeight, $scrollOffset');
     return _MenuLimits(menuTop, menuBottom, menuHeight, scrollOffset);
   }
 }
@@ -718,37 +716,6 @@ class _DropdownMenuItemContainer extends StatelessWidget {
       child: child,
     );
   }
-}
-
-/// An item in a menu created by a [DropdownButton].
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-class DropdownMenuItem<T> extends _DropdownMenuItemContainer {
-  /// Creates an item for a dropdown menu.
-  ///
-  /// The [child] argument is required.
-  const DropdownMenuItem({
-    Key? key,
-    this.onTap,
-    this.value,
-    this.enabled = true,
-    AlignmentGeometry alignment = AlignmentDirectional.centerStart,
-    required Widget child,
-  }) : super(key: key, alignment: alignment, child: child);
-
-  /// Called when the dropdown menu item is tapped.
-  final VoidCallback? onTap;
-
-  /// The value to return if the user selects this menu item.
-  ///
-  /// Eventually returned in a call to [DropdownButton.onChanged].
-  final T? value;
-
-  /// Whether or not a user can select this menu item.
-  ///
-  /// Defaults to `true`.
-  final bool enabled;
 }
 
 /// An inherited widget that causes any descendant [DropdownButton]
@@ -1732,7 +1699,7 @@ class _CustomDropdownButtonFormFieldState<T> extends FormFieldState<T> {
   }
 
   @override
-  void didUpdateWidget(DropdownButtonFormField<T> oldWidget) {
+  void didUpdateWidget(CustomDropdownButtonFormField<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialValue != widget.initialValue) {
       setValue(widget.initialValue);

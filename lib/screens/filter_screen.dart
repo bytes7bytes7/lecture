@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart' hide DropdownMenuItem;
+import 'package:flutter/material.dart';
 
-import '../custom/custom_dropdown_button_form_field.dart';
+import '../widgets/popup_item_row.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/select_item_row.dart';
 import '../global_parameters.dart';
@@ -74,78 +74,11 @@ class FilterScreen extends StatelessWidget {
                   );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context)
-                                  .focusColor
-                                  .withOpacity(0.25),
-                              offset: const Offset(0, 3),
-                              spreadRadius: 0,
-                              blurRadius: 4,
-                            ),
-                          ],
-                        ),
-                        child: CustomDropdownButtonFormField(
-                          icon: const SizedBox(),
-                          style: Theme.of(context).textTheme.bodyText1,
-                          decoration: InputDecoration(
-                            hintText: 'Семестр',
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    color: Theme.of(context).disabledColor),
-                            isCollapsed: true,
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).focusColor,
-                              ),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            if (value.toString() !=
-                                GlobalParameters.semesterNotifier.value) {
-                              GlobalParameters.semesterNotifier.value = value.toString();
-                            }
-                          },
-                          menuMaxHeight: 150,
-                          value: (GlobalParameters
-                                  .semesterNotifier.value.isNotEmpty)
-                              ? int.parse(GlobalParameters.semesterNotifier.value)
-                              : null,
-                          items: List.generate(
-                            10,
-                            (index) {
-                              return DropdownMenuItem(
-                                child: Text('${index + 1} Семестр'),
-                                value: index + 1,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 15.0),
-                    const Flexible(
-                      child: SizedBox(),
-                    ),
-                  ],
-                ),
-              ),
+             PopupItemRow(
+               hintText: 'Семестр',
+               text: GlobalParameters.semesterNotifier,
+               itemCount: 10,
+             ),
               const Spacer(),
               RoundedButton(
                 data: 'Обновить',
