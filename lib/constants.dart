@@ -7,3 +7,7 @@ abstract class ConstantColors{
   static const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
   static const Color disabledColor = Color(0xFF818181);
 }
+
+abstract class ConstantHTTP{
+  static const String university = 'kubsu';
+}

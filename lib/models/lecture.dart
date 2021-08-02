@@ -28,6 +28,22 @@ class Lecture {
     author = map[keys[6]];
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      "subject": subject,
+      "topic": topic,
+      "content": {
+        "text": content as String,
+        "videos": [],
+        "photos": [],
+      },
+      "lecturer": lecturer,
+      "date": date,
+      "rating": rating,
+      "author": author,
+    };
+  }
+
   List<String> get fieldsEN => [
         'subject',
         'topic',

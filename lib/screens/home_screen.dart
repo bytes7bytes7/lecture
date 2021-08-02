@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/global_parameters.dart';
-import 'package:lecture/services/server_service.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../bloc/lecture_bloc.dart';
 import '../widgets/sliver_search_bar.dart';
 import '../widgets/lecture_card.dart';
+import '../models/lecture.dart';
+import '../services/server_service.dart';
+import '../bloc/lecture_bloc.dart';
+import '../global_parameters.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -28,7 +29,7 @@ class HomeScreen extends StatelessWidget {
             builder: (context, snapshot) {
               LectureDataState? state;
               if (snapshot.data is LectureInitState) {
-                if(GlobalParameters.semesters == 0){
+                if (GlobalParameters.semesters == 0) {
                   ServerService.getFilterData();
                 }
                 LectureBloc.updateAllLectures();
@@ -72,6 +73,25 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).focusColor,
+        ),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        onPressed: () {
+          LectureBloc.uploadLecture(Lecture(
+            subject: 'Информатика',
+            topic: 'Абстрактные классы',
+            content:
+            'Абстрактный класс в объектно-ориентированном программировании — базовый класс, который не предполагает создания экземпляров. Абстрактные классы реализуют на практике один из принципов ООП — полиморфизм. Абстрактный класс может содержать (и не содержать[1]) абстрактные методы и свойства. Абстрактный метод не реализуется для класса, в котором описан, однако должен быть реализован для его неабстрактных потомков. Абстрактные классы представляют собой наиболее общие абстракции, то есть имеющие наибольший объём и наименьшее содержание.',
+            lecturer: 'Куликова Н.Н.',
+            date: '13.05.21',
+            rating: 4.47,
+            author: 'Петрова А.Д.',
+          ));
+        },
       ),
     );
   }

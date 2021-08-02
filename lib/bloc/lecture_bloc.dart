@@ -39,6 +39,17 @@ abstract class LectureBloc {
       }
     });
   }
+
+  static Future<void> uploadLecture(Lecture lecture)async{
+    _lectureStreamController.sink.add(LectureState._lectureLoading());
+    LectureRepository.uploadLecture(lecture).then((_) {
+    }).onError((Error error, StackTrace stackTrace) {
+      if (!_lectureStreamController.isClosed) {
+        _lectureStreamController.sink
+            .add(LectureState._lectureError(error, stackTrace));
+      }
+    });
+  }
 }
 
 class LectureState {

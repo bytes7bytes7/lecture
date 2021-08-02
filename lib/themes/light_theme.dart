@@ -22,5 +22,6 @@ final ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w500,
       color: ConstantColors.disabledColor,
     ),
+
   ),
 );
