@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:lecture/constants.dart';
 
@@ -9,24 +8,25 @@ import '../security/server_uri.dart';
 
 abstract class ServerService {
   static Future<List<Lecture>> getLectures(Map<String, dynamic> data) async {
-    // print(data);
-    // var client = http.Client();
-    // http.Response uriResponse;
-    // try {
-    //   uriResponse = await client.post(
-    //     Uri.parse(ServerURI.lectureUri),
-    //     body: json.encode(data),
-    //   );
-    // } finally {
-    //   client.close();
-    // }
-    // var body = json.decode(utf8.decode(uriResponse.bodyBytes));
-    // List<Lecture> lectures = [];
-    // for (Map<String, dynamic> m in body) {
-    //   lectures.add(Lecture.fromMap(m));
-    // }
-    // return lectures;
-    return [];
+    print(data);
+    var client = http.Client();
+    http.Response uriResponse;
+    try {
+      uriResponse = await client.get(
+        Uri.http(ServerURI.serverAuthority, ServerURI.getLectures, data),
+        headers: {
+          'accept': 'application/json',
+        },
+      );
+    } finally {
+      client.close();
+    }
+    var body = json.decode(utf8.decode(uriResponse.bodyBytes));
+    List<Lecture> lectures = [];
+    for (Map<String, dynamic> m in body) {
+      lectures.add(Lecture.fromMap(m));
+    }
+    return lectures;
   }
 
   static Future<void> getFilterData() async {
@@ -53,7 +53,8 @@ abstract class ServerService {
   static Future<void> uploadLecture(Lecture lecture) async {
     http.Response uriResponse;
     var data = lecture.toMap();
-    http.Response image = await http.get(Uri.parse('https://pbs.twimg.com/media/EG10LtNX4AAHWyl.jpg'));
+    http.Response image = await http
+        .get(Uri.parse('https://pbs.twimg.com/media/EG10LtNX4AAHWyl.jpg'));
     var base64 = const Base64Encoder().convert(image.bodyBytes);
     data['content']['photos'].add(base64);
     var client = http.Client();

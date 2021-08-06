@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:lecture/models/user.dart';
+import 'package:lecture/screens/lecture_editor_screen.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../widgets/sliver_search_bar.dart';
@@ -81,16 +85,59 @@ class HomeScreen extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         onPressed: () {
-          LectureBloc.uploadLecture(Lecture(
-            subject: 'Информатика',
-            topic: 'Абстрактные классы',
-            content:
-            'Абстрактный класс в объектно-ориентированном программировании — базовый класс, который не предполагает создания экземпляров. Абстрактные классы реализуют на практике один из принципов ООП — полиморфизм. Абстрактный класс может содержать (и не содержать[1]) абстрактные методы и свойства. Абстрактный метод не реализуется для класса, в котором описан, однако должен быть реализован для его неабстрактных потомков. Абстрактные классы представляют собой наиболее общие абстракции, то есть имеющие наибольший объём и наименьшее содержание.',
-            lecturer: 'Куликова Н.Н.',
-            date: '13.05.21',
-            rating: 4.47,
-            author: 'Петрова А.Д.',
-          ));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return const LectureEditorScreen();
+          }));
+          // var randInst = Random();
+          // String day = randInst.nextInt(29).toString();
+          // String month = randInst.nextInt(13).toString();
+          // String year = (randInst.nextInt(5) + 2015).toString();
+          // if (day.length < 2) {
+          //   day = '0' + day;
+          // }
+          // if (month.length < 2) {
+          //   month = '0' + month;
+          // }
+          // String faculty = GlobalParameters
+          //     .faculties[randInst.nextInt(GlobalParameters.faculties.length)];
+          // String level = GlobalParameters
+          //     .levels[randInst.nextInt(GlobalParameters.levels.length)];
+          // String subject = GlobalParameters
+          //     .subjects[randInst.nextInt(GlobalParameters.subjects.length)];
+          // int semester = randInst.nextInt(GlobalParameters.semesters + 1);
+          // const _chars = 'йцукенгшщзхъфывапролджэячсмитьбю';
+          // String getRandomString(int length) {
+          //   return String.fromCharCodes(
+          //     Iterable.generate(
+          //       length,
+          //       (_) => _chars.codeUnitAt(randInst.nextInt(_chars.length)),
+          //     ),
+          //   );
+          // }
+          //
+          // String topic = getRandomString(randInst.nextInt(15));
+          // String content = getRandomString(randInst.nextInt(100) + 50);
+          // String lecturer =
+          //     '${getRandomString(10)} ${getRandomString(1)}.${getRandomString(1)}.';
+          // String author =
+          //     '${getRandomString(10)} ${getRandomString(1)}.${getRandomString(1)}.';
+          // double rating = randInst.nextInt(5) + randInst.nextDouble();
+          // LectureBloc.uploadLecture(Lecture(
+          //   faculty: faculty,
+          //   level: level,
+          //   subject: subject,
+          //   semester: semester,
+          //   topic: topic,
+          //   content: content,
+          //   lecturer: lecturer,
+          //   date: '$day.$month.$year',
+          //   rating: rating,
+          //   author: User(
+          //     id: 'abc123',
+          //     firstName: author,
+          //     lastName: author,
+          //   ),
+          // ));
         },
       ),
     );

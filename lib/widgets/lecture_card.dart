@@ -104,7 +104,7 @@ class LectureCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    lecture.rating.toString(),
+                    ((lecture.rating * 100).round() / 100).toString(),
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1!
