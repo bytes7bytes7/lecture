@@ -2,6 +2,7 @@
     package="bytes7bytes7.lecture">
    <application
         android:label="lecture"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

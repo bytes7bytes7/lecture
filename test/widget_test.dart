@@ -1,30 +1,103 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:zefyrka/zefyrka.dart';
 
-import 'package:lecture/main.dart';
+import 'zefyr_lite_toolbar.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  final ZefyrController _controller = ZefyrController();
+  final ValueNotifier<String> data = ValueNotifier('');
+  final ValueNotifier<bool> editMode = ValueNotifier(true);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Text',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Test'),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                ZefyrLiteToolbar(
+                  controller: _controller,
+                  notifier: editMode,
+                ),
+                const SizedBox(
+                  height: 40.0,
+                  child: TextField(
+                    autofocus: true,
+                  ),
+                ),
+                Expanded(
+                  child: ValueListenableBuilder(
+                    valueListenable: editMode,
+                    builder: (context, bool value, __) {
+                      return Stack(
+                        children: [
+                          ZefyrEditor(
+                            readOnly: !value,
+                            autofocus: true,
+                            controller: _controller,
+                          ),
+                          if (!value)
+                            Positioned(
+                              right: 100.0,
+                              left: 100.0,
+                              bottom: 50.0,
+                              child: Tooltip(
+                                message: 'Editing blocked',
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFEDEDED),
+                                    shape:  BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.https_outlined,
+                                    color: Color(0xFF14A391),
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              child: const Icon(Icons.copy),
+              onPressed: () {
+                data.value = jsonEncode(_controller.document);
+                debugPrint(data.value);
+              },
+            ),
+            const SizedBox(width: 10),
+            FloatingActionButton(
+              child: const Icon(Icons.paste),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

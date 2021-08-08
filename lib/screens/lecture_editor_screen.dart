@@ -67,7 +67,9 @@ class LectureEditorScreen extends StatelessWidget {
                 toolConfiguration: toolConfiguration,
               ),
               const TopicTextField(),
-              const EditorCanvas(),
+              EditorCanvas(
+                toolConfiguration: toolConfiguration,
+              ),
             ],
           ),
         ),
@@ -165,7 +167,10 @@ class TopicTextField extends StatelessWidget {
 class EditorCanvas extends StatelessWidget {
   const EditorCanvas({
     Key? key,
+    required this.toolConfiguration,
   }) : super(key: key);
+
+  final ValueNotifier<Map<IconData, bool>> toolConfiguration;
 
   @override
   Widget build(BuildContext context) {

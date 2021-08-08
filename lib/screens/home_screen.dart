@@ -1,16 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:lecture/models/user.dart';
-import 'package:lecture/screens/lecture_editor_screen.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../widgets/sliver_search_bar.dart';
 import '../widgets/lecture_card.dart';
-import '../models/lecture.dart';
 import '../services/server_service.dart';
 import '../bloc/lecture_bloc.dart';
 import '../global_parameters.dart';
+import 'lecture_editor_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({

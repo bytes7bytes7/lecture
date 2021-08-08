@@ -8,7 +8,6 @@ import '../security/server_uri.dart';
 
 abstract class ServerService {
   static Future<List<Lecture>> getLectures(Map<String, dynamic> data) async {
-    print(data);
     var client = http.Client();
     http.Response uriResponse;
     try {
@@ -70,6 +69,6 @@ abstract class ServerService {
     } finally {
       client.close();
     }
-    print(json.decode(utf8.decode(uriResponse.bodyBytes)));
+    //print(json.decode(utf8.decode(uriResponse.bodyBytes)));
   }
 }

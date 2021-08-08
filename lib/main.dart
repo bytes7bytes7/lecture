@@ -11,8 +11,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const int level = 0;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
