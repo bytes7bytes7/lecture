@@ -8,7 +8,6 @@ final ThemeData lightTheme = ThemeData(
   shadowColor: ConstantColors.shadowColor,
   hintColor: ConstantColors.hintColor,
   disabledColor: ConstantColors.disabledColor,
-  hoverColor: ConstantColors.hoverColor,
   indicatorColor: ConstantColors.indicatorColor,
   errorColor: ConstantColors.errorColor,
   textTheme: const TextTheme(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lecture/widgets/search_bar.dart';
 
 import '../screens/filter_screen.dart';
-import 'rounded_button.dart';
 
 class SliverSearchBar extends StatelessWidget {
   const SliverSearchBar({
@@ -28,8 +27,8 @@ class SliverSearchBar extends StatelessWidget {
                 child: SearchBar(),
               ),
               const SizedBox(width: 15.0),
-              RoundedButton(
-                data: Icons.filter_alt_outlined,
+              MaterialButton(
+                child: const Icon(Icons.filter_alt_outlined),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {

@@ -8,7 +8,6 @@ abstract class ConstantColors{
   static const Color shadowColor = Color(0xFF000000);
   static const Color hintColor = Color(0xFFB4B4B4);
   static const Color disabledColor = Color(0xFFEDEDED);
-  static const Color hoverColor = Color(0x3F14A391);
   static const Color indicatorColor = Color(0xFFD6B029);
   static const Color errorColor = Color(0xFFE84521);
 }

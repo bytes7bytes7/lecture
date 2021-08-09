@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/popup_item_row.dart';
-import '../widgets/rounded_button.dart';
 import '../widgets/select_item_row.dart';
 import '../bloc/lecture_bloc.dart';
 import '../global_parameters.dart';
@@ -86,8 +85,8 @@ class FilterScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              RoundedButton(
-                data: 'Обновить',
+              MaterialButton(
+                child: const Text('Обновить'),
                 onPressed: () {
                   LectureBloc.updateAllLectures();
                   Navigator.pop(context);

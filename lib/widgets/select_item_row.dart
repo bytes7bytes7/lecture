@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lecture/constants.dart';
 
-import 'rounded_button.dart';
 import 'sized_icon_button.dart';
 
 class SelectItemRow extends StatelessWidget {
@@ -97,8 +96,8 @@ class SelectItemRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 15.0),
-                RoundedButton(
-                  data: Icons.search,
+                MaterialButton(
+                  child: const Icon(Icons.search),
                   onPressed: onPressed,
                 ),
               ],
