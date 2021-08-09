@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:zefyrka/zefyrka.dart';
+import 'package:zefyrka/zefyrka.dart'  hide ToggleStyleButton, LinkStyleButton;
 
 import 'zefyr_lite_toolbar.dart';
 
@@ -21,81 +19,98 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Text',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Test'),
-        ),
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              children: [
-                ZefyrLiteToolbar(
-                  controller: _controller,
-                  notifier: editMode,
-                ),
-                const SizedBox(
-                  height: 40.0,
-                  child: TextField(
-                    autofocus: true,
-                  ),
-                ),
-                Expanded(
-                  child: ValueListenableBuilder(
-                    valueListenable: editMode,
-                    builder: (context, bool value, __) {
-                      return Stack(
-                        children: [
-                          ZefyrEditor(
-                            readOnly: !value,
-                            autofocus: true,
-                            controller: _controller,
+      home: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Test'),
+          ),
+          body: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  children: [
+                    ZefyrLiteToolbar(
+                      controller: _controller,
+                      notifier: editMode,
+                    ),
+                    //ZefyrToolbar.basic(controller: _controller),
+                    const SizedBox(height: 25.0),
+                    Container(
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFF14A391)),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: const Center(
+                        child: TextField(
+                          autofocus: true,
+                          scrollPhysics: BouncingScrollPhysics(),
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            border: InputBorder.none,
                           ),
-                          if (!value)
-                            Positioned(
-                              right: 100.0,
-                              left: 100.0,
-                              bottom: 50.0,
-                              child: Tooltip(
-                                message: 'Editing blocked',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 25.0),
+                    Expanded(
+                      child: ValueListenableBuilder(
+                        valueListenable: editMode,
+                        builder: (context, bool value, __) {
+                          return Stack(
+                            children: [
+                              Positioned.fill(
                                 child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFEDEDED),
-                                    shape:  BoxShape.circle,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color(0xFF14A391)),
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: const Icon(
-                                    Icons.https_outlined,
-                                    color: Color(0xFF14A391),
-                                    size: 24.0,
+                                  child: ZefyrEditor(
+                                    controller: _controller,
+                                    autofocus: true,
+                                    readOnly: !value,
+                                    scrollPhysics:
+                                        const BouncingScrollPhysics(),
                                   ),
                                 ),
                               ),
-                            ),
-                        ],
-                      );
-                    },
-                  ),
+                              if (!value)
+                                Positioned(
+                                  right: 100.0,
+                                  left: 100.0,
+                                  bottom: 50.0,
+                                  child: Tooltip(
+                                    message: 'Editing blocked',
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFEDEDED),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.https_outlined,
+                                        color: Color(0xFF14A391),
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              child: const Icon(Icons.copy),
-              onPressed: () {
-                data.value = jsonEncode(_controller.document);
-                debugPrint(data.value);
-              },
-            ),
-            const SizedBox(width: 10),
-            FloatingActionButton(
-              child: const Icon(Icons.paste),
-              onPressed: () {},
-            ),
-          ],
         ),
       ),
     );

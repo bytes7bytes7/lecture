@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton;
+import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
 class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget> children;
@@ -28,8 +28,51 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           ToggleStyleButton(
+            attribute: NotusAttribute.strikethrough,
+            icon: Icons.format_strikethrough,
+            controller: controller,
+          ),
+          Container(
+            width: 1,
+            color: Colors.white,
+          ),
+          ToggleStyleButton(
             attribute: NotusAttribute.underline,
             icon: Icons.format_underline,
+            controller: controller,
+          ),
+          Container(
+            width: 1,
+            color: Colors.white,
+          ),
+          ToggleStyleButton(
+            attribute: NotusAttribute.block.numberList,
+            controller: controller,
+            icon: Icons.format_list_numbered,
+          ),
+          Container(
+            width: 1,
+            color: Colors.white,
+          ),
+          ToggleStyleButton(
+            attribute: NotusAttribute.block.bulletList,
+            controller: controller,
+            icon: Icons.format_list_bulleted,
+          ),
+          Container(
+            width: 1,
+            color: Colors.white,
+          ),
+          ToggleStyleButton(
+            attribute: NotusAttribute.block.code,
+            controller: controller,
+            icon: Icons.code,
+          ),
+          Container(
+            width: 1,
+            color: Colors.white,
+          ),
+          LinkStyleButton(
             controller: controller,
           ),
           Container(
@@ -190,5 +233,122 @@ class _ToggleEditButtonState extends State<ToggleEditButton> {
         widget.notifier.value = !widget.notifier.value;
       });
     });
+  }
+}
+
+class LinkStyleButton extends StatefulWidget {
+  final ZefyrController controller;
+
+  const LinkStyleButton({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  _LinkStyleButtonState createState() => _LinkStyleButtonState();
+}
+
+class _LinkStyleButtonState extends State<LinkStyleButton> {
+  void _didChangeSelection() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_didChangeSelection);
+  }
+
+  @override
+  void didUpdateWidget(covariant LinkStyleButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_didChangeSelection);
+      widget.controller.addListener(_didChangeSelection);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.controller.removeListener(_didChangeSelection);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ZIconButton(
+      highlightElevation: 0,
+      hoverElevation: 0,
+      size: 32,
+      icon: const Icon(
+        Icons.link,
+        size: 18,
+        color: Color(0xFFB4B4B4),
+      ),
+      fillColor: const Color(0xFFEDEDED),
+      onPressed: () => _openLinkDialog(context),
+    );
+  }
+
+  void _openLinkDialog(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (ctx) {
+        return const _LinkDialog();
+      },
+    ).then(_linkSubmitted);
+  }
+
+  void _linkSubmitted(String? value) {
+    if (value == null || value.isEmpty) return;
+    widget.controller.formatSelection(NotusAttribute.link.fromString(value));
+  }
+}
+
+class _LinkDialog extends StatefulWidget {
+  const _LinkDialog({Key? key}) : super(key: key);
+
+  @override
+  _LinkDialogState createState() => _LinkDialogState();
+}
+
+class _LinkDialogState extends State<_LinkDialog> {
+  String _link = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: TextField(
+        decoration: const InputDecoration(
+          labelText: 'Ссылка',
+          labelStyle:TextStyle(
+            color: Color(0xFF14A391),
+          ),
+        ),
+        autofocus: true,
+        onChanged: _linkChanged,
+      ),
+      actions: [
+        TextButton(
+          onPressed: _link.isNotEmpty ? _applyLink : null,
+          child: const Text(
+            'Ок',
+            style: TextStyle(
+              color: Color(0xFF14A391),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _linkChanged(String value) {
+    setState(() {
+      _link = value;
+    });
+  }
+
+  void _applyLink() {
+    Navigator.pop(context, _link);
   }
 }
