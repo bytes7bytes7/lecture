@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 typedef VoidFunction = void Function();
 
 abstract class ConstantColors{
-  static const Color focusColor = Color(0xFF000000);
+  static const Color primaryColor = Color(0xFF14A391);
   static const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
-  static const Color disabledColor = Color(0xFF818181);
+  static const Color shadowColor = Color(0xFF000000);
+  static const Color hintColor = Color(0xFFB4B4B4);
+  static const Color disabledColor = Color(0xFFEDEDED);
+  static const Color hoverColor = Color(0x3F14A391);
+  static const Color indicatorColor = Color(0xFFD6B029);
+  static const Color errorColor = Color(0xFFE84521);
 }
 
 abstract class ConstantHTTP{

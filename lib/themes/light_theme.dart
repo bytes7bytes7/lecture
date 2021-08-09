@@ -3,25 +3,44 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 final ThemeData lightTheme = ThemeData(
-  focusColor: ConstantColors.focusColor,
+  primaryColor: ConstantColors.primaryColor,
   scaffoldBackgroundColor: ConstantColors.scaffoldBackgroundColor,
+  shadowColor: ConstantColors.shadowColor,
+  hintColor: ConstantColors.hintColor,
   disabledColor: ConstantColors.disabledColor,
+  hoverColor: ConstantColors.hoverColor,
+  indicatorColor: ConstantColors.indicatorColor,
+  errorColor: ConstantColors.errorColor,
   textTheme: const TextTheme(
     headline1: TextStyle(
-      fontSize: 20,
+      fontSize: 24.0,
       fontWeight: FontWeight.bold,
-      color: ConstantColors.focusColor,
+      fontFamily: 'PlayfairDisplaySC',
+      color: ConstantColors.shadowColor,
+    ),
+    headline2: TextStyle(
+      fontSize: 23.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Roboto',
+      color: ConstantColors.shadowColor,
+    ),
+    headline3: TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Roboto',
+      color: ConstantColors.shadowColor,
     ),
     bodyText1: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w400,
-      color: ConstantColors.focusColor,
+      fontSize: 17.0,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Roboto',
+      color: ConstantColors.shadowColor,
     ),
     subtitle1: TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.w500,
-      color: ConstantColors.disabledColor,
+      fontSize: 17.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Roboto',
+      color: ConstantColors.shadowColor,
     ),
-
   ),
 );

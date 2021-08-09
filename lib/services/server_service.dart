@@ -17,6 +17,9 @@ abstract class ServerService {
           'accept': 'application/json',
         },
       );
+    }catch (e){
+      print('getLecture error: $e');
+      return [];
     } finally {
       client.close();
     }
@@ -34,6 +37,9 @@ abstract class ServerService {
     try {
       uriResponse = await client.get(Uri.http(ServerURI.serverAuthority,
           ServerURI.getFilterData, {'university': ConstantHTTP.university}));
+    }catch(e){
+      print('getFilterData error $e');
+      return ;
     } finally {
       client.close();
     }
@@ -66,9 +72,12 @@ abstract class ServerService {
           'Content-Type': 'application/json',
         },
       );
+    }catch (e){
+      print('uploadLecture error: $e');
+      return;
     } finally {
       client.close();
     }
-    //print(json.decode(utf8.decode(uriResponse.bodyBytes)));
+    print(json.decode(utf8.decode(uriResponse.bodyBytes)));
   }
 }

@@ -17,9 +17,6 @@ class LectureEditorScreen extends StatelessWidget {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Test'),
-        ),
         body: SafeArea(
           child: Center(
             child: Padding(
