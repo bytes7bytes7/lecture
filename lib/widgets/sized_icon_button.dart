@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/constants.dart';
 
 class SizedIconButton extends StatelessWidget {
   const SizedIconButton({
@@ -8,17 +7,18 @@ class SizedIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     required this.message,
-    this.splashRadius = 14,
+    this.splashRadius = 22,
   }) : super(key: key);
 
   final double size;
   final IconData icon;
-  final VoidFunction onPressed;
+  final VoidCallback onPressed;
   final String message;
   final double splashRadius;
 
   @override
   Widget build(BuildContext context) {
+    // TODO: hoverColor disappears on filter overlay
     return SizedBox(
       height: size,
       width: size,

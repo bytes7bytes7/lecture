@@ -99,66 +99,57 @@ class HomeScreen extends StatelessWidget {
                 );
               } else if (snapshot.data is LectureDataState) {
                 LectureDataState state = snapshot.data as LectureDataState;
-                return NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollNotification) {
-                    if (scrollNotification.metrics.pixels >
-                        scrollNotification.metrics.maxScrollExtent) {
-                      // TODO: load next page of lectures
+                return ListView.builder(
+                  physics: const AlwaysBouncingScrollPhysics(),
+                  itemCount: state.lectures.length + 1,
+                  itemBuilder: (context, index) {
+                    switch (index) {
+                      case 0:
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                top: 20.0,
+                                bottom: 15.0,
+                              ),
+                              child: HomeSearchBar(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 25.0, vertical: 15.0),
+                              child: Text(
+                                'Предметы',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                            const SubjectListView(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, top: 15.0, bottom: 5),
+                              child: Text(
+                                'Новое',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                            if (state.lectures.isEmpty)
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Text(
+                                  'Пусто',
+                                  style:
+                                      Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                          ],
+                        );
+                      default:
+                        return LectureCard(
+                          lecture: state.lectures[index - 1],
+                        );
                     }
-                    return true;
                   },
-                  child: ListView.builder(
-                    physics: const AlwaysBouncingScrollPhysics(),
-                    itemCount: state.lectures.length + 1,
-                    itemBuilder: (context, index) {
-                      switch (index) {
-                        case 0:
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 15.0,
-                                ),
-                                child: HomeSearchBar(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0, vertical: 15.0),
-                                child: Text(
-                                  'Предметы',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                              ),
-                              const SubjectListView(),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 25.0, top: 15.0, bottom: 5),
-                                child: Text(
-                                  'Новое',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                              ),
-                              if (state.lectures.isEmpty)
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: Text(
-                                    'Пусто',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                            ],
-                          );
-                        default:
-                          return LectureCard(
-                            lecture: state.lectures[index - 1],
-                          );
-                      }
-                    },
-                  ),
                 );
               } else {
                 return const ErrorLabel();

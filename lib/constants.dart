@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-typedef VoidFunction = void Function();
-
 abstract class ConstantColors{
   static const Color primaryColor = Color(0xFF14A391);
   static const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
@@ -22,4 +20,6 @@ abstract class ConstantMessages{
   static const String exit = 'Выход';
   static const String choose = 'Выбрать';
   static const String clear = 'Очистить';
+  static const String less = 'Меньше';
+  static const String more = 'Больше';
 }

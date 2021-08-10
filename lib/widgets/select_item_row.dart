@@ -13,7 +13,7 @@ class SelectItemRow extends StatelessWidget {
 
   final String hintText;
   final ValueNotifier<String> text;
-  final VoidFunction onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
