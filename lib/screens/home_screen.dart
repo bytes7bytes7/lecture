@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lecture/constants.dart';
+import 'package:lecture/models/lecture.dart';
 
 import '../widgets/sized_icon_button.dart';
 import '../custom/custom_route_builder.dart';
@@ -138,8 +141,7 @@ class HomeScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 20.0),
                                 child: Text(
                                   'Пусто',
-                                  style:
-                                      Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
                           ],
@@ -166,9 +168,44 @@ class HomeScreen extends StatelessWidget {
             size: 24.0,
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              CustomRouteBuilder(widget: const LectureEditorScreen()),
-            );
+            var rand = Random();
+            const _chars = 'йцукенгшщзхъфывапролджэячсмитьбю ';
+            String getRandomString(int length) =>
+                String.fromCharCodes(Iterable.generate(length,
+                    (_) => _chars.codeUnitAt(rand.nextInt(_chars.length))));
+            String faculty = GlobalParameters
+                .faculties[rand.nextInt(GlobalParameters.faculties.length)];
+            String level = GlobalParameters
+                .levels[rand.nextInt(GlobalParameters.levels.length)];
+            String subject = GlobalParameters
+                .subjects[rand.nextInt(GlobalParameters.subjects.length)];
+            int semester = rand.nextInt(GlobalParameters.semesters) + 1;
+            String topic = getRandomString(rand.nextInt(10) + 10);
+            String content = getRandomString(rand.nextInt(50) + 50);
+            String lecturer =
+                '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
+            int year = rand.nextInt(5)+2015;
+            int month = rand.nextInt(12)+1;
+            int day = rand.nextInt(28)+1;
+            double rating = rand.nextInt(4) + rand.nextDouble() + 1;
+            String author =
+                '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
+            LectureBloc.uploadLecture(Lecture(
+              faculty: faculty,
+              level: level,
+              subject: subject,
+              semester: semester,
+              topic: topic,
+              content: content,
+              lecturer: lecturer,
+              date: '$day.$month.$year',
+              rating: rating,
+              author: author,
+            ));
+            // TODO: uncomment this code
+            // Navigator.of(context).push(
+            //   CustomRouteBuilder(widget: const LectureEditorScreen()),
+            // );
           },
         ),
       ),

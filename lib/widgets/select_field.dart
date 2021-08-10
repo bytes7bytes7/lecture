@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/overlays/show_select_overlay.dart';
 
 import '../constants.dart';
 import 'sized_icon_button.dart';
@@ -44,7 +45,9 @@ class SelectField extends StatelessWidget {
           SizedIconButton(
             size: 24.0,
             icon: Icons.search,
-            onPressed: () {},
+            onPressed: () {
+              showSelectOverlay(context);
+            },
             message: ConstantMessages.choose,
           ),
         ],

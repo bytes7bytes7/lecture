@@ -1,5 +1,3 @@
-import 'user.dart';
-
 class Lecture {
   Lecture({
     required this.faculty,
@@ -23,7 +21,7 @@ class Lecture {
   late String lecturer;
   late String date;
   late double rating;
-  late User author;
+  late String author;
 
   Lecture.fromMap(Map<String, dynamic> map) {
     List<String> keys = fieldsEN;
@@ -36,11 +34,7 @@ class Lecture {
     lecturer = map[keys[6]];
     date = map[keys[7]].split('.').reversed.join('.');
     rating = map[keys[8]];
-    author = User(
-      id: map[keys[9]],
-      firstName: map[keys[9]],
-      lastName: '',
-    );
+    author = map[keys[9]];
   }
 
   Map<String, dynamic> toMap() {
@@ -65,7 +59,7 @@ class Lecture {
       'lecturer': lecturer,
       'date': formatted,
       'rating': rating,
-      'author': author.toMap(),
+      'author': author,
     };
   }
 

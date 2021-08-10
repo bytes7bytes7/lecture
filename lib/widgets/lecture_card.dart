@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/screens/lecture_screen.dart';
 
+import '../custom/custom_route_builder.dart';
 import '../models/lecture.dart';
 
 class LectureCard extends StatelessWidget {
@@ -31,7 +33,11 @@ class LectureCard extends StatelessWidget {
         child: MaterialButton(
           padding: const EdgeInsets.all(12.0),
           minWidth: 0,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(CustomRouteBuilder(
+              widget: LectureScreen(lecture: lecture),
+            ));
+          },
           child: Column(
             children: [
               Padding(
@@ -47,8 +53,9 @@ class LectureCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(left: 2),
+                      //padding: const EdgeInsets.only(left: 2),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
                         color: (lecture.rating >= 4.0)
                             ? Theme.of(context).primaryColor.withOpacity(0.25)
                             : (lecture.rating >= 3.0)
@@ -60,53 +67,64 @@ class LectureCard extends StatelessWidget {
                                     : Theme.of(context)
                                         .errorColor
                                         .withOpacity(0.25),
-                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Row(
                         children: [
                           Container(
+                            margin: const EdgeInsets.only(
+                                left: 2.0, top: 2.0, bottom: 2.0),
                             decoration: BoxDecoration(
-                                color: (lecture.rating >= 4.0)
-                                    ? Theme.of(context).primaryColor
-                                    : (lecture.rating >= 3.0)
-                                        ? Theme.of(context).indicatorColor
-                                        : (lecture.rating == 0.0)
-                                            ? Theme.of(context).hintColor
-                                            : Theme.of(context).errorColor,
-                                shape: BoxShape.circle),
+                              shape: BoxShape.circle,
+                              color: (lecture.rating >= 4.0)
+                                  ? Theme.of(context).primaryColor
+                                  : (lecture.rating >= 3.0)
+                                      ? Theme.of(context).indicatorColor
+                                      : (lecture.rating == 0.0)
+                                          ? Theme.of(context).hintColor
+                                          : Theme.of(context).errorColor,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: Icon(
                                 Icons.star,
                                 color:
                                     Theme.of(context).scaffoldBackgroundColor,
-                                size: 16.0,
+                                size: 14.0,
                               ),
                             ),
                           ),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              ((lecture.rating * 100)
-                                      .round()
-                                      .toString()
-                                      .split('')
-                                    ..insert(1, ','))
-                                  .join(''),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
-                                    color: (lecture.rating >= 4.0)
-                                        ? Theme.of(context).primaryColor
-                                        : (lecture.rating >= 3.0)
-                                            ? Theme.of(context).indicatorColor
-                                            : (lecture.rating == 0.0)
-                                                ? Theme.of(context).hintColor
-                                                : Theme.of(context).errorColor,
+                            child: (lecture.rating == 0)
+                                ? Text(
+                                    '0,00',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                            color: Theme.of(context).hintColor),
+                                  )
+                                : Text(
+                                    ((lecture.rating * 100)
+                                            .round()
+                                            .toString()
+                                            .split('')
+                                          ..insert(1, ','))
+                                        .join(''),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                          color: (lecture.rating >= 4.0)
+                                              ? Theme.of(context).primaryColor
+                                              : (lecture.rating >= 3.0)
+                                                  ? Theme.of(context)
+                                                      .indicatorColor
+                                                  : Theme.of(context)
+                                                      .errorColor,
+                                        ),
                                   ),
-                            ),
                           ),
                         ],
                       ),
@@ -167,7 +185,7 @@ class LectureCard extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        lecture.author.firstName,
+                        lecture.author,
                         style: Theme.of(context).textTheme.bodyText1,
                         overflow: TextOverflow.ellipsis,
                       ),

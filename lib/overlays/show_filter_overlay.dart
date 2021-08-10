@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/widgets/double_button.dart';
 
+import '../widgets/double_button.dart';
 import '../widgets/select_date_field.dart';
 import '../widgets/select_number_field.dart';
 import '../widgets/select_field.dart';

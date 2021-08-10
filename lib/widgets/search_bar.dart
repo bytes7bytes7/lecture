@@ -8,30 +8,29 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      height: 40.0,
+      margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(color: Theme.of(context).focusColor),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).focusColor.withOpacity(0.25),
-            offset: const Offset(0, 3),
-            spreadRadius: 0,
-            blurRadius: 4,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'Поиск',
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).hintColor),
+            ),
+          ),
+          Icon(
+            Icons.search,
+            color: Theme.of(context).primaryColor,
+            size: 24.0,
           ),
         ],
-      ),
-      child: TextField(
-        // controller: searchController,
-        style: Theme.of(context).textTheme.bodyText1,
-        scrollPhysics: const BouncingScrollPhysics(),
-        decoration: InputDecoration(
-          hintText: 'Поиск ...',
-          hintStyle: Theme.of(context).textTheme.bodyText1,
-          border: InputBorder.none,
-        ),
       ),
     );
   }

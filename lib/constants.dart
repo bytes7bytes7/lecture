@@ -22,4 +22,5 @@ abstract class ConstantMessages{
   static const String clear = 'Очистить';
   static const String less = 'Меньше';
   static const String more = 'Больше';
+  static const String additional = 'Дополнительно';
 }
