@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/custom/custom_route_builder.dart';
+import 'package:lecture/constants.dart';
 
+import '../widgets/sized_icon_button.dart';
+import '../custom/custom_route_builder.dart';
 import '../widgets/error_label.dart';
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../widgets/lecture_card.dart';
 import '../widgets/subject_list_view.dart';
 import '../widgets/home_search_bar.dart';
-import '../widgets/leading_icon_button.dart';
 import '../services/server_service.dart';
 import '../bloc/lecture_bloc.dart';
 import '../global_parameters.dart';
@@ -30,20 +31,19 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
-          // TODO: fix appbar padding
-          titleSpacing: 20.0,
+          titleSpacing: 25.0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              LeadingIconButton(
+              SizedIconButton(
                 icon: Icons.sort,
-                color: Theme.of(context).primaryColor,
+                message: ConstantMessages.settings,
                 onPressed: () {
                   Navigator.of(context).push(
                     CustomRouteBuilder(
                       widget: const SettingsScreen(),
-                      begin: const Offset(-1,0),
-                      end: const Offset(0,0),
+                      begin: const Offset(-1, 0),
+                      end: const Offset(0, 0),
                     ),
                   );
                 },
@@ -57,11 +57,18 @@ class HomeScreen extends StatelessWidget {
                 margin: const EdgeInsets.all(4),
                 width: 36.0,
                 height: 36.0,
-                //color: Colors.green,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(7.0),
-                  child: Image.network(
-                    'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7.0),
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    child: Image.network(
+                      'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',
+                    ),
                   ),
                 ),
               ),
@@ -92,56 +99,66 @@ class HomeScreen extends StatelessWidget {
                 );
               } else if (snapshot.data is LectureDataState) {
                 LectureDataState state = snapshot.data as LectureDataState;
-                return ListView.builder(
-                  physics: const AlwaysBouncingScrollPhysics(),
-                  itemCount: state.lectures.length + 1,
-                  itemBuilder: (context, index) {
-                    switch (index) {
-                      case 0:
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 15.0,
+                return NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollNotification) {
+                    if (scrollNotification.metrics.pixels >
+                        scrollNotification.metrics.maxScrollExtent) {
+                      // TODO: load next page of lectures
+                    }
+                    return true;
+                  },
+                  child: ListView.builder(
+                    physics: const AlwaysBouncingScrollPhysics(),
+                    itemCount: state.lectures.length + 1,
+                    itemBuilder: (context, index) {
+                      switch (index) {
+                        case 0:
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  top: 20.0,
+                                  bottom: 15.0,
+                                ),
+                                child: HomeSearchBar(),
                               ),
-                              child: HomeSearchBar(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 25.0, vertical: 15.0),
-                              child: Text(
-                                'Предметы',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            ),
-                            const SubjectListView(),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 25.0, top: 15.0, bottom: 5),
-                              child: Text(
-                                'Новое',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            ),
-                            if (state.lectures.isEmpty)
-                              Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.only(top: 20.0),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25.0, vertical: 15.0),
                                 child: Text(
-                                  'Пусто',
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  'Предметы',
+                                  style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ),
-                          ],
-                        );
-                      default:
-                        return LectureCard(
-                          lecture: state.lectures[index - 1],
-                        );
-                    }
-                  },
+                              const SubjectListView(),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 25.0, top: 15.0, bottom: 5),
+                                child: Text(
+                                  'Новое',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                              ),
+                              if (state.lectures.isEmpty)
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: Text(
+                                    'Пусто',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ),
+                            ],
+                          );
+                        default:
+                          return LectureCard(
+                            lecture: state.lectures[index - 1],
+                          );
+                      }
+                    },
+                  ),
                 );
               } else {
                 return const ErrorLabel();
@@ -157,7 +174,11 @@ class HomeScreen extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
             size: 24.0,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              CustomRouteBuilder(widget: const LectureEditorScreen()),
+            );
+          },
         ),
       ),
     );

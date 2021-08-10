@@ -85,7 +85,7 @@ class SelectItemRow extends StatelessWidget {
                                     onPressed: () {
                                       text.value = '';
                                     },
-                                    message: 'Очистить',
+                                    message: ConstantMessages.clear,
                                   ),
                               ],
                             ),

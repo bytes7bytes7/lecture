@@ -15,3 +15,11 @@ abstract class ConstantColors{
 abstract class ConstantHTTP{
   static const String university = 'kubsu';
 }
+
+abstract class ConstantMessages{
+  static const String settings = 'Настройки';
+  static const String back = 'Назад';
+  static const String exit = 'Выход';
+  static const String choose = 'Выбрать';
+  static const String clear = 'Очистить';
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/constants.dart';
 
 import '../custom/custom_dropdown_button_form_field.dart';
 import 'sized_icon_button.dart';
@@ -63,7 +64,7 @@ class PopupItemRow extends StatelessWidget {
                               onPressed: () {
                                 text.value = '';
                               },
-                              message: 'Очистить',
+                              message: ConstantMessages.clear,
                             )
                           : const SizedBox.shrink(),
                       style: Theme.of(context).textTheme.bodyText1,
