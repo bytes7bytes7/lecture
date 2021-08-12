@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:lecture/constants.dart';
-import 'package:lecture/models/lecture.dart';
 
+import '../constants.dart';
 import '../widgets/sized_icon_button.dart';
 import '../custom/custom_route_builder.dart';
 import '../widgets/error_label.dart';
@@ -102,56 +99,110 @@ class HomeScreen extends StatelessWidget {
                 );
               } else if (snapshot.data is LectureDataState) {
                 LectureDataState state = snapshot.data as LectureDataState;
-                return ListView.builder(
-                  physics: const AlwaysBouncingScrollPhysics(),
-                  itemCount: state.lectures.length + 1,
-                  itemBuilder: (context, index) {
-                    switch (index) {
-                      case 0:
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 15.0,
-                              ),
-                              child: HomeSearchBar(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 25.0, vertical: 15.0),
-                              child: Text(
-                                'Предметы',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            ),
-                            const SubjectListView(),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 25.0, top: 15.0, bottom: 5),
-                              child: Text(
-                                'Новое',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            ),
-                            if (state.lectures.isEmpty)
-                              Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.only(top: 20.0),
-                                child: Text(
-                                  'Пусто',
-                                  style: Theme.of(context).textTheme.bodyText1,
+                return Stack(
+                  children: [
+                    ListView.builder(
+                      physics: const AlwaysBouncingScrollPhysics(),
+                      itemCount: state.lectures.length + 1,
+                      itemBuilder: (context, index) {
+                        switch (index) {
+                          case 0:
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 15.0,
+                                  ),
+                                  child: HomeSearchBar(),
                                 ),
-                              ),
-                          ],
-                        );
-                      default:
-                        return LectureCard(
-                          lecture: state.lectures[index - 1],
-                        );
-                    }
-                  },
+                                if (GlobalParameters.isFilterEmpty() &&
+                                    !GlobalParameters.isFilterChanged.value) ...[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25.0, vertical: 15.0),
+                                    child: Text(
+                                      'Предметы',
+                                      style: Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ),
+                                  const SubjectListView(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25.0, top: 15.0, bottom: 5),
+                                    child: Text(
+                                      'Новое',
+                                      style: Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ),
+                                ] else
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25.0, top: 15.0, bottom: 5),
+                                    child: Text(
+                                      'Результат поиска',
+                                      style: Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ),
+                                if (state.lectures.isEmpty)
+                                  Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.only(top: 60.0),
+                                    child: Text(
+                                      'Пусто 😢',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          default:
+                            return LectureCard(
+                              lecture: state.lectures[index - 1],
+                            );
+                        }
+                      },
+                    ),
+                    Positioned(
+                      bottom: 12,
+                      left: 10,
+                      right: 10,
+                      child: Center(
+                        child: ValueListenableBuilder(
+                          valueListenable: GlobalParameters.isFilterChanged,
+                          builder: (context, bool value, _) {
+                            if (!value) {
+                              return const SizedBox.shrink();
+                            } else {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18, vertical: 10),
+                                  primary: Theme.of(context).scaffoldBackgroundColor,
+                                  backgroundColor: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  side: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                child: Text(
+                                  'Обновить',
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Theme.of(context).scaffoldBackgroundColor),
+                                ),
+                                onPressed: () {
+                                  GlobalParameters.updateFiler();
+                                },
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               } else {
                 return const ErrorLabel();
@@ -168,44 +219,9 @@ class HomeScreen extends StatelessWidget {
             size: 24.0,
           ),
           onPressed: () {
-            var rand = Random();
-            const _chars = 'йцукенгшщзхъфывапролджэячсмитьбю ';
-            String getRandomString(int length) =>
-                String.fromCharCodes(Iterable.generate(length,
-                    (_) => _chars.codeUnitAt(rand.nextInt(_chars.length))));
-            String faculty = GlobalParameters
-                .faculties[rand.nextInt(GlobalParameters.faculties.length)];
-            String level = GlobalParameters
-                .levels[rand.nextInt(GlobalParameters.levels.length)];
-            String subject = GlobalParameters
-                .subjects[rand.nextInt(GlobalParameters.subjects.length)];
-            int semester = rand.nextInt(GlobalParameters.semesters) + 1;
-            String topic = getRandomString(rand.nextInt(10) + 10);
-            String content = getRandomString(rand.nextInt(50) + 50);
-            String lecturer =
-                '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
-            int year = rand.nextInt(5)+2015;
-            int month = rand.nextInt(12)+1;
-            int day = rand.nextInt(28)+1;
-            double rating = rand.nextInt(4) + rand.nextDouble() + 1;
-            String author =
-                '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
-            LectureBloc.uploadLecture(Lecture(
-              faculty: faculty,
-              level: level,
-              subject: subject,
-              semester: semester,
-              topic: topic,
-              content: content,
-              lecturer: lecturer,
-              date: '$day.$month.$year',
-              rating: rating,
-              author: author,
-            ));
-            // TODO: uncomment this code
-            // Navigator.of(context).push(
-            //   CustomRouteBuilder(widget: const LectureEditorScreen()),
-            // );
+            Navigator.of(context).push(
+              CustomRouteBuilder(widget: const LectureEditorScreen()),
+            );
           },
         ),
       ),

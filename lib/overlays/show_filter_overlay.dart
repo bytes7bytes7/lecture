@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../global_parameters.dart';
 import '../widgets/double_button.dart';
 import '../widgets/select_date_field.dart';
 import '../widgets/select_number_field.dart';
@@ -13,47 +14,62 @@ void showFilterOverlay(
     context: context,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
-    constraints: const BoxConstraints(maxHeight: 510),
     builder: (BuildContext context) {
-      return Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+      // TODO: find way to dynamically change size
+      return FractionallySizedBox(
+        heightFactor: 0.75,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              const DragContainer(),
-              const SelectField(
-                text: 'Физико-технический факультет',
-                defaultText: 'Факультет',
-              ),
-              const SelectField(
-                text: '',
-                defaultText: 'Уровень высшего образования',
-              ),
-              const SelectField(
-                text: '',
-                defaultText: 'Предмет',
-              ),
-              const SelectNumberField(
-                title: 'Семестр',
-                number: 2,
-              ),
-              const SelectDateField(
-                startDate: '06.08.21',
-                endDate: '10.08.21',
-              ),
-              DoubleButton(
-                prefix: 'Сброс',
-                prefixOnPressed: () {},
-                suffix: 'Готово',
-                suffixOnPressed: () {},
-              ),
-            ],
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                const DragContainer(),
+                SelectField(
+                  notifier: GlobalParameters.facultyNotifier,
+                  defaultText: 'Факультет',
+                  items: GlobalParameters.faculties,
+                ),
+                SelectField(
+                  notifier: GlobalParameters.levelNotifier,
+                  defaultText: 'Уровень высшего образования',
+                  items: GlobalParameters.levels,
+                ),
+                SelectField(
+                  notifier: GlobalParameters.subjectNotifier,
+                  defaultText: 'Предмет',
+                  items: GlobalParameters.subjects,
+                ),
+                SelectNumberField(
+                  title: 'Семестр',
+                  notifier: GlobalParameters.semesterNotifier,
+                  defaultText: '-',
+                  min: 1,
+                  max: GlobalParameters.semesters,
+                ),
+                const SelectDateField(
+                  startDate: '06.08.21',
+                  endDate: '10.08.21',
+                ),
+                const Spacer(),
+                DoubleButton(
+                  prefix: 'Сброс',
+                  prefixOnPressed: () {
+                    GlobalParameters.dropFilter();
+                  },
+                  suffix: 'Готово',
+                  suffixOnPressed: () {
+                    GlobalParameters.updateFiler();
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );

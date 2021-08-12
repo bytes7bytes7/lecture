@@ -7,12 +7,14 @@ import 'sized_icon_button.dart';
 class SelectField extends StatelessWidget {
   const SelectField({
     Key? key,
-    required this.text,
+    required this.notifier,
     required this.defaultText,
+    required this.items,
   }) : super(key: key);
 
-  final String text;
+  final ValueNotifier<String> notifier;
   final String defaultText;
+  final List<String> items;
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +30,33 @@ class SelectField extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: (text.isNotEmpty)
-                ? Text(
-                    text,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                : Text(
-                    defaultText,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Theme.of(context).hintColor),
-                  ),
-          ),
+          ValueListenableBuilder(
+              valueListenable: notifier,
+              builder: (context, String value, _) {
+                return Expanded(
+                  child: (value.isNotEmpty)
+                      ? Text(
+                          value,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        )
+                      : Text(
+                          defaultText,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Theme.of(context).hintColor),
+                        ),
+                );
+              }),
           SizedIconButton(
             size: 24.0,
             icon: Icons.search,
-            onPressed: () {
-              showSelectOverlay(context);
+            onPressed: () async {
+              showSelectOverlay(
+                context: context,
+                items: items,
+                notifier: notifier,
+              );
             },
             message: ConstantMessages.choose,
           ),

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../global_parameters.dart';
 import 'sized_icon_button.dart';
 
 class SelectNumberField extends StatelessWidget {
   const SelectNumberField({
     Key? key,
     required this.title,
-    required this.number,
+    required this.notifier,
+    required this.defaultText,
+    required this.min,
+    required this.max,
   }) : super(key: key);
 
+  /// Value of notifier must be [0-9]
+  final ValueNotifier<String> notifier;
   final String title;
-  final int number;
+  final String defaultText;
+
+  /// Value must be [min : max]
+  final int min;
+  final int max;
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +46,53 @@ class SelectNumberField extends StatelessWidget {
           SizedIconButton(
             size: 24.0,
             icon: Icons.keyboard_arrow_left,
-            onPressed: () {},
+            onPressed: () {
+              if (notifier.value.isEmpty) {
+                notifier.value = max.toString();
+              } else {
+                try {
+                  int old = int.parse(notifier.value);
+                  if (old != min) {
+                    notifier.value = (--old).toString();
+                  }
+                } catch (e) {
+                  notifier.value = '';
+                }
+              }
+              GlobalParameters.checkFilter();
+            },
             message: ConstantMessages.less,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              number.toString(),
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
+          ValueListenableBuilder(
+            valueListenable: notifier,
+            builder: (context, String num, _) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  (notifier.value.isNotEmpty) ? num : defaultText,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              );
+            },
           ),
           SizedIconButton(
             size: 24.0,
             icon: Icons.keyboard_arrow_right,
-            onPressed: () {},
+            onPressed: () {
+              if (notifier.value.isEmpty) {
+                notifier.value = min.toString();
+              } else {
+                try {
+                  int old = int.parse(notifier.value);
+                  if (old != max) {
+                    notifier.value = (++old).toString();
+                  }
+                } catch (e) {
+                  notifier.value = '';
+                }
+              }
+              GlobalParameters.checkFilter();
+            },
             message: ConstantMessages.more,
           ),
         ],

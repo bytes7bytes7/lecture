@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zefyrka/zefyrka.dart'  hide ToggleStyleButton, LinkStyleButton;
-import '../widgets/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
+import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
+
+import '../constants.dart';
+import '../widgets/default_app_bar.dart';
+import '../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
 
 class LectureEditorScreen extends StatelessWidget {
   const LectureEditorScreen({
@@ -17,6 +20,17 @@ class LectureEditorScreen extends StatelessWidget {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
+        appBar: DefaultAppBar(
+          prefix: Icons.arrow_back,
+          prefixMessage: ConstantMessages.back,
+          prefixOnPressed: () {
+            Navigator.pop(context);
+          },
+          text: 'Новая лекция',
+          suffix: Icons.more_vert,
+          suffixMessage: ConstantMessages.additional,
+          suffixOnPressed: () {},
+        ),
         body: SafeArea(
           child: Center(
             child: Padding(
@@ -30,16 +44,24 @@ class LectureEditorScreen extends StatelessWidget {
                   //ZefyrToolbar.basic(controller: _controller),
                   const SizedBox(height: 25.0),
                   Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     height: 40.0,
                     decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFF14A391)),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: TextField(
                         autofocus: true,
-                        scrollPhysics: BouncingScrollPhysics(),
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        style: Theme.of(context).textTheme.bodyText1,
+                        cursorColor: Theme.of(context).primaryColor,
                         decoration: InputDecoration(
+                          hintText: 'Тема',
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Theme.of(context).hintColor),
                           isCollapsed: true,
                           border: InputBorder.none,
                         ),
@@ -64,8 +86,14 @@ class LectureEditorScreen extends StatelessWidget {
                                   controller: _controller,
                                   autofocus: true,
                                   readOnly: !value,
-                                  scrollPhysics:
-                                  const BouncingScrollPhysics(),
+                                  scrollPhysics: const BouncingScrollPhysics(),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  /// Add cursorColor property to editor.dart in zefyrka package this way:
+                                  /// 1) Add into ZefyrEditor class: "final Color? cursorColor;"
+                                  /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
+                                  /// 3) Replace "cursorColor ??= selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;"
+                                  /// 4) Replace "cursorColor ??= selectionTheme.cursorColor ?? theme.colorScheme.primary;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? theme.colorScheme.primary;"
+                                  cursorColor: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),

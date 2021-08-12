@@ -38,6 +38,13 @@ class SettingsScreen extends StatelessWidget {
                   image: NetworkImage(
                       'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg'),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).shadowColor.withOpacity(0.25),
+                    offset: const Offset(0,4),
+                    blurRadius: 10.0,
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -48,6 +55,18 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
+            IconTextButton(
+              icon: Icons.person,
+              text: 'Аккаунт',
+              onPressed: () {},
+            ),
+            Divider(
+              color: Theme.of(context).hintColor,
+              thickness: 1.0,
+              indent: 25.0,
+              endIndent: 25.0,
+              height: 1,
+            ),
             IconTextButton(
               icon: Icons.brightness_6_rounded,
               text: 'Тема приложения',

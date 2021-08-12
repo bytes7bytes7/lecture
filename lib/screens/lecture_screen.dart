@@ -80,33 +80,34 @@ class LectureScreen extends StatelessWidget {
                 ),
               ),
               ValueListenableBuilder(
-                  valueListenable: ratingNotifier,
-                  builder: (context, int value, _) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          5,
-                          (index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 7.0),
-                              child: SizedIconButton(
-                                icon: (index < value)
-                                    ? Icons.star
-                                    : Icons.star_border,
-                                message: '${index + 1}',
-                                onPressed: () {
-                                  ratingNotifier.value = index + 1;
-                                },
-                              ),
-                            );
-                          },
-                        ),
+                valueListenable: ratingNotifier,
+                builder: (context, int value, _) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        5,
+                        (index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 7.0),
+                            child: SizedIconButton(
+                              icon: (index < value)
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              message: '${index + 1}',
+                              onPressed: () {
+                                ratingNotifier.value = index + 1;
+                              },
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  }),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -141,13 +142,13 @@ class _LectureHead extends StatelessWidget {
                           .textTheme
                           .subtitle1!
                           .copyWith(color: Theme.of(context).primaryColor),
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      lecture.lecturer,
-                      style: Theme.of(context).textTheme.bodyText1,
-                      overflow: TextOverflow.ellipsis,
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        lecture.lecturer,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
                   ],
                 ),
@@ -223,28 +224,34 @@ class _LectureHead extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Row(
-            children: [
-              Text(
-                'Предмет:',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: Theme.of(context).primaryColor),
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  lecture.subject,
-                  style: Theme.of(context).textTheme.bodyText1,
+        ...[
+          ['Предмет:', lecture.subject],
+          ['Факультет:', lecture.faculty],
+          ['Уровень:', lecture.level],
+          ['Семестр:', lecture.semester]
+        ].map((pair) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Row(
+              children: [
+                Text(
+                  pair[0] as String,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Theme.of(context).primaryColor),
                 ),
-              ),
-            ],
-          ),
-        ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    '${pair[1]}',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Row(
@@ -255,14 +262,12 @@ class _LectureHead extends StatelessWidget {
                     .textTheme
                     .subtitle1!
                     .copyWith(color: Theme.of(context).primaryColor),
-                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   lecture.author,
                   style: Theme.of(context).textTheme.bodyText1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(

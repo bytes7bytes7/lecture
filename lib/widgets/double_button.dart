@@ -17,7 +17,7 @@ class DoubleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+      margin: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 20.0),
       height: 57.0,
       width: double.infinity,
       child: OutlinedButton(
@@ -69,12 +69,12 @@ class DoubleButton extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
-                onPressed: () {},
+                onPressed: suffixOnPressed,
               ),
             ),
           ],
         ),
-        onPressed: () {},
+        onPressed: prefixOnPressed,
       ),
     );
   }
