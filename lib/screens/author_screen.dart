@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/custom/always_bouncing_scroll_physics.dart';
 
+import '../models/lecture.dart';
+import '../widgets/lecture_card.dart';
 import '../constants.dart';
 import '../widgets/default_app_bar.dart';
 
@@ -20,8 +23,10 @@ class AuthorScreen extends StatelessWidget {
         text: 'id32684510',
       ),
       body: Center(
+        // TODO: add RefreshIndicator
         child: ListView.builder(
-          itemCount: 2,
+          physics: const AlwaysBouncingScrollPhysics(),
+          itemCount: 8 + 1,
           itemBuilder: (context, index) {
             switch (index) {
               case 0:
@@ -71,8 +76,7 @@ class AuthorScreen extends StatelessWidget {
                   ],
                 );
               default:
-                return const SizedBox.shrink();
-              //return LectureCard(lecture: lecture);
+                return LectureCard(lecture: Lecture.random());
             }
           },
         ),

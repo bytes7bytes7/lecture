@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/constants.dart';
-import 'package:lecture/widgets/default_app_bar.dart';
 
+import '../constants.dart';
+import '../custom/custom_route_builder.dart';
+import '../screens/bookmark_screen.dart';
+import '../screens/my_lectures_screen.dart';
+import '../widgets/default_app_bar.dart';
 import '../widgets/icon_text_button.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -43,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).shadowColor.withOpacity(0.25),
-                    offset: const Offset(0,4),
+                    offset: const Offset(0, 4),
                     blurRadius: 10.0,
                   ),
                 ],
@@ -84,7 +87,13 @@ class SettingsScreen extends StatelessWidget {
             IconTextButton(
               icon: Icons.bookmark,
               text: 'Сохраненное',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  CustomRouteBuilder(
+                    widget: const BookmarkScreen(),
+                  ),
+                );
+              },
               actions: [
                 Container(
                   padding:
@@ -114,7 +123,13 @@ class SettingsScreen extends StatelessWidget {
             IconTextButton(
               icon: Icons.insert_drive_file,
               text: 'Мои лекции',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  CustomRouteBuilder(
+                    widget: const MyLecturesScreen(),
+                  ),
+                );
+              },
               actions: [
                 Container(
                   padding:
