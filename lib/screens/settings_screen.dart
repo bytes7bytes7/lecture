@@ -27,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
+              margin: const EdgeInsets.only(top: 15.0),
               height: 76.0,
               width: 76.0,
               decoration: BoxDecoration(
@@ -37,6 +38,7 @@ class SettingsScreen extends StatelessWidget {
                 image: const DecorationImage(
                   image: NetworkImage(
                       'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg'),
+                  fit: BoxFit.cover,
                 ),
                 boxShadow: [
                   BoxShadow(

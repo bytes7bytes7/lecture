@@ -111,10 +111,7 @@ class HomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 15.0,
-                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 15.0),
                                   child: HomeSearchBar(),
                                 ),
                                 if (GlobalParameters.isFilterEmpty() &&
@@ -165,7 +162,7 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                     Positioned(
-                      bottom: 12,
+                      bottom: 18,
                       left: 10,
                       right: 10,
                       child: Center(

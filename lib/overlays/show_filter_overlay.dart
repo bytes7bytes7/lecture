@@ -56,6 +56,7 @@ void showFilterOverlay(
                   startDate: '06.08.21',
                   endDate: '10.08.21',
                 ),
+                /// I can use showDatePicker()
                 const Spacer(),
                 DoubleButton(
                   prefix: 'Сброс',

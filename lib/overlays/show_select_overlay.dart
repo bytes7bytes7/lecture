@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../global_parameters.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/drag_container.dart';
-import '../global_parameters.dart';
 
 void showSelectOverlay({
   required BuildContext context,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/custom/custom_route_builder.dart';
+import 'package:lecture/screens/author_screen.dart';
 
+import '../widgets/default_app_bar.dart';
 import '../widgets/sized_icon_button.dart';
 import '../models/lecture.dart';
 import '../constants.dart';
-import '../widgets/default_app_bar.dart';
 import '../custom/always_bouncing_scroll_physics.dart';
 
 class LectureScreen extends StatelessWidget {
@@ -27,11 +29,67 @@ class LectureScreen extends StatelessWidget {
         text: 'Лекция',
         suffix: Icons.more_vert,
         suffixMessage: ConstantMessages.additional,
+        suffixOnPressed: () {
+          showMenu(
+            context: context,
+            position: const RelativeRect.fromLTRB(25.1, 100.0, 25.0, 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            items: [
+              PopupMenuItem(
+                value: 0,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.bookmark_border,
+                      color: Theme.of(context).primaryColor,
+                      size: 24.0,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'В закладки',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                onTap: () {},
+              ),
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      color: Theme.of(context).primaryColor,
+                      size: 24.0,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'К автору',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                onTap: () {},
+              ),
+            ],
+          ).then((value) {
+            switch (value) {
+              case 0:
+                break;
+              case 1:
+                Navigator.of(context)
+                    .push(CustomRouteBuilder(widget: const AuthorScreen()));
+                break;
+            }
+          });
+        },
       ),
       body: SingleChildScrollView(
         physics: const AlwaysBouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
           child: Column(
             children: [
               _LectureHead(lecture: lecture),
@@ -129,7 +187,7 @@ class _LectureHead extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          padding: const EdgeInsets.only(bottom: 5.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

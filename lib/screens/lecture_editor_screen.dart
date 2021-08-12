@@ -34,7 +34,8 @@ class LectureEditorScreen extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: Column(
                 children: [
                   ZefyrLiteToolbar(
@@ -87,7 +88,9 @@ class LectureEditorScreen extends StatelessWidget {
                                   autofocus: true,
                                   readOnly: !value,
                                   scrollPhysics: const BouncingScrollPhysics(),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+
                                   /// Add cursorColor property to editor.dart in zefyrka package this way:
                                   /// 1) Add into ZefyrEditor class: "final Color? cursorColor;"
                                   /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
