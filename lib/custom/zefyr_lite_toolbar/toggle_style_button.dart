@@ -83,15 +83,15 @@ Widget _toggleStyleButtonChildBuilder(
   final isEnabled = onPressed != null;
   final iconColor = isEnabled
       ? isToggled
-      ? const Color(0xFF14A391)
-      : const Color(0xFFB4B4B4)
+      ? Theme.of(context).primaryColor
+      : Theme.of(context).hintColor
       : theme.disabledColor;
   return ZIconButton(
     highlightElevation: 0,
     hoverElevation: 0,
     size: 32,
     icon: Icon(icon, size: 18, color: iconColor),
-    fillColor: const Color(0xFFEDEDED),
+    fillColor: Theme.of(context).disabledColor,
     onPressed: onPressed,
   );
 }

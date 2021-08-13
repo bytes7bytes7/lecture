@@ -8,12 +8,19 @@ abstract class GlobalParameters {
   static ValueNotifier<String> semesterNotifier = ValueNotifier('');
   static ValueNotifier<String> subjectNotifier = ValueNotifier('');
 
+  static List<String> faculties = [];
+  static List<String> levels = [];
+  static List<String> subjects = [];
+  static int semesters = 0;
+
   static ValueNotifier<bool> isFilterChanged = ValueNotifier(false);
 
   static String _oldFaculty = '';
   static String _oldLevel = '';
   static String _oldSemester = '';
   static String _oldSubject = '';
+
+  static ValueNotifier<String> themeNotifier = ValueNotifier('Светлая');
 
   static void checkFilter() {
     if (!(_oldFaculty == facultyNotifier.value &&
@@ -57,9 +64,4 @@ abstract class GlobalParameters {
     checkFilter();
     LectureBloc.updateAllLectures();
   }
-
-  static List<String> faculties = [];
-  static List<String> levels = [];
-  static List<String> subjects = [];
-  static int semesters = 0;
 }

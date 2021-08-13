@@ -23,17 +23,14 @@ class BookmarkScreen extends StatelessWidget {
         text: 'Сохраненное',
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: ListView.builder(
-            physics: const AlwaysBouncingScrollPhysics(),
-            itemCount: 7,
-            itemBuilder: (context, index) {
-              return LectureCard(
-                lecture: Lecture.random(),
-              );
-            },
-          ),
+        child: ListView.builder(
+          physics: const AlwaysBouncingScrollPhysics(),
+          itemCount: 7,
+          itemBuilder: (context, index) {
+            return LectureCard(
+              lecture: Lecture.random(),
+            );
+          },
         ),
       ),
     );

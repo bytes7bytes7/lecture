@@ -41,6 +41,7 @@ class LectureEditorScreen extends StatelessWidget {
                   ZefyrLiteToolbar(
                     controller: _controller,
                     notifier: editMode,
+                    dividerColor: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   //ZefyrToolbar.basic(controller: _controller),
                   const SizedBox(height: 25.0),
@@ -48,7 +49,7 @@ class LectureEditorScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     height: 40.0,
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFF14A391)),
+                      border: Border.all(color: Theme.of(context).primaryColor),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Center(
@@ -80,17 +81,18 @@ class LectureEditorScreen extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(0xFF14A391)),
+                                      color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: ZefyrEditor(
+                                  // TODO: add textStyle
                                   controller: _controller,
                                   autofocus: true,
                                   readOnly: !value,
                                   scrollPhysics: const BouncingScrollPhysics(),
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-
+                                    horizontal: 10.0,
+                                  ),
                                   /// Add cursorColor property to editor.dart in zefyrka package this way:
                                   /// 1) Add into ZefyrEditor class: "final Color? cursorColor;"
                                   /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
@@ -109,13 +111,13 @@ class LectureEditorScreen extends StatelessWidget {
                                   message: 'Editing blocked',
                                   child: Container(
                                     padding: const EdgeInsets.all(8.0),
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFFEDEDED),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).disabledColor,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.https_outlined,
-                                      color: Color(0xFF14A391),
+                                      color: Theme.of(context).primaryColor,
                                       size: 24.0,
                                     ),
                                   ),

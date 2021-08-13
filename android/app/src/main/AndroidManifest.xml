@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bytes7bytes7.lecture">
    <application
-        android:label="lecture"
+        android:label="Лекция"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

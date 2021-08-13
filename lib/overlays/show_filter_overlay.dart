@@ -17,7 +17,7 @@ void showFilterOverlay(
     builder: (BuildContext context) {
       // TODO: find way to dynamically change size
       return FractionallySizedBox(
-        heightFactor: 0.75,
+        heightFactor: 0.7,
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
@@ -30,6 +30,7 @@ void showFilterOverlay(
             child: Column(
               children: <Widget>[
                 const DragContainer(),
+                const Spacer(),
                 SelectField(
                   notifier: GlobalParameters.facultyNotifier,
                   defaultText: 'Факультет',

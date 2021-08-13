@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lecture/overlays/show_bottom_overlay.dart';
+import 'package:lecture/screens/theme_screen.dart';
 
 import '../constants.dart';
 import '../custom/custom_route_builder.dart';
 import '../screens/bookmark_screen.dart';
 import '../screens/my_lectures_screen.dart';
 import '../widgets/default_app_bar.dart';
-import '../widgets/icon_text_button.dart';
+import '../widgets/line_button.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -24,7 +26,9 @@ class SettingsScreen extends StatelessWidget {
         text: 'id16520468',
         suffix: Icons.exit_to_app,
         suffixMessage: ConstantMessages.exit,
-        suffixOnPressed: () {},
+        suffixOnPressed: () {
+          showBottomOverlay(context);
+        },
       ),
       body: Center(
         child: Column(
@@ -60,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-            IconTextButton(
+            LineButton(
               icon: Icons.person,
               text: 'Аккаунт',
               onPressed: () {},
@@ -72,10 +76,16 @@ class SettingsScreen extends StatelessWidget {
               endIndent: 25.0,
               height: 1,
             ),
-            IconTextButton(
+            LineButton(
               icon: Icons.brightness_6_rounded,
               text: 'Тема приложения',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  CustomRouteBuilder(
+                    widget: const ThemeScreen(),
+                  ),
+                );
+              },
             ),
             Divider(
               color: Theme.of(context).hintColor,
@@ -84,7 +94,7 @@ class SettingsScreen extends StatelessWidget {
               endIndent: 25.0,
               height: 1,
             ),
-            IconTextButton(
+            LineButton(
               icon: Icons.bookmark,
               text: 'Сохраненное',
               onPressed: () {
@@ -120,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
               endIndent: 25.0,
               height: 1,
             ),
-            IconTextButton(
+            LineButton(
               icon: Icons.insert_drive_file,
               text: 'Мои лекции',
               onPressed: () {
@@ -152,7 +162,7 @@ class SettingsScreen extends StatelessWidget {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
-              child: IconTextButton(
+              child: LineButton(
                 icon: Icons.info,
                 text: 'О приложении',
                 onPressed: () {},

@@ -8,7 +8,7 @@ class DragContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25.0),
+      margin: const EdgeInsets.only(top: 25.0),
       height: 7.0,
       width: 80.0,
       decoration: BoxDecoration(

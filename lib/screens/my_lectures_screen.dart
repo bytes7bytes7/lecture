@@ -6,31 +6,10 @@ import '../custom/always_bouncing_scroll_physics.dart';
 import '../widgets/default_app_bar.dart';
 import '../constants.dart';
 
-class MyLecturesScreen extends StatefulWidget {
+class MyLecturesScreen extends StatelessWidget {
   const MyLecturesScreen({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<MyLecturesScreen> createState() => _MyLecturesScreenState();
-}
-
-class _MyLecturesScreenState extends State<MyLecturesScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _controller;
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(length: 2, vsync: this);
-
-    _controller.addListener(() {
-      setState(() {
-        _selectedIndex = _controller.index;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

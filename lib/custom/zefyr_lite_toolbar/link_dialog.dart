@@ -13,12 +13,21 @@ class _LinkDialogState extends State<_LinkDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       content: TextField(
-        decoration: const InputDecoration(
+        cursorColor: Theme.of(context).primaryColor,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).shadowColor),
+        decoration: InputDecoration(
           labelText: 'Ссылка',
-          labelStyle:TextStyle(
-            color: Color(0xFF14A391),
+          labelStyle: TextStyle(
+            color: Theme.of(context).primaryColor,
           ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+
         ),
         autofocus: true,
         onChanged: _linkChanged,
@@ -26,10 +35,10 @@ class _LinkDialogState extends State<_LinkDialog> {
       actions: [
         TextButton(
           onPressed: _link.isNotEmpty ? _applyLink : null,
-          child: const Text(
+          child: Text(
             'Ок',
             style: TextStyle(
-              color: Color(0xFF14A391),
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ),

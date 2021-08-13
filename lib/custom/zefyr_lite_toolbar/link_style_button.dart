@@ -44,12 +44,12 @@ class _LinkStyleButtonState extends State<LinkStyleButton> {
       highlightElevation: 0,
       hoverElevation: 0,
       size: 32,
-      icon: const Icon(
+      icon: Icon(
         Icons.link,
         size: 18,
-        color: Color(0xFFB4B4B4),
+        color: Theme.of(context).hintColor,
       ),
-      fillColor: const Color(0xFFEDEDED),
+      fillColor: Theme.of(context).disabledColor,
       onPressed: () => _openLinkDialog(context),
     );
   }
