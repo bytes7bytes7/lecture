@@ -13,9 +13,9 @@ class SingleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // TODO: make it smaller (width)
       margin: const EdgeInsets.only(bottom: 20.0),
       height: 57.0,
+      width: 250,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.all(0),
