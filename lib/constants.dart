@@ -32,6 +32,7 @@ abstract class ConstantMessages{
   static const String less = 'Меньше';
   static const String more = 'Больше';
   static const String additional = 'Дополнительно';
+  static const String obscure = 'Видимость';
 }
 
 abstract class ConstantDBData{
