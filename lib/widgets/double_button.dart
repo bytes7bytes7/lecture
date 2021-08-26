@@ -44,7 +44,7 @@ class DoubleButton extends StatelessWidget {
                   prefix,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .subtitle1!
                       .copyWith(color: Theme.of(context).hintColor),
                 ),
               ),
@@ -66,7 +66,7 @@ class DoubleButton extends StatelessWidget {
                 ),
                 child: Text(
                   suffix,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 onPressed: suffixOnPressed,

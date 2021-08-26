@@ -18,28 +18,16 @@ class PinEntryTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State createState() {
-    return PinEntryTextFieldState();
-  }
+  _PinEntryTextFieldState createState() => _PinEntryTextFieldState();
 }
 
-class PinEntryTextFieldState extends State<PinEntryTextField> {
+class _PinEntryTextFieldState extends State<PinEntryTextField> {
   final List<String?> _pin = List.generate(4, (index) => null);
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
   final List<TextEditingController> _textControllers =
       List.generate(4, (index) => TextEditingController());
 
   Widget textFields = Container();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      setState(() {
-        textFields = generateTextFields(context);
-      });
-    });
-  }
 
   @override
   void dispose() {
@@ -49,8 +37,9 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
     super.dispose();
   }
 
-  Widget generateTextFields(BuildContext context) {
-    if (_pin.first != null) {
+  @override
+  Widget build(BuildContext context) {
+    if (_pin.first == null) {
       FocusScope.of(context).requestFocus(_focusNodes[0]);
     }
 
@@ -59,7 +48,7 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
       verticalDirection: VerticalDirection.down,
       children: List.generate(
         4,
-        (int i) {
+            (int i) {
           return SizedBox(
             width: 50.0,
             height: 76.0,
@@ -114,9 +103,7 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
                   ),
                   onChanged: (String str) {
                     widget.errorNotifier.value = false;
-                    setState(() {
-                      _pin[i] = str;
-                    });
+                    _pin[i] = str;
                     if (str.isEmpty) {
                       return;
                     }
@@ -136,13 +123,13 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
                       }
                     }
                     if (_pin.every(
-                        (String? digit) => digit != null && digit != '')) {
+                            (String? digit) => digit != null && digit != '')) {
                       widget.onSubmit(_pin.join());
                     }
                   },
                   onSubmitted: (String str) {
                     if (_pin.every(
-                        (String? digit) => digit != null && digit != '')) {
+                            (String? digit) => digit != null && digit != '')) {
                       widget.onSubmit(_pin.join());
                     }
                   },
@@ -153,10 +140,5 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
         },
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return textFields;
   }
 }

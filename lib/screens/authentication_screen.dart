@@ -64,7 +64,18 @@ class AuthenticationScreen extends StatelessWidget {
                         return Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            const SignUpOverlay(),
+                            SignUpOverlay(constraints: constraints),
+                            ValueListenableBuilder(
+                                valueListenable: GlobalParameters.confirmOverlayNotifier,
+                                builder: (context, bool value, _) {
+                                  return AnimatedPositioned(
+                                    left: value ? 0 : size.width,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                    child: ConfirmOverlay(constraints: constraints),
+                                  );
+                                }
+                            ),
                             ValueListenableBuilder(
                               valueListenable: GlobalParameters.personalInfoOverlayNotifier,
                               builder: (context, bool value, _) {

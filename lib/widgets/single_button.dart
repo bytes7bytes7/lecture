@@ -32,7 +32,7 @@ class SingleButton extends StatelessWidget {
           text,
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .subtitle1!
               .copyWith(color: Theme.of(context).scaffoldBackgroundColor),
         ),
         onPressed: onPressed,

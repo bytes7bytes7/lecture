@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/secure_text_field.dart';
+import '../widgets/simple_text_field.dart';
 import '../global_parameters.dart';
 import '../widgets/single_button.dart';
-import '../widgets/sized_icon_button.dart';
-import '../constants.dart';
-import 'personal_info_overlay.dart';
 
 class SignUpOverlay extends StatelessWidget {
   const SignUpOverlay({
     Key? key,
+    required this.constraints,
   }) : super(key: key);
+
+  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<bool> passVisible = ValueNotifier(false);
     final ValueNotifier<bool> repPassVisible = ValueNotifier(false);
     return Container(
+      height: constraints.maxHeight,
+      width: constraints.maxWidth,
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -54,44 +58,10 @@ class SignUpOverlay extends StatelessWidget {
             ['Эл. почта', Icons.mail, true],
           ].map<Widget>(
             (params) {
-              return Flexible(
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText1,
-                  cursorColor: Theme.of(context).primaryColor,
-                  textAlignVertical: TextAlignVertical.center,
-                  autovalidateMode: (params[2] as bool)
-                      ? AutovalidateMode.onUserInteraction
-                      : AutovalidateMode.disabled,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Заполните поле';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      params[1] as IconData,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    // TODO: think up the way how to add a red star to huntText
-                    hintText: params[0] as String,
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Theme.of(context).hintColor),
-                    isCollapsed: true,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
+              return SimpleTextField(
+                autoValidateMode: params[2] as bool,
+                icon: params[1] as IconData,
+                hint: params[0] as String,
               );
             },
           ),
@@ -100,64 +70,16 @@ class SignUpOverlay extends StatelessWidget {
             ['Повторите пароль', Icons.https, true, repPassVisible],
           ].map<Widget>(
             (params) {
-              return Flexible(
-                child: ValueListenableBuilder(
-                  valueListenable: (params[3] as ValueNotifier<bool>),
-                  builder: (context, bool value, _) {
-                    return TextFormField(
-                      style: Theme.of(context).textTheme.bodyText1,
-                      cursorColor: Theme.of(context).primaryColor,
-                      textAlignVertical: TextAlignVertical.center,
-                      autovalidateMode: (params[2] as bool)
-                          ? AutovalidateMode.onUserInteraction
-                          : AutovalidateMode.disabled,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Заполните поле';
-                        }
-                        return null;
-                      },
-                      obscureText: !value,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          params[1] as IconData,
-                          color: Theme.of(context).hintColor,
-                        ),
-                        suffixIcon: SizedIconButton(
-                          size: 24.0,
-                          icon: value ? Icons.visibility : Icons.visibility_off,
-                          onPressed: () {
-                            (params[3] as ValueNotifier<bool>).value =
-                                !(params[3] as ValueNotifier<bool>).value;
-                          },
-                          message: ConstantMessages.obscure,
-                        ),
-                        // TODO: think up the way how to add a red star to huntText
-                        hintText: params[0] as String,
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(color: Theme.of(context).hintColor),
-                        isCollapsed: true,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).hintColor,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+              return SecureTextField(
+                autoValidateMode: params[2] as bool,
+                icon: params[1] as IconData,
+                hint: params[0] as String,
+                obscure: params[3] as ValueNotifier<bool>,
               );
             },
           ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -181,11 +103,11 @@ class SignUpOverlay extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             child: SingleButton(
               text: 'Далее',
               onPressed: () {
-                GlobalParameters.personalInfoOverlayNotifier.value = true;
+                GlobalParameters.confirmOverlayNotifier.value = true;
               },
             ),
           ),

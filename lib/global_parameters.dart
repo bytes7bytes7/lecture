@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'bloc/lecture_bloc.dart';
 
 abstract class GlobalParameters {
+  static ValueNotifier<bool> confirmOverlayNotifier = ValueNotifier(false);
   static ValueNotifier<bool> personalInfoOverlayNotifier = ValueNotifier(false);
+
 
   static ValueNotifier<String> facultyNotifier = ValueNotifier('');
   static ValueNotifier<String> levelNotifier = ValueNotifier('');
