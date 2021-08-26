@@ -4,11 +4,20 @@ abstract class OverlayViewer {
   static double? height;
   static OverlayEntry? overlayEntry;
 
+  static void dispose(){
+    if(overlayEntry != null) {
+      overlayEntry!.remove();
+      overlayEntry = null;
+      height = null;
+    }
+  }
+
   static void openOverlay({
     required BuildContext context,
     required Widget overlay,
   }) async {
     if (height == null) {
+      // height must be initialized by call from AuthenticationScreen
       final double fullHeight = MediaQuery.of(context).size.height;
       final EdgeInsets padding = MediaQuery.of(context).padding;
       height = fullHeight - padding.top - padding.bottom;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../custom/open_overlay.dart';
+import '../global_parameters.dart';
 import '../widgets/single_button.dart';
 import '../widgets/sized_icon_button.dart';
 import '../constants.dart';
-import 'confirm_overlay.dart';
+import 'personal_info_overlay.dart';
 
 class SignUpOverlay extends StatelessWidget {
   const SignUpOverlay({
@@ -40,13 +40,11 @@ class SignUpOverlay extends StatelessWidget {
               children: [
                 TextSpan(
                   text: 'Создайте аккаунт для доступа к ',
-                  style:
-                  Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 TextSpan(
                   text: 'Лекции',
-                  style:
-                  Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],
             ),
@@ -54,15 +52,11 @@ class SignUpOverlay extends StatelessWidget {
           const SizedBox(height: 20),
           ...[
             ['Эл. почта', Icons.mail, true],
-            ['Имя', Icons.person, true],
-            ['Фамилия', Icons.person, true],
-            ['Отчество', Icons.person, false],
           ].map<Widget>(
-                (params) {
-              return Expanded(
+            (params) {
+              return Flexible(
                 child: TextFormField(
-                  style:
-                  Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1,
                   cursorColor: Theme.of(context).primaryColor,
                   textAlignVertical: TextAlignVertical.center,
                   autovalidateMode: (params[2] as bool)
@@ -84,9 +78,7 @@ class SignUpOverlay extends StatelessWidget {
                     hintStyle: Theme.of(context)
                         .textTheme
                         .bodyText1!
-                        .copyWith(
-                        color:
-                        Theme.of(context).hintColor),
+                        .copyWith(color: Theme.of(context).hintColor),
                     isCollapsed: true,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -105,27 +97,17 @@ class SignUpOverlay extends StatelessWidget {
           ),
           ...[
             ['Пароль', Icons.https, true, passVisible],
-            [
-              'Повторите пароль',
-              Icons.https,
-              true,
-              repPassVisible
-            ],
+            ['Повторите пароль', Icons.https, true, repPassVisible],
           ].map<Widget>(
-                (params) {
-              return Expanded(
+            (params) {
+              return Flexible(
                 child: ValueListenableBuilder(
-                  valueListenable:
-                  (params[3] as ValueNotifier<bool>),
+                  valueListenable: (params[3] as ValueNotifier<bool>),
                   builder: (context, bool value, _) {
                     return TextFormField(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1,
-                      cursorColor:
-                      Theme.of(context).primaryColor,
-                      textAlignVertical:
-                      TextAlignVertical.center,
+                      style: Theme.of(context).textTheme.bodyText1,
+                      cursorColor: Theme.of(context).primaryColor,
+                      textAlignVertical: TextAlignVertical.center,
                       autovalidateMode: (params[2] as bool)
                           ? AutovalidateMode.onUserInteraction
                           : AutovalidateMode.disabled,
@@ -143,14 +125,10 @@ class SignUpOverlay extends StatelessWidget {
                         ),
                         suffixIcon: SizedIconButton(
                           size: 24.0,
-                          icon: value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                          icon: value ? Icons.visibility : Icons.visibility_off,
                           onPressed: () {
-                            (params[3] as ValueNotifier<bool>)
-                                .value = !(params[3]
-                            as ValueNotifier<bool>)
-                                .value;
+                            (params[3] as ValueNotifier<bool>).value =
+                                !(params[3] as ValueNotifier<bool>).value;
                           },
                           message: ConstantMessages.obscure,
                         ),
@@ -159,20 +137,16 @@ class SignUpOverlay extends StatelessWidget {
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
-                            .copyWith(
-                            color: Theme.of(context)
-                                .hintColor),
+                            .copyWith(color: Theme.of(context).hintColor),
                         isCollapsed: true,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color:
-                            Theme.of(context).hintColor,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Theme.of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
@@ -183,28 +157,27 @@ class SignUpOverlay extends StatelessWidget {
             },
           ),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Уже есть аккаунт?',
-                  style:
-                  Theme.of(context).textTheme.bodyText1,
-                ),
-                TextButton(
-                  child: Text(
-                    'Войти',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(
-                      decoration:
-                      TextDecoration.underline,
-                    ),
+            flex: 4,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Уже есть аккаунт?',
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  onPressed: () {},
-                ),
-              ],
+                  TextButton(
+                    child: Text(
+                      'Войти',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            decoration: TextDecoration.underline,
+                          ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
           ),
           Align(
@@ -212,12 +185,7 @@ class SignUpOverlay extends StatelessWidget {
             child: SingleButton(
               text: 'Далее',
               onPressed: () {
-                OverlayViewer.openOverlay(context: context,overlay: ConfirmOverlay());
-                // Navigator.of(context).push(
-                //   CustomRouteBuilder(
-                //     widget: const HomeScreen(),
-                //   ),
-                // );
+                GlobalParameters.personalInfoOverlayNotifier.value = true;
               },
             ),
           ),

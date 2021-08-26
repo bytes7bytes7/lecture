@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/custom/open_overlay.dart';
+
+import 'package:lecture/global_parameters.dart';
+import 'package:lecture/overlays/personal_info_overlay.dart';
 import 'package:lecture/overlays/sign_up_overlay.dart';
+import '../overlays/confirm_overlay.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({
@@ -9,15 +12,9 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double fullHeight = MediaQuery.of(context).size.height;
+    final Size size = MediaQuery.of(context).size;
     final EdgeInsets padding = MediaQuery.of(context).padding;
-    final double height = fullHeight - padding.top - padding.bottom;
-    WidgetsBinding.instance!.addPostFrameCallback((_){
-      if (OverlayViewer.height == null) {
-        OverlayViewer.openOverlay(
-            context: context, overlay: const SignUpOverlay());
-      }
-    });
+    final double height = size.height - padding.top - padding.bottom;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -62,11 +59,26 @@ class AuthenticationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 5,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        height: Theme.of(context).textTheme.headline1!.fontSize,
-                      ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            const SignUpOverlay(),
+                            ValueListenableBuilder(
+                              valueListenable: GlobalParameters.personalInfoOverlayNotifier,
+                              builder: (context, bool value, _) {
+                                return AnimatedPositioned(
+                                  left: value ? 0 : size.width,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                  child: PersonalInfoOverlay(constraints: constraints),
+                                );
+                              }
+                            ),
+                          ],
+                        );
+                      }
                     ),
                   ),
                 ],
