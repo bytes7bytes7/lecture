@@ -28,6 +28,7 @@ class SingleButton extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        onPressed: onPressed,
         child: Text(
           text,
           style: Theme.of(context)
@@ -35,7 +36,6 @@ class SingleButton extends StatelessWidget {
               .subtitle1!
               .copyWith(color: Theme.of(context).scaffoldBackgroundColor),
         ),
-        onPressed: onPressed,
       ),
     );
   }

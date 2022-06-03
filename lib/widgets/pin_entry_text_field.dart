@@ -18,7 +18,7 @@ class PinEntryTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PinEntryTextFieldState createState() => _PinEntryTextFieldState();
+  State<PinEntryTextField> createState() => _PinEntryTextFieldState();
 }
 
 class _PinEntryTextFieldState extends State<PinEntryTextField> {
@@ -39,10 +39,6 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
 
   @override
   Widget build(BuildContext context) {
-    if (_pin.first == null) {
-      FocusScope.of(context).requestFocus(_focusNodes[0]);
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       verticalDirection: VerticalDirection.down,
@@ -61,7 +57,6 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
                   textAlign: TextAlign.center,
                   cursorColor: widget.cursorColor,
                   maxLength: 1,
-                  autofocus: i == 0,
                   style: widget.textStyle,
                   focusNode: _focusNodes[i],
                   obscureText: widget.isTextObscure,

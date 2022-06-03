@@ -29,43 +29,44 @@ class Lecture {
 
   Lecture.random({bool isPublished = true}) {
     var rand = Random();
-    const _chars = 'йцукенгшщзхъфывапролджэячсмитьбю ';
+    const charsR = 'йцукенгшщзхъфывапролджэячсмитьбю ';
     String getRandomString(int length) =>
         String.fromCharCodes(Iterable.generate(
-            length, (_) => _chars.codeUnitAt(rand.nextInt(_chars.length))));
-    String _faculty = GlobalParameters
+            length, (_) => charsR.codeUnitAt(rand.nextInt(charsR.length))));
+    String facultyR = GlobalParameters
         .faculties[rand.nextInt(GlobalParameters.faculties.length)];
-    String _level =
+    String levelR =
         GlobalParameters.levels[rand.nextInt(GlobalParameters.levels.length)];
-    String _subject = GlobalParameters
+    String subjectR = GlobalParameters
         .subjects[rand.nextInt(GlobalParameters.subjects.length)];
-    int _semester = rand.nextInt(GlobalParameters.semesters) + 1;
-    String _topic = getRandomString(rand.nextInt(10) + 10);
-    String _content = getRandomString(rand.nextInt(50) + 50);
-    String _lecturer =
+    int semesterR = rand.nextInt(GlobalParameters.semesters) + 1;
+    String topicR = getRandomString(rand.nextInt(10) + 10);
+    String contentR = getRandomString(rand.nextInt(50) + 50);
+    String lecturerR =
         '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
-    String _year = (rand.nextInt(5) + 2015).toString();
-    String _month = (rand.nextInt(12) + 1).toString();
-    if (_month.length < 2) {
-      _month = '0' + _month;
+    String yearR = (rand.nextInt(5) + 2015).toString();
+    String monthR = (rand.nextInt(12) + 1).toString();
+    if (monthR.length < 2) {
+      monthR = '0$monthR';
     }
-    String _day = (rand.nextInt(28) + 1).toString();
-    if (_day.length < 2) {
-      _day = '0' + _day;
+    String dayR = (rand.nextInt(28) + 1).toString();
+    if (dayR.length < 2) {
+      dayR = '0$dayR';
     }
-    double _rating = rand.nextInt(4) + rand.nextDouble() + 1;
-    String _author =
+    double ratingR = rand.nextInt(4) + rand.nextDouble() + 1;
+    String authorR =
         '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
-    faculty = _faculty;
-    level = _level;
-    subject = _subject;
-    semester = _semester;
-    topic = _topic;
-    content = _content;
-    lecturer = _lecturer;
-    date = '$_day.$_month.$_year';
-    rating = isPublished ? _rating : 0;
-    author = _author;
+
+    faculty = facultyR;
+    level = levelR;
+    subject = subjectR;
+    semester = semesterR;
+    topic = topicR;
+    content = contentR;
+    lecturer = lecturerR;
+    date = '$dayR.$monthR.$yearR';
+    rating = isPublished ? ratingR : 0;
+    author = authorR;
   }
 
   Lecture.fromMap(Map<String, dynamic> map) {
@@ -86,7 +87,7 @@ class Lecture {
     List<String> parts = date.split('.');
     for (int i = 0; i < 2; i++) {
       if (parts[i].length < 2) {
-        parts[i] = '0' + parts[i];
+        parts[i] = '0${parts[i]}';
       }
     }
     String formatted = parts.reversed.join('.');

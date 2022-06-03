@@ -98,7 +98,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
         super(key: key);
 
   @override
-  _ZefyrLiteToolbarState createState() => _ZefyrLiteToolbarState();
+  State<ZefyrLiteToolbar> createState() => _ZefyrLiteToolbarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(40.0);

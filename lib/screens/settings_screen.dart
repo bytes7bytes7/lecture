@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/overlays/show_bottom_overlay.dart';
-import 'package:lecture/screens/theme_screen.dart';
 
+import '../overlays/show_bottom_overlay.dart';
+import '../screens/theme_screen.dart';
 import '../constants.dart';
 import '../custom/custom_route_builder.dart';
+import '../global_parameters.dart';
 import '../screens/bookmark_screen.dart';
 import '../screens/my_lectures_screen.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
+import 'authentication_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -27,7 +29,43 @@ class SettingsScreen extends StatelessWidget {
         suffix: Icons.exit_to_app,
         suffixMessage: ConstantMessages.exit,
         suffixOnPressed: () {
-          showBottomOverlay(context);
+          showBottomOverlay(
+            context: context,
+            prefix: 'Отмена',
+            prefixOnPressed: () {
+              Navigator.pop(context);
+            },
+            suffix: 'Выйти',
+            suffixOnPressed: () {
+              GlobalParameters.setOverlayConfigToDefault();
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                CustomRouteBuilder(widget: const AuthenticationScreen()),
+              );
+            },
+            textSpans: [
+              const TextSpan(
+                text: '😐\n\n',
+                style: TextStyle(fontSize: 30),
+              ),
+              TextSpan(
+                text: 'Вы действительно хотите ',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              TextSpan(
+                text: 'выйти',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(color: Theme.of(context).errorColor),
+              ),
+              TextSpan(
+                text: '\nиз учетной записи?',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          );
         },
       ),
       body: Center(

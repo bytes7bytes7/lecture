@@ -6,6 +6,14 @@ abstract class GlobalParameters {
   static ValueNotifier<bool> confirmOverlayNotifier = ValueNotifier(false);
   static ValueNotifier<bool> personalInfoOverlayNotifier = ValueNotifier(false);
 
+  static String pin = '';
+
+  static void setOverlayConfigToDefault(){
+    confirmOverlayNotifier.value = false;
+    personalInfoOverlayNotifier.value = false;
+    pin = '';
+  }
+
 
   static ValueNotifier<String> facultyNotifier = ValueNotifier('');
   static ValueNotifier<String> levelNotifier = ValueNotifier('');

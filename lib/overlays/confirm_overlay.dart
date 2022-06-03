@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+import '../widgets/pin_entry_text_field.dart';
 import '../widgets/double_button.dart';
 import '../global_parameters.dart';
 
@@ -16,7 +17,6 @@ class ConfirmOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String pin = '';
     return Container(
       height: constraints.maxHeight,
       width: constraints.maxWidth,
@@ -44,20 +44,19 @@ class ConfirmOverlay extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1,
           ),
           const SizedBox(height: 20),
-          // Expanded(
-          //   child: Container(
-          //     alignment: Alignment.topCenter,
-          //     padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 0.0),
-          //     child: PinEntryTextField(
-          //       errorNotifier: errorNotifier,
-          //       cursorColor: Theme.of(context).primaryColor,
-          //       onSubmit: (value) {
-          //         pin = value;
-          //         print(pin);
-          //       },
-          //     ),
-          //   ),
-          // ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 0.0),
+              child: PinEntryTextField(
+                errorNotifier: errorNotifier,
+                cursorColor: Theme.of(context).primaryColor,
+                onSubmit: (value) {
+                  GlobalParameters.pin = value;
+                },
+              ),
+            ),
+          ),
           Align(
             alignment: Alignment.center,
             child: DoubleButton(
@@ -68,7 +67,7 @@ class ConfirmOverlay extends StatelessWidget {
               suffix: 'Далее',
               suffixOnPressed: () {
                 // TODO: verify PIN-code
-                if (pin.isNotEmpty) {
+                if (GlobalParameters.pin.isNotEmpty && GlobalParameters.pin.length == 4) {
                   if (Random().nextInt(2) % 2 == 0) {
                     errorNotifier.value = true;
                   } else {

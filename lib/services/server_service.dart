@@ -10,7 +10,7 @@ abstract class ServerService {
   static Future<List<Lecture>> getLectures(Map<String, dynamic> data) async {
     http.Response? uriResponse;
     bool error = false;
-    for (int _ = 0; _ < 3; _++) {
+    for (int i = 0; i < 3; i++) {
       var client = http.Client();
       try {
         uriResponse = await client.get(
@@ -44,7 +44,7 @@ abstract class ServerService {
   static Future<void> getFilterData() async {
     http.Response? uriResponse;
     bool error = false;
-    for (int _ = 0; _ < 3; _++) {
+    for (int i = 0; i < 3; i++) {
       var client = http.Client();
       try {
         uriResponse = await client.get(Uri.http(ServerURI.serverAuthority,
@@ -79,7 +79,7 @@ abstract class ServerService {
     var data = lecture.toMap();
     http.Response? uriResponse;
     bool error = false;
-    for (int _ = 0; _ < 3; _++) {
+    for (int i = 0; i < 3; i++) {
       // http.Response image = await http
       //     .get(Uri.parse('https://pbs.twimg.com/media/EG10LtNX4AAHWyl.jpg'));
       // var base64 = const Base64Encoder().convert(image.bodyBytes);

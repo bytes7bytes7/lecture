@@ -13,7 +13,7 @@ class ToggleNotifierButton extends StatefulWidget {
   final Function childBuilder;
 
   @override
-  _ToggleNotifierButtonState createState() => _ToggleNotifierButtonState();
+  State<ToggleNotifierButton> createState() => _ToggleNotifierButtonState();
 }
 
 class _ToggleNotifierButtonState extends State<ToggleNotifierButton> {

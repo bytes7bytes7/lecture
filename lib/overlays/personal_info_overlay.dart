@@ -55,6 +55,7 @@ class PersonalInfoOverlay extends StatelessWidget {
               );
             },
           ),
+          const Spacer(),
           Align(
             alignment: Alignment.center,
             child: SingleButton(

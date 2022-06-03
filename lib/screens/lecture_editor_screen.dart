@@ -12,8 +12,9 @@ class LectureEditorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ZefyrController _controller = ZefyrController();
+    final ZefyrController controller = ZefyrController();
     final ValueNotifier<bool> editMode = ValueNotifier(true);
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -39,7 +40,7 @@ class LectureEditorScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ZefyrLiteToolbar(
-                    controller: _controller,
+                    controller: controller,
                     notifier: editMode,
                     dividerColor: Theme.of(context).scaffoldBackgroundColor,
                   ),
@@ -86,7 +87,7 @@ class LectureEditorScreen extends StatelessWidget {
                                 ),
                                 child: ZefyrEditor(
                                   // TODO: add textStyle
-                                  controller: _controller,
+                                  controller: controller,
                                   autofocus: true,
                                   readOnly: !value,
                                   scrollPhysics: const BouncingScrollPhysics(),
@@ -98,7 +99,6 @@ class LectureEditorScreen extends StatelessWidget {
                                   /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
                                   /// 3) Replace "cursorColor ??= selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;"
                                   /// 4) Replace "cursorColor ??= selectionTheme.cursorColor ?? theme.colorScheme.primary;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? theme.colorScheme.primary;"
-                                  cursorColor: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),

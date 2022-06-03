@@ -32,6 +32,7 @@ class DoubleButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
+        onPressed: prefixOnPressed,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -64,17 +65,16 @@ class DoubleButton extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
+                onPressed: suffixOnPressed,
                 child: Text(
                   suffix,
                   style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
-                onPressed: suffixOnPressed,
               ),
             ),
           ],
         ),
-        onPressed: prefixOnPressed,
       ),
     );
   }

@@ -298,7 +298,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
               child: PrimaryScrollController(
                 controller: widget.route.scrollController!,
                 child: Scrollbar(
-                  isAlwaysShown: true,
+                  thumbVisibility: true,
                   child: ListView(
                     padding: kMaterialListPadding,
                     shrinkWrap: true,
@@ -688,6 +688,7 @@ class _DropdownMenuItemContainer extends StatelessWidget {
   /// The [child] argument is required.
   const _DropdownMenuItemContainer({
     Key? key,
+    // ignore: unused_element
     this.alignment = AlignmentDirectional.centerStart,
     required this.child,
   }) : super(key: key);
@@ -1189,16 +1190,16 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
       ),
     };
     focusNode!.addListener(_handleFocusChanged);
-    final FocusManager focusManager = WidgetsBinding.instance!.focusManager;
+    final FocusManager focusManager = WidgetsBinding.instance.focusManager;
     _focusHighlightMode = focusManager.highlightMode;
     focusManager.addHighlightModeListener(_handleFocusHighlightModeChange);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _removeDropdownRoute();
-    WidgetsBinding.instance!.focusManager
+    WidgetsBinding.instance.focusManager
         .removeHighlightModeListener(_handleFocusHighlightModeChange);
     focusNode!.removeListener(_handleFocusChanged);
     _internalNode?.dispose();

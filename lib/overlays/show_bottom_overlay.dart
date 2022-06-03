@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../custom/custom_route_builder.dart';
-import '../screens/authentication_screen.dart';
 import '../widgets/double_button.dart';
 import '../widgets/drag_container.dart';
 
-void showBottomOverlay(
-  BuildContext context,
-) {
+void showBottomOverlay({
+  required BuildContext context,
+  required List<TextSpan> textSpans,
+  required String prefix,
+  required VoidCallback prefixOnPressed,
+  required String suffix,
+  required VoidCallback suffixOnPressed,
+}) {
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
@@ -31,42 +34,15 @@ void showBottomOverlay(
                 softWrap: true,
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: '😐\n\n',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    TextSpan(
-                      text: 'Вы действительно хотите ',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    TextSpan(
-                      text: 'выйти',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Theme.of(context).errorColor),
-                    ),
-                    TextSpan(
-                      text: '\nиз учетной записи?',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
+                  children: textSpans,
                 ),
               ),
               const Spacer(),
               DoubleButton(
-                prefix: 'Отмена',
-                prefixOnPressed: () {
-                  Navigator.pop(context);
-                },
-                suffix: 'Выйти',
-                suffixOnPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    CustomRouteBuilder(widget: const AuthenticationScreen()),
-                  );
-                },
+                prefix: prefix,
+                prefixOnPressed: prefixOnPressed,
+                suffix: suffix,
+                suffixOnPressed: suffixOnPressed,
               ),
             ],
           ),

@@ -16,7 +16,7 @@ class ToggleStyleButton extends StatefulWidget {
   final Function childBuilder;
 
   @override
-  _ToggleStyleButtonState createState() => _ToggleStyleButtonState();
+  State<ToggleStyleButton> createState() => _ToggleStyleButtonState();
 }
 
 class _ToggleStyleButtonState extends State<ToggleStyleButton> {

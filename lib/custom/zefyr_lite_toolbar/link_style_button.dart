@@ -9,7 +9,7 @@ class LinkStyleButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LinkStyleButtonState createState() => _LinkStyleButtonState();
+  State<LinkStyleButton> createState() => _LinkStyleButtonState();
 }
 
 class _LinkStyleButtonState extends State<LinkStyleButton> {
