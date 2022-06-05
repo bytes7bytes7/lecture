@@ -14,7 +14,7 @@ class User {
   String? photo;
 
   User.fromMap(Map<String, dynamic> map) {
-    List<String> keys = fieldsEN;
+    final keys = fieldsEN;
     id = map[keys[0]];
     firstName = map[keys[1]];
     middleName = map[keys[2]];

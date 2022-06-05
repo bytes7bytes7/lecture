@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/custom/custom_route_builder.dart';
-import 'package:lecture/screens/author_screen.dart';
 
+import '../constants/tooltips.dart' as const_tooltips;
+import '../custom/always_bouncing_scroll_physics.dart';
+import '../custom/custom_route_builder.dart';
+import '../models/lecture.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/sized_icon_button.dart';
-import '../models/lecture.dart';
-import '../constants.dart';
-import '../custom/always_bouncing_scroll_physics.dart';
+import 'author_screen.dart';
 
 class LectureScreen extends StatelessWidget {
   const LectureScreen({
@@ -18,17 +18,18 @@ class LectureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> ratingNotifier = ValueNotifier(0);
+    final ratingNotifier = ValueNotifier<int>(0);
+
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: ConstantMessages.back,
+        prefixMessage: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
         text: 'Лекция',
         suffix: Icons.more_vert,
-        suffixMessage: ConstantMessages.additional,
+        suffixMessage: const_tooltips.additional,
         suffixOnPressed: () {
           showMenu(
             context: context,
@@ -106,7 +107,7 @@ class LectureScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                lecture.content['text'] * 40,
+                lecture.text,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Padding(
@@ -211,7 +212,7 @@ class _LectureHead extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
+              DecoratedBox(
                 //padding: const EdgeInsets.only(left: 2),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
@@ -227,7 +228,10 @@ class _LectureHead extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(
-                          left: 2.0, top: 2.0, bottom: 2.0),
+                        left: 2.0,
+                        top: 2.0,
+                        bottom: 2.0,
+                      ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (lecture.rating >= 4.0)

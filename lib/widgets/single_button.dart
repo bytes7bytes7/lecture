@@ -18,7 +18,7 @@ class SingleButton extends StatelessWidget {
       width: 250,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           primary: Theme.of(context).scaffoldBackgroundColor,
           backgroundColor: Theme.of(context).primaryColor,
           shape: RoundedRectangleBorder(

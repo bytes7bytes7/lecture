@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'sized_icon_button.dart';
 
-class DefaultAppBar extends StatelessWidget with PreferredSizeWidget {
+class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
     Key? key,
     required this.prefix,
@@ -44,19 +44,20 @@ class DefaultAppBar extends StatelessWidget with PreferredSizeWidget {
             text,
             style: Theme.of(context).textTheme.headline2,
           ),
-          (suffix != null)
-              ? SizedIconButton(
-                  icon: suffix!,
-                  message: suffixMessage,
-                  onPressed: suffixOnPressed ?? () {},
-                )
-              : SizedBox(
-                  width: SizedIconButton(
-                    icon: prefix,
-                    message: '',
-                    onPressed: () {},
-                  ).size,
-                ),
+          if (suffix != null)
+            SizedIconButton(
+              icon: suffix!,
+              message: suffixMessage,
+              onPressed: suffixOnPressed ?? () {},
+            )
+          else
+            SizedBox(
+              width: SizedIconButton(
+                icon: prefix,
+                message: '',
+                onPressed: () {},
+              ).size,
+            ),
         ],
       ),
     );

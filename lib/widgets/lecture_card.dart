@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/screens/lecture_screen.dart';
 
 import '../custom/custom_route_builder.dart';
 import '../models/lecture.dart';
+import '../screens/lecture_screen.dart';
 
 class LectureCard extends StatelessWidget {
   const LectureCard({
@@ -34,9 +34,11 @@ class LectureCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           minWidth: 0,
           onPressed: () {
-            Navigator.of(context).push(CustomRouteBuilder(
-              widget: LectureScreen(lecture: lecture),
-            ));
+            Navigator.of(context).push(
+              CustomRouteBuilder(
+                widget: LectureScreen(lecture: lecture),
+              ),
+            );
           },
           child: Column(
             children: [
@@ -52,7 +54,7 @@ class LectureCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Container(
+                    DecoratedBox(
                       //padding: const EdgeInsets.only(left: 2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
@@ -72,7 +74,10 @@ class LectureCard extends StatelessWidget {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(
-                                left: 2.0, top: 2.0, bottom: 2.0),
+                              left: 2.0,
+                              top: 2.0,
+                              bottom: 2.0,
+                            ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: (lecture.rating >= 4.0)
@@ -103,7 +108,8 @@ class LectureCard extends StatelessWidget {
                                         .textTheme
                                         .subtitle1!
                                         .copyWith(
-                                            color: Theme.of(context).hintColor),
+                                          color: Theme.of(context).hintColor,
+                                        ),
                                   )
                                 : Text(
                                     ((lecture.rating * 100)

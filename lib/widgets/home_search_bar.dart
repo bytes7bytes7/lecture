@@ -29,17 +29,18 @@ class HomeSearchBar extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Theme.of(context).hintColor,
-                    size: 24.0,
-                  ),
-                  hintText: 'Поиск',
-                  hintStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        color: Theme.of(context).hintColor,
-                      ),
-                  border: InputBorder.none,
-                  isCollapsed: true),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Theme.of(context).hintColor,
+                  size: 24.0,
+                ),
+                hintText: 'Поиск',
+                hintStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      color: Theme.of(context).hintColor,
+                    ),
+                border: InputBorder.none,
+                isCollapsed: true,
+              ),
             ),
           ),
           Container(
@@ -52,7 +53,7 @@ class HomeSearchBar extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18.0),
               child: MaterialButton(
-                padding: const EdgeInsets.all(0),
+                padding: EdgeInsets.zero,
                 minWidth: 0,
                 onPressed: () {
                   showFilterOverlay(context);

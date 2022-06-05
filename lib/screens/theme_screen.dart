@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flutter/material.dart';
 
+import '../constants/db.dart' as const_db;
+import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
-import '../constants.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
 
@@ -13,13 +14,13 @@ class ThemeScreen extends StatelessWidget {
 
   void changeTheme({required BuildContext context, required String value}) {
     switch (value) {
-      case ConstantDBData.lightThemeValue:
+      case const_db.lightThemeValue:
         AdaptiveTheme.of(context).setLight();
         break;
-      case ConstantDBData.darkThemeValue:
+      case const_db.darkThemeValue:
         AdaptiveTheme.of(context).setDark();
         break;
-      case ConstantDBData.systemThemeValue:
+      case const_db.systemThemeValue:
         AdaptiveTheme.of(context).setSystem();
         break;
     }
@@ -30,7 +31,7 @@ class ThemeScreen extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: ConstantMessages.back,
+        prefixMessage: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },

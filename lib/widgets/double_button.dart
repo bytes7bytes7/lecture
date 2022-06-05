@@ -22,7 +22,7 @@ class DoubleButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           primary: Theme.of(context).hintColor,
           backgroundColor: Theme.of(context).disabledColor,
           side: BorderSide(
@@ -55,7 +55,7 @@ class DoubleButton extends StatelessWidget {
               fit: FlexFit.tight,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.all(0),
+                  padding: EdgeInsets.zero,
                   primary: Theme.of(context).scaffoldBackgroundColor,
                   backgroundColor: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
@@ -69,7 +69,8 @@ class DoubleButton extends StatelessWidget {
                 child: Text(
                   suffix,
                   style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: Theme.of(context).scaffoldBackgroundColor),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
                 ),
               ),
             ),

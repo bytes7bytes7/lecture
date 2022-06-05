@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
 import 'sized_icon_button.dart';
 
@@ -51,7 +51,7 @@ class SelectNumberField extends StatelessWidget {
                 notifier.value = max.toString();
               } else {
                 try {
-                  int old = int.parse(notifier.value);
+                  var old = int.parse(notifier.value);
                   if (old != min) {
                     notifier.value = (--old).toString();
                   }
@@ -61,7 +61,7 @@ class SelectNumberField extends StatelessWidget {
               }
               GlobalParameters.checkFilter();
             },
-            message: ConstantMessages.less,
+            message: const_tooltips.less,
           ),
           ValueListenableBuilder(
             valueListenable: notifier,
@@ -83,7 +83,7 @@ class SelectNumberField extends StatelessWidget {
                 notifier.value = min.toString();
               } else {
                 try {
-                  int old = int.parse(notifier.value);
+                  var old = int.parse(notifier.value);
                   if (old != max) {
                     notifier.value = (++old).toString();
                   }
@@ -93,7 +93,7 @@ class SelectNumberField extends StatelessWidget {
               }
               GlobalParameters.checkFilter();
             },
-            message: ConstantMessages.more,
+            message: const_tooltips.more,
           ),
         ],
       ),

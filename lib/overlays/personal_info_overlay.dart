@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/widgets/simple_text_field.dart';
 
 import '../custom/custom_route_builder.dart';
 import '../screens/home_screen.dart';
+import '../widgets/simple_text_field.dart';
 import '../widgets/single_button.dart';
 
 class PersonalInfoOverlay extends StatelessWidget {

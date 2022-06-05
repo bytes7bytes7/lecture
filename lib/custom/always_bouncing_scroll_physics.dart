@@ -1,5 +1,11 @@
-import 'package:flutter/material.dart' show ScrollPhysics, ScrollMetrics, Simulation, Tolerance, BouncingScrollSimulation;
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart'
+    show
+        ScrollPhysics,
+        ScrollMetrics,
+        Simulation,
+        BouncingScrollSimulation;
 
 const double kMinFlingVelocity = 50.0;
 
@@ -23,7 +29,9 @@ class AlwaysBouncingScrollPhysics extends ScrollPhysics {
     assert(offset != 0.0);
     assert(position.minScrollExtent <= position.maxScrollExtent);
 
-    if (!position.outOfRange) return offset;
+    if (!position.outOfRange) {
+      return offset;
+    }
 
     final double overscrollPastStart =
         math.max(position.minScrollExtent - position.pixels, 0.0);
@@ -31,30 +39,38 @@ class AlwaysBouncingScrollPhysics extends ScrollPhysics {
         math.max(position.pixels - position.maxScrollExtent, 0.0);
     final double overscrollPast =
         math.max(overscrollPastStart, overscrollPastEnd);
-    final bool easing = (overscrollPastStart > 0.0 && offset < 0.0) ||
+    final easing = (overscrollPastStart > 0.0 && offset < 0.0) ||
         (overscrollPastEnd > 0.0 && offset > 0.0);
 
-    final double friction = easing
+    final friction = easing
         // Apply less resistance when easing the overscroll vs tensioning.
         ? frictionFactor(
-            (overscrollPast - offset.abs()) / position.viewportDimension)
+            (overscrollPast - offset.abs()) / position.viewportDimension,
+          )
         : frictionFactor(overscrollPast / position.viewportDimension);
-    final double direction = offset.sign;
+    final direction = offset.sign;
 
     return direction * _applyFriction(overscrollPast, offset.abs(), friction);
   }
 
   static double _applyFriction(
-      double extentOutside, double absDelta, double gamma) {
+    double extentOutside,
+    double absDelta,
+    double gamma,
+  ) {
     assert(absDelta > 0);
-    double total = 0.0;
+
+    var total = 0.0;
+    var newAbsDelta = absDelta;
     if (extentOutside > 0) {
-      final double deltaToLimit = extentOutside / gamma;
-      if (absDelta < deltaToLimit) return absDelta * gamma;
+      final deltaToLimit = extentOutside / gamma;
+      if (newAbsDelta < deltaToLimit) {
+        return newAbsDelta * gamma;
+      }
       total += extentOutside;
-      absDelta -= deltaToLimit;
+      newAbsDelta -= deltaToLimit;
     }
-    return total + absDelta;
+    return total + newAbsDelta;
   }
 
   @override
@@ -62,8 +78,10 @@ class AlwaysBouncingScrollPhysics extends ScrollPhysics {
 
   @override
   Simulation? createBallisticSimulation(
-      ScrollMetrics position, double velocity) {
-    final Tolerance tolerance = this.tolerance;
+    ScrollMetrics position,
+    double velocity,
+  ) {
+    final tolerance = this.tolerance;
     if (velocity.abs() >= tolerance.velocity || position.outOfRange) {
       return BouncingScrollSimulation(
         spring: spring,
@@ -95,8 +113,10 @@ class AlwaysBouncingScrollPhysics extends ScrollPhysics {
   @override
   double carriedMomentum(double existingVelocity) {
     return existingVelocity.sign *
-        math.min(0.000816 * math.pow(existingVelocity.abs(), 1.967).toDouble(),
-            40000.0);
+        math.min(
+          0.000816 * math.pow(existingVelocity.abs(), 1.967).toDouble(),
+          40000.0,
+        );
   }
 
   // Eyeballed from observation to counter the effect of an unintended scroll

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../global_parameters.dart';
 import '../widgets/double_button.dart';
-import '../widgets/select_date_field.dart';
-import '../widgets/select_number_field.dart';
-import '../widgets/select_field.dart';
 import '../widgets/drag_container.dart';
+import '../widgets/select_date_field.dart';
+import '../widgets/select_field.dart';
+import '../widgets/select_number_field.dart';
 
 void showFilterOverlay(
   BuildContext context,
@@ -18,7 +18,7 @@ void showFilterOverlay(
       // TODO: find way to dynamically change size
       return FractionallySizedBox(
         heightFactor: 0.7,
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: const BorderRadius.only(
@@ -61,9 +61,7 @@ void showFilterOverlay(
                 const Spacer(),
                 DoubleButton(
                   prefix: 'Сброс',
-                  prefixOnPressed: () {
-                    GlobalParameters.dropFilter();
-                  },
+                  prefixOnPressed: GlobalParameters.dropFilter,
                   suffix: 'Готово',
                   suffixOnPressed: () {
                     GlobalParameters.updateFiler();

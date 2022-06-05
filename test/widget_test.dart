@@ -27,7 +27,7 @@ class _FirstState extends State<First> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white70,
       appBar: AppBar(

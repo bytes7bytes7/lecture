@@ -26,7 +26,7 @@ class SizedIconButton extends StatelessWidget {
         message: message,
         showDuration: const Duration(seconds: 2),
         child: IconButton(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           icon: Icon(
             icon,
             color: Theme.of(context).primaryColor,

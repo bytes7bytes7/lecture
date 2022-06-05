@@ -17,30 +17,34 @@ class LineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconData = icon;
+
     return MaterialButton(
-      padding: const EdgeInsets.all(0),
+      padding: EdgeInsets.zero,
       minWidth: 0,
       onPressed: onPressed,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (icon != null) ...[
-              Icon(
-                icon,
-                color: Theme.of(context).primaryColor,
-                size: 24.0,
-              ),
-              const SizedBox(width: 15.0),
-            ],
-            Expanded(
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.bodyText1,
-                overflow: TextOverflow.ellipsis,
-              ),
+            Row(
+              children: [
+                if (iconData != null) ...[
+                  Icon(
+                    iconData,
+                    color: Theme.of(context).primaryColor,
+                    size: 24.0,
+                  ),
+                  const SizedBox(width: 15.0),
+                ],
+                Text(
+                  text,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
-            const Spacer(),
             ...actions,
           ],
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import 'sized_icon_button.dart';
 
 class SelectDateField extends StatelessWidget {
@@ -37,7 +37,7 @@ class SelectDateField extends StatelessWidget {
             size: 24.0,
             icon: Icons.date_range,
             onPressed: () {},
-            message: ConstantMessages.choose,
+            message: const_tooltips.choose,
           ),
         ],
       ),

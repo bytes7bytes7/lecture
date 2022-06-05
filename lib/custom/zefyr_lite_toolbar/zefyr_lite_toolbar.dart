@@ -9,6 +9,13 @@ part 'link_style_button.dart';
 
 part 'link_dialog.dart';
 
+typedef ChildBuilder = Widget Function(
+  BuildContext,
+  IconData,
+  bool,
+  VoidCallback?,
+);
+
 class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget> children;
 
@@ -36,7 +43,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
           ),
           Container(
             width: 1,
-            color:dividerColor,
+            color: dividerColor,
           ),
           ToggleStyleButton(
             attribute: NotusAttribute.strikethrough,
@@ -45,7 +52,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
           ),
           Container(
             width: 1,
-            color:dividerColor,
+            color: dividerColor,
           ),
           ToggleStyleButton(
             attribute: NotusAttribute.underline,
@@ -81,7 +88,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
           ),
           Container(
             width: 1,
-            color:dividerColor,
+            color: dividerColor,
           ),
           LinkStyleButton(
             controller: controller,

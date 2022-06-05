@@ -1,150 +1,188 @@
 import 'dart:math';
 
+import '../constants/api.dart' as const_api;
+import '../constants/text.dart' as const_text;
 import '../global_parameters.dart';
 
+const chars = 'йцукенгшщзхъфывапролджэячсмитьбю ';
+final _rand = Random();
+
+int _randomInt(int max) {
+  if (max <= 0) {
+    return -1;
+  }
+
+  return _rand.nextInt(max);
+}
+
+String _randomString(int length) => String.fromCharCodes(
+      Iterable.generate(
+        length,
+        (_) => chars.codeUnitAt(_randomInt(chars.length)),
+      ),
+    );
+
 class Lecture {
-  Lecture({
+  const Lecture({
     required this.faculty,
     required this.level,
     required this.subject,
     required this.semester,
     required this.topic,
-    required this.content,
+    required this.text,
+    required this.photos,
+    required this.videos,
     required this.lecturer,
     required this.date,
     required this.rating,
     required this.author,
   });
 
-  late String faculty;
-  late String level;
-  late String subject;
-  late int semester;
-  late String topic;
-  dynamic content;
-  late String lecturer;
-  late String date;
-  late double rating;
-  late String author;
+  final String faculty;
+  final String level;
+  final String subject;
+  final int semester;
+  final String topic;
+  final String text;
+  final List<String> photos;
+  final List<String> videos;
+  final String lecturer;
+  final String date;
+  final double rating;
+  final String author;
 
-  Lecture.random({bool isPublished = true}) {
-    var rand = Random();
-    const charsR = 'йцукенгшщзхъфывапролджэячсмитьбю ';
-    String getRandomString(int length) =>
-        String.fromCharCodes(Iterable.generate(
-            length, (_) => charsR.codeUnitAt(rand.nextInt(charsR.length))));
-    String facultyR = GlobalParameters
-        .faculties[rand.nextInt(GlobalParameters.faculties.length)];
-    String levelR =
-        GlobalParameters.levels[rand.nextInt(GlobalParameters.levels.length)];
-    String subjectR = GlobalParameters
-        .subjects[rand.nextInt(GlobalParameters.subjects.length)];
-    int semesterR = rand.nextInt(GlobalParameters.semesters) + 1;
-    String topicR = getRandomString(rand.nextInt(10) + 10);
-    String contentR = getRandomString(rand.nextInt(50) + 50);
-    String lecturerR =
-        '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
-    String yearR = (rand.nextInt(5) + 2015).toString();
-    String monthR = (rand.nextInt(12) + 1).toString();
-    if (monthR.length < 2) {
-      monthR = '0$monthR';
+  // TODO: remove it
+  static Lecture random({bool isPublished = true}) {
+    var faculty = const_text.unknownStr;
+    var index = _randomInt(GlobalParameters.faculties.length);
+    if (index != -1 && GlobalParameters.faculties.isNotEmpty) {
+      faculty = GlobalParameters.faculties[index];
     }
-    String dayR = (rand.nextInt(28) + 1).toString();
-    if (dayR.length < 2) {
-      dayR = '0$dayR';
-    }
-    double ratingR = rand.nextInt(4) + rand.nextDouble() + 1;
-    String authorR =
-        '${getRandomString(rand.nextInt(7) + 7)} ${getRandomString(1)}.${getRandomString(1)}';
 
-    faculty = facultyR;
-    level = levelR;
-    subject = subjectR;
-    semester = semesterR;
-    topic = topicR;
-    content = contentR;
-    lecturer = lecturerR;
-    date = '$dayR.$monthR.$yearR';
-    rating = isPublished ? ratingR : 0;
-    author = authorR;
+    var level = const_text.unknownStr;
+    index = _randomInt(GlobalParameters.levels.length);
+    if (index != -1 && GlobalParameters.levels.isNotEmpty) {
+      level = GlobalParameters.levels[index];
+    }
+
+    var subject = const_text.unknownStr;
+    index = _randomInt(GlobalParameters.subjects.length);
+    if (index != -1 && GlobalParameters.subjects.isNotEmpty) {
+      subject = GlobalParameters.subjects[index];
+    }
+
+    var semester = const_text.unknownInt;
+    index = _randomInt(GlobalParameters.semesters);
+    if (index != -1 && GlobalParameters.semesters > 0) {
+      semester = index + 1;
+    }
+
+    final topic = _randomString(_randomInt(10) + 10);
+    final text = _randomString(_randomInt(50) + 200);
+    final photos = List<String>.generate(_randomInt(10), _randomString);
+    final videos = List<String>.generate(_randomInt(10), _randomString);
+    final lecturer =
+        '${_randomString(_randomInt(7) + 7)} ${_randomString(1)}.${_randomString(1)}';
+    final year = (_randomInt(5) + 2015).toString();
+
+    var month = (_randomInt(12) + 1).toString();
+    if (month.length < 2) {
+      month = '0$month';
+    }
+
+    var day = (_randomInt(28) + 1).toString();
+    if (day.length < 2) {
+      day = '0$day';
+    }
+
+    final rating = _randomInt(4) + _rand.nextDouble() + 1;
+    final author =
+        '${_randomString(_randomInt(7) + 7)} ${_randomString(1)}.${_randomString(1)}';
+
+    return Lecture(
+      faculty: faculty,
+      level: level,
+      subject: subject,
+      semester: semester,
+      topic: topic,
+      text: text,
+      photos: photos,
+      videos: videos,
+      lecturer: lecturer,
+      date: '$day.$month.$year',
+      rating: isPublished ? rating : 0,
+      author: author,
+    );
   }
 
-  Lecture.fromMap(Map<String, dynamic> map) {
-    List<String> keys = fieldsEN;
-    faculty = map[keys[0]];
-    level = map[keys[1]];
-    subject = map[keys[2]];
-    semester = map[keys[3]];
-    topic = map[keys[4]];
-    content = map[keys[5]];
-    lecturer = map[keys[6]];
-    date = map[keys[7]].split('.').reversed.join('.');
-    rating = map[keys[8]];
-    author = map[keys[9]];
-  }
+  static Lecture fromMap(Map<String, Object?> map) {
+    final faculty = map[const_api.faculty];
+    final level = map[const_api.level];
+    final subject = map[const_api.subject];
+    final semester = map[const_api.semester];
+    final topic = map[const_api.topic];
 
-  Map<String, dynamic> toMap() {
-    List<String> parts = date.split('.');
-    for (int i = 0; i < 2; i++) {
-      if (parts[i].length < 2) {
-        parts[i] = '0${parts[i]}';
+    final content = map[const_api.content];
+    var text = const_text.unknownStr;
+    var photos = <String>[];
+    var videos = <String>[];
+    if (content is Map<String, Object?>) {
+      final tText = content[const_api.text];
+      if (tText is String) {
+        text = tText;
+      }
+
+      final tPhotos = content[const_api.photos];
+      if (tPhotos is List<String>) {
+        photos = tPhotos;
+      }
+
+      final tVideos = content[const_api.videos];
+      if (tVideos is List<String>) {
+        videos = tVideos;
       }
     }
-    String formatted = parts.reversed.join('.');
-    return {
-      'faculty': faculty,
-      'level': level,
-      'subject': subject,
-      'semester': semester,
-      'topic': topic,
-      'content': {
-        'text': content as String,
-        'photos': [],
-        'videos': [],
-      },
-      'lecturer': lecturer,
-      'date': formatted,
-      'rating': rating,
-      'author': author,
-    };
+
+    final lecturer = map[const_api.lecturer];
+    final date = map[const_api.date];
+    final rating = map[const_api.rating];
+    final author = map[const_api.author];
+
+    return Lecture(
+      faculty: (faculty is String) ? faculty : const_text.unknownStr,
+      level: (level is String) ? level : const_text.unknownStr,
+      subject: (subject is String) ? subject : const_text.unknownStr,
+      semester: (semester is int) ? semester : const_text.unknownInt,
+      topic: (topic is String) ? topic : const_text.unknownStr,
+      text: text,
+      photos: photos,
+      videos: videos,
+      lecturer: (lecturer is String) ? lecturer : const_text.unknownStr,
+      date: (date is String)
+          ? date.split('.').reversed.join('.')
+          : const_text.unknownStr,
+      rating: (rating is double) ? rating : const_text.unknownDouble,
+      author: (author is String) ? author : const_text.unknownStr,
+    );
   }
 
-  List<String> get fieldsEN => [
-        'faculty',
-        'level',
-        'subject',
-        'semester',
-        'topic',
-        'content',
-        'lecturer',
-        'date',
-        'rating',
-        'author',
-      ];
-
-  List<String> get fieldsRU => [
-        'Факультет',
-        'Уровень высшего образования',
-        'Предмет',
-        'Семестер',
-        'Тема',
-        'Контент',
-        'Лектор',
-        'Дата',
-        'Рейтинг',
-        'Автор',
-      ];
-
-  List<dynamic> get items => [
-        faculty,
-        level,
-        subject,
-        semester,
-        topic,
-        content,
-        lecturer,
-        date,
-        rating,
-        author,
-      ];
+  Map<String, Object?> toMap() {
+    final fDate = date.split('.').reversed.join('.');
+    return {
+      const_api.faculty: faculty,
+      const_api.level: level,
+      const_api.subject: subject,
+      const_api.semester: semester,
+      const_api.topic: topic,
+      const_api.content: {
+        const_api.text: text,
+        const_api.photos: photos,
+        const_api.videos: videos,
+      },
+      const_api.lecturer: lecturer,
+      const_api.date: fDate,
+      const_api.rating: rating,
+      const_api.author: author,
+    };
+  }
 }

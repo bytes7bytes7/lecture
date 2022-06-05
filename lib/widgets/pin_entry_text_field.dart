@@ -44,7 +44,7 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
       verticalDirection: VerticalDirection.down,
       children: List.generate(
         4,
-            (int i) {
+        (int i) {
           return SizedBox(
             width: 50.0,
             height: 76.0,
@@ -118,13 +118,15 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
                       }
                     }
                     if (_pin.every(
-                            (String? digit) => digit != null && digit != '')) {
+                      (String? digit) => digit != null && digit != '',
+                    )) {
                       widget.onSubmit(_pin.join());
                     }
                   },
                   onSubmitted: (String str) {
                     if (_pin.every(
-                            (String? digit) => digit != null && digit != '')) {
+                      (String? digit) => digit != null && digit != '',
+                    )) {
                       widget.onSubmit(_pin.join());
                     }
                   },

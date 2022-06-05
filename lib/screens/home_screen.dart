@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-import '../widgets/sized_icon_button.dart';
-import '../custom/custom_route_builder.dart';
-import '../widgets/error_label.dart';
-import '../custom/always_bouncing_scroll_physics.dart';
-import '../widgets/lecture_card.dart';
-import '../widgets/subject_list_view.dart';
-import '../widgets/home_search_bar.dart';
-import '../services/server_service.dart';
 import '../bloc/lecture_bloc.dart';
+import '../constants/tooltips.dart' as const_tooltips;
+import '../custom/always_bouncing_scroll_physics.dart';
+import '../custom/custom_route_builder.dart';
 import '../global_parameters.dart';
+import '../services/server_service.dart';
+import '../widgets/error_label.dart';
+import '../widgets/home_search_bar.dart';
+import '../widgets/lecture_card.dart';
+import '../widgets/sized_icon_button.dart';
+import '../widgets/subject_list_view.dart';
 import 'lecture_editor_screen.dart';
 import 'settings_screen.dart';
 
@@ -37,13 +37,13 @@ class HomeScreen extends StatelessWidget {
             children: [
               SizedIconButton(
                 icon: Icons.sort,
-                message: ConstantMessages.settings,
+                message: const_tooltips.settings,
                 onPressed: () {
                   Navigator.of(context).push(
                     CustomRouteBuilder(
                       widget: const SettingsScreen(),
                       begin: const Offset(-1, 0),
-                      end: const Offset(0, 0),
+                      end: Offset.zero,
                     ),
                   );
                 },
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                 height: 36.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(7.0),
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7.0),
                       border: Border.all(
@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         body: RefreshIndicator(
-          onRefresh: () => LectureBloc.updateAllLectures(),
+          onRefresh: LectureBloc.updateAllLectures,
           color: Theme.of(context).primaryColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           triggerMode: RefreshIndicatorTriggerMode.anywhere,
@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               } else if (snapshot.data is LectureDataState) {
-                LectureDataState state = snapshot.data as LectureDataState;
+                final state = snapshot.data as LectureDataState;
                 return Stack(
                   children: [
                     ListView.builder(
@@ -115,31 +115,43 @@ class HomeScreen extends StatelessWidget {
                                   child: HomeSearchBar(),
                                 ),
                                 if (GlobalParameters.isFilterEmpty() &&
-                                    !GlobalParameters.isFilterChanged.value) ...[
+                                    !GlobalParameters
+                                        .isFilterChanged.value) ...[
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 25.0, vertical: 15.0),
+                                      horizontal: 25.0,
+                                      vertical: 15.0,
+                                    ),
                                     child: Text(
                                       'Предметы',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
                                     ),
                                   ),
                                   const SubjectListView(),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 25.0, top: 15.0, bottom: 5),
+                                      left: 25.0,
+                                      top: 15.0,
+                                      bottom: 5,
+                                    ),
                                     child: Text(
                                       'Новое',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
                                     ),
                                   ),
                                 ] else
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 25.0, top: 15.0, bottom: 5),
+                                      left: 25.0,
+                                      top: 15.0,
+                                      bottom: 5,
+                                    ),
                                     child: Text(
                                       'Результат поиска',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
                                     ),
                                   ),
                                 if (state.lectures.isEmpty)
@@ -148,7 +160,8 @@ class HomeScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 60.0),
                                     child: Text(
                                       'Пусто 😢',
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -175,9 +188,13 @@ class HomeScreen extends StatelessWidget {
                               return OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 10),
-                                  primary: Theme.of(context).scaffoldBackgroundColor,
-                                  backgroundColor: Theme.of(context).primaryColor,
+                                    horizontal: 18,
+                                    vertical: 10,
+                                  ),
+                                  primary:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                   ),
@@ -185,14 +202,17 @@ class HomeScreen extends StatelessWidget {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
+                                onPressed: GlobalParameters.updateFiler,
                                 child: Text(
                                   'Обновить',
-                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      color: Theme.of(context).scaffoldBackgroundColor),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                      ),
                                 ),
-                                onPressed: () {
-                                  GlobalParameters.updateFiler();
-                                },
                               );
                             }
                           },

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lecture/constants.dart';
 
+import '../constants/api.dart' as const_api;
 import '../global_parameters.dart';
 import '../models/lecture.dart';
 import '../security/server_uri.dart';
@@ -9,9 +9,9 @@ import '../security/server_uri.dart';
 abstract class ServerService {
   static Future<List<Lecture>> getLectures(Map<String, dynamic> data) async {
     http.Response? uriResponse;
-    bool error = false;
-    for (int i = 0; i < 3; i++) {
-      var client = http.Client();
+    var error = false;
+    for (var i = 0; i < 3; i++) {
+      final client = http.Client();
       try {
         uriResponse = await client.get(
           Uri.http(ServerURI.serverAuthority, ServerURI.getLectures, data),
@@ -31,9 +31,9 @@ abstract class ServerService {
         break;
       }
     }
-    List<Lecture> lectures = [];
+    final lectures = <Lecture>[];
     if (uriResponse != null) {
-      var body = json.decode(utf8.decode(uriResponse.bodyBytes));
+      final body = json.decode(utf8.decode(uriResponse.bodyBytes));
       for (Map<String, dynamic> m in body) {
         lectures.add(Lecture.fromMap(m));
       }
@@ -43,12 +43,17 @@ abstract class ServerService {
 
   static Future<void> getFilterData() async {
     http.Response? uriResponse;
-    bool error = false;
-    for (int i = 0; i < 3; i++) {
-      var client = http.Client();
+    var error = false;
+    for (var i = 0; i < 3; i++) {
+      final client = http.Client();
       try {
-        uriResponse = await client.get(Uri.http(ServerURI.serverAuthority,
-            ServerURI.getFilterData, {'university': ConstantHTTP.university}));
+        uriResponse = await client.get(
+          Uri.http(
+            ServerURI.serverAuthority,
+            ServerURI.getLectures,
+            {'university': const_api.university},
+          ),
+        );
         error = false;
       } catch (e) {
         error = true;
@@ -62,29 +67,47 @@ abstract class ServerService {
       }
     }
     if (uriResponse != null) {
-      var body = json.decode(utf8.decode(uriResponse.bodyBytes));
+      final body = json.decode(utf8.decode(uriResponse.bodyBytes));
       GlobalParameters.faculties.clear();
       GlobalParameters.levels.clear();
       GlobalParameters.subjects.clear();
       GlobalParameters.semesters = 0;
 
-      GlobalParameters.faculties.addAll(List<String>.from(body['faculties']));
-      GlobalParameters.levels.addAll(List<String>.from(body['all_levels']));
-      GlobalParameters.subjects.addAll(List<String>.from(body['all_subjects']));
-      GlobalParameters.semesters = body['max_semester'];
+      if (body is Map<String, Object?>) {
+        final faculties = body[const_api.allFaculties];
+        final levels = body[const_api.allLevels];
+        final subjects = body[const_api.alSubjects];
+        final maxSemester = body[const_api.maxSemester];
+
+        if (faculties is List<String>) {
+          GlobalParameters.faculties.addAll(faculties);
+        }
+
+        if (levels is List<String>) {
+          GlobalParameters.levels.addAll(levels);
+        }
+
+        if (subjects is List<String>) {
+          GlobalParameters.subjects.addAll(subjects);
+        }
+
+        if (maxSemester is int) {
+          GlobalParameters.semesters = maxSemester;
+        }
+      }
     }
   }
 
   static Future<void> uploadLecture(Lecture lecture) async {
-    var data = lecture.toMap();
+    final data = lecture.toMap();
     http.Response? uriResponse;
-    bool error = false;
-    for (int i = 0; i < 3; i++) {
+    var error = false;
+    for (var i = 0; i < 3; i++) {
       // http.Response image = await http
       //     .get(Uri.parse('https://pbs.twimg.com/media/EG10LtNX4AAHWyl.jpg'));
       // var base64 = const Base64Encoder().convert(image.bodyBytes);
       // data['content']['photos'].add(base64);
-      var client = http.Client();
+      final client = http.Client();
       try {
         uriResponse = await client.post(
           Uri.http(ServerURI.serverAuthority, ServerURI.addLecture),

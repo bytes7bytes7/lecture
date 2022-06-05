@@ -1,9 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import '../widgets/pin_entry_text_field.dart';
-import '../widgets/double_button.dart';
 import '../global_parameters.dart';
+import '../widgets/double_button.dart';
+import '../widgets/pin_entry_text_field.dart';
 
 class ConfirmOverlay extends StatelessWidget {
   ConfirmOverlay({
@@ -68,7 +69,7 @@ class ConfirmOverlay extends StatelessWidget {
               suffixOnPressed: () {
                 // TODO: verify PIN-code
                 if (GlobalParameters.pin.isNotEmpty && GlobalParameters.pin.length == 4) {
-                  if (Random().nextInt(2) % 2 == 0) {
+                  if (Random().nextInt(2).isEven) {
                     errorNotifier.value = true;
                   } else {
                     GlobalParameters.personalInfoOverlayNotifier.value = true;

@@ -10,7 +10,7 @@ class ToggleNotifierButton extends StatefulWidget {
 
   final IconData icon;
   final ValueNotifier<bool> notifier;
-  final Function childBuilder;
+  final ChildBuilder childBuilder;
 
   @override
   State<ToggleNotifierButton> createState() => _ToggleNotifierButtonState();

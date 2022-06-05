@@ -13,7 +13,7 @@ class ToggleStyleButton extends StatefulWidget {
   final NotusAttribute attribute;
   final IconData icon;
   final ZefyrController controller;
-  final Function childBuilder;
+  final ChildBuilder childBuilder;
 
   @override
   State<ToggleStyleButton> createState() => _ToggleStyleButtonState();
@@ -57,11 +57,15 @@ class _ToggleStyleButtonState extends State<ToggleStyleButton> {
   @override
   Widget build(BuildContext context) {
     final isInCodeBlock =
-    _selectionStyle.containsSame(NotusAttribute.block.code);
+        _selectionStyle.containsSame(NotusAttribute.block.code);
     final isEnabled =
         !isInCodeBlock || widget.attribute == NotusAttribute.block.code;
     return widget.childBuilder(
-        context, widget.icon, _isToggled, isEnabled ? _toggleAttribute : null);
+      context,
+      widget.icon,
+      _isToggled,
+      isEnabled ? _toggleAttribute : null,
+    );
   }
 
   void _toggleAttribute() {
@@ -74,17 +78,17 @@ class _ToggleStyleButtonState extends State<ToggleStyleButton> {
 }
 
 Widget _toggleStyleButtonChildBuilder(
-    BuildContext context,
-    IconData icon,
-    bool isToggled,
-    VoidCallback? onPressed,
-    ) {
+  BuildContext context,
+  IconData icon,
+  bool isToggled,
+  VoidCallback? onPressed,
+) {
   final theme = Theme.of(context);
   final isEnabled = onPressed != null;
   final iconColor = isEnabled
       ? isToggled
-      ? Theme.of(context).primaryColor
-      : Theme.of(context).hintColor
+          ? Theme.of(context).primaryColor
+          : Theme.of(context).hintColor
       : theme.disabledColor;
   return ZIconButton(
     highlightElevation: 0,

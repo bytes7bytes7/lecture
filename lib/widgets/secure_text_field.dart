@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import 'sized_icon_button.dart';
 
 class SecureTextField extends StatelessWidget {
@@ -49,7 +49,7 @@ class SecureTextField extends StatelessWidget {
                 onPressed: () {
                   obscure.value = !obscure.value;
                 },
-                message: ConstantMessages.obscure,
+                message: const_tooltips.obscure,
               ),
               // TODO: think up the way how to add a red star to huntText
               hintText: hint,

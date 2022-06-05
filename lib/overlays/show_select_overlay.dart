@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../global_parameters.dart';
-import '../widgets/search_bar.dart';
 import '../widgets/drag_container.dart';
+import '../widgets/search_bar.dart';
 
 void showSelectOverlay({
   required BuildContext context,
   required List<String> items,
   required ValueNotifier<String> notifier,
 }) {
-  Size size = MediaQuery.of(context).size;
+  final size = MediaQuery.of(context).size;
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
     constraints: BoxConstraints(maxHeight: size.height * 0.9),
     builder: (BuildContext context) {
-      return Container(
+      return DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: const BorderRadius.only(

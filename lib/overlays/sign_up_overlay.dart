@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../global_parameters.dart';
 import '../widgets/secure_text_field.dart';
 import '../widgets/simple_text_field.dart';
-import '../global_parameters.dart';
 import '../widgets/single_button.dart';
 
 class SignUpOverlay extends StatelessWidget {
@@ -15,8 +15,8 @@ class SignUpOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> passVisible = ValueNotifier(false);
-    final ValueNotifier<bool> repPassVisible = ValueNotifier(false);
+    final passVisible = ValueNotifier<bool>(false);
+    final repPassVisible = ValueNotifier<bool>(false);
     return Container(
       height: constraints.maxHeight,
       width: constraints.maxWidth,
@@ -96,7 +96,9 @@ class SignUpOverlay extends StatelessWidget {
                             decoration: TextDecoration.underline,
                           ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      GlobalParameters.confirmOverlayNotifier.value = true;
+                    },
                   ),
                 ],
               ),

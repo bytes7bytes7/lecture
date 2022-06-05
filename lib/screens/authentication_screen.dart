@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:lecture/global_parameters.dart';
-import 'package:lecture/overlays/personal_info_overlay.dart';
-import 'package:lecture/overlays/sign_up_overlay.dart';
+import '../global_parameters.dart';
 import '../overlays/confirm_overlay.dart';
+import '../overlays/personal_info_overlay.dart';
+import '../overlays/sign_up_overlay.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({
@@ -12,9 +12,9 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final EdgeInsets padding = MediaQuery.of(context).padding;
-    final double height = size.height - padding.top - padding.bottom;
+    final size = MediaQuery.of(context).size;
+    final padding = MediaQuery.of(context).padding;
+    final height = size.height - padding.top - padding.bottom;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -50,8 +50,9 @@ class AuthenticationScreen extends StatelessWidget {
                                 .textTheme
                                 .headline1!
                                 .copyWith(
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
                           ),
                         ],
                       ),
@@ -66,30 +67,35 @@ class AuthenticationScreen extends StatelessWidget {
                           children: [
                             SignUpOverlay(constraints: constraints),
                             ValueListenableBuilder(
-                                valueListenable: GlobalParameters.confirmOverlayNotifier,
-                                builder: (context, bool value, _) {
-                                  return AnimatedPositioned(
-                                    left: value ? 0 : size.width,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInOut,
-                                    child: ConfirmOverlay(constraints: constraints),
-                                  );
-                                }
-                            ),
-                            ValueListenableBuilder(
-                              valueListenable: GlobalParameters.personalInfoOverlayNotifier,
+                              valueListenable:
+                                  GlobalParameters.confirmOverlayNotifier,
                               builder: (context, bool value, _) {
                                 return AnimatedPositioned(
                                   left: value ? 0 : size.width,
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut,
-                                  child: PersonalInfoOverlay(constraints: constraints),
+                                  child:
+                                      ConfirmOverlay(constraints: constraints),
                                 );
-                              }
+                              },
+                            ),
+                            ValueListenableBuilder(
+                              valueListenable:
+                                  GlobalParameters.personalInfoOverlayNotifier,
+                              builder: (context, bool value, _) {
+                                return AnimatedPositioned(
+                                  left: value ? 0 : size.width,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                  child: PersonalInfoOverlay(
+                                    constraints: constraints,
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         );
-                      }
+                      },
                     ),
                   ),
                 ],

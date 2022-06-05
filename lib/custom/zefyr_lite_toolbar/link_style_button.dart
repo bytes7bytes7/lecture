@@ -64,7 +64,9 @@ class _LinkStyleButtonState extends State<LinkStyleButton> {
   }
 
   void _linkSubmitted(String? value) {
-    if (value == null || value.isEmpty) return;
+    if (value == null || value.isEmpty) {
+      return;
+    }
     widget.controller.formatSelection(NotusAttribute.link.fromString(value));
   }
 }

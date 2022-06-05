@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../models/lecture.dart';
-import '../widgets/lecture_card.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../models/lecture.dart';
 import '../widgets/default_app_bar.dart';
-import '../constants.dart';
+import '../widgets/lecture_card.dart';
 
 class MyLecturesScreen extends StatelessWidget {
   const MyLecturesScreen({
@@ -16,7 +16,7 @@ class MyLecturesScreen extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: ConstantMessages.back,
+        prefixMessage: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
@@ -37,11 +37,11 @@ class MyLecturesScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 tabs: [
                   Tab(
-                    text: "Опубликовано 1",
+                    text: 'Опубликовано 1',
                     height: Theme.of(context).textTheme.subtitle1!.fontSize! * 2,
                   ),
                   Tab(
-                    text: "Черновики 2",
+                    text: 'Черновики 2',
                     height: Theme.of(context).textTheme.subtitle1!.fontSize! * 2,
                   ),
                 ],

@@ -13,7 +13,7 @@ abstract class LectureBloc {
   }
 
   static Future<void> updateAllLectures() async {
-    Map<String, dynamic> data = {};
+    final data = <String, dynamic>{};
     if (GlobalParameters.facultyNotifier.value.isNotEmpty) {
       data['faculty'] = GlobalParameters.facultyNotifier.value;
     }
@@ -26,28 +26,30 @@ abstract class LectureBloc {
     if (GlobalParameters.semesterNotifier.value.isNotEmpty) {
       data['semester'] = GlobalParameters.semesterNotifier.value;
     }
+
     _lectureStreamController.sink.add(LectureState._lectureLoading());
-    LectureRepository.getAllLectures(data).then((List<Lecture> lectureList) {
+
+    try {
+      final lectureList = await LectureRepository.getAllLectures(data);
       if (!_lectureStreamController.isClosed) {
         _lectureStreamController.sink
             .add(LectureState._lectureData(lectureList));
       }
-    }).onError((Error error, StackTrace stackTrace) {
+    } catch (e) {
       if (!_lectureStreamController.isClosed) {
-        _lectureStreamController.sink
-            .add(LectureState._lectureError(error, stackTrace));
+        _lectureStreamController.sink.add(LectureState._lectureError(e));
       }
-    });
+    }
   }
 
-  static Future<void> uploadLecture(Lecture lecture)async{
-    LectureRepository.uploadLecture(lecture).then((_) {
-    }).onError((Error error, StackTrace stackTrace) {
+  static Future<void> uploadLecture(Lecture lecture) async {
+    try {
+      await LectureRepository.uploadLecture(lecture);
+    } catch (e) {
       if (!_lectureStreamController.isClosed) {
-        _lectureStreamController.sink
-            .add(LectureState._lectureError(error, stackTrace));
+        _lectureStreamController.sink.add(LectureState._lectureError(e));
       }
-    });
+    }
   }
 }
 
@@ -58,8 +60,7 @@ class LectureState {
 
   factory LectureState._lectureLoading() = LectureLoadingState;
 
-  factory LectureState._lectureError(Error error, StackTrace stackTrace) =
-      LectureErrorState;
+  factory LectureState._lectureError(Object error) = LectureErrorState;
 }
 
 class LectureInitState extends LectureState {}
@@ -67,10 +68,9 @@ class LectureInitState extends LectureState {}
 class LectureLoadingState extends LectureState {}
 
 class LectureErrorState extends LectureState {
-  LectureErrorState(this.error, this.stackTrace);
+  LectureErrorState(this.error);
 
-  final Error error;
-  final StackTrace stackTrace;
+  final Object error;
 }
 
 class LectureDataState extends LectureState {

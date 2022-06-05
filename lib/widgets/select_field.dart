@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lecture/overlays/show_select_overlay.dart';
 
-import '../constants.dart';
+import '../constants/tooltips.dart' as const_tooltips;
+import '../overlays/show_select_overlay.dart';
 import 'sized_icon_button.dart';
 
 class SelectField extends StatelessWidget {
@@ -31,23 +31,24 @@ class SelectField extends StatelessWidget {
       child: Row(
         children: [
           ValueListenableBuilder(
-              valueListenable: notifier,
-              builder: (context, String value, _) {
-                return Expanded(
-                  child: (value.isNotEmpty)
-                      ? Text(
-                          value,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        )
-                      : Text(
-                          defaultText,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Theme.of(context).hintColor),
-                        ),
-                );
-              }),
+            valueListenable: notifier,
+            builder: (context, String value, _) {
+              return Expanded(
+                child: (value.isNotEmpty)
+                    ? Text(
+                        value,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      )
+                    : Text(
+                        defaultText,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: Theme.of(context).hintColor),
+                      ),
+              );
+            },
+          ),
           SizedIconButton(
             size: 24.0,
             icon: Icons.search,
@@ -58,7 +59,7 @@ class SelectField extends StatelessWidget {
                 notifier: notifier,
               );
             },
-            message: ConstantMessages.choose,
+            message: const_tooltips.choose,
           ),
         ],
       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../overlays/show_bottom_overlay.dart';
-import '../screens/theme_screen.dart';
-import '../constants.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/custom_route_builder.dart';
 import '../global_parameters.dart';
+import '../overlays/show_bottom_overlay.dart';
 import '../screens/bookmark_screen.dart';
 import '../screens/my_lectures_screen.dart';
+import '../screens/theme_screen.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
 import 'authentication_screen.dart';
@@ -21,13 +21,13 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: ConstantMessages.back,
+        prefixMessage: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
         text: 'id16520468',
         suffix: Icons.exit_to_app,
-        suffixMessage: ConstantMessages.exit,
+        suffixMessage: const_tooltips.exit,
         suffixOnPressed: () {
           showBottomOverlay(
             context: context,
@@ -82,7 +82,8 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 image: const DecorationImage(
                   image: NetworkImage(
-                      'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg'),
+                    'https://www.topsunglasses.net/wp-content/uploads/2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',
+                  ),
                   fit: BoxFit.cover,
                 ),
                 boxShadow: [

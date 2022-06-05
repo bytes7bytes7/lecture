@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
-import '../constants.dart';
-import '../widgets/default_app_bar.dart';
+import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
+import '../widgets/default_app_bar.dart';
 
 class LectureEditorScreen extends StatelessWidget {
   const LectureEditorScreen({
@@ -12,8 +12,8 @@ class LectureEditorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ZefyrController controller = ZefyrController();
-    final ValueNotifier<bool> editMode = ValueNotifier(true);
+    final controller = ZefyrController();
+    final editMode = ValueNotifier<bool>(true);
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -23,13 +23,13 @@ class LectureEditorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: DefaultAppBar(
           prefix: Icons.arrow_back,
-          prefixMessage: ConstantMessages.back,
+          prefixMessage: const_tooltips.back,
           prefixOnPressed: () {
             Navigator.pop(context);
           },
           text: 'Новая лекция',
           suffix: Icons.more_vert,
-          suffixMessage: ConstantMessages.additional,
+          suffixMessage: const_tooltips.additional,
           suffixOnPressed: () {},
         ),
         body: SafeArea(
@@ -79,10 +79,11 @@ class LectureEditorScreen extends StatelessWidget {
                         return Stack(
                           children: [
                             Positioned.fill(
-                              child: Container(
+                              child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Theme.of(context).primaryColor),
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: ZefyrEditor(
@@ -94,6 +95,7 @@ class LectureEditorScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0,
                                   ),
+
                                   /// Add cursorColor property to editor.dart in zefyrka package this way:
                                   /// 1) Add into ZefyrEditor class: "final Color? cursorColor;"
                                   /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
