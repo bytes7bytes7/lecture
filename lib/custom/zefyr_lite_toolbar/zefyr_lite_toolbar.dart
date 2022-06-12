@@ -114,11 +114,13 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
 class _ZefyrLiteToolbarState extends State<ZefyrLiteToolbar> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       constraints: BoxConstraints.tightFor(height: widget.preferredSize.height),
       decoration: BoxDecoration(
-        color: Theme.of(context).disabledColor,
+        color: theme.disabledColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: SingleChildScrollView(

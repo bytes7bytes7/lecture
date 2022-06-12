@@ -1,35 +1,43 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+
+const _splashRadius = 22.0;
+const _showDuration = Duration(seconds: 2);
+
 class SizedIconButton extends StatelessWidget {
   const SizedIconButton({
     Key? key,
-    this.size = 36.0,
     required this.icon,
     required this.onPressed,
-    required this.message,
-    this.splashRadius = 22,
+    required this.tooltip,
+    this.size = const_measures.bigIconSize,
+    this.splashRadius = _splashRadius,
+    this.color,
   }) : super(key: key);
 
-  final double size;
   final IconData icon;
   final VoidCallback onPressed;
-  final String message;
+  final String tooltip;
+  final double size;
   final double splashRadius;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     // TODO: hoverColor disappears on filter overlay
     return SizedBox(
       height: size,
       width: size,
       child: Tooltip(
-        message: message,
-        showDuration: const Duration(seconds: 2),
+        message: tooltip,
+        showDuration: _showDuration,
         child: IconButton(
           padding: EdgeInsets.zero,
           icon: Icon(
             icon,
-            color: Theme.of(context).primaryColor,
+            color: color ?? theme.primaryColor,
             size: size,
           ),
           splashRadius: splashRadius,

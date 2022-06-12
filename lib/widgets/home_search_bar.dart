@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+import '../constants/tooltips.dart' as const_tooltips;
 import '../overlays/show_filter_overlay.dart';
+import 'sized_icon_button.dart';
+
+const _height = 56.0;
+const _margin = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 15.0,
+);
+const _borderRadius = 20.0;
+const _buttonBorderRadius = 18.0;
 
 class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({
-    Key? key,
-  }) : super(key: key);
+  const HomeSearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 25.0),
-      height: 57.0,
+      height: _height,
+      margin: _margin,
       decoration: BoxDecoration(
-        color: Theme.of(context).disabledColor,
-        borderRadius: BorderRadius.circular(20.0),
+        color: theme.disabledColor,
+        borderRadius: BorderRadius.circular(_borderRadius),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: theme.primaryColor,
         ),
       ),
       child: Row(
@@ -26,43 +37,40 @@ class HomeSearchBar extends StatelessWidget {
             child: TextField(
               scrollPhysics: const BouncingScrollPhysics(),
               textAlignVertical: TextAlignVertical.center,
-              style: Theme.of(context).textTheme.bodyText1,
-              cursorColor: Theme.of(context).primaryColor,
+              style: theme.textTheme.bodyText1,
+              cursorColor: theme.primaryColor,
               decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Theme.of(context).hintColor,
-                  size: 24.0,
+                  color: theme.hintColor,
+                  size: const_measures.smallIconSize,
                 ),
                 hintText: 'Поиск',
-                hintStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: Theme.of(context).hintColor,
-                    ),
-                border: InputBorder.none,
-                isCollapsed: true,
+                hintStyle: theme.textTheme.subtitle1?.copyWith(
+                  color: theme.hintColor,
+                ),
               ),
             ),
           ),
           Container(
-            height: 57.0,
-            width: 57.0,
+            height: _height,
+            width: _height,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(18.0),
+              color: theme.primaryColor,
+              borderRadius: BorderRadius.circular(_buttonBorderRadius),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(18.0),
-              child: MaterialButton(
-                padding: EdgeInsets.zero,
-                minWidth: 0,
+              borderRadius: BorderRadius.circular(_buttonBorderRadius),
+              child: SizedIconButton(
+                icon: Icons.tune,
+                size: const_measures.smallIconSize,
+                tooltip: const_tooltips.filter,
+                color: theme.scaffoldBackgroundColor,
                 onPressed: () {
-                  showFilterOverlay(context);
+                  showFilterOverlay(context: context);
                 },
-                child: Icon(
-                  Icons.tune,
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  size: 24.0,
-                ),
               ),
             ),
           ),

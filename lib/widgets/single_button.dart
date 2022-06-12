@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+
+const _width = 250.0;
+const _margin = EdgeInsets.only(bottom: 20.0);
+
 class SingleButton extends StatelessWidget {
   const SingleButton({
     Key? key,
@@ -12,29 +17,34 @@ class SingleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      height: 57.0,
-      width: 250,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          primary: Theme.of(context).scaffoldBackgroundColor,
-          backgroundColor: Theme.of(context).primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+    final theme = Theme.of(context);
+
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        height: const_measures.buttonHeight,
+        width: _width,
+        margin: _margin,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            primary: theme.scaffoldBackgroundColor,
+            backgroundColor: theme.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                const_measures.buttonBorderRadius,
+              ),
+            ),
+            side: const BorderSide(
+              style: BorderStyle.none,
+            ),
           ),
-          side: BorderSide(
-            color: Theme.of(context).primaryColor,
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: theme.textTheme.subtitle1
+                ?.copyWith(color: theme.scaffoldBackgroundColor),
           ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .subtitle1!
-              .copyWith(color: Theme.of(context).scaffoldBackgroundColor),
         ),
       ),
     );

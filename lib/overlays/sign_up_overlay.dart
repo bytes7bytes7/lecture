@@ -1,85 +1,131 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
-import '../widgets/secure_text_field.dart';
-import '../widgets/simple_text_field.dart';
-import '../widgets/single_button.dart';
+import '../utils/triple.dart';
+import '../widgets/widgets.dart';
 
-class SignUpOverlay extends StatelessWidget {
-  const SignUpOverlay({
-    Key? key,
-    required this.constraints,
-  }) : super(key: key);
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+);
+const _titleMargin = EdgeInsets.only(
+  top: 30.0,
+);
+const _textMargin = EdgeInsets.symmetric(
+  vertical: 10.0,
+);
+const _bottomTextFlex = 5;
 
-  final BoxConstraints constraints;
+class SignUpOverlay extends StatefulWidget {
+  const SignUpOverlay({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpOverlay> createState() => _SignUpOverlayState();
+}
+
+class _SignUpOverlayState extends State<SignUpOverlay> {
+  late final ValueNotifier<bool> passObscure;
+  late final ValueNotifier<bool> repPassObscure;
+
+  @override
+  void initState() {
+    super.initState();
+
+    passObscure = ValueNotifier<bool>(true);
+    repPassObscure = ValueNotifier<bool>(true);
+  }
+
+  @override
+  void dispose() {
+    passObscure.dispose();
+    repPassObscure.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final passVisible = ValueNotifier<bool>(false);
-    final repPassVisible = ValueNotifier<bool>(false);
+    final theme = Theme.of(context);
+    final constraints = ConstraintInherited.of(context).constraints;
+
     return Container(
       height: constraints.maxHeight,
       width: constraints.maxWidth,
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: _padding,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+          topLeft: Radius.circular(const_measures.overlayBorderRadius),
+          topRight: Radius.circular(const_measures.overlayBorderRadius),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 30.0),
+            margin: _titleMargin,
             child: Text(
               'Привет!',
-              style: Theme.of(context).textTheme.headline2,
+              style: theme.textTheme.headline2,
             ),
           ),
-          const SizedBox(height: 10),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Создайте аккаунт для доступа к ',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                TextSpan(
-                  text: 'Лекции',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              ],
+          Container(
+            margin: _textMargin,
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Создайте аккаунт для доступа к ',
+                    style: theme.textTheme.bodyText1,
+                  ),
+                  TextSpan(
+                    text: 'Лекции',
+                    style: theme.textTheme.subtitle1,
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 20),
-          ...[
-            ['Эл. почта', Icons.mail, true],
-          ].map<Widget>(
-            (params) {
+          ...<MapEntry<String, IconData>>[
+            const MapEntry('Эл. почта', Icons.mail),
+          ].map(
+            (pair) {
               return SimpleTextField(
-                autoValidateMode: params[2] as bool,
-                icon: params[1] as IconData,
-                hint: params[0] as String,
+                icon: pair.value,
+                hint: pair.key,
               );
             },
           ),
-          ...[
-            ['Пароль', Icons.https, true, passVisible],
-            ['Повторите пароль', Icons.https, true, repPassVisible],
-          ].map<Widget>(
-            (params) {
-              return SecureTextField(
-                autoValidateMode: params[2] as bool,
-                icon: params[1] as IconData,
-                hint: params[0] as String,
-                obscure: params[3] as ValueNotifier<bool>,
-              );
+          ...<Triple<String, IconData, ValueNotifier<bool>>>[
+            Triple(
+              first: 'Пароль',
+              second: Icons.https,
+              third: passObscure,
+            ),
+            Triple(
+              first: 'Повторите пароль',
+              second: Icons.https,
+              third: repPassObscure,
+            ),
+          ].map(
+            (triple) {
+              final first = triple.first;
+              final second = triple.second;
+              final third = triple.third;
+
+              if (first != null && second != null && third != null) {
+                return SecureTextField(
+                  icon: second,
+                  hint: first,
+                  obscure: third,
+                );
+              }
+
+              return const SizedBox.shrink();
             },
           ),
           Expanded(
-            flex: 5,
+            flex: _bottomTextFlex,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -87,34 +133,35 @@ class SignUpOverlay extends StatelessWidget {
                 children: [
                   Text(
                     'Уже есть аккаунт?',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: theme.textTheme.bodyText1,
                   ),
                   TextButton(
+                    onPressed: _signIn,
                     child: Text(
                       'Войти',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            decoration: TextDecoration.underline,
-                          ),
+                      style: theme.textTheme.subtitle1?.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
-                    onPressed: () {
-                      GlobalParameters.confirmOverlayNotifier.value = true;
-                    },
                   ),
                 ],
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SingleButton(
-              text: 'Далее',
-              onPressed: () {
-                GlobalParameters.confirmOverlayNotifier.value = true;
-              },
-            ),
+          SingleButton(
+            text: 'Далее',
+            onPressed: _next,
           ),
         ],
       ),
     );
+  }
+
+  void _signIn() {
+    GlobalParameters.confirmOverlayNotifier.value = true;
+  }
+
+  void _next() {
+    GlobalParameters.confirmOverlayNotifier.value = true;
   }
 }

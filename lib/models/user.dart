@@ -1,50 +1,63 @@
+import '../constants/api.dart' as const_api;
+import '../constants/app.dart' as const_app;
+import '../custom/iterable_ext.dart';
+
+extension UserExt on User {
+  String getFio() {
+    final buffer = StringBuffer()..write(lastName);
+
+    final firName = firstName.split('').firstOrNull;
+    if (firName != null) {
+      buffer.write(' $firName.');
+    }
+
+    final midName = middleName?.split('').firstOrNull;
+    if (midName != null) {
+      buffer.write(' $midName.');
+    }
+
+    return buffer.toString();
+  }
+}
+
 class User {
-  User({
+  const User({
     required this.id,
     required this.firstName,
-    this.middleName,
     required this.lastName,
-    this.photo,
+    this.middleName,
+    this.avatar,
   });
 
-  late String id;
-  late String firstName;
-  String? middleName;
-  late String lastName;
-  String? photo;
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String? middleName;
+  final String? avatar;
 
-  User.fromMap(Map<String, dynamic> map) {
-    final keys = fieldsEN;
-    id = map[keys[0]];
-    firstName = map[keys[1]];
-    middleName = map[keys[2]];
-    lastName = map[keys[3]];
-    photo = map[keys[4]];
+  static User fromMap(Map<String, Object?> map) {
+    final id = map[const_api.id];
+    final firstName = map[const_api.firstName];
+    final lastName = map[const_api.lastName];
+    final middleName = map[const_api.middleName];
+    final avatar = map[const_api.avatar];
+
+    return User(
+      id: (id is String) ? id : const_app.unknownStr,
+      firstName: (firstName is String) ? firstName : const_app.unknownStr,
+      lastName: (lastName is String) ? lastName : const_app.unknownStr,
+      middleName: (middleName is String) ? middleName : null,
+      avatar: (avatar is String) ? avatar : null,
+    );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     return {
-      'id': id,
-      'firstName': firstName,
-      'middleName': middleName,
-      'lastName': lastName,
-      'photo': photo,
+      const_api.id: id,
+      const_api.firstName: firstName,
+      const_api.lastName: lastName,
+      const_api.middleName: middleName,
+      const_api.avatar: avatar,
     };
   }
-
-  List<String> get fieldsEN => [
-        'id',
-        'firstName',
-        'middleName',
-        'lastName',
-        'photo',
-      ];
-
-  List<String> get fieldsRU => [
-        'id',
-        'Имя',
-        'Отчество',
-        'Фамилия',
-        'Фото',
-      ];
 }

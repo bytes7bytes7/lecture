@@ -1,63 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
 import '../widgets/drag_container.dart';
 import '../widgets/search_bar.dart';
+
+const _heightFactor = 0.9;
+const _itemMargin = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 10.0,
+);
+const _offset = Offset(0, 4);
+const _blurRadius = 8.0;
+const _textPadding = EdgeInsets.symmetric(
+  horizontal: 20.0,
+  vertical: 15.0,
+);
 
 void showSelectOverlay({
   required BuildContext context,
   required List<String> items,
   required ValueNotifier<String> notifier,
 }) {
+  final theme = Theme.of(context);
   final size = MediaQuery.of(context).size;
+
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
-    constraints: BoxConstraints(maxHeight: size.height * 0.9),
+    constraints: BoxConstraints(
+      maxHeight: _heightFactor * size.height,
+    ),
     builder: (BuildContext context) {
       return DecoratedBox(
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: theme.scaffoldBackgroundColor,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+            topLeft: Radius.circular(const_measures.overlayBorderRadius),
+            topRight: Radius.circular(const_measures.overlayBorderRadius),
           ),
         ),
         child: Center(
           child: Column(
-            children: <Widget>[
+            children: [
               const DragContainer(),
-              const SearchBar(),
+              SearchBar(
+                hint: 'Поиск',
+                onSubmitted: (query) {
+                  // TODO: make request to server (use rx)
+                  SpreadQuillManager.inst.log('$query requested');
+                },
+              ),
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 10.0),
+                      margin: _itemMargin,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(10.0),
+                        color: theme.scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(
+                          const_measures.mainBorderRadius,
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color:
-                                Theme.of(context).shadowColor.withOpacity(0.25),
-                            offset: const Offset(0, 4),
-                            blurRadius: 8,
+                            color: theme.shadowColor.withOpacity(
+                              const_measures.opacity,
+                            ),
+                            offset: _offset,
+                            blurRadius: _blurRadius,
                           ),
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(
+                          const_measures.mainBorderRadius,
+                        ),
                         child: MaterialButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 15.0),
-                          minWidth: 0,
+                          padding: _textPadding,
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               items[index],
-                              style: Theme.of(context).textTheme.bodyText1,
+                              style: theme.textTheme.bodyText1,
                             ),
                           ),
                           onPressed: () {

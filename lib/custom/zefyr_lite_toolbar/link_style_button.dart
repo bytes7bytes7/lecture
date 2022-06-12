@@ -13,14 +13,14 @@ class LinkStyleButton extends StatefulWidget {
 }
 
 class _LinkStyleButtonState extends State<LinkStyleButton> {
-  void _didChangeSelection() {
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(_didChangeSelection);
+  }
+
+  void _didChangeSelection() {
+    setState(() {});
   }
 
   @override
@@ -40,6 +40,8 @@ class _LinkStyleButtonState extends State<LinkStyleButton> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ZIconButton(
       highlightElevation: 0,
       hoverElevation: 0,
@@ -47,9 +49,9 @@ class _LinkStyleButtonState extends State<LinkStyleButton> {
       icon: Icon(
         Icons.link,
         size: 18,
-        color: Theme.of(context).hintColor,
+        color: theme.hintColor,
       ),
-      fillColor: Theme.of(context).disabledColor,
+      fillColor: theme.disabledColor,
       onPressed: () => _openLinkDialog(context),
     );
   }

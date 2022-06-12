@@ -12,22 +12,23 @@ class _LinkDialogState extends State<_LinkDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AlertDialog(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       content: TextField(
-        cursorColor: Theme.of(context).primaryColor,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).shadowColor),
+        cursorColor: theme.primaryColor,
+        style: theme.textTheme.bodyText1?.copyWith(color: theme.shadowColor),
         decoration: InputDecoration(
           labelText: 'Ссылка',
           labelStyle: TextStyle(
-            color: Theme.of(context).primaryColor,
+            color: theme.primaryColor,
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color: theme.primaryColor,
             ),
           ),
-
         ),
         autofocus: true,
         onChanged: _linkChanged,
@@ -38,7 +39,7 @@ class _LinkDialogState extends State<_LinkDialog> {
           child: Text(
             'Ок',
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: theme.primaryColor,
             ),
           ),
         ),

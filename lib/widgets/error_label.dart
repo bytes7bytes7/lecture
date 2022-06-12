@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 
+import 'single_button.dart';
+
 class ErrorLabel extends StatelessWidget {
   const ErrorLabel({
     Key? key,
+    required this.tryAgain,
+    this.topWidget,
   }) : super(key: key);
+
+  final VoidCallback tryAgain;
+  final Widget? topWidget;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Ошибка :(\nПопробуйте снова позже',
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: Theme.of(context).errorColor,
-            ),
-        textAlign: TextAlign.center,
-      ),
+    final theme = Theme.of(context);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        topWidget ?? const SizedBox.shrink(),
+        Text(
+          'Ошибка\n👉🏻👈🏻',
+          style: theme.textTheme.subtitle1,
+          textAlign: TextAlign.center,
+        ),
+        SingleButton(
+          text: 'Повторить',
+          onPressed: tryAgain,
+        ),
+      ],
     );
   }
 }

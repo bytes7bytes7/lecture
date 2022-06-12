@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+const _height = 7.0;
+const _width = 80.0;
+const _borderRadius = 5.0;
+const _margin = EdgeInsets.symmetric(vertical: 15.0);
+
 class DragContainer extends StatelessWidget {
   const DragContainer({
     Key? key,
@@ -7,13 +12,15 @@ class DragContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      margin: const EdgeInsets.only(top: 25.0),
-      height: 7.0,
-      width: 80.0,
+      height: _height,
+      width: _width,
+      margin: _margin,
       decoration: BoxDecoration(
-        color: Theme.of(context).disabledColor,
-        borderRadius: BorderRadius.circular(5.0),
+        color: theme.disabledColor,
+        borderRadius: BorderRadius.circular(_borderRadius),
       ),
     );
   }

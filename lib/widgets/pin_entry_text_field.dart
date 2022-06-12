@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/measures.dart' as const_measures;
+
+const _cellWidth = 50.0;
+const _cellHeight = 76.0;
+const _cellAmount = 4;
+const _borderWidth = 1.0;
+const _borderWidthBold = 2.0;
+const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
+
 class PinEntryTextField extends StatefulWidget {
   final ValueNotifier<bool> errorNotifier;
   final ValueChanged<String> onSubmit;
-  final TextStyle textStyle;
-  final bool isTextObscure;
-  final Color cursorColor;
 
   const PinEntryTextField({
     Key? key,
     required this.errorNotifier,
     required this.onSubmit,
-    this.isTextObscure = false,
-    this.cursorColor = Colors.blue,
-    this.textStyle = const TextStyle(fontSize: 20.0, color: Colors.black),
   }) : super(key: key);
 
   @override
@@ -22,114 +25,93 @@ class PinEntryTextField extends StatefulWidget {
 }
 
 class _PinEntryTextFieldState extends State<PinEntryTextField> {
-  final List<String?> _pin = List.generate(4, (index) => null);
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
-  final List<TextEditingController> _textControllers =
-      List.generate(4, (index) => TextEditingController());
-
-  Widget textFields = Container();
+  final _pin = List<String>.generate(_cellAmount, (index) => '');
+  final _focusNodes =
+      List<FocusNode>.generate(_cellAmount, (index) => FocusNode());
+  final _textControllers = List<TextEditingController>.generate(
+    _cellAmount,
+    (index) => TextEditingController(),
+  );
 
   @override
   void dispose() {
-    for (var t in _textControllers) {
-      t.dispose();
+    for (var controller in _textControllers) {
+      controller.dispose();
     }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      verticalDirection: VerticalDirection.down,
       children: List.generate(
-        4,
-        (int i) {
+        _cellAmount,
+        (i) {
           return SizedBox(
-            width: 50.0,
-            height: 76.0,
-            child: ValueListenableBuilder(
+            width: _cellWidth,
+            child: ValueListenableBuilder<bool>(
               valueListenable: widget.errorNotifier,
-              builder: (context, bool error, _) {
+              builder: (context, error, child) {
                 return TextField(
                   controller: _textControllers[i],
+                  focusNode: _focusNodes[i],
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
-                  cursorColor: widget.cursorColor,
-                  maxLength: 1,
-                  style: widget.textStyle,
-                  focusNode: _focusNodes[i],
-                  obscureText: widget.isTextObscure,
+                  cursorColor: theme.primaryColor,
+                  style: theme.textTheme.headline2
+                      ?.copyWith(color: theme.shadowColor),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     counterText: '',
                     isCollapsed: true,
-                    // TODO: errorBorder makes border smaller
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                    contentPadding: _contentPadding,
+                    constraints: const BoxConstraints(
+                      minHeight: _cellHeight,
+                    ),
                     errorText: error ? '' : null,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        const_measures.mainBorderRadius,
+                      ),
                       borderSide: BorderSide(
-                        width: 1.0,
-                        color: Theme.of(context).hintColor,
+                        width: _borderWidth,
+                        color: theme.hintColor,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        const_measures.mainBorderRadius,
+                      ),
                       borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).primaryColor,
+                        width: _borderWidthBold,
+                        color: theme.primaryColor,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        const_measures.mainBorderRadius,
+                      ),
                       borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).errorColor,
+                        width: _borderWidth,
+                        color: theme.errorColor,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        const_measures.mainBorderRadius,
+                      ),
                       borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).primaryColor,
+                        width: _borderWidthBold,
+                        color: theme.primaryColor,
                       ),
                     ),
                   ),
-                  onChanged: (String str) {
-                    widget.errorNotifier.value = false;
-                    _pin[i] = str;
-                    if (str.isEmpty) {
-                      return;
-                    }
-                    if (i + 1 != 4) {
-                      _focusNodes[i].unfocus();
-                      if (_textControllers[i].text.isNotEmpty &&
-                          _pin[i] == '') {
-                        FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
-                      } else {
-                        FocusScope.of(context).requestFocus(_focusNodes[i + 1]);
-                      }
-                    } else {
-                      _focusNodes[i].unfocus();
-                      if (_textControllers[i].text.isNotEmpty &&
-                          _pin[i] == '') {
-                        FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
-                      }
-                    }
-                    if (_pin.every(
-                      (String? digit) => digit != null && digit != '',
-                    )) {
-                      widget.onSubmit(_pin.join());
-                    }
-                  },
-                  onSubmitted: (String str) {
-                    if (_pin.every(
-                      (String? digit) => digit != null && digit != '',
-                    )) {
-                      widget.onSubmit(_pin.join());
-                    }
-                  },
+                  onChanged: (str) => _onChanged(str, i),
+                  onSubmitted: _onSubmitted,
                 );
               },
             ),
@@ -137,5 +119,32 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
         },
       ),
     );
+  }
+
+  void _onChanged(String str, int i) {
+    widget.errorNotifier.value = false;
+
+    if (str.isEmpty) {
+      _pin[i] = '';
+    } else {
+      final lst = str.split('');
+      for (var j = i; j < _cellAmount && j - i < str.length; j++) {
+        _textControllers[j].text = _pin[j] = lst[j - i];
+        _focusNodes[j].unfocus();
+        if (j < _cellAmount - 1) {
+          FocusScope.of(context).requestFocus(_focusNodes[j + 1]);
+        }
+      }
+    }
+
+    if (_pin.every((digit) => digit.isNotEmpty)) {
+      widget.onSubmit(_pin.join());
+    }
+  }
+
+  void _onSubmitted(String str) {
+    if (_pin.every((digit) => digit.isNotEmpty)) {
+      widget.onSubmit(_pin.join());
+    }
   }
 }

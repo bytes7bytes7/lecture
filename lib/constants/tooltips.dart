@@ -1,9 +1,11 @@
-const settings = 'Настройки';
+const additional = 'Дополнительно';
 const back = 'Назад';
-const exit = 'Выход';
 const choose = 'Выбрать';
 const clear = 'Очистить';
+const exit = 'Выход';
+const filter = 'Фильтр';
 const less = 'Меньше';
 const more = 'Больше';
-const additional = 'Дополнительно';
+const newLecture = 'Новая лекция';
 const obscure = 'Видимость';
+const settings = 'Настройки';

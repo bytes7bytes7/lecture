@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
+import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
 import '../widgets/default_app_bar.dart';
+
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 15.0,
+);
+const _separator = SizedBox(height: 25);
+const _topicContentPadding = EdgeInsets.all(10);
+const _zefyrPadding = EdgeInsets.symmetric(
+  horizontal: 10.0,
+);
+const _blockPadding = EdgeInsets.all(8.0);
+const _blockBottomOffset = 50.0;
 
 class LectureEditorScreen extends StatelessWidget {
   const LectureEditorScreen({
@@ -12,6 +25,7 @@ class LectureEditorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final controller = ZefyrController();
     final editMode = ValueNotifier<bool>(true);
 
@@ -23,104 +37,108 @@ class LectureEditorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: DefaultAppBar(
           prefix: Icons.arrow_back,
-          prefixMessage: const_tooltips.back,
+          prefixTooltip: const_tooltips.back,
           prefixOnPressed: () {
             Navigator.pop(context);
           },
-          text: 'Новая лекция',
+          title: 'Новая лекция',
           suffix: Icons.more_vert,
-          suffixMessage: const_tooltips.additional,
+          suffixTooltip: const_tooltips.additional,
           suffixOnPressed: () {},
         ),
         body: SafeArea(
           child: Center(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+              padding: _padding,
               child: Column(
                 children: [
                   ZefyrLiteToolbar(
                     controller: controller,
                     notifier: editMode,
-                    dividerColor: Theme.of(context).scaffoldBackgroundColor,
+                    dividerColor: theme.scaffoldBackgroundColor,
                   ),
-                  //ZefyrToolbar.basic(controller: _controller),
-                  const SizedBox(height: 25.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Center(
-                      child: TextField(
-                        autofocus: true,
-                        scrollPhysics: const BouncingScrollPhysics(),
-                        style: Theme.of(context).textTheme.bodyText1,
-                        cursorColor: Theme.of(context).primaryColor,
-                        decoration: InputDecoration(
-                          hintText: 'Тема',
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Theme.of(context).hintColor),
-                          isCollapsed: true,
-                          border: InputBorder.none,
+                  _separator,
+                  TextField(
+                    autofocus: true,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    style: theme.textTheme.bodyText1,
+                    cursorColor: theme.primaryColor,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      contentPadding: _topicContentPadding,
+                      hintText: 'Тема',
+                      hintStyle: theme.textTheme.bodyText1
+                          ?.copyWith(color: theme.hintColor),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          const_measures.mainBorderRadius,
+                        ),
+                        borderSide: BorderSide(
+                          color: theme.hintColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          const_measures.mainBorderRadius,
+                        ),
+                        borderSide: BorderSide(
+                          color: theme.primaryColor,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          const_measures.mainBorderRadius,
+                        ),
+                        borderSide: BorderSide(
+                          color: theme.errorColor,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 25.0),
+                  _separator,
                   Expanded(
                     child: ValueListenableBuilder(
                       valueListenable: editMode,
-                      builder: (context, bool value, __) {
+                      builder: (context, bool value, child) {
                         return Stack(
                           children: [
                             Positioned.fill(
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Theme.of(context).primaryColor,
+                                    color: theme.primaryColor,
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(
+                                    const_measures.mainBorderRadius,
+                                  ),
                                 ),
                                 child: ZefyrEditor(
-                                  // TODO: add textStyle
                                   controller: controller,
                                   autofocus: true,
                                   readOnly: !value,
                                   scrollPhysics: const BouncingScrollPhysics(),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0,
-                                  ),
-
-                                  /// Add cursorColor property to editor.dart in zefyrka package this way:
-                                  /// 1) Add into ZefyrEditor class: "final Color? cursorColor;"
-                                  /// 2) Add into ZefyrEditor constructor: "this.cursorColor,"
-                                  /// 3) Replace "cursorColor ??= selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;"
-                                  /// 4) Replace "cursorColor ??= selectionTheme.cursorColor ?? theme.colorScheme.primary;" on "cursorColor = widget.cursorColor ?? selectionTheme.cursorColor ?? theme.colorScheme.primary;"
+                                  padding: _zefyrPadding,
+                                  expands: true,
                                 ),
                               ),
                             ),
                             if (!value)
                               Positioned(
-                                right: 100.0,
-                                left: 100.0,
-                                bottom: 50.0,
+                                right: 0,
+                                left: 0,
+                                bottom: _blockBottomOffset,
                                 child: Tooltip(
-                                  message: 'Editing blocked',
+                                  message: 'Режим просмотра',
                                   child: Container(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: _blockPadding,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).disabledColor,
+                                      color: theme.disabledColor,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.https_outlined,
-                                      color: Theme.of(context).primaryColor,
-                                      size: 24.0,
+                                      color: theme.primaryColor,
+                                      size: const_measures.smallIconSize,
                                     ),
                                   ),
                                 ),

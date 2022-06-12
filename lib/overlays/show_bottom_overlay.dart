@@ -1,48 +1,58 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../widgets/double_button.dart';
 import '../widgets/drag_container.dart';
+
+const _textPadding = EdgeInsets.symmetric(
+  horizontal: 2 * const_measures.mainHorMargin,
+);
 
 void showBottomOverlay({
   required BuildContext context,
   required List<TextSpan> textSpans,
-  required String prefix,
-  required VoidCallback prefixOnPressed,
-  required String suffix,
-  required VoidCallback suffixOnPressed,
+  required String primary,
+  required VoidCallback primaryOnPressed,
+  required String secondary,
+  required VoidCallback secondaryOnPressed,
 }) {
+  final theme = Theme.of(context);
+
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
       // TODO: find way to dynamically change size
       return Container(
-        height: 250,
+        height: const_measures.bottomOverlayHeight,
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: theme.scaffoldBackgroundColor,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+            topLeft: Radius.circular(const_measures.overlayBorderRadius),
+            topRight: Radius.circular(const_measures.overlayBorderRadius),
           ),
         ),
         child: Center(
           child: Column(
-            children: <Widget>[
+            children: [
               const DragContainer(),
-              const Spacer(),
-              RichText(
-                softWrap: true,
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: textSpans,
+              Expanded(
+                child: Padding(
+                  padding: _textPadding,
+                  child: RichText(
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: textSpans,
+                    ),
+                  ),
                 ),
               ),
-              const Spacer(),
               DoubleButton(
-                prefix: prefix,
-                prefixOnPressed: prefixOnPressed,
-                suffix: suffix,
-                suffixOnPressed: suffixOnPressed,
+                secondary: secondary,
+                secondaryOnPressed: secondaryOnPressed,
+                primary: primary,
+                primaryOnPressed: primaryOnPressed,
               ),
             ],
           ),

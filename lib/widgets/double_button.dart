@@ -1,80 +1,94 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+
+const _margin = EdgeInsets.only(bottom: 20.0);
+const _primaryFlex = 5;
+const _secondaryFlex = 2;
+
 class DoubleButton extends StatelessWidget {
   const DoubleButton({
     Key? key,
-    required this.prefix,
-    required this.prefixOnPressed,
-    required this.suffix,
-    required this.suffixOnPressed,
+    required this.primary,
+    required this.primaryOnPressed,
+    required this.secondary,
+    required this.secondaryOnPressed,
   }) : super(key: key);
 
-  final String prefix;
-  final VoidCallback prefixOnPressed;
-  final String suffix;
-  final VoidCallback suffixOnPressed;
+  final String primary;
+  final VoidCallback primaryOnPressed;
+  final String secondary;
+  final VoidCallback secondaryOnPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 20.0),
-      height: 57.0,
-      width: double.infinity,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          primary: Theme.of(context).hintColor,
-          backgroundColor: Theme.of(context).disabledColor,
-          side: BorderSide(
-            color: Theme.of(context).disabledColor,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
-        onPressed: prefixOnPressed,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  prefix,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Theme.of(context).hintColor),
-                ),
+    final theme = Theme.of(context);
+
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        height: const_measures.buttonHeight,
+        width: double.infinity,
+        margin: _margin,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            primary: theme.hintColor,
+            backgroundColor: theme.disabledColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                const_measures.buttonBorderRadius,
               ),
             ),
-            Flexible(
-              flex: 3,
-              fit: FlexFit.tight,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  primary: Theme.of(context).scaffoldBackgroundColor,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  side: BorderSide(
-                    color: Theme.of(context).primaryColor,
+            side: const BorderSide(
+              style: BorderStyle.none,
+            ),
+          ),
+          onPressed: secondaryOnPressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                flex: _secondaryFlex,
+                fit: FlexFit.tight,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    secondary,
+                    style: theme.textTheme.subtitle1
+                        ?.copyWith(color: theme.hintColor),
                   ),
                 ),
-                onPressed: suffixOnPressed,
-                child: Text(
-                  suffix,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              Flexible(
+                flex: _primaryFlex,
+                fit: FlexFit.tight,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    primary: theme.scaffoldBackgroundColor,
+                    backgroundColor: theme.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        const_measures.buttonBorderRadius,
                       ),
+                    ),
+                    side: const BorderSide(
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  onPressed: primaryOnPressed,
+                  child: Text(
+                    primary,
+                    style: theme.textTheme.subtitle1?.copyWith(
+                      color: theme.scaffoldBackgroundColor,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

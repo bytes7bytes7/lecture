@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app.dart' as const_app;
+import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
-import '../widgets/double_button.dart';
-import '../widgets/drag_container.dart';
-import '../widgets/select_date_field.dart';
-import '../widgets/select_field.dart';
-import '../widgets/select_number_field.dart';
+import '../widgets/widgets.dart';
 
-void showFilterOverlay(
-  BuildContext context,
-) {
+const _heightFactor = 0.7;
+
+void showFilterOverlay({
+  required BuildContext context,
+}) {
+  final theme = Theme.of(context);
+
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
@@ -17,18 +19,18 @@ void showFilterOverlay(
     builder: (BuildContext context) {
       // TODO: find way to dynamically change size
       return FractionallySizedBox(
-        heightFactor: 0.7,
+        heightFactor: _heightFactor,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: theme.scaffoldBackgroundColor,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
+              topLeft: Radius.circular(const_measures.overlayBorderRadius),
+              topRight: Radius.circular(const_measures.overlayBorderRadius),
             ),
           ),
           child: Center(
             child: Column(
-              children: <Widget>[
+              children: [
                 const DragContainer(),
                 const Spacer(),
                 SelectField(
@@ -49,24 +51,20 @@ void showFilterOverlay(
                 SelectNumberField(
                   title: 'Семестр',
                   notifier: GlobalParameters.semesterNotifier,
-                  defaultText: '-',
-                  min: 1,
+                  defaultText: const_app.notSetNumber,
+                  min: const_app.minSemester,
                   max: GlobalParameters.semesters,
                 ),
-                const SelectDateField(
-                  startDate: '06.08.21',
-                  endDate: '10.08.21',
+                SelectDateField(
+                  begin: DateTime.parse('06.06.22'),
+                  end: DateTime.parse('10.06.22'),
                 ),
-                /// I can use showDatePicker()
                 const Spacer(),
                 DoubleButton(
-                  prefix: 'Сброс',
-                  prefixOnPressed: GlobalParameters.dropFilter,
-                  suffix: 'Готово',
-                  suffixOnPressed: () {
-                    GlobalParameters.updateFiler();
-                    Navigator.pop(context);
-                  },
+                  secondary: 'Сброс',
+                  secondaryOnPressed: _dropFilter,
+                  primary: 'Готово',
+                  primaryOnPressed: () => _onDone(context),
                 ),
               ],
             ),
@@ -75,4 +73,13 @@ void showFilterOverlay(
       );
     },
   );
+}
+
+void _dropFilter() {
+  GlobalParameters.dropFilter();
+}
+
+void _onDone(BuildContext context) {
+  GlobalParameters.updateFiler();
+  Navigator.pop(context);
 }

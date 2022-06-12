@@ -3,82 +3,62 @@ import 'package:flutter/material.dart';
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../models/lecture.dart';
-import '../widgets/default_app_bar.dart';
-import '../widgets/lecture_card.dart';
+import '../models/user.dart';
+import '../widgets/widgets.dart';
+
+const _authorPadding = EdgeInsets.symmetric(vertical: 15);
+const _amount = 8;
 
 class AuthorScreen extends StatelessWidget {
   const AuthorScreen({
     Key? key,
+    required this.author,
   }) : super(key: key);
+
+  final User author;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: const_tooltips.back,
+        prefixTooltip: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        text: 'id32684510',
+        title: 'id${author.id}',
       ),
       body: Center(
         // TODO: add RefreshIndicator
+        // TODO: add request to get lectures (with pagination)
         child: ListView.builder(
           physics: const AlwaysBouncingScrollPhysics(),
-          itemCount: 8 + 1,
+          itemCount: _amount + 1,
           itemBuilder: (context, index) {
-            switch (index) {
-              case 0:
-                return Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 15.0),
-                      height: 76.0,
-                      width: 76.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://img.youscreen.ru/wall/14977928959176/14977928959176_1920x1200.jpg',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                Theme.of(context).shadowColor.withOpacity(0.25),
-                            offset: const Offset(0, 4),
-                            blurRadius: 10.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text(
-                        'Иванов Алексей\nИгоревич',
-                        style: Theme.of(context).textTheme.headline3,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      '8 Лекций',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: Theme.of(context).hintColor),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20.0),
-                  ],
-                );
-              default:
-                return LectureCard(lecture: Lecture.random());
+            if (index != 0) {
+              return LectureCard(
+                lecture: Lecture.random(),
+              );
             }
+
+            return Padding(
+              padding: _authorPadding,
+              child: Column(
+                children: [
+                  UserHeader(
+                    user: author,
+                  ),
+                  Text(
+                    '$_amount Лекций',
+                    style: theme.textTheme.bodyText1
+                        ?.copyWith(color: theme.hintColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),

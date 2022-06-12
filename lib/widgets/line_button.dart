@@ -1,46 +1,95 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+
+const _borderWidth = 1.0;
+
+enum LineBorderType {
+  left,
+  top,
+  right,
+  bottom,
+  none,
+}
 
 class LineButton extends StatelessWidget {
   const LineButton({
     Key? key,
-    this.icon,
     required this.text,
-    this.actions = const [],
     required this.onPressed,
+    this.icon,
+    this.actions = const [],
+    this.borderType = LineBorderType.none,
   }) : super(key: key);
 
-  final IconData? icon;
   final String text;
-  final List<Widget> actions;
   final VoidCallback onPressed;
+  final IconData? icon;
+  final List<Widget> actions;
+  final LineBorderType borderType;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     final iconData = icon;
 
     return MaterialButton(
       padding: EdgeInsets.zero,
-      minWidth: 0,
       onPressed: onPressed,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12.0,
+        ),
+        margin: const EdgeInsets.symmetric(
+          horizontal: const_measures.mainHorMargin,
+        ),
+        decoration: BoxDecoration(
+          border: (borderType == LineBorderType.left)
+              ? Border(
+                  left: BorderSide(
+                    color: theme.hintColor,
+                    width: _borderWidth,
+                  ),
+                )
+              : (borderType == LineBorderType.top)
+                  ? Border(
+                      top: BorderSide(
+                        color: theme.hintColor,
+                        width: _borderWidth,
+                      ),
+                    )
+                  : (borderType == LineBorderType.right)
+                      ? Border(
+                          right: BorderSide(
+                            color: theme.hintColor,
+                            width: _borderWidth,
+                          ),
+                        )
+                      : (borderType == LineBorderType.bottom)
+                          ? Border(
+                              bottom: BorderSide(
+                                color: theme.hintColor,
+                                width: _borderWidth,
+                              ),
+                            )
+                          : null,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                if (iconData != null) ...[
+                if (iconData != null)
                   Icon(
                     iconData,
-                    color: Theme.of(context).primaryColor,
-                    size: 24.0,
+                    color: theme.primaryColor,
+                    size: const_measures.smallIconSize,
                   ),
-                  const SizedBox(width: 15.0),
-                ],
+                const SizedBox(width: const_measures.smallIconSize / 2),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: theme.textTheme.bodyText1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../constants/app.dart' as const_app;
+import '../constants/colors.dart' as const_colors;
 import '../global_parameters.dart';
-import '../overlays/confirm_overlay.dart';
-import '../overlays/personal_info_overlay.dart';
-import '../overlays/sign_up_overlay.dart';
+import '../overlays/overlays.dart';
+import '../widgets/widgets.dart';
+
+const _logoSeparator = SizedBox(width: 5);
+const _mainFlex = 5;
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({
@@ -12,93 +17,85 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final padding = MediaQuery.of(context).padding;
     final height = size.height - padding.top - padding.bottom;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: theme.primaryColor,
+      ),
+    );
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        // to show background color when keyboard is closing
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: SizedBox(
-              height: height,
-              child: Column(
-                children: [
-                  Flexible(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height:
-                                Theme.of(context).textTheme.headline1!.fontSize,
-                            width:
-                                Theme.of(context).textTheme.headline1!.fontSize,
-                            child:
-                                Image.asset('assets/images/ic_launcher_96.png'),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            'Лекция',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Stack(
-                          clipBehavior: Clip.none,
+          child: ColoredBox(
+            color: theme.primaryColor,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: SizedBox(
+                height: height,
+                child: Column(
+                  children: [
+                    Flexible(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SignUpOverlay(constraints: constraints),
-                            ValueListenableBuilder(
-                              valueListenable:
-                                  GlobalParameters.confirmOverlayNotifier,
-                              builder: (context, bool value, _) {
-                                return AnimatedPositioned(
-                                  left: value ? 0 : size.width,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                  child:
-                                      ConfirmOverlay(constraints: constraints),
-                                );
-                              },
+                            SizedBox(
+                              height: theme.textTheme.headline1?.fontSize,
+                              width: theme.textTheme.headline1?.fontSize,
+                              child: Image.asset(const_app.logo96),
                             ),
-                            ValueListenableBuilder(
-                              valueListenable:
-                                  GlobalParameters.personalInfoOverlayNotifier,
-                              builder: (context, bool value, _) {
-                                return AnimatedPositioned(
-                                  left: value ? 0 : size.width,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                  child: PersonalInfoOverlay(
-                                    constraints: constraints,
-                                  ),
-                                );
-                              },
+                            _logoSeparator,
+                            Text(
+                              const_app.appName,
+                              style: theme.textTheme.headline1?.copyWith(
+                                color:
+                                    const_colors.lightScaffoldBackgroundColor,
+                              ),
                             ),
                           ],
-                        );
-                      },
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      flex: _mainFlex,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return ConstraintInherited(
+                            constraints: constraints,
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                const SignUpOverlay(),
+                                ListeningOverlay(
+                                  notifier:
+                                      GlobalParameters.confirmOverlayNotifier,
+                                  overlay: const ConfirmOverlay(),
+                                ),
+                                ListeningOverlay(
+                                  notifier: GlobalParameters
+                                      .personalInfoOverlayNotifier,
+                                  overlay: const PersonalInfoOverlay(),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

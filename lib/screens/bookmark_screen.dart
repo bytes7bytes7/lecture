@@ -16,11 +16,11 @@ class BookmarkScreen extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: const_tooltips.back,
+        prefixTooltip: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        text: 'Сохраненное',
+        title: 'Сохраненное',
       ),
       body: Center(
         child: ListView.builder(

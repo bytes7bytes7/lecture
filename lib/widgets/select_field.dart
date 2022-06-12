@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../overlays/show_select_overlay.dart';
 import 'sized_icon_button.dart';
+
+const _margin = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 12.0,
+);
+const _padding = EdgeInsets.symmetric(
+  horizontal: 20.0,
+  vertical: 10.0,
+);
 
 class SelectField extends StatelessWidget {
   const SelectField({
@@ -18,40 +28,43 @@ class SelectField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12.0),
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: _margin,
+      padding: _padding,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(10.0),
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(
+          const_measures.mainBorderRadius,
+        ),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: theme.primaryColor,
         ),
       ),
       child: Row(
         children: [
           ValueListenableBuilder(
             valueListenable: notifier,
-            builder: (context, String value, _) {
+            builder: (context, String value, child) {
               return Expanded(
                 child: (value.isNotEmpty)
                     ? Text(
                         value,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: theme.textTheme.bodyText1,
                       )
                     : Text(
                         defaultText,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(color: Theme.of(context).hintColor),
+                        style: theme.textTheme.bodyText1
+                            ?.copyWith(color: theme.hintColor),
                       ),
               );
             },
           ),
           SizedIconButton(
-            size: 24.0,
             icon: Icons.search,
+            size: const_measures.smallIconSize,
+            tooltip: const_tooltips.choose,
             onPressed: () async {
               showSelectOverlay(
                 context: context,
@@ -59,7 +72,6 @@ class SelectField extends StatelessWidget {
                 notifier: notifier,
               );
             },
-            message: const_tooltips.choose,
           ),
         ],
       ),

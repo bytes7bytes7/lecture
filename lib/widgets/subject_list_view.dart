@@ -1,65 +1,85 @@
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
+import '../models/subject.dart';
+
+const _maxHeight = 185.0;
+const _itemWidth = 110.0;
+const _blurRadius = 10.0;
+const _maxLines = 3;
+const _offset = Offset(0, 4);
+const _buttonPadding = EdgeInsets.all(25.0);
+const _separator = SizedBox(width: 25.0);
+
 class SubjectListView extends StatelessWidget {
   const SubjectListView({
     Key? key,
+    required this.items,
   }) : super(key: key);
+
+  final List<Subject> items;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return LimitedBox(
-      maxHeight: 155,
+      maxHeight: _maxHeight,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        itemCount: 6,
+        itemCount: items.length,
         separatorBuilder: (context, index) {
-          return const SizedBox(width: 25.0);
+          return _separator;
         },
         itemBuilder: (context, index) {
           return Container(
+            width: _itemWidth,
             margin: EdgeInsets.only(
-              left: index == 0 ? 25.0 : 0,
-              right: index == 5 ? 25.0 : 0,
+              left: index == 0 ? const_measures.mainHorMargin : 0,
+              right:
+                  index == items.length - 1 ? const_measures.mainHorMargin : 0,
               top: 5,
             ),
-            width: 100,
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 5),
-                  height: 100.0,
-                  width: 100.0,
+                  height: _itemWidth,
+                  width: _itemWidth,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(9.0),
+                    color: theme.scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(
+                      const_measures.mainBorderRadius,
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context)
-                            .shadowColor
-                            .withOpacity(0.25),
-                        offset: const Offset(0, 4),
-                        blurRadius: 10.0,
+                        color: theme.shadowColor
+                            .withOpacity(const_measures.opacity),
+                        offset: _offset,
+                        blurRadius: _blurRadius,
                       ),
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(9.0),
+                    borderRadius: BorderRadius.circular(
+                      const_measures.mainBorderRadius,
+                    ),
                     child: MaterialButton(
-                      padding: const EdgeInsets.all(25.0),
-                      minWidth: 0,
+                      padding: _buttonPadding,
                       onPressed: () {},
-                      child: Image.asset('assets/images/subjects/russian.png'),
+                      child: Image.asset(items[index].url),
                     ),
                   ),
                 ),
+                const Spacer(),
                 Text(
-                  'Русский язык',
-                  style: Theme.of(context).textTheme.bodyText1,
-                  maxLines: 2,
+                  items[index].title,
+                  style: theme.textTheme.bodyText1,
+                  maxLines: _maxLines,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                 ),
+                const Spacer(),
               ],
             ),
           );

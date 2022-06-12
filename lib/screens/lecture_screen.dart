@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
+import '../constants/api.dart' as const_api;
+import '../constants/measures.dart' as const_measures;
+import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
-import '../custom/custom_route_builder.dart';
 import '../models/lecture.dart';
-import '../widgets/default_app_bar.dart';
-import '../widgets/sized_icon_button.dart';
-import 'author_screen.dart';
+import '../utils/triple.dart';
+import '../widgets/widgets.dart';
+
+const _ratingInitValue = 0;
+const _dividerHeight = 20.0;
+const _dividerThickness = 1.0;
+const _dividerIndent = 15.0;
+const _menuTopOffset = 100.0;
+const _menuBottomOffset = 0.0;
+const _menuBorderRadius = 20.0;
+const _contentPadding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 15.0,
+);
+const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
+const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
+const _menuItemSeparator = SizedBox(width: 10);
 
 class LectureScreen extends StatelessWidget {
   const LectureScreen({
@@ -18,154 +35,73 @@ class LectureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ratingNotifier = ValueNotifier<int>(0);
+    final theme = Theme.of(context);
+    final ratingNotifier = ValueNotifier<int>(_ratingInitValue);
 
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixMessage: const_tooltips.back,
+        prefixTooltip: const_tooltips.back,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        text: 'Лекция',
+        title: 'Лекция',
         suffix: Icons.more_vert,
-        suffixMessage: const_tooltips.additional,
-        suffixOnPressed: () {
-          showMenu(
-            context: context,
-            position: const RelativeRect.fromLTRB(25.1, 100.0, 25.0, 0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            items: [
-              PopupMenuItem(
-                value: 0,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.bookmark_border,
-                      color: Theme.of(context).primaryColor,
-                      size: 24.0,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      'В закладки',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-                onTap: () {},
-              ),
-              PopupMenuItem(
-                value: 1,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.person_outline,
-                      color: Theme.of(context).primaryColor,
-                      size: 24.0,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      'К автору',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-                onTap: () {},
-              ),
-            ],
-          ).then((value) {
-            switch (value) {
-              case 0:
-                break;
-              case 1:
-                Navigator.of(context)
-                    .push(CustomRouteBuilder(widget: const AuthorScreen()));
-                break;
-            }
-          });
-        },
+        suffixTooltip: const_tooltips.additional,
+        suffixOnPressed: () => _showMenu(context),
       ),
       body: SingleChildScrollView(
         physics: const AlwaysBouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+          padding: _contentPadding,
           child: Column(
             children: [
-              _LectureHead(lecture: lecture),
+              LectureHeader(lecture: lecture),
               Divider(
-                height: 20,
-                color: Theme.of(context).hintColor,
-                thickness: 1.0,
+                height: _dividerHeight,
+                thickness: _dividerThickness,
+                color: theme.hintColor,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                padding: _topicPadding,
                 child: Text(
                   lecture.topic,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: theme.textTheme.headline3,
                 ),
               ),
               Text(
                 lecture.text,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: theme.textTheme.bodyText1,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
+                padding: _conclusionPadding,
                 child: Row(
                   children: [
                     Expanded(
                       child: Divider(
-                        endIndent: 15.0,
-                        color: Theme.of(context).hintColor,
-                        thickness: 1.0,
+                        endIndent: _dividerIndent,
+                        thickness: _dividerThickness,
+                        color: theme.hintColor,
                       ),
                     ),
                     Text(
                       'Было полезно?',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Theme.of(context).primaryColor),
+                      style: theme.textTheme.subtitle1?.copyWith(
+                        color: theme.primaryColor,
+                      ),
                     ),
                     Expanded(
                       child: Divider(
-                        indent: 15.0,
-                        color: Theme.of(context).hintColor,
-                        thickness: 1.0,
+                        indent: _dividerIndent,
+                        thickness: _dividerThickness,
+                        color: theme.hintColor,
                       ),
                     ),
                   ],
                 ),
               ),
-              ValueListenableBuilder(
-                valueListenable: ratingNotifier,
-                builder: (context, int value, _) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        5,
-                        (index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 7.0),
-                            child: SizedIconButton(
-                              icon: (index < value)
-                                  ? Icons.star
-                                  : Icons.star_border,
-                              message: '${index + 1}',
-                              onPressed: () {
-                                ratingNotifier.value = index + 1;
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
+              RatingStars(
+                ratingNotifier: ratingNotifier,
               ),
             ],
           ),
@@ -173,175 +109,70 @@ class LectureScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class _LectureHead extends StatelessWidget {
-  const _LectureHead({
-    Key? key,
-    required this.lecture,
-  }) : super(key: key);
+  void _showMenu(BuildContext context) {
+    final theme = Theme.of(context);
 
-  final Lecture lecture;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
+    showMenu(
+      context: context,
+      // add 1 to left component to move menu to the right
+      position: const RelativeRect.fromLTRB(
+        const_measures.mainHorMargin + 1,
+        _menuTopOffset,
+        const_measures.mainHorMargin,
+        _menuBottomOffset,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(_menuBorderRadius),
+      ),
+      items: const <Triple<int, IconData, String>>[
+        Triple(
+          first: 0,
+          second: Icons.bookmark_border,
+          third: 'В закладки',
+        ),
+        Triple(
+          first: 1,
+          second: Icons.person_outline,
+          third: 'К автору',
+        ),
+      ].map<PopupMenuItem>((quad) {
+        // do NOT add navigation to onTap,
+        // because it does NOT work until this menu closes
+        return PopupMenuItem(
+          value: quad.first,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Text(
-                      'Лектор:',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        lecture.lecturer,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                  ],
-                ),
+              Icon(
+                quad.second,
+                color: theme.primaryColor,
+                size: const_measures.smallIconSize,
               ),
-              DecoratedBox(
-                //padding: const EdgeInsets.only(left: 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: (lecture.rating >= 4.0)
-                      ? Theme.of(context).primaryColor.withOpacity(0.25)
-                      : (lecture.rating >= 3.0)
-                          ? Theme.of(context).indicatorColor.withOpacity(0.25)
-                          : (lecture.rating == 0.0)
-                              ? Theme.of(context).disabledColor
-                              : Theme.of(context).errorColor.withOpacity(0.25),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 2.0,
-                        top: 2.0,
-                        bottom: 2.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: (lecture.rating >= 4.0)
-                            ? Theme.of(context).primaryColor
-                            : (lecture.rating >= 3.0)
-                                ? Theme.of(context).indicatorColor
-                                : (lecture.rating == 0.0)
-                                    ? Theme.of(context).hintColor
-                                    : Theme.of(context).errorColor,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Icon(
-                          Icons.star,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          size: 14.0,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: (lecture.rating == 0)
-                          ? Text(
-                              '0,00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(color: Theme.of(context).hintColor),
-                            )
-                          : Text(
-                              ((lecture.rating * 100)
-                                      .round()
-                                      .toString()
-                                      .split('')
-                                    ..insert(1, ','))
-                                  .join(''),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
-                                    color: (lecture.rating >= 4.0)
-                                        ? Theme.of(context).primaryColor
-                                        : (lecture.rating >= 3.0)
-                                            ? Theme.of(context).indicatorColor
-                                            : Theme.of(context).errorColor,
-                                  ),
-                            ),
-                    ),
-                  ],
-                ),
+              _menuItemSeparator,
+              Text(
+                '${quad.third}',
+                style: theme.textTheme.bodyText1,
               ),
             ],
           ),
-        ),
-        ...[
-          ['Предмет:', lecture.subject],
-          ['Факультет:', lecture.faculty],
-          ['Уровень:', lecture.level],
-          ['Семестр:', lecture.semester]
-        ].map((pair) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Row(
-              children: [
-                Text(
-                  pair[0] as String,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Theme.of(context).primaryColor),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    '${pair[1]}',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-              ],
-            ),
+        );
+      }).toList(),
+    ).then((value) {
+      switch (value) {
+        case 0:
+          // TODO: add action "add a bookmark"
+          SpreadQuillManager.inst.info('Добавить в закладки');
+          break;
+        case 1:
+          SpreadQuillManager.inst.info('К автору');
+          Navigator.of(context).pushNamed(
+            const_routes.author,
+            arguments: <String, Object?>{
+              const_api.author: lecture.author,
+            },
           );
-        }),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Row(
-            children: [
-              Text(
-                'Автор:',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: Theme.of(context).primaryColor),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  lecture.author,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-              Text(
-                lecture.date,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Theme.of(context).hintColor,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+          break;
+      }
+    });
   }
 }

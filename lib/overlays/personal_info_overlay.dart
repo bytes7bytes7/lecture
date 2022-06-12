@@ -1,76 +1,78 @@
 import 'package:flutter/material.dart';
 
-import '../custom/custom_route_builder.dart';
-import '../screens/home_screen.dart';
-import '../widgets/simple_text_field.dart';
-import '../widgets/single_button.dart';
+import '../constants/measures.dart' as const_measures;
+import '../constants/routes.dart' as const_routes;
+import '../widgets/widgets.dart';
+
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+);
+const _titleMargin = EdgeInsets.only(
+  top: 30.0,
+);
+const _textMargin = EdgeInsets.symmetric(
+  vertical: 10.0,
+);
 
 class PersonalInfoOverlay extends StatelessWidget {
-  const PersonalInfoOverlay({
-    Key? key,
-    required this.constraints,
-  }) : super(key: key);
-
-  final BoxConstraints constraints;
+  const PersonalInfoOverlay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final constraints = ConstraintInherited.of(context).constraints;
+
     return Container(
       height: constraints.maxHeight,
       width: constraints.maxWidth,
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: _padding,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+          topLeft: Radius.circular(const_measures.overlayBorderRadius),
+          topRight: Radius.circular(const_measures.overlayBorderRadius),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 30.0),
+            margin: _titleMargin,
             child: Text(
               'Личное',
-              style: Theme.of(context).textTheme.headline2,
+              style: theme.textTheme.headline2,
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Заполните следующие поля, чтобы другие пользователи могли Вас найти',
-            style: Theme.of(context).textTheme.bodyText1,
+          Container(
+            margin: _textMargin,
+            child: Text(
+              'Заполните следующие поля, чтобы другие пользователи могли Вас найти',
+              style: theme.textTheme.bodyText1,
+            ),
           ),
-          const SizedBox(height: 20),
-          ...[
-            ['Имя', Icons.person, true],
-            ['Фамилия', Icons.person, true],
-            ['Отчество', Icons.person, false],
-          ].map<Widget>(
-            (params) {
+          ...<MapEntry<String, IconData>>[
+            const MapEntry('Имя', Icons.person),
+            const MapEntry('Фамилия', Icons.person),
+            const MapEntry('Отчество', Icons.person),
+          ].map(
+            (pair) {
               return SimpleTextField(
-                autoValidateMode: params[2] as bool,
-                icon: params[1] as IconData,
-                hint: params[0] as String,
+                icon: pair.value,
+                hint: pair.key,
               );
             },
           ),
           const Spacer(),
-          Align(
-            alignment: Alignment.center,
-            child: SingleButton(
-              text: 'Далее',
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  CustomRouteBuilder(
-                    widget: const HomeScreen(),
-                  ),
-                );
-              },
-            ),
+          SingleButton(
+            text: 'Далее',
+            onPressed: () => _next(context),
           ),
         ],
       ),
     );
+  }
+
+  void _next(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(const_routes.home);
   }
 }

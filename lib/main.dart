@@ -1,37 +1,32 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quick_quotes_quill/console_quill.dart';
+import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
-import 'screens/authentication_screen.dart';
-import 'themes/dark_theme.dart';
-import 'themes/light_theme.dart';
+import 'app.dart';
+import 'constants/app.dart' as const_app;
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-  runApp(const MyApp());
-}
+void main() async {
+  if (kDebugMode) {
+    final quill = ConsoleQuill(const_app.loggerName);
+    quill
+      ..config = quill.config.copyWith(
+        msgFGColor: CQHIColors.gray.fg,
+      )
+      ..info('Logger is enabled!');
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: lightTheme,
-      dark: darkTheme,
-      initial: AdaptiveThemeMode.system,
-      builder: (lightTheme, darkTheme){
-        return MaterialApp(
-          title: 'Lecture',
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          debugShowCheckedModeBanner: false,
-          home: const AuthenticationScreen(),
-        );
-      },
-    );
+    await SpreadQuillManager.inst.initialize([
+      quill,
+    ]);
   }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
+
+  runApp(const App());
 }

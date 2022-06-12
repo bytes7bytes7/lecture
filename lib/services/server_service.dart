@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
 import '../constants/api.dart' as const_api;
 import '../global_parameters.dart';
@@ -22,8 +23,7 @@ abstract class ServerService {
         error = false;
       } catch (e) {
         error = true;
-        // ignore: avoid_print
-        print('getLecture error: $e');
+        SpreadQuillManager.inst.error('getLecture error: $e');
       } finally {
         client.close();
       }
@@ -57,8 +57,7 @@ abstract class ServerService {
         error = false;
       } catch (e) {
         error = true;
-        // ignore: avoid_print
-        print('getFilterData error $e');
+        SpreadQuillManager.inst.error('getFilterData error $e');
       } finally {
         client.close();
       }
@@ -67,33 +66,37 @@ abstract class ServerService {
       }
     }
     if (uriResponse != null) {
-      final body = json.decode(utf8.decode(uriResponse.bodyBytes));
-      GlobalParameters.faculties.clear();
-      GlobalParameters.levels.clear();
-      GlobalParameters.subjects.clear();
-      GlobalParameters.semesters = 0;
+      try {
+        final body = json.decode(utf8.decode(uriResponse.bodyBytes));
+        GlobalParameters.faculties.clear();
+        GlobalParameters.levels.clear();
+        GlobalParameters.subjects.clear();
+        GlobalParameters.semesters = 0;
 
-      if (body is Map<String, Object?>) {
-        final faculties = body[const_api.allFaculties];
-        final levels = body[const_api.allLevels];
-        final subjects = body[const_api.alSubjects];
-        final maxSemester = body[const_api.maxSemester];
+        if (body is Map<String, Object?>) {
+          final faculties = body[const_api.allFaculties];
+          final levels = body[const_api.allLevels];
+          final subjects = body[const_api.alSubjects];
+          final maxSemester = body[const_api.maxSemester];
 
-        if (faculties is List<String>) {
-          GlobalParameters.faculties.addAll(faculties);
+          if (faculties is List<String>) {
+            GlobalParameters.faculties.addAll(faculties);
+          }
+
+          if (levels is List<String>) {
+            GlobalParameters.levels.addAll(levels);
+          }
+
+          if (subjects is List<String>) {
+            GlobalParameters.subjects.addAll(subjects);
+          }
+
+          if (maxSemester is int) {
+            GlobalParameters.semesters = maxSemester;
+          }
         }
-
-        if (levels is List<String>) {
-          GlobalParameters.levels.addAll(levels);
-        }
-
-        if (subjects is List<String>) {
-          GlobalParameters.subjects.addAll(subjects);
-        }
-
-        if (maxSemester is int) {
-          GlobalParameters.semesters = maxSemester;
-        }
+      } catch (e) {
+        SpreadQuillManager.inst.error(e);
       }
     }
   }
@@ -120,8 +123,7 @@ abstract class ServerService {
         error = false;
       } catch (e) {
         error = true;
-        // ignore: avoid_print
-        print('uploadLecture error: $e');
+        SpreadQuillManager.inst.error('uploadLecture error: $e');
       } finally {
         client.close();
       }
@@ -130,8 +132,8 @@ abstract class ServerService {
       }
     }
     if (uriResponse != null) {
-      // ignore: avoid_print
-      print(json.decode(utf8.decode(uriResponse.bodyBytes)));
+      SpreadQuillManager.inst
+          .log(json.decode(utf8.decode(uriResponse.bodyBytes)));
     }
   }
 }

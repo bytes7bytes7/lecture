@@ -260,6 +260,8 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
     // When the menu is dismissed we just fade the entire thing out
     // in the first 0.25s.
     assert(debugCheckHasMaterialLocalizations(context));
+    final theme = Theme.of(context);
+
     final localizations = MaterialLocalizations.of(context);
     final route = widget.route;
     final children = <Widget>[
@@ -278,7 +280,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
       opacity: _fadeOpacity,
       child: CustomPaint(
         painter: _DropdownMenuPainter(
-          color: widget.dropdownColor ?? Theme.of(context).canvasColor,
+          color: widget.dropdownColor ?? theme.canvasColor,
           elevation: route.elevation,
           selectedIndex: route.selectedIndex,
           resize: _resize,
@@ -302,7 +304,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                 scrollbars: false,
                 overscroll: false,
                 physics: const ClampingScrollPhysics(),
-                platform: Theme.of(context).platform,
+                platform: theme.platform,
               ),
               child: PrimaryScrollController(
                 controller: widget.route.scrollController!,
@@ -985,7 +987,7 @@ class DropdownButton<T> extends StatefulWidget {
   ///       value: selectedItem,
   ///       onChanged: (String? string) => setState(() => selectedItem = string!),
   ///       selectedItemBuilder: (BuildContext context) {
-  ///         return items.map<Widget>((String item) {
+  ///         return items.map((String item) {
   ///           return Text(item);
   ///         }).toList();
   ///       },
@@ -1372,12 +1374,14 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
 
   Color get _iconColor {
     // These colors are not defined in the Material Design spec.
+    final theme = Theme.of(context);
+
     if (_enabled) {
       if (widget.iconEnabledColor != null) {
         return widget.iconEnabledColor!;
       }
 
-      switch (Theme.of(context).brightness) {
+      switch (theme.brightness) {
         case Brightness.light:
           return Colors.grey.shade700;
         case Brightness.dark:
@@ -1388,7 +1392,7 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
         return widget.iconDisabledColor!;
       }
 
-      switch (Theme.of(context).brightness) {
+      switch (theme.brightness) {
         case Brightness.light:
           return Colors.grey.shade400;
         case Brightness.dark:
@@ -1428,6 +1432,8 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
+    final theme = Theme.of(context);
+
     final newOrientation = _getOrientation(context);
     _lastOrientation ??= newOrientation;
     if (newOrientation != _lastOrientation) {
@@ -1455,7 +1461,7 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
       hintIndex = items.length;
       items.add(
         DefaultTextStyle(
-          style: _textStyle!.copyWith(color: Theme.of(context).hintColor),
+          style: _textStyle!.copyWith(color: theme.hintColor),
           child: IgnorePointer(
             ignoringSemantics: false,
             child: displayedHint,
@@ -1493,11 +1499,11 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>>
     Widget result = DefaultTextStyle(
       style: _enabled
           ? _textStyle!
-          : _textStyle!.copyWith(color: Theme.of(context).disabledColor),
+          : _textStyle!.copyWith(color: theme.disabledColor),
       child: Container(
         decoration: _showHighlight
             ? BoxDecoration(
-                color: widget.focusColor ?? Theme.of(context).focusColor,
+                color: widget.focusColor ?? theme.focusColor,
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
               )
             : null,

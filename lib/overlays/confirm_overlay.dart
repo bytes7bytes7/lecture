@@ -1,87 +1,113 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
-import '../widgets/double_button.dart';
-import '../widgets/pin_entry_text_field.dart';
+import '../widgets/widgets.dart';
 
-class ConfirmOverlay extends StatelessWidget {
-  ConfirmOverlay({
-    Key? key,
-    required this.constraints,
-  }) : super(key: key);
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+);
+const _titleMargin = EdgeInsets.only(
+  top: 30.0,
+);
+const _textMargin = EdgeInsets.symmetric(
+  vertical: 10.0,
+);
+const _pinMargin = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: 20.0,
+);
 
-  final BoxConstraints constraints;
+class ConfirmOverlay extends StatefulWidget {
+  const ConfirmOverlay({Key? key}) : super(key: key);
 
-  final ValueNotifier<bool> errorNotifier = ValueNotifier(false);
+  @override
+  State<ConfirmOverlay> createState() => _ConfirmOverlayState();
+}
+
+class _ConfirmOverlayState extends State<ConfirmOverlay> {
+  late final ValueNotifier<bool> errorNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+
+    errorNotifier = ValueNotifier(false);
+  }
+
+  @override
+  void dispose() {
+    errorNotifier.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final constraints = ConstraintInherited.of(context).constraints;
+
     return Container(
       height: constraints.maxHeight,
       width: constraints.maxWidth,
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: _padding,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+          topLeft: Radius.circular(const_measures.overlayBorderRadius),
+          topRight: Radius.circular(const_measures.overlayBorderRadius),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 30.0),
+            margin: _titleMargin,
             child: Text(
               'Код подтверждения',
-              style: Theme.of(context).textTheme.headline2,
+              style: theme.textTheme.headline2,
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Введите код, который был выслан на электронную почту',
-            style: Theme.of(context).textTheme.bodyText1,
+          Container(
+            margin: _textMargin,
+            child: Text(
+              'Введите код, который был выслан на электронную почту',
+              style: theme.textTheme.bodyText1,
+            ),
           ),
-          const SizedBox(height: 20),
           Expanded(
             child: Container(
               alignment: Alignment.topCenter,
-              padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 0.0),
+              margin: _pinMargin,
               child: PinEntryTextField(
                 errorNotifier: errorNotifier,
-                cursorColor: Theme.of(context).primaryColor,
-                onSubmit: (value) {
-                  GlobalParameters.pin = value;
-                },
+                onSubmit: (value) => _pin = value,
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: DoubleButton(
-              prefix: 'Отмена',
-              prefixOnPressed: () {
-                GlobalParameters.confirmOverlayNotifier.value = false;
-              },
-              suffix: 'Далее',
-              suffixOnPressed: () {
-                // TODO: verify PIN-code
-                if (GlobalParameters.pin.isNotEmpty && GlobalParameters.pin.length == 4) {
-                  if (Random().nextInt(2).isEven) {
-                    errorNotifier.value = true;
-                  } else {
-                    GlobalParameters.personalInfoOverlayNotifier.value = true;
-                  }
-                } else {
-                  errorNotifier.value = true;
-                }
-              },
-            ),
+          DoubleButton(
+            secondary: 'Отмена',
+            secondaryOnPressed: _cancel,
+            primary: 'Далее',
+            primaryOnPressed: _next,
           ),
         ],
       ),
     );
+  }
+
+  set _pin(String value) => GlobalParameters.pin = value;
+
+  void _cancel() {
+    GlobalParameters.confirmOverlayNotifier.value = false;
+  }
+
+  void _next() {
+    // TODO: verify PIN-code
+    if (GlobalParameters.pin.isNotEmpty && GlobalParameters.pin.length == 4) {
+      GlobalParameters.personalInfoOverlayNotifier.value = true;
+    } else {
+      errorNotifier.value = true;
+    }
   }
 }
