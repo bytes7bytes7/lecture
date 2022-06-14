@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../models/user.dart';
 
 const _avatarSize = 76.0;
 const _namePadding = EdgeInsets.symmetric(vertical: 10);

@@ -24,3 +24,8 @@ const firstName = 'firstName';
 const middleName = 'middleName';
 const lastName = 'lastName';
 const avatar = 'avatar';
+
+const idLength = 8;
+const unknownStr = '?';
+const unknownInt = 0;
+const unknownDouble = 0.0;

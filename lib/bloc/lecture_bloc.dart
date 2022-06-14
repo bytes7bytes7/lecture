@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:rest_client/rest_client.dart';
+
 import '../global_parameters.dart';
-import '../models/lecture.dart';
 import '../repositories/lecture_repository.dart';
 
 abstract class LectureBloc {

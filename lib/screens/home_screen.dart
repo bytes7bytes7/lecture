@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../bloc/lecture_bloc.dart';
 import '../constants/app.dart' as const_app;
@@ -7,8 +9,6 @@ import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../global_parameters.dart';
-import '../models/subject.dart';
-import '../services/server_service.dart';
 import '../widgets/widgets.dart';
 
 const _floatButtonSize = 24.0;
@@ -35,7 +35,6 @@ class HomeScreen extends StatelessWidget {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        // TODO: replace appbar on some custom widget
         appBar: DefaultAppBar(
           title: const_app.appName,
           titleStyle: theme.textTheme.headline1,
@@ -57,7 +56,7 @@ class HomeScreen extends StatelessWidget {
               final state = snapshot.data;
               if (state is LectureInitState) {
                 if (GlobalParameters.semesters == 0) {
-                  ServerService.getFilterData();
+                  SpreadQuillManager.inst.info('getFilterData');
                 }
                 LectureBloc.updateAllLectures();
                 return const SizedBox.shrink();

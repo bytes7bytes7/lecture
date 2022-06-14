@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:rest_client/constants.dart' as const_api;
+import 'package:rest_client/rest_client.dart';
 
-import 'constants/api.dart' as const_api;
 import 'constants/routes.dart' as const_routes;
-import 'models/lecture.dart';
-import 'models/user.dart';
 import 'screens/screens.dart';
 
 part 'custom_route_builder.dart';

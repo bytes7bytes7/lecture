@@ -1,5 +1,5 @@
 extension StringExt on String {
-  String get capitalized {
+  String get capitalize {
     if (isNotEmpty) {
       final letters = split('');
       letters[0] = letters[0].toUpperCase();

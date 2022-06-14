@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/rest_client.dart';
 
-import '../models/lecture.dart';
-import '../models/user.dart';
 import '../utils/triple.dart';
 import 'rating_badge.dart';
 
@@ -25,7 +24,7 @@ class LectureHeader extends StatelessWidget {
         ...[
           Triple(
             first: 'Лектор:',
-            second: lecture.lecturer.getFio(),
+            second: shortFIO(lecture.lecturer),
             third: RatingBadge(
               rating: lecture.getRating(),
               amount: lecture.rating,
@@ -36,16 +35,8 @@ class LectureHeader extends StatelessWidget {
             second: lecture.subject,
           ),
           Triple(
-            first: 'Факультет:',
-            second: lecture.faculty,
-          ),
-          Triple(
-            first: 'Уровень:',
-            second: lecture.level,
-          ),
-          Triple(
-            first: 'Семестр:',
-            second: lecture.semester,
+            first: 'Учреждение:',
+            second: lecture.institution,
           ),
           Triple(
             first: 'Автор:',

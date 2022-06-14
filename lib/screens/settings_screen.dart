@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
-import '../models/user.dart';
 import '../overlays/show_bottom_overlay.dart';
 import '../utils/quadruple.dart';
 import '../widgets/widgets.dart';
 
 const _me = User(
-  id: '07776660',
+  id: 7776660,
   firstName: 'Владимир',
   lastName: 'Соколов',
+  email: 'vladimir.sokolov@mail.ru',
+  token: 'TEST_TOKEN',
   avatar: 'https://www.topsunglasses.net/wp-content/uploads/'
       '2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',
 );
@@ -37,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'id${_me.id}',
+        title: _me.beautifulID,
         suffix: Icons.exit_to_app,
         suffixTooltip: const_tooltips.exit,
         suffixOnPressed: () {

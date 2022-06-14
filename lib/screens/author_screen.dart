@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
-import '../models/lecture.dart';
-import '../models/user.dart';
 import '../widgets/widgets.dart';
 
 const _authorPadding = EdgeInsets.symmetric(vertical: 15);
@@ -28,7 +27,7 @@ class AuthorScreen extends StatelessWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'id${author.id}',
+        title: author.beautifulID,
       ),
       body: Center(
         // TODO: add RefreshIndicator

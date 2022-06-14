@@ -537,7 +537,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
 
     // double menuTop = (buttonTop - selectedItemOffset) -
     //     (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
-    // TODO: 8 is a padding of curtain object
+    // TODO: 8 is a padding of certain object
     final menuTop = buttonBottom + 8;
     var preferredMenuHeight = kMaterialListPadding.vertical;
     if (items.isNotEmpty) {

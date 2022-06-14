@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/constants.dart' as const_api;
+import 'package:rest_client/rest_client.dart';
 
-import '../constants/api.dart' as const_api;
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../models/lecture.dart';
-import '../models/user.dart';
 import '../utils/triple.dart';
 import 'rating_badge.dart';
 
@@ -73,7 +72,7 @@ class LectureCard extends StatelessWidget {
               ),
               Triple(
                 first: Icons.record_voice_over,
-                second: lecture.lecturer.getFio(),
+                second: shortFIO(lecture.lecturer),
               ),
               Triple(
                 first: Icons.school,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../models/subject.dart';
 
 const _maxHeight = 185.0;
 const _itemWidth = 110.0;

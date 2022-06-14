@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../models/lecture.dart';
 
 const _badgeIconSize = 14.0;
 const _textPadding = EdgeInsets.symmetric(horizontal: 10.0);

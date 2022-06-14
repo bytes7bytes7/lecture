@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
-import '../models/lecture.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/lecture_card.dart';
 

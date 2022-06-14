@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:rest_client/constants.dart' as const_api;
+import 'package:rest_client/rest_client.dart';
 
-import '../constants/api.dart' as const_api;
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
-import '../models/lecture.dart';
 import '../utils/triple.dart';
 import '../widgets/widgets.dart';
 
@@ -70,7 +70,7 @@ class LectureScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                lecture.text,
+                lecture.content?.text ?? '',
                 style: theme.textTheme.bodyText1,
               ),
               Padding(
