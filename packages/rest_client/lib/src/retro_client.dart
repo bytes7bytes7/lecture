@@ -75,4 +75,16 @@ abstract class RetroClient implements RestClient {
   @override
   @GET(const_secret.getUser)
   Future<User> getUser(int id);
+
+  @override
+  @GET(const_secret.findInstitution)
+  Future<List<String>> findInstitution(String query);
+
+  @override
+  @GET(const_secret.findSubject)
+  Future<List<String>> findSubject(String query);
+
+  @override
+  @GET(const_secret.findAuthor)
+  Future<List<User>> findAuthor(String query);
 }

@@ -4,7 +4,6 @@ part 'filter_config.freezed.dart';
 
 part 'filter_config.g.dart';
 
-@JsonSerializable()
 @freezed
 class FilterConfig with _$FilterConfig {
   const factory FilterConfig({
@@ -24,4 +23,7 @@ class FilterConfig with _$FilterConfig {
     beginDate: '',
     endDate: '',
   );
+
+  factory FilterConfig.fromJson(Map<String, dynamic> json) =>
+      _$FilterConfigFromJson(json);
 }

@@ -30,4 +30,10 @@ abstract class RestClient {
   Future<void> changeUserInfo(Map<String, dynamic> params);
 
   Future<User> getUser(int id);
+
+  Future<List<String>> findInstitution(String query);
+
+  Future<List<String>> findSubject(String query);
+
+  Future<List<User>> findAuthor(String query);
 }

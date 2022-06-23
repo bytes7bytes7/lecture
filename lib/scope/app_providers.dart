@@ -9,6 +9,7 @@ import '../repositories/interface/interfaces.dart';
 import 'providers/providers.dart';
 
 mixin AppProviders {
+  // TODO: do not forget ot override it after auth
   final account = Provider<User>((ref) => throw UnimplementedError());
 
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
@@ -29,9 +30,9 @@ mixin AppProviders {
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
-  final lectureRepo = Provider<LectureRepo>((ref) => LectureRepoImpl());
+  final lectureRepo = Provider<LectureRepo>(LectureRepoImpl.new);
 
-  final filterRepo = Provider<FilterRepo>((ref) => FilterRepoImpl());
+  final filterRepo = Provider<FilterRepo>(FilterRepoImpl.new);
 
-  final storageRepo = Provider<StorageRepo>((ref) => StorageRepoImpl());
+  final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 }

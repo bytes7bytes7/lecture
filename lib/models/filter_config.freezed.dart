@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+FilterConfig _$FilterConfigFromJson(Map<String, dynamic> json) {
+  return _FilterConfig.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FilterConfig {
   String get institution => throw _privateConstructorUsedError;
@@ -23,6 +27,7 @@ mixin _$FilterConfig {
   String get beginDate => throw _privateConstructorUsedError;
   String get endDate => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FilterConfigCopyWith<FilterConfig> get copyWith =>
       throw _privateConstructorUsedError;
@@ -154,7 +159,7 @@ class __$$_FilterConfigCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_FilterConfig implements _FilterConfig {
   const _$_FilterConfig(
       {required this.institution,
@@ -163,6 +168,9 @@ class _$_FilterConfig implements _FilterConfig {
       required this.author,
       required this.beginDate,
       required this.endDate});
+
+  factory _$_FilterConfig.fromJson(Map<String, dynamic> json) =>
+      _$$_FilterConfigFromJson(json);
 
   @override
   final String institution;
@@ -196,6 +204,7 @@ class _$_FilterConfig implements _FilterConfig {
             const DeepCollectionEquality().equals(other.endDate, endDate));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -210,6 +219,11 @@ class _$_FilterConfig implements _FilterConfig {
   @override
   _$$_FilterConfigCopyWith<_$_FilterConfig> get copyWith =>
       __$$_FilterConfigCopyWithImpl<_$_FilterConfig>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_FilterConfigToJson(this);
+  }
 }
 
 abstract class _FilterConfig implements FilterConfig {
@@ -220,6 +234,9 @@ abstract class _FilterConfig implements FilterConfig {
       required final String author,
       required final String beginDate,
       required final String endDate}) = _$_FilterConfig;
+
+  factory _FilterConfig.fromJson(Map<String, dynamic> json) =
+      _$_FilterConfig.fromJson;
 
   @override
   String get institution => throw _privateConstructorUsedError;

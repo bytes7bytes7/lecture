@@ -93,4 +93,37 @@ class MockClient implements RestClient {
   Future<User> getUser(int id) async {
     return Future.delayed(_dur, User.random);
   }
+
+  @override
+  Future<List<String>> findInstitution(String query) async {
+    return Future.delayed(
+      _dur,
+      () => List.generate(
+        dev.randomInt(30),
+        (index) => dev.randomString(dev.randomInt(30) + 10),
+      ),
+    );
+  }
+
+  @override
+  Future<List<String>> findSubject(String query) async {
+    return Future.delayed(
+      _dur,
+      () => List.generate(
+        dev.randomInt(30),
+        (index) => dev.randomString(dev.randomInt(10) + 10),
+      ),
+    );
+  }
+
+  @override
+  Future<List<User>> findAuthor(String query) async {
+    return Future.delayed(
+      _dur,
+      () => List.generate(
+        dev.randomInt(30),
+        (index) => User.random(),
+      ),
+    );
+  }
 }

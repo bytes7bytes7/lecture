@@ -6,7 +6,8 @@ part of 'filter_config.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FilterConfig _$FilterConfigFromJson(Map<String, dynamic> json) => FilterConfig(
+_$_FilterConfig _$$_FilterConfigFromJson(Map<String, dynamic> json) =>
+    _$_FilterConfig(
       institution: json['institution'] as String,
       subject: json['subject'] as String,
       lecturer: json['lecturer'] as String,
@@ -15,7 +16,7 @@ FilterConfig _$FilterConfigFromJson(Map<String, dynamic> json) => FilterConfig(
       endDate: json['endDate'] as String,
     );
 
-Map<String, dynamic> _$FilterConfigToJson(FilterConfig instance) =>
+Map<String, dynamic> _$$_FilterConfigToJson(_$_FilterConfig instance) =>
     <String, dynamic>{
       'institution': instance.institution,
       'subject': instance.subject,
