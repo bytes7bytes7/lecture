@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
@@ -7,6 +8,7 @@ import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../scope/app_scope.dart';
 import '../utils/triple.dart';
 import '../widgets/widgets.dart';
 
@@ -25,7 +27,7 @@ const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
 const _menuItemSeparator = SizedBox(width: 10);
 
-class LectureScreen extends StatelessWidget {
+class LectureScreen extends ConsumerWidget {
   const LectureScreen({
     super.key,
     required this.lecture,
@@ -34,7 +36,7 @@ class LectureScreen extends StatelessWidget {
   final Lecture lecture;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final ratingNotifier = ValueNotifier<int>(_ratingInitValue);
 
@@ -69,8 +71,9 @@ class LectureScreen extends StatelessWidget {
                   style: theme.textTheme.headline3,
                 ),
               ),
-              FutureBuilder(
-                future: ,
+              FutureBuilder<Content?>(
+                future:
+                    ref.read(AppScope.get().lectureRepo).getContent(lecture.id),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ErrorLabel(
@@ -89,7 +92,7 @@ class LectureScreen extends StatelessWidget {
                   return Column(
                     children: [
                       Text(
-                        lecture.contentID?.text ?? '',
+                        data.text,
                         style: theme.textTheme.bodyText1,
                       ),
                       Padding(

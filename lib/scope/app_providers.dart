@@ -3,13 +3,9 @@ import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/rest_client.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../models/filter_config.dart';
-import '../repositories/impl/filter_repo_impl.dart';
-import '../repositories/impl/lecture_repo_impl.dart';
-import '../repositories/impl/storage_repo_impl.dart';
-import '../repositories/interface/filter_repo.dart';
-import '../repositories/interface/lecture_repo.dart';
-import '../repositories/interface/storage_repo.dart';
+import '../models/models.dart';
+import '../repositories/impl/impls.dart';
+import '../repositories/interface/interfaces.dart';
 import 'providers/providers.dart';
 
 mixin AppProviders {
@@ -29,6 +25,9 @@ mixin AppProviders {
 
   final loggerManager =
       Provider<QuillManagerBase>((ref) => SpreadQuillManager.inst);
+
+  final restClient =
+      Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
   final lectureRepo = Provider<LectureRepo>((ref) => LectureRepoImpl());
 

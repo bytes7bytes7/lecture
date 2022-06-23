@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'dev.dart' as dev;
+import '../dev.dart' as dev;
 
 part 'content.g.dart';
 

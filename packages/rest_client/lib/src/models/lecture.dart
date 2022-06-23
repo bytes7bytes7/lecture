@@ -3,9 +3,8 @@ import 'dart:math';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../constants/api.dart' as const_api;
+import '../dev.dart' as dev;
 import '../extensions/string_ext.dart';
-import 'content.dart';
-import 'dev.dart' as dev;
 import 'user.dart';
 
 part 'lecture.g.dart';

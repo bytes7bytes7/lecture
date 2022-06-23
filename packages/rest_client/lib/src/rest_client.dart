@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import '../rest_client.dart';
 
 abstract class RestClient {
@@ -11,11 +9,11 @@ abstract class RestClient {
 
   Future<Content?> getContent(int id);
 
-  Future<List<Uint8List>> getPhotos(List<int> ids);
+  Future<List<int>> getPhoto(int id);
 
-  Future<List<Uint8List>> getVideos(List<int> ids);
+  Future<List<int>> getVideo(int id);
 
-  Future<List<Uint8List>> getAudios(List<int> ids);
+  Future<List<int>> getAudio(int id);
 
   Future<void> addBookmark(int id);
 

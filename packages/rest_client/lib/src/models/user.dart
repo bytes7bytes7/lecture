@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../constants/api.dart' as const_api;
+import '../dev.dart' as dev;
 import '../extensions/iterable_ext.dart';
 
 part 'user.g.dart';
@@ -43,7 +44,7 @@ class User {
   final String? middleName;
   final String? token;
   final String? avatar;
-  final List<String>? bookmarks;
+  final List<int>? bookmarks;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -51,4 +52,40 @@ class User {
 
   String get beautifulID =>
       'id${id.toString().padLeft(const_api.idLength, '0')}';
+
+  // TODO: remove it
+  static User random() {
+    final id = dev.randomInt(1000);
+    final firstName = dev.randomString(dev.randomInt(5) + 7, noSpace: true);
+    final lastName = dev.randomString(dev.randomInt(5) + 7, noSpace: true);
+    final middleName = dev.randomInt(2) == 1
+        ? dev.randomString(dev.randomInt(5) + 7, noSpace: true)
+        : null;
+    final email =
+        '${dev.randomString(dev.randomInt(5) + 7, noSpace: true)}@mail.ru';
+    final token = dev.randomString(
+      64,
+      noSpace: true,
+      useEn: true,
+      useNum: true,
+    );
+    final avatar = dev.randomInt(2) == 1
+        ? 'https://i.pinimg.com/564x/29/cf/ef/29cfef455b564112ab62371318593017.jpg'
+        : null;
+
+    final bookmarks = dev.randomInt(2) == 1
+        ? List.generate(dev.randomInt(10), (index) => dev.randomInt(1000))
+        : null;
+
+    return User(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      middleName: middleName,
+      token: token,
+      avatar: avatar,
+      bookmarks: bookmarks,
+    );
+  }
 }

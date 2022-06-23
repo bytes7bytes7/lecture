@@ -45,11 +45,7 @@ class HomeScreen extends ConsumerWidget {
           },
         ),
         body: RefreshIndicator(
-          onRefresh: () async {
-            await ref.read(AppScope.get().lectureRepo).getLectures();
-
-            return;
-          },
+          onRefresh: () => _onRefresh(ref),
           color: theme.primaryColor,
           backgroundColor: theme.scaffoldBackgroundColor,
           triggerMode: RefreshIndicatorTriggerMode.anywhere,
@@ -169,6 +165,12 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _onRefresh(WidgetRef ref) async {
+    final r = await ref.read(AppScope.get().lectureRepo).getLectures(null);
+
+    return;
   }
 }
 

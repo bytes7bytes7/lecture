@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -33,23 +31,26 @@ abstract class RetroClient implements RestClient {
 
   @override
   @GET(const_secret.getPhotos)
-  Future<List<Uint8List>> getPhotos(@Path('id') List<int> ids);
+  Future<List<int>> getPhoto(@Path('id') int id);
 
   @override
   @GET(const_secret.getVideos)
-  Future<List<Uint8List>> getVideos(@Path('id') List<int> ids);
+  Future<List<int>> getVideo(@Path('id') int id);
 
   @override
   @GET(const_secret.getAudios)
-  Future<List<Uint8List>> getAudios(@Path('id') List<int> ids);
+  Future<List<int>> getAudio(@Path('id') int id);
 
   @override
+  @POST(const_secret.addBookmark)
   Future<void> addBookmark(int id);
 
   @override
+  @POST(const_secret.deleteBookmark)
   Future<void> deleteBookmark(int id);
 
   @override
+  @GET(const_secret.getUserLectures)
   Future<List<Lecture>> getUserLectures(int id);
 
   @override
@@ -64,11 +65,14 @@ abstract class RetroClient implements RestClient {
   Future<String> refreshToken(@Query('token') String token);
 
   @override
+  @POST(const_secret.deleteUser)
   Future<void> deleteUser();
 
   @override
+  @POST(const_secret.changeUserInfo)
   Future<void> changeUserInfo(Map<String, dynamic> params);
 
   @override
+  @GET(const_secret.getUser)
   Future<User> getUser(int id);
 }
