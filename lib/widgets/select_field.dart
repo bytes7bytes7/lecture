@@ -16,14 +16,16 @@ const _padding = EdgeInsets.symmetric(
 
 class SelectField extends StatelessWidget {
   const SelectField({
-    Key? key,
-    required this.notifier,
-    required this.defaultText,
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.hint,
     required this.items,
-  }) : super(key: key);
+  });
 
-  final ValueNotifier<String> notifier;
-  final String defaultText;
+  final String value;
+  final void Function(String value) onChanged;
+  final String hint;
   final List<String> items;
 
   @override
@@ -44,22 +46,17 @@ class SelectField extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ValueListenableBuilder(
-            valueListenable: notifier,
-            builder: (context, String value, child) {
-              return Expanded(
-                child: (value.isNotEmpty)
-                    ? Text(
-                        value,
-                        style: theme.textTheme.bodyText1,
-                      )
-                    : Text(
-                        defaultText,
-                        style: theme.textTheme.bodyText1
-                            ?.copyWith(color: theme.hintColor),
-                      ),
-              );
-            },
+          Expanded(
+            child: (value.isNotEmpty)
+                ? Text(
+                    value,
+                    style: theme.textTheme.bodyText1,
+                  )
+                : Text(
+                    hint,
+                    style: theme.textTheme.bodyText1
+                        ?.copyWith(color: theme.hintColor),
+                  ),
           ),
           SizedIconButton(
             icon: Icons.search,
@@ -69,7 +66,7 @@ class SelectField extends StatelessWidget {
               showSelectOverlay(
                 context: context,
                 items: items,
-                notifier: notifier,
+                onChanged: onChanged,
               );
             },
           ),

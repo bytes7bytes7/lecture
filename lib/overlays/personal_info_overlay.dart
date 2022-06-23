@@ -15,7 +15,7 @@ const _textMargin = EdgeInsets.symmetric(
 );
 
 class PersonalInfoOverlay extends StatelessWidget {
-  const PersonalInfoOverlay({Key? key}) : super(key: key);
+  const PersonalInfoOverlay({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -7,8 +7,8 @@ const _margin = EdgeInsets.symmetric(vertical: 15.0);
 
 class DragContainer extends StatelessWidget {
   const DragContainer({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

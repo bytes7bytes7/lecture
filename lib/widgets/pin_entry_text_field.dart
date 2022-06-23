@@ -15,10 +15,10 @@ class PinEntryTextField extends StatefulWidget {
   final ValueChanged<String> onSubmit;
 
   const PinEntryTextField({
-    Key? key,
+    super.key,
     required this.errorNotifier,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   State<PinEntryTextField> createState() => _PinEntryTextFieldState();

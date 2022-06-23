@@ -2,11 +2,11 @@ part of 'zefyr_lite_toolbar.dart';
 
 class ToggleNotifierButton extends StatefulWidget {
   const ToggleNotifierButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.notifier,
     this.childBuilder = _toggleStyleButtonChildBuilder,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final ValueNotifier<bool> notifier;

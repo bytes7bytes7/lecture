@@ -9,9 +9,9 @@ const _padding = EdgeInsets.symmetric(
 
 class Badge extends StatelessWidget {
   const Badge({
-    Key? key,
+    super.key,
     required this.value,
-  }) : super(key: key);
+  });
 
   final String value;
 

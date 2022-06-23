@@ -9,9 +9,9 @@ const _namePadding = EdgeInsets.symmetric(vertical: 10);
 
 class UserHeader extends StatelessWidget {
   const UserHeader({
-    Key? key,
+    super.key,
     required this.user,
-  }) : super(key: key);
+  });
 
   final User user;
 

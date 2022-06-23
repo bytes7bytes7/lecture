@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/cupertino.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/constants.dart' as const_api;

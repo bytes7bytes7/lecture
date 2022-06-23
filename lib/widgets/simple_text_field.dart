@@ -4,10 +4,10 @@ const _margin = EdgeInsets.symmetric(vertical: 8);
 
 class SimpleTextField extends StatelessWidget {
   const SimpleTextField({
-    Key? key,
+    super.key,
     required this.icon,
     required this.hint,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final String hint;

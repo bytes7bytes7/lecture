@@ -39,7 +39,7 @@ class User {
   final int id;
   final String firstName;
   final String lastName;
-  final String email;
+  final String? email;
   final String? middleName;
   final String? token;
   final String? avatar;

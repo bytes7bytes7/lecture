@@ -1,18 +1,35 @@
-import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import 'dart:typed_data';
 
 import '../rest_client.dart';
-import 'constants/secret.dart' as const_secret;
 
-part 'rest_client.g.dart';
-
-@RestApi(baseUrl: const_secret.baseUrl)
 abstract class RestClient {
-  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+  Future<int> addLecture(Lecture lecture);
 
-  @GET(const_secret.getLectures)
-  Future<List<Lecture>> getLectures();
+  Future<void> deleteLecture(int id);
 
-  @POST(const_secret.addLecture)
-  Future<Lecture> createLecture(@Body() Lecture lecture);
+  Future<List<Lecture>> getLectures(int? id, Map<String, dynamic> filter);
+
+  Future<Content?> getContent(int id);
+
+  Future<List<Uint8List>> getPhotos(List<int> ids);
+
+  Future<List<Uint8List>> getVideos(List<int> ids);
+
+  Future<List<Uint8List>> getAudios(List<int> ids);
+
+  Future<void> addBookmark(int id);
+
+  Future<void> deleteBookmark(int id);
+
+  Future<List<Lecture>> getUserLectures(int id);
+
+  Future<String> getToken(String login, String password);
+
+  Future<String> refreshToken(String token);
+
+  Future<void> deleteUser();
+
+  Future<void> changeUserInfo(Map<String, dynamic> params);
+
+  Future<User> getUser(int id);
 }

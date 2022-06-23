@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const _strokeWidth = 2.0;
 
 class LoadingCircle extends StatelessWidget {
-  const LoadingCircle({Key? key}) : super(key: key);
+  const LoadingCircle({super.key});
 
   @override
   Widget build(BuildContext context) {

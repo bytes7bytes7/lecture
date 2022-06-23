@@ -8,11 +8,11 @@ const _margin = EdgeInsets.symmetric(vertical: 8);
 
 class SecureTextField extends StatelessWidget {
   const SecureTextField({
-    Key? key,
+    super.key,
     required this.icon,
     required this.hint,
     required this.obscure,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final String hint;

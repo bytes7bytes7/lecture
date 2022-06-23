@@ -7,10 +7,10 @@ const _margin = EdgeInsets.only(bottom: 20.0);
 
 class SingleButton extends StatelessWidget {
   const SingleButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback onPressed;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../global_parameters.dart';
 import '../widgets/drag_container.dart';
 import '../widgets/search_bar.dart';
 
@@ -21,7 +20,7 @@ const _textPadding = EdgeInsets.symmetric(
 void showSelectOverlay({
   required BuildContext context,
   required List<String> items,
-  required ValueNotifier<String> notifier,
+  required void Function(String value) onChanged,
 }) {
   final theme = Theme.of(context);
   final size = MediaQuery.of(context).size;
@@ -89,8 +88,7 @@ void showSelectOverlay({
                             ),
                           ),
                           onPressed: () {
-                            notifier.value = items[index];
-                            GlobalParameters.checkFilter();
+                            onChanged(items[index]);
                             Navigator.pop(context);
                           },
                         ),

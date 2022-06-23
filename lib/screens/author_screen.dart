@@ -10,9 +10,9 @@ const _amount = 8;
 
 class AuthorScreen extends StatelessWidget {
   const AuthorScreen({
-    Key? key,
+    super.key,
     required this.author,
-  }) : super(key: key);
+  });
 
   final User author;
 

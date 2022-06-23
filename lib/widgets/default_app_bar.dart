@@ -7,7 +7,7 @@ const _automaticallyImplyLeading = false;
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.titleStyle,
     this.prefix,
@@ -16,7 +16,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.suffix,
     this.suffixTooltip,
     this.suffixOnPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final TextStyle? titleStyle;

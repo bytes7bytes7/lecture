@@ -7,9 +7,9 @@ const _starPadding = EdgeInsets.symmetric(horizontal: 7.0);
 
 class RatingStars extends StatelessWidget {
   const RatingStars({
-    Key? key,
+    super.key,
     required this.ratingNotifier,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<int> ratingNotifier;
 

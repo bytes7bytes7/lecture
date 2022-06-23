@@ -19,9 +19,9 @@ const _verSizedBox = SizedBox(width: 10);
 
 class LectureCard extends StatelessWidget {
   const LectureCard({
-    Key? key,
+    super.key,
     required this.lecture,
-  }) : super(key: key);
+  });
 
   final Lecture lecture;
 

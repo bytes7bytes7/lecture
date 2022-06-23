@@ -14,13 +14,13 @@ enum LineBorderType {
 
 class LineButton extends StatelessWidget {
   const LineButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.icon,
     this.actions = const [],
     this.borderType = LineBorderType.none,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback onPressed;

@@ -9,9 +9,9 @@ const _labelAndValueSeparator = SizedBox(width: 6);
 
 class LectureHeader extends StatelessWidget {
   const LectureHeader({
-    Key? key,
+    super.key,
     required this.lecture,
-  }) : super(key: key);
+  });
 
   final Lecture lecture;
 

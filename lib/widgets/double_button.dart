@@ -8,12 +8,12 @@ const _secondaryFlex = 2;
 
 class DoubleButton extends StatelessWidget {
   const DoubleButton({
-    Key? key,
+    super.key,
     required this.primary,
     required this.primaryOnPressed,
     required this.secondary,
     required this.secondaryOnPressed,
-  }) : super(key: key);
+  });
 
   final String primary;
   final VoidCallback primaryOnPressed;

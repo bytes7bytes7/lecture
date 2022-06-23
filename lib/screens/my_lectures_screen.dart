@@ -17,8 +17,8 @@ const _draftListKey = PageStorageKey('MyLecturesScreen/draft');
 
 class MyLecturesScreen extends StatelessWidget {
   const MyLecturesScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

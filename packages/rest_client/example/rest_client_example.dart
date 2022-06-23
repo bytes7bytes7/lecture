@@ -12,9 +12,9 @@ void main() {
 
   final dio = Dio();
   dio.options.headers['accept'] = 'application/json';
-  final client = RestClient(dio);
+  final client = ClientFactory().createClient();
 
-  client.getLectures().then((items) {
+  client.getLectures(null, {}).then((items) {
     for (final item in items) {
       SpreadQuillManager.inst.log(item);
     }

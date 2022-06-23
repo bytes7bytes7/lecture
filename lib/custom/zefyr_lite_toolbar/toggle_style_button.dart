@@ -2,13 +2,12 @@ part of 'zefyr_lite_toolbar.dart';
 
 class ToggleStyleButton extends StatefulWidget {
   ToggleStyleButton({
-    Key? key,
+    super.key,
     required this.attribute,
     required this.icon,
     required this.controller,
     this.childBuilder = _toggleStyleButtonChildBuilder,
-  })  : assert(!attribute.isUnset),
-        super(key: key);
+  })  : assert(!attribute.isUnset);
 
   final NotusAttribute attribute;
   final IconData icon;

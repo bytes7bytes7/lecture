@@ -20,8 +20,8 @@ const _blockBottomOffset = 50.0;
 
 class LectureEditorScreen extends StatelessWidget {
   const LectureEditorScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -13,9 +13,9 @@ const _separator = SizedBox(width: 25.0);
 
 class SubjectListView extends StatelessWidget {
   const SubjectListView({
-    Key? key,
+    super.key,
     required this.items,
-  }) : super(key: key);
+  });
 
   final List<Subject> items;
 

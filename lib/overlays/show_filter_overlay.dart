@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants/app.dart' as const_app;
 import '../constants/measures.dart' as const_measures;
-import '../global_parameters.dart';
+import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
 const _heightFactor = 0.7;
 
 void showFilterOverlay({
   required BuildContext context,
+  required WidgetRef ref,
 }) {
   final theme = Theme.of(context);
 
@@ -34,37 +35,56 @@ void showFilterOverlay({
                 const DragContainer(),
                 const Spacer(),
                 SelectField(
-                  notifier: GlobalParameters.facultyNotifier,
-                  defaultText: 'Факультет',
-                  items: GlobalParameters.faculties,
+                  value: ref.watch(
+                    AppScope.get().filter.select((value) => value.institution),
+                  ),
+                  hint: 'Учреждение',
+                  items: const ['1', '2'],
+                  onChanged: (String value) {
+                    ref.read(AppScope.get().filter.notifier).institution =
+                        value;
+                  },
                 ),
                 SelectField(
-                  notifier: GlobalParameters.levelNotifier,
-                  defaultText: 'Уровень высшего образования',
-                  items: GlobalParameters.levels,
+                  value: ref.watch(
+                    AppScope.get().filter.select((value) => value.subject),
+                  ),
+                  hint: 'Предмет',
+                  items: const ['1', '2'],
+                  onChanged: (String value) {
+                    ref.read(AppScope.get().filter.notifier).subject = value;
+                  },
                 ),
                 SelectField(
-                  notifier: GlobalParameters.subjectNotifier,
-                  defaultText: 'Предмет',
-                  items: GlobalParameters.subjects,
+                  value: ref.watch(
+                    AppScope.get().filter.select((value) => value.lecturer),
+                  ),
+                  hint: 'Лектор',
+                  items: const ['1', '2'],
+                  onChanged: (String value) {
+                    ref.read(AppScope.get().filter.notifier).lecturer = value;
+                  },
                 ),
-                SelectNumberField(
-                  title: 'Семестр',
-                  notifier: GlobalParameters.semesterNotifier,
-                  defaultText: const_app.notSetNumber,
-                  min: const_app.minSemester,
-                  max: GlobalParameters.semesters,
+                SelectField(
+                  value: ref.watch(
+                    AppScope.get().filter.select((value) => value.author),
+                  ),
+                  hint: 'Автор',
+                  items: const ['1', '2'],
+                  onChanged: (String value) {
+                    ref.read(AppScope.get().filter.notifier).author = value;
+                  },
                 ),
                 SelectDateField(
-                  begin: DateTime.parse('06.06.22'),
-                  end: DateTime.parse('10.06.22'),
+                  begin: DateTime.utc(2022, 6, 6),
+                  end: DateTime.utc(2022, 6, 10),
                 ),
                 const Spacer(),
                 DoubleButton(
                   secondary: 'Сброс',
-                  secondaryOnPressed: _dropFilter,
+                  secondaryOnPressed: () => _dropFilter(ref),
                   primary: 'Готово',
-                  primaryOnPressed: () => _onDone(context),
+                  primaryOnPressed: () => _onDone(context, ref),
                 ),
               ],
             ),
@@ -75,11 +95,11 @@ void showFilterOverlay({
   );
 }
 
-void _dropFilter() {
-  GlobalParameters.dropFilter();
+void _dropFilter(WidgetRef ref) {
+  ref.read(AppScope.get().filter.notifier).dropFilter();
 }
 
-void _onDone(BuildContext context) {
-  GlobalParameters.updateFiler();
+void _onDone(BuildContext context, WidgetRef ref) {
+  ref.read(AppScope.get().filter.notifier).updateFilter();
   Navigator.pop(context);
 }

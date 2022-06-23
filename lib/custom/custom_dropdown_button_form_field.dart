@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// ignore_for_file: prefer_mixin
+// ignore_for_file: prefer_mixin, unused_element
 
 import 'dart:math' as math;
 import 'dart:ui' show window;
@@ -92,14 +92,14 @@ class _DropdownMenuPainter extends CustomPainter {
 // The widget that is the button wrapping the menu items.
 class _DropdownMenuItemButton<T> extends StatefulWidget {
   const _DropdownMenuItemButton({
-    Key? key,
+    super.key,
     this.padding,
     required this.route,
     required this.buttonRect,
     required this.constraints,
     required this.itemIndex,
     required this.enableFeedback,
-  }) : super(key: key);
+  });
 
   final _DropdownRoute<T> route;
   final EdgeInsets? padding;
@@ -206,14 +206,14 @@ class _DropdownMenuItemButtonState<T>
 
 class _DropdownMenu<T> extends StatefulWidget {
   const _DropdownMenu({
-    Key? key,
+    super.key,
     this.padding,
     required this.route,
     required this.buttonRect,
     required this.constraints,
     this.dropdownColor,
     required this.enableFeedback,
-  }) : super(key: key);
+  });
 
   final _DropdownRoute<T> route;
   final EdgeInsets? padding;
@@ -586,7 +586,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
 
 class _DropdownRoutePage<T> extends StatelessWidget {
   const _DropdownRoutePage({
-    Key? key,
+    super.key,
     required this.route,
     required this.constraints,
     this.items,
@@ -598,7 +598,7 @@ class _DropdownRoutePage<T> extends StatelessWidget {
     this.style,
     required this.dropdownColor,
     required this.enableFeedback,
-  }) : super(key: key);
+  });
 
   final _DropdownRoute<T> route;
   final BoxConstraints constraints;
@@ -668,10 +668,10 @@ class _DropdownRoutePage<T> extends StatelessWidget {
 // as closely as possible.
 class _MenuItem<T> extends SingleChildRenderObjectWidget {
   const _MenuItem({
-    Key? key,
+    super.key,
     required this.onLayout,
     required this.item,
-  }) : super(key: key, child: item);
+  }) : super(child: item);
 
   final ValueChanged<Size> onLayout;
   final DropdownMenuItem<T>? item;
@@ -710,11 +710,10 @@ class _DropdownMenuItemContainer extends StatelessWidget {
   ///
   /// The [child] argument is required.
   const _DropdownMenuItemContainer({
-    Key? key,
-    // ignore: unused_element
+    super.key,
     this.alignment = AlignmentDirectional.centerStart,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The widget below this widget in the tree.
   ///
@@ -753,9 +752,9 @@ class DropdownButtonHideUnderline extends InheritedWidget {
   /// Creates a [DropdownButtonHideUnderline]. A non-null [child] must
   /// be given.
   const DropdownButtonHideUnderline({
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
+    super.key,
+    required super.child,
+  });
 
   /// Returns whether the underline of [DropdownButton] widgets should
   /// be hidden.
@@ -868,7 +867,7 @@ class DropdownButton<T> extends StatefulWidget {
   /// dropdown when it is open. If it is null, the current theme's
   /// [ThemeData.canvasColor] will be used instead.
   DropdownButton({
-    Key? key,
+    super.key,
     required this.items,
     this.selectedItemBuilder,
     this.value,
@@ -908,8 +907,7 @@ class DropdownButton<T> extends StatefulWidget {
           'Either zero or 2 or more [DropdownMenuItem]s were detected '
           'with the same value',
         ),
-        assert(itemHeight == null || itemHeight >= kMinInteractiveDimension),
-        super(key: key);
+        assert(itemHeight == null || itemHeight >= kMinInteractiveDimension);
 
   /// The list of items the user can select.
   ///
@@ -1596,7 +1594,7 @@ class CustomDropdownButtonFormField<T> extends FormField<T> {
   /// The `items`, `elevation`, `iconSize`, `isDense`, `isExpanded`,
   /// `autofocus`, and `decoration`  parameters must not be null.
   CustomDropdownButtonFormField({
-    Key? key,
+    super.key,
     required List<DropdownMenuItem<T>>? items,
     DropdownButtonBuilder? selectedItemBuilder,
     T? value,
@@ -1618,8 +1616,8 @@ class CustomDropdownButtonFormField<T> extends FormField<T> {
     bool autofocus = false,
     Color? dropdownColor,
     InputDecoration? decoration,
-    FormFieldSetter<T>? onSaved,
-    FormFieldValidator<T>? validator,
+    super.onSaved,
+    super.validator,
     @Deprecated(
       'Use autovalidateMode parameter which provide more specific '
       'behaviour related to auto validation. '
@@ -1651,10 +1649,7 @@ class CustomDropdownButtonFormField<T> extends FormField<T> {
         ),
         decoration = decoration ?? InputDecoration(focusColor: focusColor),
         super(
-          key: key,
-          onSaved: onSaved,
           initialValue: value,
-          validator: validator,
           autovalidateMode: autovalidate
               ? AutovalidateMode.always
               : (autovalidateMode ?? AutovalidateMode.disabled),

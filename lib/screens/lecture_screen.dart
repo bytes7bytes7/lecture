@@ -27,9 +27,9 @@ const _menuItemSeparator = SizedBox(width: 10);
 
 class LectureScreen extends StatelessWidget {
   const LectureScreen({
-    Key? key,
+    super.key,
     required this.lecture,
-  }) : super(key: key);
+  });
 
   final Lecture lecture;
 
@@ -69,39 +69,62 @@ class LectureScreen extends StatelessWidget {
                   style: theme.textTheme.headline3,
                 ),
               ),
-              Text(
-                lecture.content?.text ?? '',
-                style: theme.textTheme.bodyText1,
-              ),
-              Padding(
-                padding: _conclusionPadding,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        endIndent: _dividerIndent,
-                        thickness: _dividerThickness,
-                        color: theme.hintColor,
+              FutureBuilder(
+                future: ,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return ErrorLabel(
+                      tryAgain: () {
+                        SpreadQuillManager.inst
+                            .log("Load lecture's content again");
+                      },
+                    );
+                  }
+
+                  final data = snapshot.data;
+                  if (data == null) {
+                    return const LoadingCircle();
+                  }
+
+                  return Column(
+                    children: [
+                      Text(
+                        lecture.contentID?.text ?? '',
+                        style: theme.textTheme.bodyText1,
                       ),
-                    ),
-                    Text(
-                      'Было полезно?',
-                      style: theme.textTheme.subtitle1?.copyWith(
-                        color: theme.primaryColor,
+                      Padding(
+                        padding: _conclusionPadding,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                endIndent: _dividerIndent,
+                                thickness: _dividerThickness,
+                                color: theme.hintColor,
+                              ),
+                            ),
+                            Text(
+                              'Было полезно?',
+                              style: theme.textTheme.subtitle1?.copyWith(
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                indent: _dividerIndent,
+                                thickness: _dividerThickness,
+                                color: theme.hintColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        indent: _dividerIndent,
-                        thickness: _dividerThickness,
-                        color: theme.hintColor,
+                      RatingStars(
+                        ratingNotifier: ratingNotifier,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              RatingStars(
-                ratingNotifier: ratingNotifier,
+                    ],
+                  );
+                },
               ),
             ],
           ),

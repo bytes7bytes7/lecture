@@ -7,14 +7,14 @@ const _showDuration = Duration(seconds: 2);
 
 class SizedIconButton extends StatelessWidget {
   const SizedIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     required this.tooltip,
     this.size = const_measures.bigIconSize,
     this.splashRadius = _splashRadius,
     this.color,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback onPressed;

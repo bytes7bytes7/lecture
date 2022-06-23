@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
-import '../global_parameters.dart';
 import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -17,18 +16,18 @@ const _textPadding = EdgeInsets.symmetric(horizontal: 20.0);
 
 class SelectNumberField extends StatelessWidget {
   const SelectNumberField({
-    Key? key,
+    super.key,
     required this.title,
     required this.notifier,
-    required this.defaultText,
+    required this.hint,
     required this.min,
     required this.max,
-  }) : super(key: key);
+  });
 
   /// Value of notifier must be 0-9 or -
   final ValueNotifier<String> notifier;
   final String title;
-  final String defaultText;
+  final String hint;
 
   /// Value must be in range [min, max]
   final int min;
@@ -63,19 +62,18 @@ class SelectNumberField extends StatelessWidget {
             size: const_measures.smallIconSize,
             tooltip: const_tooltips.less,
             onPressed: () {
-              if (notifier.value != defaultText) {
+              if (notifier.value != hint) {
                 try {
                   var old = int.parse(notifier.value);
                   if (old != min) {
                     notifier.value = (--old).toString();
                   } else {
-                    notifier.value = defaultText;
+                    notifier.value = hint;
                   }
                 } catch (e) {
-                  notifier.value = defaultText;
+                  notifier.value = hint;
                 }
               }
-              GlobalParameters.checkFilter();
             },
           ),
           ValueListenableBuilder(
@@ -84,7 +82,7 @@ class SelectNumberField extends StatelessWidget {
               return Padding(
                 padding: _textPadding,
                 child: Text(
-                  (notifier.value.isNotEmpty) ? num : defaultText,
+                  (notifier.value.isNotEmpty) ? num : hint,
                   style: theme.textTheme.bodyText1,
                 ),
               );
@@ -95,19 +93,18 @@ class SelectNumberField extends StatelessWidget {
             size: const_measures.smallIconSize,
             tooltip: const_tooltips.more,
             onPressed: () {
-              if (notifier.value != defaultText) {
+              if (notifier.value != hint) {
                 try {
                   var old = int.parse(notifier.value);
                   if (old != max) {
                     notifier.value = (++old).toString();
                   }
                 } catch (e) {
-                  notifier.value = defaultText;
+                  notifier.value = hint;
                 }
               } else {
                 notifier.value = '$min';
               }
-              GlobalParameters.checkFilter();
             },
           ),
         ],

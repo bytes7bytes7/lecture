@@ -4,10 +4,10 @@ const _positionedDuration = Duration(milliseconds: 300);
 
 class ListeningOverlay extends StatelessWidget {
   const ListeningOverlay({
-    Key? key,
+    super.key,
     required this.notifier,
     required this.overlay,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<bool> notifier;
   final Widget overlay;

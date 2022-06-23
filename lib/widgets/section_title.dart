@@ -9,9 +9,9 @@ const _padding = EdgeInsets.symmetric(
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   final String title;
 

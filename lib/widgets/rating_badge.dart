@@ -8,10 +8,10 @@ const _textPadding = EdgeInsets.symmetric(horizontal: 10.0);
 
 class RatingBadge extends StatelessWidget {
   const RatingBadge({
-    Key? key,
+    super.key,
     required this.rating,
     required this.amount,
-  }) : super(key: key);
+  });
 
   final Rating rating;
   final double amount;

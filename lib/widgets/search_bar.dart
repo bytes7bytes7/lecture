@@ -18,10 +18,10 @@ const _requestDelay = Duration(seconds: 2);
 
 class SearchBar extends StatefulWidget {
   const SearchBar({
-    Key? key,
+    super.key,
     required this.hint,
     required this.onSubmitted,
-  }) : super(key: key);
+  });
 
   final String hint;
   final void Function(String) onSubmitted;

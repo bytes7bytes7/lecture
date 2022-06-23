@@ -4,10 +4,10 @@ import 'single_button.dart';
 
 class ErrorLabel extends StatelessWidget {
   const ErrorLabel({
-    Key? key,
+    super.key,
     required this.tryAgain,
     this.topWidget,
-  }) : super(key: key);
+  });
 
   final VoidCallback tryAgain;
   final Widget? topWidget;

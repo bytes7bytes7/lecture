@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ConstraintInherited extends InheritedWidget {
   const ConstraintInherited({
-    Key? key,
+    super.key,
     required this.constraints,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final BoxConstraints constraints;
 

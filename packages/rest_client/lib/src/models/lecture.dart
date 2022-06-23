@@ -2,44 +2,13 @@ import 'dart:math';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../rest_client.dart';
 import '../constants/api.dart' as const_api;
 import '../extensions/string_ext.dart';
 import 'content.dart';
+import 'dev.dart' as dev;
 import 'user.dart';
 
 part 'lecture.g.dart';
-
-const _ru = 'йцукенгшщзхъфывапролджэячсмитьбю ';
-const _en = 'qwertyuiopasdfghjklzxcvbnm ';
-final _rand = Random();
-
-int _randomInt(int max) {
-  if (max <= 0) {
-    return -1;
-  }
-
-  return _rand.nextInt(max);
-}
-
-String _randomString(int length, {bool noSpace = false, bool useEn = false}) {
-  var chars = _ru;
-
-  if (useEn) {
-    chars = _en;
-  }
-
-  if (noSpace) {
-    chars = chars.replaceAll(' ', '');
-  }
-
-  return String.fromCharCodes(
-    Iterable.generate(
-      length,
-      (_) => chars.codeUnitAt(_randomInt(chars.length)),
-    ),
-  );
-}
 
 String shortFIO(String longFIO) {
   final lst = longFIO.split(' ');
@@ -67,7 +36,6 @@ class Lecture {
     required this.institution,
     required this.subject,
     required this.topic,
-    required this.content,
     required this.lecturer,
     required this.date,
     required this.rating,
@@ -78,7 +46,6 @@ class Lecture {
   final String institution;
   final String subject;
   final String topic;
-  final Content? content;
   final String lecturer;
   final String date;
   final double rating;
@@ -103,56 +70,40 @@ class Lecture {
 
   // TODO: remove it
   static Lecture random({bool isPublished = true}) {
-    final id = _randomInt(pow(10, 6).toInt());
+    final id = dev.randomInt(pow(10, 6).toInt());
     final institution = const_api.unknownStr;
     final subject = const_api.unknownStr;
-    final topic = _randomString(_randomInt(10) + 10).capitalize;
-    final text = _randomString(_randomInt(300) + 5000);
-    final photos = List<String>.generate(
-      _randomInt(10),
-      (i) => _randomString(i, noSpace: true, useEn: true),
-    );
-    final videos = List<String>.generate(
-      _randomInt(10),
-      (i) => _randomString(i, noSpace: true, useEn: true),
-    );
-    final audios = List<String>.generate(
-      _randomInt(10),
-      (i) => _randomString(i, noSpace: true, useEn: true),
-    );
+    final topic = dev.randomString(dev.randomInt(10) + 10).capitalize;
 
-    final year = (_randomInt(5) + 2015).toString();
+    final year = (dev.randomInt(5) + 2015).toString();
 
-    var month = (_randomInt(12) + 1).toString();
-    if (month.length < 2) {
-      month = '0$month';
-    }
+    final month = (dev.randomInt(12) + 1).toString().padLeft(2, '0');
 
-    var day = (_randomInt(28) + 1).toString();
-    if (day.length < 2) {
-      day = '0$day';
-    }
+    final day = (dev.randomInt(28) + 1).toString().padLeft(2, '0');
 
-    final rating = _randomInt(4) + _rand.nextDouble() + 1;
+    final rating = dev.randomDouble(5);
 
     final firstName =
-        _randomString(_randomInt(4) + 6, noSpace: true).capitalize;
+        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize;
     final middleName =
-        _randomString(_randomInt(4) + 6, noSpace: true).capitalize;
-    final lastName = _randomString(_randomInt(8) + 6, noSpace: true).capitalize;
+        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize;
+    final lastName =
+        dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalize;
 
     final lecturer = [lastName, firstName, middleName].join(' ');
 
     final author = User(
-      id: _randomInt(pow(10, 6).toInt()),
-      firstName: _randomString(_randomInt(4) + 6, noSpace: true).capitalize,
-      lastName: _randomString(_randomInt(8) + 6, noSpace: true).capitalize,
-      email: '${_randomString(_randomInt(4) + 6, noSpace: true)}@mail.ru',
-      middleName: _randomInt(2) == 1
-          ? _randomString(_randomInt(6) + 8, noSpace: true).capitalize
+      id: dev.randomInt(pow(10, 6).toInt()),
+      firstName:
+          dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize,
+      lastName:
+          dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalize,
+      email: '${dev.randomString(dev.randomInt(4) + 6, noSpace: true)}@mail.ru',
+      middleName: dev.randomInt(2) == 1
+          ? dev.randomString(dev.randomInt(6) + 8, noSpace: true).capitalize
           : null,
-      avatar: _randomInt(2) == 1
-          ? _randomString(_randomInt(20) + 10, noSpace: true, useEn: true)
+      avatar: dev.randomInt(2) == 1
+          ? dev.randomString(dev.randomInt(20) + 10, noSpace: true, useEn: true)
           : null,
     );
 
@@ -161,12 +112,6 @@ class Lecture {
       institution: institution,
       subject: subject,
       topic: topic,
-      content: Content(
-        text: text,
-        photos: photos,
-        videos: videos,
-        audios: audios,
-      ),
       lecturer: lecturer,
       date: '$day.$month.$year',
       rating: isPublished ? rating : 0,

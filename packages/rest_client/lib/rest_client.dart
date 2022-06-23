@@ -1,6 +1,5 @@
 library rest_client;
 
-export 'src/models/lecture.dart';
-export 'src/models/subject.dart';
-export 'src/models/user.dart';
+export 'src/client_factory.dart';
+export 'src/models/models.dart';
 export 'src/rest_client.dart';

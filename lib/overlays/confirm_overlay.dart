@@ -19,7 +19,7 @@ const _pinMargin = EdgeInsets.symmetric(
 );
 
 class ConfirmOverlay extends StatefulWidget {
-  const ConfirmOverlay({Key? key}) : super(key: key);
+  const ConfirmOverlay({super.key});
 
   @override
   State<ConfirmOverlay> createState() => _ConfirmOverlayState();

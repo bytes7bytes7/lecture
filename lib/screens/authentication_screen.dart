@@ -12,8 +12,8 @@ const _mainFlex = 5;
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -17,8 +17,8 @@ const _padding = EdgeInsets.fromLTRB(
 
 class ThemeScreen extends StatelessWidget {
   const ThemeScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

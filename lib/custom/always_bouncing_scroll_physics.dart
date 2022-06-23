@@ -10,8 +10,7 @@ import 'package:flutter/material.dart'
 const double kMinFlingVelocity = 50.0;
 
 class AlwaysBouncingScrollPhysics extends ScrollPhysics {
-  const AlwaysBouncingScrollPhysics({ScrollPhysics? parent})
-      : super(parent: parent);
+  const AlwaysBouncingScrollPhysics({super.parent});
 
   @override
   AlwaysBouncingScrollPhysics applyTo(ScrollPhysics? ancestor) {

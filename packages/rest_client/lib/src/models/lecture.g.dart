@@ -7,14 +7,11 @@ part of 'lecture.dart';
 // **************************************************************************
 
 Lecture _$LectureFromJson(Map<String, dynamic> json) => Lecture(
-      id: json['id'] as String,
-      faculty: json['faculty'] as String,
-      level: json['level'] as String,
+      id: json['id'] as int,
+      institution: json['institution'] as String,
       subject: json['subject'] as String,
-      semester: json['semester'] as int,
       topic: json['topic'] as String,
-      content: Content.fromJson(json['content'] as Map<String, dynamic>),
-      lecturer: User.fromJson(json['lecturer'] as Map<String, dynamic>),
+      lecturer: json['lecturer'] as String,
       date: json['date'] as String,
       rating: (json['rating'] as num).toDouble(),
       author: User.fromJson(json['author'] as Map<String, dynamic>),
@@ -22,12 +19,9 @@ Lecture _$LectureFromJson(Map<String, dynamic> json) => Lecture(
 
 Map<String, dynamic> _$LectureToJson(Lecture instance) => <String, dynamic>{
       'id': instance.id,
-      'faculty': instance.faculty,
-      'level': instance.level,
+      'institution': instance.institution,
       'subject': instance.subject,
-      'semester': instance.semester,
       'topic': instance.topic,
-      'content': instance.content,
       'lecturer': instance.lecturer,
       'date': instance.date,
       'rating': instance.rating,

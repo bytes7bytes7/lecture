@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
@@ -13,11 +14,11 @@ const _margin = EdgeInsets.symmetric(
 const _borderRadius = 20.0;
 const _buttonBorderRadius = 18.0;
 
-class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({Key? key}) : super(key: key);
+class HomeSearchBar extends ConsumerWidget  {
+  const HomeSearchBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Container(
@@ -69,7 +70,7 @@ class HomeSearchBar extends StatelessWidget {
                 tooltip: const_tooltips.filter,
                 color: theme.scaffoldBackgroundColor,
                 onPressed: () {
-                  showFilterOverlay(context: context);
+                  showFilterOverlay(context: context, ref: ref);
                 },
               ),
             ),

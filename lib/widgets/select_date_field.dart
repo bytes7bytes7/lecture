@@ -19,10 +19,10 @@ const _padding = EdgeInsets.symmetric(
 
 class SelectDateField extends StatelessWidget {
   const SelectDateField({
-    Key? key,
+    super.key,
     this.begin,
     this.end,
-  }) : super(key: key);
+  });
 
   final DateTime? begin;
   final DateTime? end;
@@ -83,6 +83,10 @@ class SelectDateField extends StatelessWidget {
   }
 
   String _dayMonthYear(DateTime dt) {
-    return '${dt.day}.${dt.month}.${dt.year}';
+    final day = '${dt.day}'.padLeft(2, '0');
+    final month = '${dt.month}'.padLeft(2, '0');
+    final year = '${dt.year}'.substring(2);
+
+    return '$day.$month.$year';
   }
 }

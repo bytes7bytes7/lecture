@@ -17,7 +17,7 @@ const _textMargin = EdgeInsets.symmetric(
 const _bottomTextFlex = 5;
 
 class SignUpOverlay extends StatefulWidget {
-  const SignUpOverlay({Key? key}) : super(key: key);
+  const SignUpOverlay({super.key});
 
   @override
   State<SignUpOverlay> createState() => _SignUpOverlayState();

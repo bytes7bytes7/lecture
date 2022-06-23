@@ -6,6 +6,7 @@ import 'package:quick_quotes_quill/spread_quill_manager.dart';
 
 import 'app.dart';
 import 'constants/app.dart' as const_app;
+import 'scope/app_scope.dart';
 
 void main() async {
   if (kDebugMode) {
@@ -28,5 +29,9 @@ void main() async {
     ],
   );
 
-  runApp(const App());
+  runApp(
+    AppScope(
+      child: const App(),
+    ),
+  );
 }

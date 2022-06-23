@@ -25,8 +25,8 @@ const _my = 3;
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

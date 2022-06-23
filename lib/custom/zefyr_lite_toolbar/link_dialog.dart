@@ -1,7 +1,9 @@
+// ignore_for_file: unused_element
+
 part of 'zefyr_lite_toolbar.dart';
 
 class _LinkDialog extends StatefulWidget {
-  const _LinkDialog({Key? key}) : super(key: key);
+  const _LinkDialog({super.key});
 
   @override
   _LinkDialogState createState() => _LinkDialogState();

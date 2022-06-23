@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/rest_client.dart';
 
-import '../bloc/lecture_bloc.dart';
 import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
-import '../global_parameters.dart';
+import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
 const _floatButtonSize = 24.0;
 const _emptyBoxPadding = EdgeInsets.only(top: 60.0);
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     SystemChrome.setSystemUIOverlayStyle(
@@ -45,37 +45,59 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         body: RefreshIndicator(
-          onRefresh: LectureBloc.updateAllLectures,
+          onRefresh: () async {
+            await ref.read(AppScope.get().lectureRepo).getLectures();
+
+            return;
+          },
           color: theme.primaryColor,
           backgroundColor: theme.scaffoldBackgroundColor,
           triggerMode: RefreshIndicatorTriggerMode.anywhere,
-          child: StreamBuilder(
-            stream: LectureBloc.lecture,
-            initialData: LectureInitState(),
+          child: StreamBuilder<List<Lecture>>(
             builder: (context, snapshot) {
-              final state = snapshot.data;
-              if (state is LectureInitState) {
-                if (GlobalParameters.semesters == 0) {
-                  SpreadQuillManager.inst.info('getFilterData');
-                }
-                LectureBloc.updateAllLectures();
-                return const SizedBox.shrink();
-              } else if (state is LectureLoadingState) {
+              SpreadQuillManager.inst.info('getFilterData');
+              SpreadQuillManager.inst.log('updateAllLectures');
+              if (snapshot.hasError) {
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    return ListView(
+                      physics: const AlwaysBouncingScrollPhysics(),
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          child: ErrorLabel(
+                            topWidget: const HomeSearchBar(),
+                            tryAgain: () async {
+                              SpreadQuillManager.inst.log('updateAllLectures');
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+
+              final data = snapshot.data;
+              if (data == null) {
                 return const LoadingCircle();
-              } else if (state is LectureDataState) {
+              } else {
                 return Stack(
                   children: [
                     ListView.builder(
                       physics: const AlwaysBouncingScrollPhysics(),
-                      itemCount: state.lectures.length + 1,
+                      itemCount: data.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const HomeSearchBar(),
-                              if (GlobalParameters.isFilterEmpty() &&
-                                  !GlobalParameters.isFilterChanged.value) ...[
+                              if (ref
+                                  .read(AppScope.get().filter.notifier)
+                                  .isFilterEmpty) ...[
                                 const SectionTitle(
                                   title: 'Предметы',
                                 ),
@@ -102,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                                 const SectionTitle(
                                   title: 'Результаты поиска',
                                 ),
-                              if (state.lectures.isEmpty)
+                              if (data.isEmpty)
                                 Container(
                                   alignment: Alignment.center,
                                   padding: _emptyBoxPadding,
@@ -117,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                         }
 
                         return LectureCard(
-                          lecture: state.lectures[index - 1],
+                          lecture: data[index - 1],
                         );
                       },
                     ),
@@ -125,42 +147,9 @@ class HomeScreen extends StatelessWidget {
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      child: ValueListenableBuilder(
-                        valueListenable: GlobalParameters.isFilterChanged,
-                        builder: (context, bool value, _) {
-                          if (!value) {
-                            return const SizedBox.shrink();
-                          } else {
-                            return const SingleButton(
-                              text: 'Обновить',
-                              onPressed: GlobalParameters.updateFiler,
-                            );
-                          }
-                        },
-                      ),
+                      child: _RefreshButton(),
                     ),
                   ],
-                );
-              } else {
-                return LayoutBuilder(
-                  builder: (context, constraints) {
-                    return ListView(
-                      physics: const AlwaysBouncingScrollPhysics(),
-                      children: [
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight,
-                          ),
-                          child: ErrorLabel(
-                            topWidget: const HomeSearchBar(),
-                            tryAgain: () async {
-                              await LectureBloc.updateAllLectures();
-                            },
-                          ),
-                        ),
-                      ],
-                    );
-                  },
                 );
               }
             },
@@ -180,5 +169,17 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _RefreshButton extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return (ref.watch(AppScope.get().isFilterUpdated))
+        ? SingleButton(
+            text: 'Обновить',
+            onPressed: ref.read(AppScope.get().filter.notifier).updateFilter,
+          )
+        : const SizedBox.shrink();
   }
 }

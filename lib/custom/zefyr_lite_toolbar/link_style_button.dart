@@ -4,9 +4,9 @@ class LinkStyleButton extends StatefulWidget {
   final ZefyrController controller;
 
   const LinkStyleButton({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   State<LinkStyleButton> createState() => _LinkStyleButtonState();

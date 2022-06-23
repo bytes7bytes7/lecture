@@ -22,7 +22,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
   final Color dividerColor;
 
   ZefyrLiteToolbar({
-    Key? key,
+    super.key,
     required ZefyrController controller,
     required ValueNotifier<bool> notifier,
     required this.dividerColor,
@@ -101,8 +101,7 @@ class ZefyrLiteToolbar extends StatefulWidget implements PreferredSizeWidget {
             icon: Icons.edit,
             notifier: notifier,
           ),
-        ],
-        super(key: key);
+        ];
 
   @override
   State<ZefyrLiteToolbar> createState() => _ZefyrLiteToolbarState();
