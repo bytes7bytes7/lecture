@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
+import '../l10n/l10n.dart';
 import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.symmetric(vertical: 8);
@@ -21,6 +21,7 @@ class SecureTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Container(
       margin: _margin,
@@ -48,7 +49,7 @@ class SecureTextField extends StatelessWidget {
               suffixIcon: SizedIconButton(
                 icon: value ? Icons.visibility : Icons.visibility_off,
                 size: const_measures.smallIconSize,
-                tooltip: const_tooltips.obscure,
+                tooltip: l10n.tooltipVisibility,
                 onPressed: () {
                   obscure.value = !obscure.value;
                 },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
-import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../l10n/l10n.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/lecture_card.dart';
 
@@ -13,10 +13,12 @@ class BookmarkScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixTooltip: const_tooltips.back,
+        prefixTooltip: l10n.tooltipBack,
         prefixOnPressed: () {
           Navigator.pop(context);
         },

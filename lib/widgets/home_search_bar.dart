@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
+import '../l10n/l10n.dart';
 import '../overlays/show_filter_overlay.dart';
 import 'sized_icon_button.dart';
 
@@ -14,12 +14,13 @@ const _margin = EdgeInsets.symmetric(
 const _borderRadius = 20.0;
 const _buttonBorderRadius = 18.0;
 
-class HomeSearchBar extends ConsumerWidget  {
+class HomeSearchBar extends ConsumerWidget {
   const HomeSearchBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Container(
       height: _height,
@@ -67,7 +68,7 @@ class HomeSearchBar extends ConsumerWidget  {
               child: SizedIconButton(
                 icon: Icons.tune,
                 size: const_measures.smallIconSize,
-                tooltip: const_tooltips.filter,
+                tooltip: l10n.tooltipFilter,
                 color: theme.scaffoldBackgroundColor,
                 onPressed: () {
                   showFilterOverlay(context: context, ref: ref);

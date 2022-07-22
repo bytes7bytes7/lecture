@@ -5,8 +5,8 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../utils/triple.dart';
 import '../widgets/widgets.dart';
@@ -26,7 +26,7 @@ const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
 const _menuItemSeparator = SizedBox(width: 10);
 
-class LectureScreen extends ConsumerWidget {
+class LectureScreen extends ConsumerStatefulWidget {
   const LectureScreen({
     super.key,
     required this.lecture,
@@ -35,20 +35,41 @@ class LectureScreen extends ConsumerWidget {
   final Lecture lecture;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LectureScreen> createState() => _LectureScreenState();
+}
+
+class _LectureScreenState extends ConsumerState<LectureScreen> {
+  late final ValueNotifier<int> _ratingNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _ratingNotifier = ValueNotifier<int>(_ratingInitValue);
+  }
+
+  @override
+  void dispose() {
+    _ratingNotifier.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final ratingNotifier = ValueNotifier<int>(_ratingInitValue);
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixTooltip: const_tooltips.back,
+        prefixTooltip: l10n.tooltipBack,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
         title: 'Лекция',
         suffix: Icons.more_vert,
-        suffixTooltip: const_tooltips.additional,
+        suffixTooltip: l10n.tooltipAdditional,
         suffixOnPressed: () => _showMenu(context, ref),
       ),
       body: SingleChildScrollView(
@@ -57,7 +78,7 @@ class LectureScreen extends ConsumerWidget {
           padding: _contentPadding,
           child: Column(
             children: [
-              LectureHeader(lecture: lecture),
+              LectureHeader(lecture: widget.lecture),
               Divider(
                 height: _dividerHeight,
                 thickness: _dividerThickness,
@@ -66,13 +87,14 @@ class LectureScreen extends ConsumerWidget {
               Padding(
                 padding: _topicPadding,
                 child: Text(
-                  lecture.topic,
+                  widget.lecture.topic,
                   style: theme.textTheme.headline3,
                 ),
               ),
               FutureBuilder<Content?>(
-                future:
-                    ref.read(AppScope.get().lectureRepo).getContent(lecture.id),
+                future: ref
+                    .read(AppScope.get().lectureRepo)
+                    .getContent(widget.lecture.id),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ErrorLabel(
@@ -123,7 +145,7 @@ class LectureScreen extends ConsumerWidget {
                         ),
                       ),
                       RatingStars(
-                        ratingNotifier: ratingNotifier,
+                        ratingNotifier: _ratingNotifier,
                       ),
                     ],
                   );
@@ -194,7 +216,7 @@ class LectureScreen extends ConsumerWidget {
           Navigator.of(context).pushNamed(
             const_routes.author,
             arguments: <String, Object?>{
-              const_api.author: lecture.author,
+              const_api.author: widget.lecture.author,
             },
           );
           break;

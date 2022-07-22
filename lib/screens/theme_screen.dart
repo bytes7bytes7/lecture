@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../constants/db.dart' as const_db;
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
+import '../l10n/l10n.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
 
@@ -23,11 +23,12 @@ class ThemeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixTooltip: const_tooltips.back,
+        prefixTooltip: l10n.tooltipBack,
         prefixOnPressed: () {
           Navigator.pop(context);
         },

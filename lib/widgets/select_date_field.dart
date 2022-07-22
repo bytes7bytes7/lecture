@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import 'sized_icon_button.dart';
 
@@ -31,6 +31,7 @@ class SelectDateField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     final firstDate = begin;
     final lastDate = end;
@@ -74,7 +75,7 @@ class SelectDateField extends ConsumerWidget {
           SizedIconButton(
             icon: Icons.date_range,
             size: const_measures.smallIconSize,
-            tooltip: const_tooltips.choose,
+            tooltip: l10n.tooltipChoose,
             onPressed: () {
               // try use showDatePicker()
               ref.read(AppScope.get().loggerManager).info('Выбрать дату');

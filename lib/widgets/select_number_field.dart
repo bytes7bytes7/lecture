@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
+import '../l10n/l10n.dart';
 import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -36,6 +36,7 @@ class SelectNumberField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Container(
       margin: _margin,
@@ -60,7 +61,7 @@ class SelectNumberField extends StatelessWidget {
           SizedIconButton(
             icon: Icons.keyboard_arrow_left,
             size: const_measures.smallIconSize,
-            tooltip: const_tooltips.less,
+            tooltip: l10n.tooltipLess,
             onPressed: () {
               if (notifier.value != hint) {
                 try {
@@ -91,7 +92,7 @@ class SelectNumberField extends StatelessWidget {
           SizedIconButton(
             icon: Icons.keyboard_arrow_right,
             size: const_measures.smallIconSize,
-            tooltip: const_tooltips.more,
+            tooltip: l10n.tooltipMore,
             onPressed: () {
               if (notifier.value != hint) {
                 try {

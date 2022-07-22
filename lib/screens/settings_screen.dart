@@ -4,8 +4,8 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
+import '../l10n/l10n.dart';
 import '../overlays/show_bottom_overlay.dart';
 import '../scope/app_scope.dart';
 import '../utils/quadruple.dart';
@@ -32,17 +32,18 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: DefaultAppBar(
         prefix: Icons.arrow_back,
-        prefixTooltip: const_tooltips.back,
+        prefixTooltip: l10n.tooltipBack,
         prefixOnPressed: () {
           Navigator.pop(context);
         },
         title: _me.beautifulID,
         suffix: Icons.exit_to_app,
-        suffixTooltip: const_tooltips.exit,
+        suffixTooltip: l10n.tooltipExit,
         suffixOnPressed: () {
           showBottomOverlay(
             context: context,

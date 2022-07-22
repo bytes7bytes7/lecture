@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
+import '../l10n/l10n.dart';
 import '../widgets/default_app_bar.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -18,16 +18,39 @@ const _zefyrPadding = EdgeInsets.symmetric(
 const _blockPadding = EdgeInsets.all(8.0);
 const _blockBottomOffset = 50.0;
 
-class LectureEditorScreen extends StatelessWidget {
+class LectureEditorScreen extends StatefulWidget {
   const LectureEditorScreen({
     super.key,
   });
 
   @override
+  State<LectureEditorScreen> createState() => _LectureEditorScreenState();
+}
+
+class _LectureEditorScreenState extends State<LectureEditorScreen> {
+  late final ZefyrController _controller;
+  late final ValueNotifier<bool> _editMode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = ZefyrController();
+    _editMode = ValueNotifier<bool>(true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _editMode.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final controller = ZefyrController();
-    final editMode = ValueNotifier<bool>(true);
+    final l10n = context.l10n;
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -37,13 +60,13 @@ class LectureEditorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: DefaultAppBar(
           prefix: Icons.arrow_back,
-          prefixTooltip: const_tooltips.back,
+          prefixTooltip: l10n.tooltipBack,
           prefixOnPressed: () {
             Navigator.pop(context);
           },
           title: 'Новая лекция',
           suffix: Icons.more_vert,
-          suffixTooltip: const_tooltips.additional,
+          suffixTooltip: l10n.tooltipAdditional,
           suffixOnPressed: () {},
         ),
         body: SafeArea(
@@ -53,8 +76,8 @@ class LectureEditorScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ZefyrLiteToolbar(
-                    controller: controller,
-                    notifier: editMode,
+                    controller: _controller,
+                    notifier: _editMode,
                     dividerColor: theme.scaffoldBackgroundColor,
                   ),
                   _separator,
@@ -98,7 +121,7 @@ class LectureEditorScreen extends StatelessWidget {
                   _separator,
                   Expanded(
                     child: ValueListenableBuilder(
-                      valueListenable: editMode,
+                      valueListenable: _editMode,
                       builder: (context, bool value, child) {
                         return Stack(
                           children: [
@@ -113,7 +136,7 @@ class LectureEditorScreen extends StatelessWidget {
                                   ),
                                 ),
                                 child: ZefyrEditor(
-                                  controller: controller,
+                                  controller: _controller,
                                   autofocus: true,
                                   readOnly: !value,
                                   scrollPhysics: const BouncingScrollPhysics(),

@@ -5,8 +5,8 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
-import '../constants/tooltips.dart' as const_tooltips;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -21,6 +21,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
@@ -38,7 +39,7 @@ class HomeScreen extends ConsumerWidget {
           title: const_app.appName,
           titleStyle: theme.textTheme.headline1,
           prefix: Icons.sort,
-          prefixTooltip: const_tooltips.settings,
+          prefixTooltip: l10n.tooltipSettings,
           prefixOnPressed: () {
             Navigator.of(context).pushNamed(const_routes.settings);
           },
@@ -154,7 +155,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          tooltip: const_tooltips.newLecture,
+          tooltip: l10n.tooltipNewLecture,
           backgroundColor: theme.primaryColor,
           child: Icon(
             Icons.note_add,
