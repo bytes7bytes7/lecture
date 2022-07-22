@@ -5,11 +5,13 @@ import 'package:riverpod/riverpod.dart';
 import '../models/models.dart';
 import '../repositories/impl/impls.dart';
 import '../repositories/interface/interfaces.dart';
-import 'providers/providers.dart';
+import 'notifiers/notifiers.dart';
 
 mixin AppProviders {
   // TODO: do not forget ot override it after auth
-  final account = Provider<User>((ref) => throw UnimplementedError());
+  final account = StateNotifierProvider<AccountNotifier, User>(
+    (ref) => throw UnimplementedError(),
+  );
 
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
@@ -17,7 +19,7 @@ mixin AppProviders {
     );
   });
 
-  late final isFilterUpdated = Provider<bool>((ref) {
+  late final isFilterUpdated = StateProvider<bool>((ref) {
     // TODO: think up something clever
     ref.watch(filter);
     return ref.read(filter.notifier).hasStateChanged;

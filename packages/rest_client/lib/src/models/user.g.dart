@@ -14,9 +14,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       middleName: json['middleName'] as String?,
       token: json['token'] as String?,
       avatar: json['avatar'] as String?,
-      bookmarks: (json['bookmarks'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      bookmarks:
+          (json['bookmarks'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{

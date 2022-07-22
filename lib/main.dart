@@ -15,6 +15,8 @@ void main() async {
     ],
   );
 
+  final manager = SpreadQuillManager(const_app.loggerManagerName);
+
   if (kDebugMode) {
     final quill = ConsoleQuill(const_app.loggerName);
 
@@ -24,8 +26,6 @@ void main() async {
       )
       ..info('Logger is enabled!');
 
-    final manager = SpreadQuillManager(const_app.loggerManagerName);
-
     await manager.initialize([
       quill,
     ]);
@@ -33,6 +33,7 @@ void main() async {
 
   runApp(
     AppScope(
+      spreadQuillManager: manager,
       child: const App(),
     ),
   );
