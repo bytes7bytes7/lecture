@@ -1,6 +1,6 @@
 import 'package:rest_client/rest_client.dart';
 
-abstract class AccountRepo {
+abstract class UserRepo {
   Future<void> getToken(String login, String password);
 
   Future<void> refreshToken();

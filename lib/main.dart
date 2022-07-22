@@ -8,13 +8,6 @@ import 'constants/app.dart' as const_app;
 import 'scope/app_scope.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-    ],
-  );
-
   final manager = SpreadQuillManager(const_app.loggerManagerName);
 
   if (kDebugMode) {
@@ -30,6 +23,13 @@ void main() async {
       quill,
     ]);
   }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
 
   runApp(
     AppScope(

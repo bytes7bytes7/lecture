@@ -2,10 +2,10 @@ import 'package:rest_client/rest_client.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../scope/app_scope.dart';
-import '../interface/account_repo.dart';
+import '../interface/user_repo.dart';
 
-class AccountRepoImpl implements AccountRepo {
-  AccountRepoImpl(this._ref);
+class UserRepoImpl implements UserRepo {
+  UserRepoImpl(this._ref);
 
   final ProviderRef _ref;
 
@@ -19,7 +19,7 @@ class AccountRepoImpl implements AccountRepo {
 
   @override
   Future<void> refreshToken() async {
-    final token = _ref.read(AppScope.get().account).token;
+    final token = _ref.read(AppScope.get().user).token;
     if (token != null) {
       final newToken = _restClient.refreshToken(token);
       _ref.read(AppScope.get().loggerManager).log('refreshed token: $newToken');
@@ -38,7 +38,7 @@ class AccountRepoImpl implements AccountRepo {
 
   @override
   Future<void> changeUserInfo() async {
-    final user = _ref.read(AppScope.get().account);
+    final user = _ref.read(AppScope.get().user);
     _ref
         .read(AppScope.get().loggerManager)
         .log('separate user from sensitive information');

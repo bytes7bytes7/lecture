@@ -8,16 +8,13 @@ import '../repositories/interface/interfaces.dart';
 import 'notifiers/notifiers.dart';
 
 mixin AppProviders {
-  // TODO: do not forget ot override it after auth
-  final account = StateNotifierProvider<AccountNotifier, User>(
-    (ref) => throw UnimplementedError(),
-  );
-
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
       FilterConfig.empty,
     );
   });
+
+  final filterRepo = Provider<FilterRepo>(FilterRepoImpl.new);
 
   late final isFilterUpdated = StateProvider<bool>((ref) {
     // TODO: think up something clever
@@ -25,15 +22,18 @@ mixin AppProviders {
     return ref.read(filter.notifier).hasStateChanged;
   });
 
+  final lectureRepo = Provider<LectureRepo>(LectureRepoImpl.new);
+
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
-  final lectureRepo = Provider<LectureRepo>(LectureRepoImpl.new);
-
-  final filterRepo = Provider<FilterRepo>(FilterRepoImpl.new);
-
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
+
+  // TODO: do not forget ot override it after auth
+  final user = StateNotifierProvider<UserNotifier, User>(
+    (ref) => throw UnimplementedError(),
+  );
 }
