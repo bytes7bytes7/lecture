@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ListenableTextController extends TextEditingController {
   final _controller = StreamController<String>();
@@ -14,5 +14,11 @@ class ListenableTextController extends TextEditingController {
       _isListening = true;
     }
     return _controller.stream;
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
   }
 }

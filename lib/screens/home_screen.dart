@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../constants/app.dart' as const_app;
@@ -51,8 +50,9 @@ class HomeScreen extends ConsumerWidget {
           triggerMode: RefreshIndicatorTriggerMode.anywhere,
           child: StreamBuilder<List<Lecture>>(
             builder: (context, snapshot) {
-              SpreadQuillManager.inst.info('getFilterData');
-              SpreadQuillManager.inst.log('updateAllLectures');
+              ref.read(AppScope.get().loggerManager)
+                ..info('getFilterData')
+                ..log('updateAllLectures');
               if (snapshot.hasError) {
                 return LayoutBuilder(
                   builder: (context, constraints) {
@@ -66,7 +66,9 @@ class HomeScreen extends ConsumerWidget {
                           child: ErrorLabel(
                             topWidget: const HomeSearchBar(),
                             tryAgain: () async {
-                              SpreadQuillManager.inst.log('updateAllLectures');
+                              ref
+                                  .read(AppScope.get().loggerManager)
+                                  .log('updateAllLectures');
                             },
                           ),
                         ),

@@ -1,5 +1,4 @@
-import 'package:quick_quotes_quill/quick_quotes_quill.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -25,7 +24,7 @@ mixin AppProviders {
   });
 
   final loggerManager =
-      Provider<QuillManagerBase>((ref) => SpreadQuillManager.inst);
+      Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());

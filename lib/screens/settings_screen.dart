@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
@@ -7,6 +7,7 @@ import '../constants/routes.dart' as const_routes;
 import '../constants/tooltips.dart' as const_tooltips;
 import '../global_parameters.dart';
 import '../overlays/show_bottom_overlay.dart';
+import '../scope/app_scope.dart';
 import '../utils/quadruple.dart';
 import '../widgets/widgets.dart';
 
@@ -23,13 +24,13 @@ const _bodyPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _bookmarks = 7;
 const _my = 3;
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -97,7 +98,9 @@ class SettingsScreen extends StatelessWidget {
                         first: Icons.person,
                         second: 'Аккаунт',
                         third: () {
-                          SpreadQuillManager.inst.info('Аккаунт');
+                          ref
+                              .read(AppScope.get().loggerManager)
+                              .info('Аккаунт');
                         },
                       ),
                       Quadruple(
@@ -143,7 +146,9 @@ class SettingsScreen extends StatelessWidget {
                       icon: Icons.info,
                       text: 'О приложении',
                       onPressed: () {
-                        SpreadQuillManager.inst.info('О приложении');
+                        ref
+                            .read(AppScope.get().loggerManager)
+                            .info('О приложении');
                       },
                     ),
                   ],

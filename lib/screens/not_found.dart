@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../scope/app_scope.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/single_button.dart';
 
-class NotFoundScreen extends StatelessWidget {
+class NotFoundScreen extends ConsumerWidget {
   const NotFoundScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    SpreadQuillManager.inst.error('Открыт 404 экран');
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(AppScope.get().loggerManager).error('Открыт 404 экран');
 
     final theme = Theme.of(context);
 

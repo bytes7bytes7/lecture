@@ -1,7 +1,6 @@
 // ignore_for_file: unused_element
 
 import 'package:flutter/cupertino.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
 
@@ -63,7 +62,6 @@ class ScreenRouter {
       case const_routes.theme:
         return _left(const ThemeScreen());
       default:
-        SpreadQuillManager.inst.error('Попытка открыть 404 экран');
         return _up(const NotFoundScreen());
     }
   }

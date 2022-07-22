@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
 import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
 
@@ -50,7 +49,7 @@ class LectureScreen extends ConsumerWidget {
         title: 'Лекция',
         suffix: Icons.more_vert,
         suffixTooltip: const_tooltips.additional,
-        suffixOnPressed: () => _showMenu(context),
+        suffixOnPressed: () => _showMenu(context, ref),
       ),
       body: SingleChildScrollView(
         physics: const AlwaysBouncingScrollPhysics(),
@@ -78,7 +77,8 @@ class LectureScreen extends ConsumerWidget {
                   if (snapshot.hasError) {
                     return ErrorLabel(
                       tryAgain: () {
-                        SpreadQuillManager.inst
+                        ref
+                            .read(AppScope.get().loggerManager)
                             .log("Load lecture's content again");
                       },
                     );
@@ -136,7 +136,7 @@ class LectureScreen extends ConsumerWidget {
     );
   }
 
-  void _showMenu(BuildContext context) {
+  void _showMenu(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     showMenu(
@@ -187,10 +187,10 @@ class LectureScreen extends ConsumerWidget {
       switch (value) {
         case 0:
           // TODO: add action "add a bookmark"
-          SpreadQuillManager.inst.info('Добавить в закладки');
+          ref.read(AppScope.get().loggerManager).info('Добавить в закладки');
           break;
         case 1:
-          SpreadQuillManager.inst.info('К автору');
+          ref.read(AppScope.get().loggerManager).info('К автору');
           Navigator.of(context).pushNamed(
             const_routes.author,
             arguments: <String, Object?>{

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../scope/app_scope.dart';
 
 const _avatarSize = 76.0;
 const _namePadding = EdgeInsets.symmetric(vertical: 10);
 
-class UserHeader extends StatelessWidget {
+class UserHeader extends ConsumerWidget {
   const UserHeader({
     super.key,
     required this.user,
@@ -16,7 +17,7 @@ class UserHeader extends StatelessWidget {
   final User user;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     final middleN = user.middleName;
@@ -27,7 +28,7 @@ class UserHeader extends StatelessWidget {
       name = '${user.lastName} ${user.firstName}';
     }
 
-    SpreadQuillManager.inst.info('Загрузка аватара...');
+    ref.read(AppScope.get().loggerManager).info('Загрузка аватара...');
 
     return Column(
       children: [
@@ -62,9 +63,9 @@ class UserHeader extends StatelessWidget {
                 );
               },
               errorBuilder: (context, error, stackTrace) {
-                SpreadQuillManager.inst.error(
-                  'Ошибка загрузки аватара:\n$error\n$stackTrace',
-                );
+                ref.read(AppScope.get().loggerManager).error(
+                      'Ошибка загрузки аватара:\n$error\n$stackTrace',
+                    );
 
                 if (user.avatar?.isEmpty != false) {
                   return Icon(

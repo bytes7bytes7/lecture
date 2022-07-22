@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../scope/app_scope.dart';
 import '../widgets/drag_container.dart';
 import '../widgets/search_bar.dart';
 
@@ -19,6 +20,7 @@ const _textPadding = EdgeInsets.symmetric(
 
 void showSelectOverlay({
   required BuildContext context,
+  required WidgetRef ref,
   required List<String> items,
   required void Function(String value) onChanged,
 }) {
@@ -49,7 +51,9 @@ void showSelectOverlay({
                 hint: 'Поиск',
                 onSubmitted: (query) {
                   // TODO: make request to server (use rx)
-                  SpreadQuillManager.inst.log('$query requested');
+                  ref
+                      .read(AppScope.get().loggerManager)
+                      .log('$query requested');
                 },
               ),
               Expanded(

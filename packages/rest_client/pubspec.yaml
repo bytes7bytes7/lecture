@@ -9,7 +9,7 @@ dependencies:
   dio: ^4.0.0
   json_annotation: ^4.5.0
   retrofit: ^3.0.1
-  quick_quotes_quill: ^2.0.0
+  quick_quotes_quill: ^3.0.0
 
 dev_dependencies:
   lints: ^2.0.0

@@ -15,7 +15,7 @@ dependencies:
     path: packages/rest_client
 
   # external
-  quick_quotes_quill: ^2.0.0
+  quick_quotes_quill: ^3.0.1
 
   # third party
   adaptive_theme: ^3.0.0

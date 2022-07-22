@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quick_quotes_quill/spread_quill_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
+import '../scope/app_scope.dart';
 import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.only(
@@ -17,7 +18,7 @@ const _padding = EdgeInsets.symmetric(
   vertical: 10,
 );
 
-class SelectDateField extends StatelessWidget {
+class SelectDateField extends ConsumerWidget {
   const SelectDateField({
     super.key,
     this.begin,
@@ -28,7 +29,7 @@ class SelectDateField extends StatelessWidget {
   final DateTime? end;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     final firstDate = begin;
@@ -74,7 +75,7 @@ class SelectDateField extends StatelessWidget {
             tooltip: const_tooltips.choose,
             onPressed: () {
               // try use showDatePicker()
-              SpreadQuillManager.inst.info('Выбрать дату');
+              ref.read(AppScope.get().loggerManager).info('Выбрать дату');
             },
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/tooltips.dart' as const_tooltips;
@@ -14,7 +15,7 @@ const _padding = EdgeInsets.symmetric(
   vertical: 10.0,
 );
 
-class SelectField extends StatelessWidget {
+class SelectField extends ConsumerWidget {
   const SelectField({
     super.key,
     required this.value,
@@ -29,7 +30,7 @@ class SelectField extends StatelessWidget {
   final List<String> items;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Container(
@@ -65,6 +66,7 @@ class SelectField extends StatelessWidget {
             onPressed: () async {
               showSelectOverlay(
                 context: context,
+                ref: ref,
                 items: items,
                 onChanged: onChanged,
               );
