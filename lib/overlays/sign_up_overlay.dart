@@ -71,19 +71,9 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
           ),
           Container(
             margin: _textMargin,
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Создайте аккаунт для доступа к ',
-                    style: theme.textTheme.bodyText1,
-                  ),
-                  TextSpan(
-                    text: 'Лекции',
-                    style: theme.textTheme.subtitle1,
-                  ),
-                ],
-              ),
+            child: Text(
+              'Создайте аккаунт',
+              style: theme.textTheme.bodyText1,
             ),
           ),
           ...<MapEntry<String, IconData>>[

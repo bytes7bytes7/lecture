@@ -35,6 +35,8 @@ class SelectDateField extends ConsumerWidget {
     final firstDate = begin;
     final lastDate = end;
     late final String period;
+
+    // TODO: remake period
     if (firstDate != null) {
       if (lastDate != null) {
         period = '${_dayMonthYear(firstDate)} - ${_dayMonthYear(lastDate)}';
@@ -45,7 +47,7 @@ class SelectDateField extends ConsumerWidget {
       if (lastDate != null) {
         period = 'до ${_dayMonthYear(lastDate)}';
       } else {
-        period = 'за все время';
+        period = '';
       }
     }
 

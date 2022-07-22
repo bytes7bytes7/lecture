@@ -71,7 +71,7 @@ class _ConfirmOverlayState extends State<ConfirmOverlay> {
           Container(
             margin: _textMargin,
             child: Text(
-              'Введите код, который был выслан на электронную почту',
+              'Введите код, который пришел на электронную почту',
               style: theme.textTheme.bodyText1,
             ),
           ),
