@@ -43,7 +43,7 @@ class SettingsScreen extends ConsumerWidget {
         },
         title: _me.beautifulID,
         suffix: Icons.exit_to_app,
-        suffixTooltip: l10n.tooltipExit,
+        suffixTooltip: l10n.tooltipLogOut,
         suffixOnPressed: () {
           showBottomOverlay(
             context: context,

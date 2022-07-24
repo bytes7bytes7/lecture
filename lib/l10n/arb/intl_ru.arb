@@ -1,9 +1,8 @@
 {
   "aboutAppTitle": "О приложении",
   "accountTitle": "Аккаунт",
-  "addToBookmarks": "В закладки",
-  "addToBookmarksAskAgain": "Вы действительно хотите добавить лекцию в ###закладки###?",
-  "addToBookmarksBtn": "Добавить",
+  "addABookmark": "В закладки",
+  "addBtn": "Добавить",
   "addToDrafts": "В черновики",
   "addToDraftsAskAgain": "Вы действительно хотите добавить в ###черновики###? Лекция ###не будет### опубликована!",
   "alreadyHaveAccount": "Уже есть аккаунт?",
@@ -15,7 +14,7 @@
       }
     }
   },
-  "amountOfLectures": "{amount} Лекций",
+  "amountOfLectures": "{amount} Лекция(ий)",
   "@amountOfLectures": {
     "placeholders": {
       "amount": {
@@ -109,6 +108,7 @@
   "recoveryDesc": "Введите эл. почту, к которой был привязан аккаунт",
   "recoveryTitle": "Восстановление",
   "refresh": "Обновить",
+  "removeABookmark": "Удалить из закладок",
   "repeatPassword": "Повторите пароль",
   "saturday": "Суббота",
   "saturdayAbbr": "Сб",
@@ -132,9 +132,9 @@
   "tooltipBack": "Назад",
   "tooltipChoose": "Выбрать",
   "tooltipClear": "Очистить",
-  "tooltipExit": "Выход",
   "tooltipFilter": "Фильтр",
   "tooltipLess": "Меньше",
+  "tooltipLogOut": "Выход",
   "tooltipMore": "Больше",
   "tooltipNewLecture": "Новая лекция",
   "tooltipSettings": "Настройки",
