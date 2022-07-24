@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
+import '../l10n/l10n.dart';
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -45,6 +46,7 @@ class _ConfirmOverlayState extends State<ConfirmOverlay> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final constraints = ConstraintInherited.of(context).constraints;
 
     return Container(
@@ -64,14 +66,14 @@ class _ConfirmOverlayState extends State<ConfirmOverlay> {
           Container(
             margin: _titleMargin,
             child: Text(
-              'Код подтверждения',
+              l10n.verificationCodeTitle,
               style: theme.textTheme.headline2,
             ),
           ),
           Container(
             margin: _textMargin,
             child: Text(
-              'Введите код, который пришел на электронную почту',
+              l10n.verificationCodeDesc,
               style: theme.textTheme.bodyText1,
             ),
           ),
@@ -86,9 +88,9 @@ class _ConfirmOverlayState extends State<ConfirmOverlay> {
             ),
           ),
           DoubleButton(
-            secondary: 'Отмена',
+            secondary: l10n.cancel,
             secondaryOnPressed: _cancel,
-            primary: 'Далее',
+            primary: l10n.moveNext,
             primaryOnPressed: _next,
           ),
         ],

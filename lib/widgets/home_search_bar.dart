@@ -49,7 +49,7 @@ class HomeSearchBar extends ConsumerWidget {
                   color: theme.hintColor,
                   size: const_measures.smallIconSize,
                 ),
-                hintText: 'Поиск',
+                hintText: l10n.search,
                 hintStyle: theme.textTheme.subtitle1?.copyWith(
                   color: theme.hintColor,
                 ),

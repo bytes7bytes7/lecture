@@ -10,7 +10,7 @@ const _textPadding = EdgeInsets.symmetric(
 
 void showBottomOverlay({
   required BuildContext context,
-  required List<TextSpan> textSpans,
+  required Widget body,
   required String primary,
   required VoidCallback primaryOnPressed,
   required String secondary,
@@ -39,13 +39,7 @@ void showBottomOverlay({
               Expanded(
                 child: Padding(
                   padding: _textPadding,
-                  child: RichText(
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: textSpans,
-                    ),
-                  ),
+                  child: body,
                 ),
               ),
               DoubleButton(

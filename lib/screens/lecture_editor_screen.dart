@@ -64,7 +64,7 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
           prefixOnPressed: () {
             Navigator.pop(context);
           },
-          title: 'Новая лекция',
+          title: l10n.newLecture,
           suffix: Icons.more_vert,
           suffixTooltip: l10n.tooltipAdditional,
           suffixOnPressed: () {},
@@ -89,7 +89,7 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
                     decoration: InputDecoration(
                       isCollapsed: true,
                       contentPadding: _topicContentPadding,
-                      hintText: 'Тема',
+                      hintText: l10n.topic,
                       hintStyle: theme.textTheme.bodyText1
                           ?.copyWith(color: theme.hintColor),
                       enabledBorder: OutlineInputBorder(
@@ -151,7 +151,7 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
                                 left: 0,
                                 bottom: _blockBottomOffset,
                                 child: Tooltip(
-                                  message: 'Режим просмотра',
+                                  message: l10n.viewMode,
                                   child: Container(
                                     padding: _blockPadding,
                                     decoration: BoxDecoration(

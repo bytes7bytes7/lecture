@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../global_parameters.dart';
+import '../l10n/l10n.dart';
 import '../utils/triple.dart';
 import '../widgets/widgets.dart';
 
@@ -46,6 +47,7 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final constraints = ConstraintInherited.of(context).constraints;
 
     return Container(
@@ -65,19 +67,19 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
           Container(
             margin: _titleMargin,
             child: Text(
-              'Привет!',
+              l10n.signUpTitle,
               style: theme.textTheme.headline2,
             ),
           ),
           Container(
             margin: _textMargin,
             child: Text(
-              'Создайте аккаунт',
+              l10n.signUpDesc,
               style: theme.textTheme.bodyText1,
             ),
           ),
           ...<MapEntry<String, IconData>>[
-            const MapEntry('Эл. почта', Icons.mail),
+            MapEntry(l10n.email, Icons.mail),
           ].map(
             (pair) {
               return SimpleTextField(
@@ -88,12 +90,12 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
           ),
           ...<Triple<String, IconData, ValueNotifier<bool>>>[
             Triple(
-              first: 'Пароль',
+              first: l10n.password,
               second: Icons.https,
               third: passObscure,
             ),
             Triple(
-              first: 'Повторите пароль',
+              first: l10n.repeatPassword,
               second: Icons.https,
               third: repPassObscure,
             ),
@@ -122,13 +124,13 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Уже есть аккаунт?',
+                    l10n.alreadyHaveAccount,
                     style: theme.textTheme.bodyText1,
                   ),
                   TextButton(
                     onPressed: _signIn,
                     child: Text(
-                      'Войти',
+                      l10n.signIn,
                       style: theme.textTheme.subtitle1?.copyWith(
                         decoration: TextDecoration.underline,
                       ),
@@ -139,7 +141,7 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
             ),
           ),
           SingleButton(
-            text: 'Далее',
+            text: l10n.moveNext,
             onPressed: _next,
           ),
         ],

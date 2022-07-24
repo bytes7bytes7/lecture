@@ -1,6 +1,6 @@
-const lightThemeValue = 'Светлая';
-const darkThemeValue = 'Темная';
-const systemThemeValue = 'Системная';
+const lightThemeValue = 'light';
+const darkThemeValue = 'dark';
+const systemThemeValue = 'system';
 
 const themes = [
   lightThemeValue,

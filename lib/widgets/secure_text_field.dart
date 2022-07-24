@@ -34,7 +34,7 @@ class SecureTextField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.center,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Заполните поле';
+                return l10n.fillField;
               }
 
               return null;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/single_button.dart';
@@ -13,10 +14,11 @@ class NotFoundScreen extends ConsumerWidget {
     ref.read(AppScope.get().loggerManager).error('Открыт 404 экран');
 
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: const DefaultAppBar(
-        title: 'Туда, не знаю куда',
+      appBar: DefaultAppBar(
+        title: l10n.notFoundTitle,
       ),
       body: Center(
         child: Column(
@@ -24,12 +26,12 @@ class NotFoundScreen extends ConsumerWidget {
           children: [
             const Spacer(),
             Text(
-              'Где это мы? 😳',
+              l10n.notFoundBody,
               style: theme.textTheme.subtitle1,
             ),
             const Spacer(),
             SingleButton(
-              text: 'Назад',
+              text: l10n.goBack,
               onPressed: () {
                 Navigator.of(context).pop();
               },

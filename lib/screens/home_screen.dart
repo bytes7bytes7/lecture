@@ -97,8 +97,8 @@ class HomeScreen extends ConsumerWidget {
                               if (ref
                                   .read(AppScope.get().filter.notifier)
                                   .isFilterEmpty) ...[
-                                const SectionTitle(
-                                  title: 'Предметы',
+                                SectionTitle(
+                                  title: l10n.subjects,
                                 ),
                                 SubjectListView(
                                   items: [
@@ -116,19 +116,19 @@ class HomeScreen extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                                const SectionTitle(
-                                  title: 'Новое',
+                                SectionTitle(
+                                  title: l10n.newLectures,
                                 ),
                               ] else
-                                const SectionTitle(
-                                  title: 'Результаты поиска',
+                                SectionTitle(
+                                  title: l10n.searchResult,
                                 ),
                               if (data.isEmpty)
                                 Container(
                                   alignment: Alignment.center,
                                   padding: _emptyBoxPadding,
                                   child: Text(
-                                    'Пусто 😢',
+                                    l10n.empty,
                                     style: theme.textTheme.bodyText1,
                                     textAlign: TextAlign.center,
                                   ),
@@ -182,9 +182,11 @@ class HomeScreen extends ConsumerWidget {
 class _RefreshButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     return (ref.watch(AppScope.get().isFilterUpdated))
         ? SingleButton(
-            text: 'Обновить',
+            text: l10n.refresh,
             onPressed: ref.read(AppScope.get().filter.notifier).updateFilter,
           )
         : const SizedBox.shrink();

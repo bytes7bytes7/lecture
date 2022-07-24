@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/drag_container.dart';
 import '../widgets/search_bar.dart';
@@ -25,6 +26,7 @@ void showSelectOverlay({
   required void Function(String value) onChanged,
 }) {
   final theme = Theme.of(context);
+  final l10n = context.l10n;
   final size = MediaQuery.of(context).size;
 
   showModalBottomSheet<void>(
@@ -48,7 +50,7 @@ void showSelectOverlay({
             children: [
               const DragContainer(),
               SearchBar(
-                hint: 'Поиск',
+                hint: l10n.search,
                 onSubmitted: (query) {
                   // TODO: make request to server (use rx)
                   ref

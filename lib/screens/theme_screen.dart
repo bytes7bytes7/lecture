@@ -32,7 +32,7 @@ class ThemeScreen extends StatelessWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'Тема',
+        title: l10n.colorThemeTitle,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class ThemeScreen extends StatelessWidget {
           Padding(
             padding: _padding,
             child: Text(
-              'Выберите цветовую тему приложения',
+              l10n.colorThemeDesc,
               style: theme.textTheme.subtitle1,
             ),
           ),

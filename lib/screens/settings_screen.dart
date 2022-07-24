@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
-import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../global_parameters.dart';
 import '../l10n/l10n.dart';
@@ -47,37 +46,19 @@ class SettingsScreen extends ConsumerWidget {
         suffixOnPressed: () {
           showBottomOverlay(
             context: context,
-            secondary: 'Отмена',
+            secondary: l10n.cancel,
             secondaryOnPressed: () {
               Navigator.pop(context);
             },
-            primary: 'Выйти',
+            primary: l10n.logOut,
             primaryOnPressed: () {
               GlobalParameters.setOverlayConfigToDefault();
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushReplacementNamed(const_routes.auth);
             },
-            textSpans: [
-              const TextSpan(
-                text: '😐\n\n',
-                style: TextStyle(
-                  fontSize: const_measures.emojiSize,
-                ),
-              ),
-              TextSpan(
-                text: 'Вы действительно хотите ',
-                style: theme.textTheme.bodyText1,
-              ),
-              TextSpan(
-                text: 'выйти ',
-                style: theme.textTheme.subtitle1
-                    ?.copyWith(color: theme.errorColor),
-              ),
-              TextSpan(
-                text: 'из учетной записи?',
-                style: theme.textTheme.bodyText1,
-              ),
-            ],
+            body: HighlightedTextSpan(
+              src: l10n.logOutAskAgain,
+            ),
           );
         },
       ),
@@ -97,7 +78,7 @@ class SettingsScreen extends ConsumerWidget {
                             List<Widget>>>[
                       Quadruple(
                         first: Icons.person,
-                        second: 'Аккаунт',
+                        second: l10n.accountTitle,
                         third: () {
                           ref
                               .read(AppScope.get().loggerManager)
@@ -106,14 +87,14 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                       Quadruple(
                         first: Icons.brightness_6_rounded,
-                        second: 'Тема приложения',
+                        second: l10n.colorThemeTitle,
                         third: () {
                           Navigator.of(context).pushNamed(const_routes.theme);
                         },
                       ),
                       Quadruple(
                         first: Icons.bookmark,
-                        second: 'Сохраненное',
+                        second: l10n.bookmarks,
                         third: () {
                           Navigator.of(context)
                               .pushNamed(const_routes.bookmark);
@@ -124,7 +105,7 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                       Quadruple(
                         first: Icons.insert_drive_file,
-                        second: 'Мои лекции',
+                        second: l10n.myLectures,
                         third: () {
                           Navigator.of(context)
                               .pushNamed(const_routes.myLectures);
@@ -133,19 +114,19 @@ class SettingsScreen extends ConsumerWidget {
                           const Badge(value: '$_my'),
                         ],
                       ),
-                    ].map((quad) {
+                    ].map((e) {
                       return LineButton(
-                        icon: quad.first,
-                        text: '${quad.second}',
-                        onPressed: quad.third ?? () {},
-                        actions: quad.fourth ?? [],
+                        icon: e.first,
+                        text: '${e.second}',
+                        onPressed: e.third ?? () {},
+                        actions: e.fourth ?? [],
                         borderType: LineBorderType.bottom,
                       );
                     }),
                     const Spacer(),
                     LineButton(
                       icon: Icons.info,
-                      text: 'О приложении',
+                      text: l10n.aboutAppTitle,
                       onPressed: () {
                         ref
                             .read(AppScope.get().loggerManager)

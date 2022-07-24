@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../l10n/l10n.dart';
 import '../utils/triple.dart';
 import 'rating_badge.dart';
 
@@ -18,12 +19,13 @@ class LectureHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       children: [
         ...[
           Triple(
-            first: 'Лектор:',
+            first: l10n.lecturer,
             second: shortFIO(lecture.lecturer),
             third: RatingBadge(
               rating: lecture.getRating(),
@@ -31,15 +33,15 @@ class LectureHeader extends StatelessWidget {
             ),
           ),
           Triple(
-            first: 'Предмет:',
+            first: l10n.subject,
             second: lecture.subject,
           ),
           Triple(
-            first: 'Учреждение:',
+            first: l10n.institution,
             second: lecture.institution,
           ),
           Triple(
-            first: 'Автор:',
+            first: l10n.author,
             second: lecture.author.getFio(),
             third: Text(
               lecture.date,
@@ -48,8 +50,8 @@ class LectureHeader extends StatelessWidget {
               ),
             ),
           ),
-        ].map((triple) {
-          final third = triple.third;
+        ].map((e) {
+          final third = e.third;
 
           return Padding(
             padding: _labelPadding,
@@ -58,7 +60,7 @@ class LectureHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${triple.first}',
+                  '${e.first}',
                   style: theme.textTheme.subtitle1?.copyWith(
                     color: theme.primaryColor,
                   ),
@@ -66,7 +68,7 @@ class LectureHeader extends StatelessWidget {
                 _labelAndValueSeparator,
                 Expanded(
                   child: Text(
-                    '${triple.second}',
+                    '${e.second}',
                     style: theme.textTheme.bodyText1,
                   ),
                 ),

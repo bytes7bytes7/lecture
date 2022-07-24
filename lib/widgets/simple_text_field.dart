@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 const _margin = EdgeInsets.symmetric(vertical: 8);
 
 class SimpleTextField extends StatelessWidget {
@@ -15,6 +17,7 @@ class SimpleTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Container(
       margin: _margin,
@@ -24,7 +27,7 @@ class SimpleTextField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Заполните поле';
+            return l10n.fillField;
           }
           return null;
         },

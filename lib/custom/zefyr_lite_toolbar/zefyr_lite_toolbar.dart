@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
+import '../../l10n/l10n.dart';
+
 part 'toggle_style_button.dart';
 
 part 'toggle_notifier_button.dart';

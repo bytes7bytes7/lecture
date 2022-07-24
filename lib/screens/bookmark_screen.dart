@@ -22,7 +22,7 @@ class BookmarkScreen extends StatelessWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'Сохраненное',
+        title: l10n.bookmarks,
       ),
       body: Center(
         child: ListView.builder(

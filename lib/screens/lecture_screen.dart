@@ -67,7 +67,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'Лекция',
+        title: l10n.lecture,
         suffix: Icons.more_vert,
         suffixTooltip: l10n.tooltipAdditional,
         suffixOnPressed: () => _showMenu(context, ref),
@@ -129,7 +129,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                               ),
                             ),
                             Text(
-                              'Было полезно?',
+                              l10n.ratingTitle,
                               style: theme.textTheme.subtitle1?.copyWith(
                                 color: theme.primaryColor,
                               ),
@@ -160,6 +160,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
 
   void _showMenu(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     showMenu(
       context: context,
@@ -173,32 +174,32 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_menuBorderRadius),
       ),
-      items: const <Triple<int, IconData, String>>[
+      items: <Triple<int, IconData, String>>[
         Triple(
           first: 0,
           second: Icons.bookmark_border,
-          third: 'В закладки',
+          third: l10n.addABookmark,
         ),
         Triple(
           first: 1,
           second: Icons.person_outline,
-          third: 'К автору',
+          third: l10n.goToAuthor,
         ),
-      ].map<PopupMenuItem>((quad) {
+      ].map<PopupMenuItem>((e) {
         // do NOT add navigation to onTap,
         // because it does NOT work until this menu closes
         return PopupMenuItem(
-          value: quad.first,
+          value: e.first,
           child: Row(
             children: [
               Icon(
-                quad.second,
+                e.second,
                 color: theme.primaryColor,
                 size: const_measures.smallIconSize,
               ),
               _menuItemSeparator,
               Text(
-                '${quad.third}',
+                '${e.third}',
                 style: theme.textTheme.bodyText1,
               ),
             ],

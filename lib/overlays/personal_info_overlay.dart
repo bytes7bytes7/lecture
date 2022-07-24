@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
+import '../l10n/l10n.dart';
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -20,6 +21,7 @@ class PersonalInfoOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final constraints = ConstraintInherited.of(context).constraints;
 
     return Container(
@@ -39,21 +41,21 @@ class PersonalInfoOverlay extends StatelessWidget {
           Container(
             margin: _titleMargin,
             child: Text(
-              'Личное',
+              l10n.personalTitle,
               style: theme.textTheme.headline2,
             ),
           ),
           Container(
             margin: _textMargin,
             child: Text(
-              'Заполните следующие поля, чтобы другие пользователи могли Вас найти',
+              l10n.personalDesc,
               style: theme.textTheme.bodyText1,
             ),
           ),
           ...<MapEntry<String, IconData>>[
-            const MapEntry('Имя', Icons.person),
-            const MapEntry('Фамилия', Icons.person),
-            const MapEntry('Отчество', Icons.person),
+            MapEntry(l10n.firstName, Icons.person),
+            MapEntry(l10n.lastName, Icons.person),
+            MapEntry(l10n.middleName, Icons.person),
           ].map(
             (pair) {
               return SimpleTextField(
@@ -64,7 +66,7 @@ class PersonalInfoOverlay extends StatelessWidget {
           ),
           const Spacer(),
           SingleButton(
-            text: 'Далее',
+            text: l10n.moveNext,
             onPressed: () => _next(context),
           ),
         ],

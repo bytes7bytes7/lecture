@@ -15,6 +15,7 @@ class _LinkDialogState extends State<_LinkDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return AlertDialog(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -22,7 +23,7 @@ class _LinkDialogState extends State<_LinkDialog> {
         cursorColor: theme.primaryColor,
         style: theme.textTheme.bodyText1?.copyWith(color: theme.shadowColor),
         decoration: InputDecoration(
-          labelText: 'Ссылка',
+          labelText: l10n.link,
           labelStyle: TextStyle(
             color: theme.primaryColor,
           ),
@@ -39,7 +40,7 @@ class _LinkDialogState extends State<_LinkDialog> {
         TextButton(
           onPressed: _link.isNotEmpty ? _applyLink : null,
           child: Text(
-            'Ок',
+            l10n.ok,
             style: TextStyle(
               color: theme.primaryColor,
             ),

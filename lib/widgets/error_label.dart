@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import 'single_button.dart';
 
 class ErrorLabel extends StatelessWidget {
@@ -15,18 +16,19 @@ class ErrorLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         topWidget ?? const SizedBox.shrink(),
         Text(
-          'Ошибка\n👉🏻👈🏻',
+          l10n.error,
           style: theme.textTheme.subtitle1,
           textAlign: TextAlign.center,
         ),
         SingleButton(
-          text: 'Повторить',
+          text: l10n.tryAgain,
           onPressed: tryAgain,
         ),
       ],

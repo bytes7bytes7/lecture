@@ -51,7 +51,7 @@ class AuthorScreen extends StatelessWidget {
                     user: author,
                   ),
                   Text(
-                    '$_amount Лекций',
+                    l10n.amountOfLectures(_amount),
                     style: theme.textTheme.bodyText1
                         ?.copyWith(color: theme.hintColor),
                     textAlign: TextAlign.center,

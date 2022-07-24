@@ -4,6 +4,7 @@ export 'default_app_bar.dart';
 export 'double_button.dart';
 export 'drag_container.dart';
 export 'error_label.dart';
+export 'highlighted_rich_text.dart';
 export 'home_search_bar.dart';
 export 'lecture_card.dart';
 export 'lecture_header.dart';

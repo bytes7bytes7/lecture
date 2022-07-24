@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -12,6 +13,7 @@ void showFilterOverlay({
   required WidgetRef ref,
 }) {
   final theme = Theme.of(context);
+  final l10n = context.l10n;
 
   showModalBottomSheet<void>(
     context: context,
@@ -38,7 +40,7 @@ void showFilterOverlay({
                   value: ref.watch(
                     AppScope.get().filter.select((value) => value.institution),
                   ),
-                  hint: 'Учреждение',
+                  hint: l10n.institution,
                   items: const ['1', '2'],
                   onChanged: (String value) {
                     ref.read(AppScope.get().filter.notifier).institution =
@@ -49,7 +51,7 @@ void showFilterOverlay({
                   value: ref.watch(
                     AppScope.get().filter.select((value) => value.subject),
                   ),
-                  hint: 'Предмет',
+                  hint: l10n.subject,
                   items: const ['1', '2'],
                   onChanged: (String value) {
                     ref.read(AppScope.get().filter.notifier).subject = value;
@@ -59,7 +61,7 @@ void showFilterOverlay({
                   value: ref.watch(
                     AppScope.get().filter.select((value) => value.lecturer),
                   ),
-                  hint: 'Лектор',
+                  hint: l10n.lecturer,
                   items: const ['1', '2'],
                   onChanged: (String value) {
                     ref.read(AppScope.get().filter.notifier).lecturer = value;
@@ -69,7 +71,7 @@ void showFilterOverlay({
                   value: ref.watch(
                     AppScope.get().filter.select((value) => value.author),
                   ),
-                  hint: 'Автор',
+                  hint: l10n.author,
                   items: const ['1', '2'],
                   onChanged: (String value) {
                     ref.read(AppScope.get().filter.notifier).author = value;
@@ -81,9 +83,9 @@ void showFilterOverlay({
                 ),
                 const Spacer(),
                 DoubleButton(
-                  secondary: 'Сброс',
+                  secondary: l10n.clearFilter,
                   secondaryOnPressed: () => _dropFilter(ref),
-                  primary: 'Готово',
+                  primary: l10n.done,
                   primaryOnPressed: () => _onDone(context, ref),
                 ),
               ],

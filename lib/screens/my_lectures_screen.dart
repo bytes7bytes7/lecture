@@ -32,7 +32,7 @@ class MyLecturesScreen extends StatelessWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: 'Мои лекции',
+        title: l10n.myLectures,
       ),
       body: DefaultTabController(
         length: _tabAmount,
@@ -46,10 +46,10 @@ class MyLecturesScreen extends StatelessWidget {
               indicatorColor: Colors.transparent,
               tabs: [
                 Tab(
-                  text: 'Опубликовано ${_numBoundary(_published)}',
+                  text: l10n.lecturesPublished(_numBoundary(_published, l10n)),
                 ),
                 Tab(
-                  text: 'Черновики ${_numBoundary(_drafts)}',
+                  text: l10n.amountOfDrafts(_numBoundary(_drafts, l10n)),
                 ),
               ],
             ),
@@ -95,9 +95,9 @@ class MyLecturesScreen extends StatelessWidget {
     );
   }
 
-  String _numBoundary(int amount) {
+  String _numBoundary(int amount, AppLocalizations l10n) {
     if (amount >= 100) {
-      return '99+';
+      return l10n.moreThan99;
     }
 
     return '$amount';

@@ -10,7 +10,7 @@
   "@amountOfDrafts": {
     "placeholders": {
       "amount": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -42,8 +42,7 @@
   "done": "Done",
   "email": "Email",
   "empty": "Empty 😢",
-  "error": "Error",
-  "errorEmoji": "👉🏻👈🏻",
+  "error": "Error\n\n👉🏻👈🏻",
   "february": "February",
   "februaryAbbr": "Feb",
   "fillField": "Fill out the field",
@@ -70,15 +69,14 @@
   "@lecturesPublished": {
     "placeholders": {
       "amount": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
   "lightTheme": "Light",
   "link": "Link",
   "logOut": "Log out",
-  "logOutAskAgain": "Are you sure you want to ###log out### of your account?",
-  "logOutEmoji": "😐",
+  "logOutAskAgain": "😐\n\nAre you sure you want to ###log out### of your account?",
   "march": "March",
   "marchAbbr": "Mar",
   "may": "May",

@@ -32,6 +32,7 @@ class App extends StatelessWidget {
           ],
           supportedLocales: const [
             Locale('ru', ''),
+            Locale('en', ''),
           ],
           onGenerateInitialRoutes: (_) => [
             ScreenRouter.inst.navigate(
