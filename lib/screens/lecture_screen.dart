@@ -17,7 +17,6 @@ const _dividerThickness = 1.0;
 const _dividerIndent = 15.0;
 const _menuTopOffset = 100.0;
 const _menuBottomOffset = 0.0;
-const _menuBorderRadius = 20.0;
 const _contentPadding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
   vertical: 15.0,
@@ -170,9 +169,6 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         _menuTopOffset,
         const_measures.mainHorMargin,
         _menuBottomOffset,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(_menuBorderRadius),
       ),
       items: <Triple<int, IconData, String>>[
         Triple(

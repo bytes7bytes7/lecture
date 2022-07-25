@@ -76,7 +76,7 @@ final ThemeData lightTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _textTheme.subtitle1?.copyWith(
+        _textTheme.subtitle2?.copyWith(
           color: const_colors.white,
         ),
       ),
@@ -100,6 +100,16 @@ final ThemeData lightTheme = ThemeData(
     errorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
         color: const_colors.cinnabar,
+      ),
+    ),
+  ),
+  popupMenuTheme: PopupMenuThemeData(
+    color: const_colors.white,
+    textStyle: _textTheme.bodyText1,
+    elevation: const_measures.smallElevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        const_measures.mainBorderRadius,
       ),
     ),
   ),

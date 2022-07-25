@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const appBarElevation = 0.0;
+const smallElevation = 5.0;
 const appBarHeight = 56.0;
 const badgeMargin = 2.0;
 const badgeOffset = Offset(0, 4);
