@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
 import 'package:riverpod/riverpod.dart';
@@ -27,10 +28,21 @@ mixin AppProviders {
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
+  final navigatorKey = Provider((ref) => GlobalKey<NavigatorState>());
+
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
+
+  late final colorTheme =
+      StateNotifierProvider<ColorThemeNotifier, ColorTheme>((ref) {
+    return ColorThemeNotifier(
+      ColorTheme.system,
+      ref: ref,
+      navigatorKey: navigatorKey,
+    );
+  });
 
   // TODO: do not forget ot override it after auth
   final user = StateNotifierProvider<UserNotifier, User>(

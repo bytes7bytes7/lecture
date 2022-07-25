@@ -23,6 +23,8 @@ class HomeScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    ref.read(AppScope.get().loggerManager).log(theme.scaffoldBackgroundColor);
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: theme.scaffoldBackgroundColor,

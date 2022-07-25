@@ -1,10 +1,11 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: unused_element
 
-import '../constants/db.dart' as const_db;
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../constants/measures.dart' as const_measures;
-import '../global_parameters.dart';
 import '../l10n/l10n.dart';
+import '../scope/app_scope.dart';
 import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
 
@@ -44,50 +45,60 @@ class ThemeScreen extends StatelessWidget {
               style: theme.textTheme.subtitle1,
             ),
           ),
-          ValueListenableBuilder<String>(
-            valueListenable: GlobalParameters.themeNotifier,
-            builder: (context, value, child) {
-              return Column(
-                children: const_db.themes.map((title) {
-                  return LineButton(
-                    text: title,
-                    borderType: LineBorderType.bottom,
-                    onPressed: () {
-                      if (value != title) {
-                        GlobalParameters.themeNotifier.value = title;
-                        _changeTheme(context, title);
-                      }
-                    },
-                    actions: [
-                      Icon(
-                        (title == value)
-                            ? Icons.radio_button_on
-                            : Icons.radio_button_off,
-                        color: theme.primaryColor,
-                        size: const_measures.smallIconSize,
-                      ),
-                    ],
-                  );
-                }).toList(),
-              );
-            },
-          ),
+          const _Body(),
         ],
       ),
     );
   }
+}
 
-  void _changeTheme(BuildContext context, String value) {
-    switch (value) {
-      case const_db.lightThemeValue:
-        AdaptiveTheme.of(context).setLight();
-        break;
-      case const_db.darkThemeValue:
-        AdaptiveTheme.of(context).setDark();
-        break;
-      case const_db.systemThemeValue:
-        AdaptiveTheme.of(context).setSystem();
-        break;
+class _Body extends ConsumerWidget {
+  const _Body({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final colorTheme = ref.watch(AppScope.get().colorTheme);
+
+    return Column(
+      children: ColorTheme.values.map((e) {
+        return LineButton(
+          text: _getThemeTitle(e, l10n),
+          borderType: LineBorderType.bottom,
+          onPressed: () => _changeTheme(ref, curr: colorTheme, next: e),
+          actions: [
+            Icon(
+              (colorTheme == e)
+                  ? Icons.radio_button_on
+                  : Icons.radio_button_off,
+              color: theme.primaryColor,
+              size: const_measures.smallIconSize,
+            ),
+          ],
+        );
+      }).toList(),
+    );
+  }
+
+  void _changeTheme(
+    WidgetRef ref, {
+    required ColorTheme curr,
+    required ColorTheme next,
+  }) {
+    if (curr != next) {
+      ref.read(AppScope.get().colorTheme.notifier).set(next);
+    }
+  }
+
+  String _getThemeTitle(ColorTheme theme, AppLocalizations l10n) {
+    switch (theme) {
+      case ColorTheme.light:
+        return l10n.lightTheme;
+      case ColorTheme.dark:
+        return l10n.darkTheme;
+      case ColorTheme.system:
+        return l10n.systemTheme;
     }
   }
 }

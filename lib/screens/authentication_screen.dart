@@ -61,7 +61,7 @@ class AuthenticationScreen extends StatelessWidget {
                               const_app.appName,
                               style: theme.textTheme.headline1?.copyWith(
                                 color:
-                                    const_colors.lightScaffoldBackgroundColor,
+                                    const_colors.white,
                               ),
                             ),
                           ],

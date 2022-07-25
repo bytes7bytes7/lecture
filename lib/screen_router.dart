@@ -14,8 +14,6 @@ class ScreenRouter {
 
   static final inst = ScreenRouter._();
 
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   Route navigate(RouteSettings settings) {
     final name = settings.name ?? '';
     final args = <String, Object?>{};

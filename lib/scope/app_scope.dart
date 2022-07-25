@@ -6,6 +6,8 @@ import 'package:quick_quotes_quill/all.dart';
 
 import 'app_providers.dart';
 
+export 'notifiers/notifiers.dart';
+
 class AppScope extends StatelessWidget with AppProviders {
   static AppScope? _inst;
 
