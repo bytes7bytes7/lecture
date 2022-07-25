@@ -17,8 +17,6 @@ class SingleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Align(
       alignment: Alignment.center,
       child: Container(
@@ -26,24 +24,9 @@ class SingleButton extends StatelessWidget {
         width: _width,
         margin: _margin,
         child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            padding: EdgeInsets.zero,
-            primary: theme.scaffoldBackgroundColor,
-            backgroundColor: theme.primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                const_measures.buttonBorderRadius,
-              ),
-            ),
-            side: const BorderSide(
-              style: BorderStyle.none,
-            ),
-          ),
           onPressed: onPressed,
           child: Text(
             text,
-            style: theme.textTheme.subtitle1
-                ?.copyWith(color: theme.scaffoldBackgroundColor),
           ),
         ),
       ),

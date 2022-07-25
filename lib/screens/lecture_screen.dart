@@ -130,7 +130,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                             ),
                             Text(
                               l10n.ratingTitle,
-                              style: theme.textTheme.subtitle1?.copyWith(
+                              style: theme.textTheme.subtitle2?.copyWith(
                                 color: theme.primaryColor,
                               ),
                             ),

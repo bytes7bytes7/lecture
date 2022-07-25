@@ -3,6 +3,7 @@ const headline2Size = 23.0;
 const headline3Size = 20.0;
 const bodyText1Size = 17.0;
 const subtitle1Size = 17.0;
+const subtitle2Size = 17.0;
 
 const playfairDisplaySC = 'PlayfairDisplaySC';
 const roboto = 'Roboto';

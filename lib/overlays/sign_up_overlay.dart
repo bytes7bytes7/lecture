@@ -131,7 +131,7 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
                     onPressed: _signIn,
                     child: Text(
                       l10n.signIn,
-                      style: theme.textTheme.subtitle1?.copyWith(
+                      style: theme.textTheme.subtitle2?.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                     ),

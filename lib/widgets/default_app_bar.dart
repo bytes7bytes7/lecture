@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../constants/measures.dart' as const_measures;
 import 'sized_icon_button.dart';
 
-const _automaticallyImplyLeading = false;
-
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
     super.key,
@@ -45,13 +43,9 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     final sufOnPressed = suffixOnPressed;
 
     return AppBar(
-      elevation: const_measures.appBarElevation,
-      automaticallyImplyLeading: _automaticallyImplyLeading,
-      backgroundColor: theme.scaffoldBackgroundColor,
-      centerTitle: true,
       title: Text(
         title,
-        style: style ?? theme.textTheme.headline2,
+        style: style ?? theme.appBarTheme.titleTextStyle,
       ),
       leading:
           (prefIcon != null && prefTooltip != null && prefOnPressed != null)

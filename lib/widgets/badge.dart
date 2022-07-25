@@ -29,7 +29,7 @@ class Badge extends StatelessWidget {
       ),
       child: Text(
         value,
-        style: theme.textTheme.subtitle1?.copyWith(color: theme.primaryColor),
+        style: theme.textTheme.subtitle2?.copyWith(color: theme.primaryColor),
         textAlign: TextAlign.center,
       ),
     );

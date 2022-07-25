@@ -50,7 +50,7 @@ class HomeSearchBar extends ConsumerWidget {
                   size: const_measures.smallIconSize,
                 ),
                 hintText: l10n.search,
-                hintStyle: theme.textTheme.subtitle1?.copyWith(
+                hintStyle: theme.textTheme.bodyText1?.copyWith(
                   color: theme.hintColor,
                 ),
               ),

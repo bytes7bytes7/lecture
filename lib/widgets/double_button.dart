@@ -32,17 +32,11 @@ class DoubleButton extends StatelessWidget {
         margin: _margin,
         child: OutlinedButton(
           style: OutlinedButton.styleFrom(
-            padding: EdgeInsets.zero,
+            padding: const EdgeInsets.only(
+              left: const_measures.midPadding,
+            ),
             primary: theme.hintColor,
             backgroundColor: theme.disabledColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                const_measures.buttonBorderRadius,
-              ),
-            ),
-            side: const BorderSide(
-              style: BorderStyle.none,
-            ),
           ),
           onPressed: secondaryOnPressed,
           child: Row(
@@ -56,8 +50,9 @@ class DoubleButton extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     secondary,
-                    style: theme.textTheme.subtitle1
-                        ?.copyWith(color: theme.hintColor),
+                    style: theme.textTheme.subtitle2?.copyWith(
+                      color: theme.hintColor,
+                    ),
                   ),
                 ),
               ),
@@ -65,25 +60,9 @@ class DoubleButton extends StatelessWidget {
                 flex: _primaryFlex,
                 fit: FlexFit.tight,
                 child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    primary: theme.scaffoldBackgroundColor,
-                    backgroundColor: theme.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.buttonBorderRadius,
-                      ),
-                    ),
-                    side: const BorderSide(
-                      style: BorderStyle.none,
-                    ),
-                  ),
                   onPressed: primaryOnPressed,
                   child: Text(
                     primary,
-                    style: theme.textTheme.subtitle1?.copyWith(
-                      color: theme.scaffoldBackgroundColor,
-                    ),
                   ),
                 ),
               ),

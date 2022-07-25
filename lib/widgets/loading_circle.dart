@@ -7,11 +7,8 @@ class LoadingCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(
-        color: theme.primaryColor,
         strokeWidth: _strokeWidth,
       ),
     );

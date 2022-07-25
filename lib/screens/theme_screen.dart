@@ -42,7 +42,7 @@ class ThemeScreen extends StatelessWidget {
             padding: _padding,
             child: Text(
               l10n.colorThemeDesc,
-              style: theme.textTheme.subtitle1,
+              style: theme.textTheme.subtitle2,
             ),
           ),
           const _Body(),

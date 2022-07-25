@@ -39,6 +39,12 @@ final ThemeData darkTheme = ThemeData(
     ),
     subtitle1: TextStyle(
       fontSize: const_fonts.subtitle1Size,
+      fontWeight: FontWeight.normal,
+      fontFamily: const_fonts.roboto,
+      color: const_colors.mercury,
+    ),
+    subtitle2: TextStyle(
+      fontSize: const_fonts.subtitle2Size,
       fontWeight: FontWeight.bold,
       fontFamily: const_fonts.roboto,
       color: const_colors.mercury,

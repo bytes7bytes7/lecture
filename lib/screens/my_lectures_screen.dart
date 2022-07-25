@@ -40,7 +40,7 @@ class MyLecturesScreen extends StatelessWidget {
           children: [
             TabBar(
               isScrollable: true,
-              labelStyle: theme.textTheme.subtitle1,
+              labelStyle: theme.textTheme.subtitle2,
               labelColor: theme.primaryColor,
               unselectedLabelColor: theme.hintColor,
               indicatorColor: Colors.transparent,

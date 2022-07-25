@@ -23,7 +23,7 @@ class SectionTitle extends StatelessWidget {
       padding: _padding,
       child: Text(
         title,
-        style: theme.textTheme.subtitle1,
+        style: theme.textTheme.subtitle2,
       ),
     );
   }

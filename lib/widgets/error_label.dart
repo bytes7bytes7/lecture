@@ -24,7 +24,7 @@ class ErrorLabel extends StatelessWidget {
         topWidget ?? const SizedBox.shrink(),
         Text(
           l10n.error,
-          style: theme.textTheme.subtitle1,
+          style: theme.textTheme.subtitle2,
           textAlign: TextAlign.center,
         ),
         SingleButton(

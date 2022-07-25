@@ -23,7 +23,6 @@ class SimpleTextField extends StatelessWidget {
       margin: _margin,
       child: TextFormField(
         style: theme.textTheme.bodyText1,
-        cursorColor: theme.primaryColor,
         textAlignVertical: TextAlignVertical.center,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -32,30 +31,12 @@ class SimpleTextField extends StatelessWidget {
           return null;
         },
         decoration: InputDecoration(
-          isCollapsed: true,
           prefixIcon: Icon(
             icon,
             color: theme.hintColor,
           ),
           // TODO: think up the way how to add a red star to huntText
           hintText: hint,
-          hintStyle:
-              theme.textTheme.bodyText1?.copyWith(color: theme.hintColor),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.hintColor,
-            ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.primaryColor,
-            ),
-          ),
-          errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.errorColor,
-            ),
-          ),
         ),
       ),
     );
