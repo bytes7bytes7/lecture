@@ -15,10 +15,12 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ColorTheme.toMode(ref.read(AppScope.get().colorTheme));
+
     return AdaptiveTheme(
       light: lightTheme,
       dark: darkTheme,
-      initial: AdaptiveThemeMode.system,
+      initial: mode,
       builder: (lightTheme, darkTheme) {
         return MaterialApp(
           title: const_app.projectName,

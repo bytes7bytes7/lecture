@@ -24,7 +24,7 @@ class AuthenticationScreen extends StatelessWidget {
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: theme.primaryColor,
+        statusBarColor: Theme.of(context).primaryColor,
       ),
     );
 

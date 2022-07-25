@@ -41,11 +41,14 @@ mixin AppProviders {
       ColorTheme.system,
       ref: ref,
       navigatorKey: navigatorKey,
+      user: user,
     );
   });
 
   // TODO: do not forget ot override it after auth
-  final user = StateNotifierProvider<UserNotifier, User>(
-    (ref) => throw UnimplementedError(),
-  );
+  final user = StateNotifierProvider<UserNotifier, User>((ref) {
+    return UserNotifier(
+      const NotAuthorizedUser(),
+    );
+  });
 }

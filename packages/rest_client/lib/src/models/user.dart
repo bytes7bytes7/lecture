@@ -89,3 +89,13 @@ class User {
     );
   }
 }
+
+class NotAuthorizedUser extends User {
+  const NotAuthorizedUser()
+      : super(
+          id: -1,
+          firstName: '',
+          lastName: '',
+          email: '',
+        );
+}
