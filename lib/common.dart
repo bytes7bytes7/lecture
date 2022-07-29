@@ -28,6 +28,7 @@ final _emailRegex = RegExp(
   ')'
   '\\]'
   ')',
+  caseSensitive: false,
 );
 
 String? emailValidator({

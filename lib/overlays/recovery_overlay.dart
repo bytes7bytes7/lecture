@@ -20,17 +20,15 @@ const _textMargin = EdgeInsets.symmetric(
 );
 const _bottomTextFlex = 5;
 
-class SignInOverlay extends ConsumerStatefulWidget {
-  const SignInOverlay({super.key});
+class RecoveryOverlay extends ConsumerStatefulWidget {
+  const RecoveryOverlay({super.key});
 
   @override
-  ConsumerState<SignInOverlay> createState() => _SignUpOverlayState();
+  ConsumerState<RecoveryOverlay> createState() => _SignUpOverlayState();
 }
 
-class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
+class _SignUpOverlayState extends ConsumerState<RecoveryOverlay> {
   late final TextEditingController _emailController;
-  late final TextEditingController _passController;
-  late final ValueNotifier<bool> _passObscure;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
 
@@ -39,8 +37,6 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
     super.initState();
 
     _emailController = TextEditingController()..addListener(_onChanged);
-    _passController = TextEditingController()..addListener(_onChanged);
-    _passObscure = ValueNotifier(true);
     _areFieldsValid = ValueNotifier(false);
   }
 
@@ -59,8 +55,6 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
   @override
   void dispose() {
     _emailController.dispose();
-    _passController.dispose();
-    _passObscure.dispose();
     _areFieldsValid.dispose();
 
     super.dispose();
@@ -91,14 +85,14 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
             Container(
               margin: _titleMargin,
               child: Text(
-                l10n.signInTitle,
+                l10n.recoveryTitle,
                 style: theme.textTheme.headline2,
               ),
             ),
             Container(
               margin: _textMargin,
               child: Text(
-                l10n.signInDesc,
+                l10n.recoveryDesc,
                 style: theme.textTheme.bodyText1,
               ),
             ),
@@ -124,75 +118,18 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
                 );
               },
             ),
-            ...<
-                Quintet<IconData, String, TextEditingController,
-                    FormFieldValidator<String>, ValueNotifier<bool>>>[
-              Quintet(
-                Icons.https,
-                l10n.password,
-                _passController,
-                (_) => passwdValidator(
-                  value: _passController.text,
-                  l10n: l10n,
-                ),
-                _passObscure,
-              ),
-            ].map(
-              (e) {
-                final notifier = e.fifth;
-
-                if (notifier != null) {
-                  return SecureTextField(
-                    icon: e.first,
-                    hint: e.second,
-                    controller: e.third,
-                    validator: e.fourth,
-                    obscure: notifier,
-                  );
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: _forgotPassword,
-                child: Text(
-                  l10n.forgotPassword,
-                  style: theme.textTheme.subtitle1?.copyWith(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
+            const Expanded(
               flex: _bottomTextFlex,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      l10n.doNotHaveAccount,
-                      style: theme.textTheme.bodyText1,
-                    ),
-                    TextButton(
-                      onPressed: _openRegister,
-                      child: Text(
-                        l10n.createAccount,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: SizedBox.shrink(),
             ),
             ValueListenableBuilder<bool>(
               valueListenable: _areFieldsValid,
               builder: (context, value, child) {
-                return SingleButton(
-                  text: l10n.moveNext,
-                  onPressed: value ? _tryToLogIn : null,
+                return DoubleButton(
+                  primary: l10n.moveNext,
+                  primaryOnPressed: value ? _tryToRecover : null,
+                  secondary: l10n.cancel,
+                  secondaryOnPressed: _backToSignIn,
                 );
               },
             ),
@@ -202,15 +139,10 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
     );
   }
 
-  void _forgotPassword() {
-    ref.read(AppScope.get().showRecoveryOverlay.notifier).state = true;
-  }
+  void _tryToRecover() {}
 
-  void _openRegister() {
+  void _backToSignIn() {
     _emailController.clear();
-    _passController.clear();
-    ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
+    ref.read(AppScope.get().showRecoveryOverlay.notifier).state = false;
   }
-
-  void _tryToLogIn() {}
 }

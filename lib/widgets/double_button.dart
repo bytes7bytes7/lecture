@@ -59,10 +59,18 @@ class DoubleButton extends StatelessWidget {
               Flexible(
                 flex: _primaryFlex,
                 fit: FlexFit.tight,
-                child: OutlinedButton(
-                  onPressed: primaryOnPressed,
-                  child: Text(
-                    primary,
+                child: InkWell(
+                  overlayColor: MaterialStateProperty.all(
+                    Colors.transparent,
+                  ),
+                  onTap: () {
+                    // it MUST be empty callback
+                  },
+                  child: OutlinedButton(
+                    onPressed: primaryOnPressed,
+                    child: Text(
+                      primary,
+                    ),
                   ),
                 ),
               ),

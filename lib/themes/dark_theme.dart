@@ -97,6 +97,11 @@ final ThemeData darkTheme = ThemeData(
 
         return const_colors.gallery;
       }),
+      overlayColor: MaterialStateProperty.all(
+        const_colors.gallery.withOpacity(
+          const_measures.smallOpacity,
+        ),
+      ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(

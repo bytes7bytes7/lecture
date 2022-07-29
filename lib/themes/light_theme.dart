@@ -90,6 +90,11 @@ final ThemeData lightTheme = ThemeData(
       foregroundColor: MaterialStateProperty.all(
         const_colors.white,
       ),
+      overlayColor: MaterialStateProperty.all(
+        const_colors.gallery.withOpacity(
+          const_measures.smallOpacity,
+        ),
+      ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(

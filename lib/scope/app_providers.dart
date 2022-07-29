@@ -51,6 +51,8 @@ mixin AppProviders {
 
   final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
 
+  final showRecoveryOverlay = StateProvider<bool>((ref) => false);
+
   final showSignInOverlay = StateProvider<bool>((ref) => false);
 
   // TODO: do not forget ot override it after auth

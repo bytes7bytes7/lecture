@@ -78,6 +78,14 @@ class AuthenticationScreen extends StatelessWidget {
                               children: [
                                 const SignUpOverlay(),
                                 ListeningOverlay(
+                                  notifier: AppScope.get().showSignInOverlay,
+                                  overlay: const SignInOverlay(),
+                                ),
+                                ListeningOverlay(
+                                  notifier: AppScope.get().showRecoveryOverlay,
+                                  overlay: const RecoveryOverlay(),
+                                ),
+                                ListeningOverlay(
                                   notifier: AppScope.get().showConfirmOverlay,
                                   overlay: const ConfirmOverlay(),
                                 ),
@@ -85,10 +93,6 @@ class AuthenticationScreen extends StatelessWidget {
                                   notifier:
                                       AppScope.get().showPersonalInfoOverlay,
                                   overlay: const PersonalInfoOverlay(),
-                                ),
-                                ListeningOverlay(
-                                  notifier: AppScope.get().showSignInOverlay,
-                                  overlay: const SignInOverlay(),
                                 ),
                               ],
                             ),
