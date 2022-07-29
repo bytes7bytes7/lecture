@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../l10n/l10n.dart';
-import '../utils/triple.dart';
+import '../structs/trio.dart';
 import 'rating_badge.dart';
 
 const _labelPadding = EdgeInsets.symmetric(vertical: 3);
@@ -24,26 +24,26 @@ class LectureHeader extends StatelessWidget {
     return Column(
       children: [
         ...[
-          Triple(
-            first: l10n.lecturer,
-            second: shortFIO(lecture.lecturer),
-            third: RatingBadge(
+          Trio(
+            l10n.lecturer,
+            shortFIO(lecture.lecturer),
+            RatingBadge(
               rating: lecture.getRating(),
               amount: lecture.rating,
             ),
           ),
-          Triple(
-            first: l10n.subject,
-            second: lecture.subject,
+          Trio(
+            l10n.subject,
+            lecture.subject,
           ),
-          Triple(
-            first: l10n.institution,
-            second: lecture.institution,
+          Trio(
+            l10n.institution,
+            lecture.institution,
           ),
-          Triple(
-            first: l10n.author,
-            second: lecture.author.getFio(),
-            third: Text(
+          Trio(
+            l10n.author,
+            lecture.author.getFio(),
+            Text(
               lecture.date,
               style: theme.textTheme.bodyText1?.copyWith(
                 color: theme.hintColor,

@@ -8,7 +8,7 @@ import '../constants/routes.dart' as const_routes;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
-import '../utils/triple.dart';
+import '../structs/trio.dart';
 import '../widgets/widgets.dart';
 
 const _ratingInitValue = 0;
@@ -170,16 +170,16 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         const_measures.mainHorMargin,
         _menuBottomOffset,
       ),
-      items: <Triple<int, IconData, String>>[
-        Triple(
-          first: 0,
-          second: Icons.bookmark_border,
-          third: l10n.addABookmark,
+      items: <Trio<int, IconData, String>>[
+        Trio(
+          0,
+          Icons.bookmark_border,
+          l10n.addABookmark,
         ),
-        Triple(
-          first: 1,
-          second: Icons.person_outline,
-          third: l10n.goToAuthor,
+        Trio(
+          1,
+          Icons.person_outline,
+          l10n.goToAuthor,
         ),
       ].map<PopupMenuItem>((e) {
         // do NOT add navigation to onTap,

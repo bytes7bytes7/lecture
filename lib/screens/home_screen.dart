@@ -98,30 +98,11 @@ class HomeScreen extends ConsumerWidget {
                               const HomeSearchBar(),
                               if (ref
                                   .read(AppScope.get().filter.notifier)
-                                  .isFilterEmpty) ...[
-                                SectionTitle(
-                                  title: l10n.subjects,
-                                ),
-                                SubjectListView(
-                                  items: [
-                                    Subject(
-                                      title: 'Мат. Анализ',
-                                      url: 'assets/images/subjects/math.png',
-                                    ),
-                                    Subject(
-                                      title: 'Русс. язык',
-                                      url: 'assets/images/subjects/russian.png',
-                                    ),
-                                    Subject(
-                                      title: 'Основы программ-я на C/C++',
-                                      url: 'assets/images/subjects/coding.png',
-                                    ),
-                                  ],
-                                ),
+                                  .isFilterEmpty)
                                 SectionTitle(
                                   title: l10n.newLectures,
-                                ),
-                              ] else
+                                )
+                              else
                                 SectionTitle(
                                   title: l10n.searchResult,
                                 ),
@@ -173,7 +154,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Future<void> _onRefresh(WidgetRef ref) async {
-    final r = await ref.read(AppScope.get().lectureRepo).getLectures(null);
+    await ref.read(AppScope.get().lectureRepo).getLectures(null);
 
     ref.read(AppScope.get().loggerManager).log('_onRefresh');
 

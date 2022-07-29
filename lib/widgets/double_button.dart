@@ -16,9 +16,9 @@ class DoubleButton extends StatelessWidget {
   });
 
   final String primary;
-  final VoidCallback primaryOnPressed;
+  final VoidCallback? primaryOnPressed;
   final String secondary;
-  final VoidCallback secondaryOnPressed;
+  final VoidCallback? secondaryOnPressed;
 
   @override
   Widget build(BuildContext context) {

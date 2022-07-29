@@ -3,11 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../constants/routes.dart' as const_routes;
-import '../global_parameters.dart';
 import '../l10n/l10n.dart';
 import '../overlays/show_bottom_overlay.dart';
 import '../scope/app_scope.dart';
-import '../utils/quadruple.dart';
+import '../structs/quartet.dart';
 import '../widgets/widgets.dart';
 
 const _me = User(
@@ -51,7 +50,7 @@ class SettingsScreen extends ConsumerWidget {
             },
             primary: l10n.logOut,
             primaryOnPressed: () {
-              GlobalParameters.setOverlayConfigToDefault();
+              ref.read(AppScope.get().user.notifier).logOut();
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushReplacementNamed(const_routes.auth);
             },
@@ -72,44 +71,42 @@ class SettingsScreen extends ConsumerWidget {
                 padding: _bodyPadding,
                 child: Column(
                   children: [
-                    ...<
-                        Quadruple<IconData, String, VoidCallback,
-                            List<Widget>>>[
-                      Quadruple(
-                        first: Icons.person,
-                        second: l10n.accountTitle,
-                        third: () {
+                    ...<Quartet<IconData, String, VoidCallback, List<Widget>>>[
+                      Quartet(
+                        Icons.person,
+                        l10n.accountTitle,
+                        () {
                           ref
                               .read(AppScope.get().loggerManager)
                               .info('Аккаунт');
                         },
                       ),
-                      Quadruple(
-                        first: Icons.brightness_6_rounded,
-                        second: l10n.colorThemeTitle,
-                        third: () {
+                      Quartet(
+                        Icons.brightness_6_rounded,
+                        l10n.colorThemeTitle,
+                        () {
                           Navigator.of(context).pushNamed(const_routes.theme);
                         },
                       ),
-                      Quadruple(
-                        first: Icons.bookmark,
-                        second: l10n.bookmarks,
-                        third: () {
+                      Quartet(
+                        Icons.bookmark,
+                        l10n.bookmarks,
+                        () {
                           Navigator.of(context)
                               .pushNamed(const_routes.bookmark);
                         },
-                        fourth: [
+                        [
                           const Badge(value: '$_bookmarks'),
                         ],
                       ),
-                      Quadruple(
-                        first: Icons.insert_drive_file,
-                        second: l10n.myLectures,
-                        third: () {
+                      Quartet(
+                        Icons.insert_drive_file,
+                        l10n.myLectures,
+                        () {
                           Navigator.of(context)
                               .pushNamed(const_routes.myLectures);
                         },
-                        fourth: [
+                        [
                           const Badge(value: '$_my'),
                         ],
                       ),

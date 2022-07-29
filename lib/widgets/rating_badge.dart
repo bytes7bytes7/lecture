@@ -62,11 +62,11 @@ class RatingBadge extends StatelessWidget {
 
     switch (rating) {
       case Rating.excellent:
-        return theme.primaryColor.withOpacity(const_measures.opacity);
+        return theme.primaryColor.withOpacity(const_measures.smallOpacity);
       case Rating.good:
-        return theme.indicatorColor.withOpacity(const_measures.opacity);
+        return theme.indicatorColor.withOpacity(const_measures.smallOpacity);
       case Rating.bad:
-        return theme.errorColor.withOpacity(const_measures.opacity);
+        return theme.errorColor.withOpacity(const_measures.smallOpacity);
       case Rating.unknown:
         return theme.disabledColor;
     }

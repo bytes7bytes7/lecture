@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../l10n/l10n.dart';
+import '../structs//trio.dart';
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -52,15 +53,40 @@ class PersonalInfoOverlay extends StatelessWidget {
               style: theme.textTheme.bodyText1,
             ),
           ),
-          ...<MapEntry<String, IconData>>[
-            MapEntry(l10n.firstName, Icons.person),
-            MapEntry(l10n.lastName, Icons.person),
-            MapEntry(l10n.middleName, Icons.person),
+          ...<Trio<IconData, String, FormFieldValidator<String>>>[
+            Trio(
+              Icons.person,
+              l10n.firstName,
+              (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.fillField;
+                }
+                return null;
+              },
+            ),
+            Trio(
+              Icons.person,
+              l10n.lastName,
+              (value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.fillField;
+                }
+                return null;
+              },
+            ),
+            Trio(
+              Icons.person,
+              l10n.middleName,
+              (value) {
+                return null;
+              },
+            ),
           ].map(
-            (pair) {
+            (e) {
               return SimpleTextField(
-                icon: pair.value,
-                hint: pair.key,
+                icon: e.first,
+                hint: e.second,
+                validator: e.third,
               );
             },
           ),

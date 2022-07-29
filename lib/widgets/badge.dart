@@ -22,7 +22,7 @@ class Badge extends StatelessWidget {
     return Container(
       padding: _padding,
       decoration: BoxDecoration(
-        color: theme.primaryColor.withOpacity(const_measures.opacity),
+        color: theme.primaryColor.withOpacity(const_measures.smallOpacity),
         borderRadius: BorderRadius.circular(
           const_measures.mainBorderRadius,
         ),

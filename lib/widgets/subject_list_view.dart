@@ -11,6 +11,7 @@ const _offset = Offset(0, 4);
 const _buttonPadding = EdgeInsets.all(25.0);
 const _separator = SizedBox(width: 25.0);
 
+// TODO: add this widget, when the logic (client & server) appears
 class SubjectListView extends StatelessWidget {
   const SubjectListView({
     super.key,
@@ -54,7 +55,7 @@ class SubjectListView extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: theme.shadowColor
-                            .withOpacity(const_measures.opacity),
+                            .withOpacity(const_measures.smallOpacity),
                         offset: _offset,
                         blurRadius: _blurRadius,
                       ),

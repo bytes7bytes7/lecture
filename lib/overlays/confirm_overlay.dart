@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../global_parameters.dart';
 import '../l10n/l10n.dart';
+import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -19,14 +20,14 @@ const _pinMargin = EdgeInsets.symmetric(
   vertical: 20.0,
 );
 
-class ConfirmOverlay extends StatefulWidget {
+class ConfirmOverlay extends ConsumerStatefulWidget {
   const ConfirmOverlay({super.key});
 
   @override
-  State<ConfirmOverlay> createState() => _ConfirmOverlayState();
+  ConsumerState<ConfirmOverlay> createState() => _ConfirmOverlayState();
 }
 
-class _ConfirmOverlayState extends State<ConfirmOverlay> {
+class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
   late final ValueNotifier<bool> errorNotifier;
 
   @override
@@ -98,16 +99,19 @@ class _ConfirmOverlayState extends State<ConfirmOverlay> {
     );
   }
 
-  set _pin(String value) => GlobalParameters.pin = value;
+  set _pin(String value) {
+    ref.read(AppScope.get().confirmPin.notifier).state = value;
+  }
 
   void _cancel() {
-    GlobalParameters.confirmOverlayNotifier.value = false;
+    ref.read(AppScope.get().openConfirmOverlay.notifier).state = false;
   }
 
   void _next() {
     // TODO: verify PIN-code
-    if (GlobalParameters.pin.isNotEmpty && GlobalParameters.pin.length == 4) {
-      GlobalParameters.personalInfoOverlayNotifier.value = true;
+    final pin = ref.read(AppScope.get().confirmPin);
+    if (pin.isNotEmpty && pin.length == 4) {
+      ref.read(AppScope.get().openPersonalInfoOverlay.notifier).state = true;
     } else {
       errorNotifier.value = true;
     }

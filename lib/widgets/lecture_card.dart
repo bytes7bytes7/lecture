@@ -4,7 +4,7 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../utils/triple.dart';
+import '../structs/trio.dart';
 import 'rating_badge.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -41,7 +41,7 @@ class LectureCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withOpacity(const_measures.opacity),
+            color: theme.shadowColor.withOpacity(const_measures.smallOpacity),
             offset: const_measures.badgeOffset,
             blurRadius: _blurRadius,
           ),
@@ -63,25 +63,26 @@ class LectureCard extends StatelessWidget {
           },
           child: Column(
             children: [
-              Triple(
-                second: lecture.topic,
-                third: RatingBadge(
+              Trio(
+                null,
+                lecture.topic,
+                RatingBadge(
                   rating: lecture.getRating(),
                   amount: lecture.rating,
                 ),
               ),
-              Triple(
-                first: Icons.record_voice_over,
-                second: shortFIO(lecture.lecturer),
+              Trio(
+                Icons.record_voice_over,
+                shortFIO(lecture.lecturer),
               ),
-              Triple(
-                first: Icons.school,
-                second: lecture.subject,
+              Trio(
+                Icons.school,
+                lecture.subject,
               ),
-              Triple(
-                first: Icons.person,
-                second: lecture.author.getFio(),
-                third: Text(
+              Trio(
+                Icons.person,
+                lecture.author.getFio(),
+                Text(
                   lecture.date,
                   style: theme.textTheme.bodyText1?.copyWith(
                     color: theme.hintColor,

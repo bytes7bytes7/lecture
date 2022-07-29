@@ -9,13 +9,17 @@ const _margin = EdgeInsets.symmetric(vertical: 8);
 class SecureTextField extends StatelessWidget {
   const SecureTextField({
     super.key,
-    required this.icon,
-    required this.hint,
     required this.obscure,
+    this.icon,
+    this.hint,
+    this.controller,
+    this.validator,
   });
 
-  final IconData icon;
-  final String hint;
+  final IconData? icon;
+  final String? hint;
+  final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
   final ValueNotifier<bool> obscure;
 
   @override
@@ -29,16 +33,11 @@ class SecureTextField extends StatelessWidget {
         valueListenable: obscure,
         builder: (context, bool value, child) {
           return TextFormField(
+            controller: controller,
             style: theme.textTheme.bodyText1,
             cursorColor: theme.primaryColor,
             textAlignVertical: TextAlignVertical.center,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return l10n.fillField;
-              }
-
-              return null;
-            },
+            validator: validator,
             obscureText: value,
             decoration: InputDecoration(
               isCollapsed: true,
@@ -49,7 +48,7 @@ class SecureTextField extends StatelessWidget {
               suffixIcon: SizedIconButton(
                 icon: value ? Icons.visibility : Icons.visibility_off,
                 size: const_measures.smallIconSize,
-                tooltip: l10n.tooltipVisibility,
+                tooltip: value ? l10n.tooltipShow : l10n.tooltipHide,
                 onPressed: () {
                   obscure.value = !obscure.value;
                 },

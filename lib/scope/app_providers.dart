@@ -9,6 +9,8 @@ import '../repositories/interface/interfaces.dart';
 import 'notifiers/notifiers.dart';
 
 mixin AppProviders {
+  final confirmPin = StateProvider<String>((ref) => '');
+
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
       FilterConfig.empty,
@@ -30,6 +32,10 @@ mixin AppProviders {
 
   final navigatorKey = Provider((ref) => GlobalKey<NavigatorState>());
 
+  final openConfirmOverlay = StateProvider<bool>((ref) => false);
+
+  final openPersonalInfoOverlay = StateProvider<bool>((ref) => false);
+
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
@@ -46,9 +52,14 @@ mixin AppProviders {
   });
 
   // TODO: do not forget ot override it after auth
-  final user = StateNotifierProvider<UserNotifier, User>((ref) {
+  late final user = StateNotifierProvider<UserNotifier, User>((ref) {
     return UserNotifier(
       const NotAuthorizedUser(),
+      onLogOut: () {
+        ref.read(openConfirmOverlay.notifier).state = false;
+        ref.read(openPersonalInfoOverlay.notifier).state = false;
+        ref.read(confirmPin.notifier).state = '';
+      },
     );
   });
 }

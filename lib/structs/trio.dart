@@ -1,13 +1,11 @@
-class Quadruple<A, B, C, D> {
-  const Quadruple({
+class Trio<A, B, C> {
+  const Trio([
     this.first,
     this.second,
     this.third,
-    this.fourth,
-  });
+  ]);
 
   final A? first;
   final B? second;
   final C? third;
-  final D? fourth;
 }

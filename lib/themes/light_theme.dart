@@ -41,7 +41,7 @@ final ThemeData lightTheme = ThemeData(
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: const_colors.mountainMeadow,
     selectionColor: const_colors.mountainMeadow.withOpacity(
-      const_measures.opacity,
+      const_measures.smallOpacity,
     ),
     selectionHandleColor: const_colors.mountainMeadow,
   ),
@@ -56,13 +56,15 @@ final ThemeData lightTheme = ThemeData(
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
           return const_colors.mountainMeadow.withOpacity(
-            const_measures.opacity,
+            const_measures.smallOpacity,
           );
         }
 
         return const_colors.mountainMeadow;
       }),
-      foregroundColor: MaterialStateProperty.all(const_colors.white),
+      foregroundColor: MaterialStateProperty.all(
+        const_colors.white,
+      ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(

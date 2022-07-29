@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../constants/app.dart' as const_app;
 import '../constants/colors.dart' as const_colors;
-import '../global_parameters.dart';
 import '../overlays/overlays.dart';
+import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
 const _logoSeparator = SizedBox(width: 5);
@@ -60,8 +60,7 @@ class AuthenticationScreen extends StatelessWidget {
                             Text(
                               const_app.appName,
                               style: theme.textTheme.headline1?.copyWith(
-                                color:
-                                    const_colors.white,
+                                color: const_colors.white,
                               ),
                             ),
                           ],
@@ -79,13 +78,12 @@ class AuthenticationScreen extends StatelessWidget {
                               children: [
                                 const SignUpOverlay(),
                                 ListeningOverlay(
-                                  notifier:
-                                      GlobalParameters.confirmOverlayNotifier,
+                                  notifier: AppScope.get().openConfirmOverlay,
                                   overlay: const ConfirmOverlay(),
                                 ),
                                 ListeningOverlay(
-                                  notifier: GlobalParameters
-                                      .personalInfoOverlayNotifier,
+                                  notifier:
+                                      AppScope.get().openPersonalInfoOverlay,
                                   overlay: const PersonalInfoOverlay(),
                                 ),
                               ],

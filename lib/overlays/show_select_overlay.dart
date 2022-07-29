@@ -73,7 +73,7 @@ void showSelectOverlay({
                         boxShadow: [
                           BoxShadow(
                             color: theme.shadowColor.withOpacity(
-                              const_measures.opacity,
+                              const_measures.smallOpacity,
                             ),
                             offset: _offset,
                             blurRadius: _blurRadius,
