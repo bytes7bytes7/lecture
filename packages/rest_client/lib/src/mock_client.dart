@@ -3,8 +3,62 @@ import 'models/models.dart';
 import 'rest_client.dart';
 
 const _dur = Duration(seconds: 2);
+const _tokenLen = 32;
 
 class MockClient implements RestClient {
+  @override
+  Future<String> signUp(String email, String password) async {
+    return Future.delayed(
+      _dur,
+      () => dev.randomInt(2) == 1
+          ? dev.randomString(
+              _tokenLen,
+              noSpace: true,
+              useEn: true,
+              useNum: true,
+            )
+          : '',
+    );
+  }
+
+  @override
+  Future<bool> confirmCode(String code) async {
+    return Future.delayed(
+      _dur,
+      () => dev.randomInt(2) == 1,
+    );
+  }
+
+  @override
+  Future<void> setPersonalInfo(User user) async {
+    return Future.delayed(_dur);
+  }
+
+  @override
+  Future<String> singIn(String email, String password) async {
+    return Future.delayed(
+      _dur,
+      () => dev.randomInt(2) == 1
+          ? dev.randomString(
+              _tokenLen,
+              noSpace: true,
+              useEn: true,
+              useNum: true,
+            )
+          : '',
+    );
+  }
+
+  @override
+  Future<void> recoverPasswd(String email) async {
+    return Future.delayed(_dur);
+  }
+
+  @override
+  Future<void> setNewPasswd(String password) async {
+    return Future.delayed(_dur);
+  }
+
   @override
   Future<int> addLecture(Lecture lecture) async {
     return Future.delayed(_dur, () => dev.randomInt(1000));
@@ -64,20 +118,17 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<String> getToken(String login, String password) async {
+  Future<String> refreshToken(String token) async {
     return Future.delayed(
       _dur,
       () => dev.randomString(
-        64,
+        _tokenLen,
         noSpace: true,
         useEn: true,
         useNum: true,
       ),
     );
   }
-
-  @override
-  Future<String> refreshToken(String token) => getToken('', '');
 
   @override
   Future<void> deleteUser() async {

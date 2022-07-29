@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../../scope/app_scope.dart';
@@ -11,10 +12,19 @@ class UserRepoImpl implements UserRepo {
 
   RestClient get _restClient => _ref.read(AppScope.get().restClient);
 
+  SpreadQuillManager get _quillManager =>
+      _ref.read(AppScope.get().loggerManager);
+
   @override
-  Future<void> getToken(String login, String password) async {
-    final token = _restClient.getToken(login, password);
-    _ref.read(AppScope.get().loggerManager).log('get token: $token');
+  Future<void> signUp(String login, String password) async {
+    try {
+      final token = await _restClient.signUp(login, password);
+      _quillManager.log('get token: $token');
+      _ref.read(AppScope.get().user.notifier).refreshToken(token);
+      // TODO: maybe add getUserInfo here
+    } catch (e) {
+      _quillManager.error('signUp error: $e');
+    }
   }
 
   @override

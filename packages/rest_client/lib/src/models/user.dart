@@ -1,12 +1,24 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../constants/api.dart' as const_api;
 import '../dev.dart' as dev;
 import '../extensions/iterable_ext.dart';
 
+part 'user.freezed.dart';
+
 part 'user.g.dart';
 
+const notAuthorizedUser = User(
+  id: -1,
+  firstName: '',
+  lastName: '',
+  email: '',
+);
+
 extension UserExt on User {
+  String get beautifulID =>
+      'id${id.toString().padLeft(const_api.idLength, '0')}';
+
   String getFio() {
     final buffer = StringBuffer()..write(lastName);
 
@@ -24,34 +36,20 @@ extension UserExt on User {
   }
 }
 
-@JsonSerializable()
-class User {
-  const User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    this.middleName,
-    this.token,
-    this.avatar,
-    this.bookmarks,
-  });
-
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String? email;
-  final String? middleName;
-  final String? token;
-  final String? avatar;
-  final List<int>? bookmarks;
+@freezed
+class User with _$User {
+  const factory User({
+    required int id,
+    required String firstName,
+    required String lastName,
+    required String? email,
+    String? middleName,
+    String? token,
+    String? avatar,
+    List<int>? bookmarks,
+  }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  String get beautifulID =>
-      'id${id.toString().padLeft(const_api.idLength, '0')}';
 
   // TODO: remove it
   static User random() {
@@ -88,14 +86,4 @@ class User {
       bookmarks: bookmarks,
     );
   }
-}
-
-class NotAuthorizedUser extends User {
-  const NotAuthorizedUser()
-      : super(
-          id: -1,
-          firstName: '',
-          lastName: '',
-          email: '',
-        );
 }

@@ -1,6 +1,18 @@
 import '../rest_client.dart';
 
 abstract class RestClient {
+  Future<String> signUp(String email, String password);
+
+  Future<bool> confirmCode(String code);
+
+  Future<void> setPersonalInfo(User user);
+
+  Future<String> singIn(String email, String password);
+
+  Future<void> recoverPasswd(String email);
+
+  Future<void> setNewPasswd(String password);
+
   Future<int> addLecture(Lecture lecture);
 
   Future<void> deleteLecture(int id);
@@ -20,8 +32,6 @@ abstract class RestClient {
   Future<void> deleteBookmark(int id);
 
   Future<List<Lecture>> getUserLectures(int id);
-
-  Future<String> getToken(String login, String password);
 
   Future<String> refreshToken(String token);
 

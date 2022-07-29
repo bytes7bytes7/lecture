@@ -15,7 +15,7 @@ void main() async {
 
     quill
       ..config = quill.config.copyWith(
-        msgFGColor: CQHIColors.gray.fg,
+        msgFGColor: CQHIColors.white.fg,
       )
       ..info('Logger is enabled!');
 

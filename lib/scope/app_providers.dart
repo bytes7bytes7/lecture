@@ -56,13 +56,13 @@ mixin AppProviders {
   final showRecoveryOverlay = StateProvider<bool>((ref) => false);
 
   final showSignInOverlay = StateProvider<bool>((ref) => false);
-  
+
   final authState = StateProvider<AuthState>((ref) => AuthState.signUp);
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
     return UserNotifier(
-      const NotAuthorizedUser(),
+      notAuthorizedUser,
       onLogOut: () {
         ref.read(showChangePasswdOverlay.notifier).state = false;
         ref.read(showPersonalInfoOverlay.notifier).state = false;

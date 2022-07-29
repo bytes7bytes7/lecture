@@ -51,7 +51,7 @@ class ColorThemeNotifier extends StateNotifier<ColorTheme> {
 
         if (context != null) {
           final u = ref.read(_user);
-          if (u is NotAuthorizedUser) {
+          if (u == notAuthorizedUser) {
             SystemChrome.setSystemUIOverlayStyle(
               SystemUiOverlayStyle(
                 statusBarColor: Theme.of(context).primaryColor,

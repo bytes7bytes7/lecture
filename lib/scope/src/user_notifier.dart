@@ -12,10 +12,12 @@ class UserNotifier extends StateNotifier<User> {
 
   set user(User value) => state = value;
 
-  void logIn() {}
+  void refreshToken(String token) {
+    state = state.copyWith(token: token);
+  }
 
   void logOut() {
     _onLogOut();
-    state = const NotAuthorizedUser();
+    state = notAuthorizedUser;
   }
 }

@@ -11,6 +11,36 @@ abstract class RetroClient implements RestClient {
   factory RetroClient(Dio dio, {String baseUrl}) = _RetroClient;
 
   @override
+  @POST(const_secret.signUp)
+  Future<String> signUp(
+    @Query('username') String login,
+    @Query('password') String password,
+  );
+
+  @override
+  @POST(const_secret.confirmCode)
+  Future<bool> confirmCode(@Query('code') String code);
+
+  @override
+  @POST(const_secret.setPersonalInfo)
+  Future<void> setPersonalInfo(@Body() User user);
+
+  @override
+  @POST(const_secret.signIn)
+  Future<String> singIn(
+    @Query('email') String email,
+    @Query('password') String password,
+  );
+
+  @override
+  @POST(const_secret.recoverPasswd)
+  Future<void> recoverPasswd(@Query('email') String email);
+
+  @override
+  @POST(const_secret.setNewPasswd)
+  Future<void> setNewPasswd(@Query('password') String password);
+
+  @override
   @POST(const_secret.addLecture)
   Future<int> addLecture(@Body() Lecture lecture);
 
@@ -52,13 +82,6 @@ abstract class RetroClient implements RestClient {
   @override
   @GET(const_secret.getUserLectures)
   Future<List<Lecture>> getUserLectures(int id);
-
-  @override
-  @POST(const_secret.getToken)
-  Future<String> getToken(
-    @Query('username') String login,
-    @Query('password') String password,
-  );
 
   @override
   @POST(const_secret.refreshToken)
