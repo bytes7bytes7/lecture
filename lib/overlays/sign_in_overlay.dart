@@ -154,6 +154,18 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
                 return const SizedBox.shrink();
               },
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: _forgotPassword,
+                child: Text(
+                  l10n.forgotPassword,
+                  style: theme.textTheme.subtitle1?.copyWith(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               flex: _bottomTextFlex,
               child: Align(
@@ -193,11 +205,13 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
     );
   }
 
+  void _forgotPassword() {
+
+  }
+
   void _openRegister() {
     ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
   }
 
-  void _tryToLogIn() {
-
-  }
+  void _tryToLogIn() {}
 }
