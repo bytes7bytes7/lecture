@@ -16,6 +16,7 @@ const mainHorMargin = 25.0;
 const mainVerMargin = 12.0;
 const midPadding = 20.0;
 const smallPadding = 10.0;
+const tinyOpacity = 0.1;
 const smallOpacity = 0.25;
 const midOpacity = 0.5;
 const overlayBorderRadius = 30.0;

@@ -46,6 +46,20 @@ final ThemeData darkTheme = ThemeData(
     ),
     selectionHandleColor: const_colors.mountainMeadow,
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      overlayColor: MaterialStateProperty.all(
+        const_colors.mountainMeadow.withOpacity(
+          const_measures.tinyOpacity,
+        ),
+      ),
+      textStyle: MaterialStateProperty.all(
+        _textTheme.subtitle2?.copyWith(
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    ),
+  ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStateProperty.all(
