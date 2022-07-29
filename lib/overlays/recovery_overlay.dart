@@ -99,8 +99,6 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   }
 
   void _tryToRecover() {
-    ref.read(AppScope.get().showAfterConfirmOverlay.notifier).newState =
-        AppScope.get().showRecoveryOverlay;
     ref.read(AppScope.get().loggerManager).log('try to recover');
     ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
   }

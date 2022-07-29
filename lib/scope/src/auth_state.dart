@@ -1,0 +1,4 @@
+enum AuthState {
+  signUp,
+  recover,
+}

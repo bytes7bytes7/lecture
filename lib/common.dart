@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'constants/app.dart' as const_app;
+import 'constants/routes.dart' as const_routes;
 import 'l10n/l10n.dart';
 
 final _emailRegex = RegExp(
@@ -83,6 +86,17 @@ String? repeatPasswdValidator({
   return null;
 }
 
+String? simpleValidator({
+  required String? value,
+  required AppLocalizations l10n,
+}) {
+  if (value == null || value.isEmpty) {
+    return l10n.fillField;
+  }
+
+  return null;
+}
+
 String? _checkPasswd({
   required String value,
   required AppLocalizations l10n,
@@ -92,4 +106,14 @@ String? _checkPasswd({
   }
 
   return null;
+}
+
+void goHome(BuildContext context) {
+  Navigator.of(context).popUntil((route) => route.isFirst);
+  Navigator.of(context).pushReplacementNamed(const_routes.home);
+}
+
+void goAuth(BuildContext context) {
+  Navigator.of(context).popUntil((route) => route.isFirst);
+  Navigator.of(context).pushReplacementNamed(const_routes.auth);
 }

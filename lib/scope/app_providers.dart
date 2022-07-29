@@ -6,7 +6,7 @@ import 'package:rest_client/rest_client.dart';
 import '../models/models.dart';
 import '../repositories/impl/impls.dart';
 import '../repositories/interface/interfaces.dart';
-import 'notifiers/notifiers.dart';
+import 'src/export.dart';
 
 mixin AppProviders {
   late final colorTheme =
@@ -49,28 +49,26 @@ mixin AppProviders {
 
   final showChangePasswdOverlay = StateProvider<bool>((ref) => false);
 
-  final showConfirmOverlay = StateProvider<bool>((ref) => false);
-
   final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
+
+  final showConfirmOverlay = StateProvider<bool>((ref) => false);
 
   final showRecoveryOverlay = StateProvider<bool>((ref) => false);
 
   final showSignInOverlay = StateProvider<bool>((ref) => false);
-
-  late final showAfterConfirmOverlay =
-      StateNotifierProvider<ChangeStateProviderNotifier, StateProvider<bool>>(
-    (ref) {
-      return ChangeStateProviderNotifier(showPersonalInfoOverlay);
-    },
-  );
+  
+  final authState = StateProvider<AuthState>((ref) => AuthState.signUp);
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
     return UserNotifier(
       const NotAuthorizedUser(),
       onLogOut: () {
-        ref.read(showConfirmOverlay.notifier).state = false;
+        ref.read(showChangePasswdOverlay.notifier).state = false;
         ref.read(showPersonalInfoOverlay.notifier).state = false;
+        ref.read(showConfirmOverlay.notifier).state = false;
+        ref.read(showRecoveryOverlay.notifier).state = false;
+        ref.read(showSignInOverlay.notifier).state = false;
         ref.read(confirmPin.notifier).state = '';
       },
     );

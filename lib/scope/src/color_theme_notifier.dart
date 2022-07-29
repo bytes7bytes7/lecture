@@ -39,10 +39,11 @@ enum ColorTheme {
 class ColorThemeNotifier extends StateNotifier<ColorTheme> {
   ColorThemeNotifier(
     super.state, {
-    required this.ref,
+    required Ref ref,
     required Provider<GlobalKey<NavigatorState>> navigatorKey,
     required StateNotifierProvider<UserNotifier, User> user,
-  })  : _navigatorKey = navigatorKey,
+  })  : _ref = ref,
+        _navigatorKey = navigatorKey,
         _user = user {
     _sub = stream.listen((event) {
       Future.delayed(const Duration(milliseconds: 350), () {
@@ -70,12 +71,12 @@ class ColorThemeNotifier extends StateNotifier<ColorTheme> {
     _init();
   }
 
-  final Ref ref;
+  final Ref _ref;
   final Provider<GlobalKey<NavigatorState>> _navigatorKey;
   final StateNotifierProvider<UserNotifier, User> _user;
   late final StreamSubscription _sub;
 
-  BuildContext? get _context => ref.read(_navigatorKey).currentContext;
+  BuildContext? get _context => _ref.read(_navigatorKey).currentContext;
 
   @override
   void dispose() {

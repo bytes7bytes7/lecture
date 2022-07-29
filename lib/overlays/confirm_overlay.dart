@@ -74,9 +74,16 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
     ref.read(AppScope.get().loggerManager).log('check PIN');
     final pin = ref.read(AppScope.get().confirmPin);
     if (pin.isNotEmpty && pin.length == 4) {
-      final provider = ref.read(AppScope.get().showAfterConfirmOverlay).state;
-      ref.read(provider).state = true;
+      ref.read(AppScope.get().loggerManager).log('correct PIN');
+
+      final authState = ref.read(AppScope.get().authState);
+      if (authState == AuthState.signUp) {
+        ref.read(AppScope.get().showPersonalInfoOverlay.notifier).state = true;
+      } else if (authState == AuthState.recover) {
+        ref.read(AppScope.get().showChangePasswdOverlay.notifier).state = true;
+      }
     } else {
+      ref.read(AppScope.get().loggerManager).log('wrong PIN');
       errorNotifier.value = true;
     }
   }

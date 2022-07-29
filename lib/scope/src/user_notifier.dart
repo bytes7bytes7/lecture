@@ -5,17 +5,17 @@ import 'package:rest_client/rest_client.dart';
 class UserNotifier extends StateNotifier<User> {
   UserNotifier(
     super.state, {
-    required this.onLogOut,
-  });
+    required VoidCallback onLogOut,
+  }) : _onLogOut = onLogOut;
 
-  final VoidCallback onLogOut;
+  final VoidCallback _onLogOut;
 
   set user(User value) => state = value;
 
   void logIn() {}
 
   void logOut() {
-    onLogOut();
+    _onLogOut();
     state = const NotAuthorizedUser();
   }
 }

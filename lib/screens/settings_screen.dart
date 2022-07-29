@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../common.dart';
 import '../constants/routes.dart' as const_routes;
 import '../l10n/l10n.dart';
 import '../overlays/show_bottom_overlay.dart';
@@ -51,8 +52,7 @@ class SettingsScreen extends ConsumerWidget {
             primary: l10n.logOut,
             primaryOnPressed: () {
               ref.read(AppScope.get().user.notifier).logOut();
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.of(context).pushReplacementNamed(const_routes.auth);
+              goAuth(context);
             },
             body: HighlightedTextSpan(
               src: l10n.logOutAskAgain,

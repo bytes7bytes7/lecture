@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common.dart';
 import '../l10n/l10n.dart';
+import '../scope/app_scope.dart';
 import '../structs/quintet.dart';
 import '../widgets/widgets.dart';
 import 'card_overlay.dart';
@@ -123,5 +124,8 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
     );
   }
 
-  void _changePasswd() {}
+  void _changePasswd() {
+    ref.read(AppScope.get().loggerManager).log('change password');
+    goHome(context);
+  }
 }

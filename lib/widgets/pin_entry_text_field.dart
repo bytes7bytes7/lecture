@@ -67,7 +67,6 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     counterText: '',
-                    isCollapsed: true,
                     contentPadding: _contentPadding,
                     constraints: const BoxConstraints(
                       minHeight: _cellHeight,

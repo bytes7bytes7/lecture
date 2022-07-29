@@ -171,5 +171,8 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
     ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
   }
 
-  void _tryToLogIn() {}
+  void _tryToLogIn() {
+    ref.read(AppScope.get().loggerManager).log('log in');
+    goHome(context);
+  }
 }

@@ -167,12 +167,12 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
   }
 
   void _openSignIn() {
+    ref.read(AppScope.get().authState.notifier).state = AuthState.recover;
     ref.read(AppScope.get().showSignInOverlay.notifier).state = true;
   }
 
   void _tryToRegister() {
-    ref.read(AppScope.get().showAfterConfirmOverlay.notifier).newState =
-        AppScope.get().showPersonalInfoOverlay;
+    ref.read(AppScope.get().authState.notifier).state = AuthState.signUp;
     ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
   }
 }
