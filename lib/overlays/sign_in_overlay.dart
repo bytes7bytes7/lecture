@@ -181,9 +181,6 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
                       onPressed: _openRegister,
                       child: Text(
                         l10n.createAccount,
-                        style: theme.textTheme.subtitle2?.copyWith(
-                          decoration: TextDecoration.underline,
-                        ),
                       ),
                     ),
                   ],
@@ -205,9 +202,7 @@ class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
     );
   }
 
-  void _forgotPassword() {
-
-  }
+  void _forgotPassword() {}
 
   void _openRegister() {
     ref.read(AppScope.get().showSignInOverlay.notifier).state = false;

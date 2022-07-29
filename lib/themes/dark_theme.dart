@@ -58,6 +58,17 @@ final ThemeData darkTheme = ThemeData(
           decoration: TextDecoration.underline,
         ),
       ),
+      foregroundColor: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return const_colors.silverChalice.withOpacity(
+              const_measures.smallOpacity,
+            );
+          }
+
+          return const_colors.silverChalice;
+        },
+      ),
     ),
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(

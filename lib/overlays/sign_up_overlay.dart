@@ -183,9 +183,6 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                       onPressed: _openSignIn,
                       child: Text(
                         l10n.signIn,
-                        style: theme.textTheme.subtitle2?.copyWith(
-                          decoration: TextDecoration.underline,
-                        ),
                       ),
                     ),
                   ],
