@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants/measures.dart' as const_measures;
 import '../widgets/widgets.dart';
 
-const _bottomTextFlex = 5;
-
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
 );
@@ -68,8 +66,7 @@ class CardOverlay extends ConsumerWidget {
             ),
           ),
           body,
-          Expanded(
-            flex: _bottomTextFlex,
+          Flexible(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: subFooter,

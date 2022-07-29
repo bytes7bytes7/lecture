@@ -2,21 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common.dart';
-import '../constants/measures.dart' as const_measures;
 import '../l10n/l10n.dart';
 import '../structs/quintet.dart';
 import '../widgets/widgets.dart';
-
-const _padding = EdgeInsets.symmetric(
-  horizontal: const_measures.mainHorMargin,
-);
-const _titleMargin = EdgeInsets.only(
-  top: 30.0,
-);
-const _textMargin = EdgeInsets.symmetric(
-  vertical: 10.0,
-);
-const _bottomTextFlex = 5;
+import 'card_overlay.dart';
 
 class ChangePasswordOverlay extends ConsumerStatefulWidget {
   const ChangePasswordOverlay({super.key});
@@ -69,40 +58,15 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final l10n = context.l10n;
-    final constraints = ConstraintInherited.of(context).constraints;
 
-    return Container(
-      height: constraints.maxHeight,
-      width: constraints.maxWidth,
-      padding: _padding,
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(const_measures.overlayBorderRadius),
-          topRight: Radius.circular(const_measures.overlayBorderRadius),
-        ),
-      ),
-      child: Form(
+    return CardOverlay(
+      title: l10n.changePasswordTitle,
+      description: l10n.changePasswordDesc,
+      body: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: _titleMargin,
-              child: Text(
-                l10n.changePasswordTitle,
-                style: theme.textTheme.headline2,
-              ),
-            ),
-            Container(
-              margin: _textMargin,
-              child: Text(
-                l10n.changePasswordDesc,
-                style: theme.textTheme.bodyText1,
-              ),
-            ),
             ...<
                 Quintet<IconData, String, TextEditingController,
                     FormFieldValidator<String>, ValueNotifier<bool>>>[
@@ -110,7 +74,7 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 Icons.https,
                 l10n.password,
                 _passController,
-                    (_) => passwdValidator(
+                (_) => passwdValidator(
                   value: _passController.text,
                   l10n: l10n,
                 ),
@@ -120,7 +84,7 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 Icons.https,
                 l10n.repeatPassword,
                 _repPassController,
-                    (_) => repeatPasswdValidator(
+                (_) => repeatPasswdValidator(
                   value: _repPassController.text,
                   prevValue: _passController.text,
                   l10n: l10n,
@@ -128,7 +92,7 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 _repPassObscure,
               ),
             ].map(
-                  (e) {
+              (e) {
                 final notifier = e.fifth;
 
                 if (notifier != null) {
@@ -144,26 +108,20 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 return const SizedBox.shrink();
               },
             ),
-            const Expanded(
-              flex: _bottomTextFlex,
-              child: SizedBox.shrink(),
-            ),
-            ValueListenableBuilder<bool>(
-              valueListenable: _areFieldsValid,
-              builder: (context, value, child) {
-                return SingleButton(
-                  text: l10n.moveNext,
-                  onPressed: value ? _changePasswd : null,
-                );
-              },
-            ),
           ],
         ),
+      ),
+      footer: ValueListenableBuilder<bool>(
+        valueListenable: _areFieldsValid,
+        builder: (context, value, child) {
+          return SingleButton(
+            text: l10n.moveNext,
+            onPressed: value ? _changePasswd : null,
+          );
+        },
       ),
     );
   }
 
-  void _changePasswd() {
-
-  }
+  void _changePasswd() {}
 }

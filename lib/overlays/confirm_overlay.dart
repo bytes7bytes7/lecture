@@ -5,16 +5,8 @@ import '../constants/measures.dart' as const_measures;
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
+import 'card_overlay.dart';
 
-const _padding = EdgeInsets.symmetric(
-  horizontal: const_measures.mainHorMargin,
-);
-const _titleMargin = EdgeInsets.only(
-  top: 30.0,
-);
-const _textMargin = EdgeInsets.symmetric(
-  vertical: 10.0,
-);
 const _pinMargin = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
   vertical: 20.0,
@@ -46,55 +38,26 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final l10n = context.l10n;
-    final constraints = ConstraintInherited.of(context).constraints;
 
-    return Container(
-      height: constraints.maxHeight,
-      width: constraints.maxWidth,
-      padding: _padding,
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(const_measures.overlayBorderRadius),
-          topRight: Radius.circular(const_measures.overlayBorderRadius),
+    return CardOverlay(
+      title: l10n.verificationCodeTitle,
+      description: l10n.verificationCodeDesc,
+      body: Expanded(
+        child: Container(
+          alignment: Alignment.topCenter,
+          margin: _pinMargin,
+          child: PinEntryTextField(
+            errorNotifier: errorNotifier,
+            onSubmit: (value) => _pin = value,
+          ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: _titleMargin,
-            child: Text(
-              l10n.verificationCodeTitle,
-              style: theme.textTheme.headline2,
-            ),
-          ),
-          Container(
-            margin: _textMargin,
-            child: Text(
-              l10n.verificationCodeDesc,
-              style: theme.textTheme.bodyText1,
-            ),
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.topCenter,
-              margin: _pinMargin,
-              child: PinEntryTextField(
-                errorNotifier: errorNotifier,
-                onSubmit: (value) => _pin = value,
-              ),
-            ),
-          ),
-          DoubleButton(
-            secondary: l10n.cancel,
-            secondaryOnPressed: _cancel,
-            primary: l10n.moveNext,
-            primaryOnPressed: _next,
-          ),
-        ],
+      footer: DoubleButton(
+        secondary: l10n.cancel,
+        secondaryOnPressed: _cancel,
+        primary: l10n.moveNext,
+        primaryOnPressed: _next,
       ),
     );
   }
@@ -108,7 +71,7 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
   }
 
   void _next() {
-    // TODO: verify PIN-code
+    ref.read(AppScope.get().loggerManager).log('check PIN');
     final pin = ref.read(AppScope.get().confirmPin);
     if (pin.isNotEmpty && pin.length == 4) {
       final provider = ref.read(AppScope.get().showAfterConfirmOverlay).state;
