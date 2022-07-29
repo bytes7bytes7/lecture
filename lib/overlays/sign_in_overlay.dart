@@ -20,19 +20,17 @@ const _textMargin = EdgeInsets.symmetric(
 );
 const _bottomTextFlex = 5;
 
-class SignUpOverlay extends ConsumerStatefulWidget {
-  const SignUpOverlay({super.key});
+class SignInOverlay extends ConsumerStatefulWidget {
+  const SignInOverlay({super.key});
 
   @override
-  ConsumerState<SignUpOverlay> createState() => _SignUpOverlayState();
+  ConsumerState<SignInOverlay> createState() => _SignUpOverlayState();
 }
 
-class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
+class _SignUpOverlayState extends ConsumerState<SignInOverlay> {
   late final TextEditingController _emailController;
   late final TextEditingController _passController;
-  late final TextEditingController _repPassController;
   late final ValueNotifier<bool> _passObscure;
-  late final ValueNotifier<bool> _repPassObscure;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
 
@@ -42,9 +40,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
 
     _emailController = TextEditingController()..addListener(_onChanged);
     _passController = TextEditingController()..addListener(_onChanged);
-    _repPassController = TextEditingController()..addListener(_onChanged);
     _passObscure = ValueNotifier(true);
-    _repPassObscure = ValueNotifier(true);
     _areFieldsValid = ValueNotifier(false);
   }
 
@@ -64,9 +60,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
   void dispose() {
     _emailController.dispose();
     _passController.dispose();
-    _repPassController.dispose();
     _passObscure.dispose();
-    _repPassObscure.dispose();
     _areFieldsValid.dispose();
 
     super.dispose();
@@ -97,14 +91,14 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
             Container(
               margin: _titleMargin,
               child: Text(
-                l10n.signUpTitle,
+                l10n.signInTitle,
                 style: theme.textTheme.headline2,
               ),
             ),
             Container(
               margin: _textMargin,
               child: Text(
-                l10n.signUpDesc,
+                l10n.signInDesc,
                 style: theme.textTheme.bodyText1,
               ),
             ),
@@ -115,7 +109,10 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                 Icons.mail,
                 l10n.email,
                 _emailController,
-                (_) => emailValidator(value: _emailController.text, l10n: l10n),
+                (_) => emailValidator(
+                  value: _emailController.text,
+                  l10n: l10n,
+                ),
               ),
             ].map(
               (e) {
@@ -139,17 +136,6 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                   l10n: l10n,
                 ),
                 _passObscure,
-              ),
-              Quintet(
-                Icons.https,
-                l10n.repeatPassword,
-                _repPassController,
-                (_) => repeatPasswdValidator(
-                  value: _repPassController.text,
-                  prevValue: _passController.text,
-                  l10n: l10n,
-                ),
-                _repPassObscure,
               ),
             ].map(
               (e) {
@@ -176,13 +162,13 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      l10n.alreadyHaveAccount,
+                      l10n.doNotHaveAccount,
                       style: theme.textTheme.bodyText1,
                     ),
                     TextButton(
-                      onPressed: _openSignIn,
+                      onPressed: _openRegister,
                       child: Text(
-                        l10n.signIn,
+                        l10n.createAccount,
                         style: theme.textTheme.subtitle2?.copyWith(
                           decoration: TextDecoration.underline,
                         ),
@@ -197,7 +183,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
               builder: (context, value, child) {
                 return SingleButton(
                   text: l10n.moveNext,
-                  onPressed: value ? _tryToRegister : null,
+                  onPressed: value ? _tryToLogIn : null,
                 );
               },
             ),
@@ -207,11 +193,11 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     );
   }
 
-  void _openSignIn() {
-    ref.read(AppScope.get().showSignInOverlay.notifier).state = true;
+  void _openRegister() {
+    ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
   }
 
-  void _tryToRegister() {
-    ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
+  void _tryToLogIn() {
+
   }
 }

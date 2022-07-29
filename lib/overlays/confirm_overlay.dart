@@ -104,14 +104,14 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
   }
 
   void _cancel() {
-    ref.read(AppScope.get().openConfirmOverlay.notifier).state = false;
+    ref.read(AppScope.get().showConfirmOverlay.notifier).state = false;
   }
 
   void _next() {
     // TODO: verify PIN-code
     final pin = ref.read(AppScope.get().confirmPin);
     if (pin.isNotEmpty && pin.length == 4) {
-      ref.read(AppScope.get().openPersonalInfoOverlay.notifier).state = true;
+      ref.read(AppScope.get().showPersonalInfoOverlay.notifier).state = true;
     } else {
       errorNotifier.value = true;
     }

@@ -9,6 +9,16 @@ import '../repositories/interface/interfaces.dart';
 import 'notifiers/notifiers.dart';
 
 mixin AppProviders {
+  late final colorTheme =
+      StateNotifierProvider<ColorThemeNotifier, ColorTheme>((ref) {
+    return ColorThemeNotifier(
+      ColorTheme.system,
+      ref: ref,
+      navigatorKey: navigatorKey,
+      user: user,
+    );
+  });
+
   final confirmPin = StateProvider<String>((ref) => '');
 
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
@@ -32,32 +42,24 @@ mixin AppProviders {
 
   final navigatorKey = Provider((ref) => GlobalKey<NavigatorState>());
 
-  final openConfirmOverlay = StateProvider<bool>((ref) => false);
-
-  final openPersonalInfoOverlay = StateProvider<bool>((ref) => false);
-
   final restClient =
       Provider<RestClient>((ref) => ClientFactory().createMockClient());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 
-  late final colorTheme =
-      StateNotifierProvider<ColorThemeNotifier, ColorTheme>((ref) {
-    return ColorThemeNotifier(
-      ColorTheme.system,
-      ref: ref,
-      navigatorKey: navigatorKey,
-      user: user,
-    );
-  });
+  final showConfirmOverlay = StateProvider<bool>((ref) => false);
+
+  final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
+
+  final showSignInOverlay = StateProvider<bool>((ref) => false);
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
     return UserNotifier(
       const NotAuthorizedUser(),
       onLogOut: () {
-        ref.read(openConfirmOverlay.notifier).state = false;
-        ref.read(openPersonalInfoOverlay.notifier).state = false;
+        ref.read(showConfirmOverlay.notifier).state = false;
+        ref.read(showPersonalInfoOverlay.notifier).state = false;
         ref.read(confirmPin.notifier).state = '';
       },
     );
