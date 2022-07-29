@@ -209,6 +209,8 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
   }
 
   void _tryToRegister() {
+    ref.read(AppScope.get().showAfterConfirmOverlay.notifier).newState =
+        AppScope.get().showPersonalInfoOverlay;
     ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
-import 'package:riverpod/riverpod.dart';
 
 class UserNotifier extends StateNotifier<User> {
   UserNotifier(

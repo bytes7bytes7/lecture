@@ -94,6 +94,11 @@ class AuthenticationScreen extends StatelessWidget {
                                       AppScope.get().showPersonalInfoOverlay,
                                   overlay: const PersonalInfoOverlay(),
                                 ),
+                                ListeningOverlay(
+                                  notifier:
+                                      AppScope.get().showChangePasswdOverlay,
+                                  overlay: const ChangePasswordOverlay(),
+                                ),
                               ],
                             ),
                           );

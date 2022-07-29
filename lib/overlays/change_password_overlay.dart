@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../common.dart';
 import '../constants/measures.dart' as const_measures;
 import '../l10n/l10n.dart';
-import '../scope/app_scope.dart';
-import '../structs/quartet.dart';
 import '../structs/quintet.dart';
 import '../widgets/widgets.dart';
 
@@ -20,17 +18,18 @@ const _textMargin = EdgeInsets.symmetric(
 );
 const _bottomTextFlex = 5;
 
-class SignInOverlay extends ConsumerStatefulWidget {
-  const SignInOverlay({super.key});
+class ChangePasswordOverlay extends ConsumerStatefulWidget {
+  const ChangePasswordOverlay({super.key});
 
   @override
-  ConsumerState<SignInOverlay> createState() => _SignInOverlayState();
+  ConsumerState<ChangePasswordOverlay> createState() => _ChangeOverlayState();
 }
 
-class _SignInOverlayState extends ConsumerState<SignInOverlay> {
-  late final TextEditingController _emailController;
+class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
   late final TextEditingController _passController;
+  late final TextEditingController _repPassController;
   late final ValueNotifier<bool> _passObscure;
+  late final ValueNotifier<bool> _repPassObscure;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
 
@@ -38,9 +37,10 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController()..addListener(_onChanged);
     _passController = TextEditingController()..addListener(_onChanged);
+    _repPassController = TextEditingController()..addListener(_onChanged);
     _passObscure = ValueNotifier(true);
+    _repPassObscure = ValueNotifier(true);
     _areFieldsValid = ValueNotifier(false);
   }
 
@@ -58,9 +58,10 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _passController.dispose();
+    _repPassController.dispose();
     _passObscure.dispose();
+    _repPassObscure.dispose();
     _areFieldsValid.dispose();
 
     super.dispose();
@@ -91,38 +92,16 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
             Container(
               margin: _titleMargin,
               child: Text(
-                l10n.signInTitle,
+                l10n.changePasswordTitle,
                 style: theme.textTheme.headline2,
               ),
             ),
             Container(
               margin: _textMargin,
               child: Text(
-                l10n.signInDesc,
+                l10n.changePasswordDesc,
                 style: theme.textTheme.bodyText1,
               ),
-            ),
-            ...<
-                Quartet<IconData, String, TextEditingController,
-                    FormFieldValidator<String>>>[
-              Quartet(
-                Icons.mail,
-                l10n.email,
-                _emailController,
-                (_) => emailValidator(
-                  value: _emailController.text,
-                  l10n: l10n,
-                ),
-              ),
-            ].map(
-              (e) {
-                return SimpleTextField(
-                  icon: e.first,
-                  hint: e.second,
-                  controller: e.third,
-                  validator: e.fourth,
-                );
-              },
             ),
             ...<
                 Quintet<IconData, String, TextEditingController,
@@ -131,14 +110,25 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
                 Icons.https,
                 l10n.password,
                 _passController,
-                (_) => passwdValidator(
+                    (_) => passwdValidator(
                   value: _passController.text,
                   l10n: l10n,
                 ),
                 _passObscure,
               ),
+              Quintet(
+                Icons.https,
+                l10n.repeatPassword,
+                _repPassController,
+                    (_) => repeatPasswdValidator(
+                  value: _repPassController.text,
+                  prevValue: _passController.text,
+                  l10n: l10n,
+                ),
+                _repPassObscure,
+              ),
             ].map(
-              (e) {
+                  (e) {
                 final notifier = e.fifth;
 
                 if (notifier != null) {
@@ -154,45 +144,16 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
                 return const SizedBox.shrink();
               },
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: _forgotPassword,
-                child: Text(
-                  l10n.forgotPassword,
-                  style: theme.textTheme.subtitle1?.copyWith(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
+            const Expanded(
               flex: _bottomTextFlex,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      l10n.doNotHaveAccount,
-                      style: theme.textTheme.bodyText1,
-                    ),
-                    TextButton(
-                      onPressed: _openRegister,
-                      child: Text(
-                        l10n.createAccount,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: SizedBox.shrink(),
             ),
             ValueListenableBuilder<bool>(
               valueListenable: _areFieldsValid,
               builder: (context, value, child) {
                 return SingleButton(
                   text: l10n.moveNext,
-                  onPressed: value ? _tryToLogIn : null,
+                  onPressed: value ? _changePasswd : null,
                 );
               },
             ),
@@ -202,15 +163,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
     );
   }
 
-  void _forgotPassword() {
-    ref.read(AppScope.get().showRecoveryOverlay.notifier).state = true;
-  }
+  void _changePasswd() {
 
-  void _openRegister() {
-    _emailController.clear();
-    _passController.clear();
-    ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
   }
-
-  void _tryToLogIn() {}
 }

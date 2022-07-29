@@ -6,7 +6,6 @@ import '../constants/measures.dart' as const_measures;
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../structs/quartet.dart';
-import '../structs/quintet.dart';
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -24,10 +23,10 @@ class RecoveryOverlay extends ConsumerStatefulWidget {
   const RecoveryOverlay({super.key});
 
   @override
-  ConsumerState<RecoveryOverlay> createState() => _SignUpOverlayState();
+  ConsumerState<RecoveryOverlay> createState() => _RecoveryOverlayState();
 }
 
-class _SignUpOverlayState extends ConsumerState<RecoveryOverlay> {
+class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   late final TextEditingController _emailController;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
@@ -139,7 +138,12 @@ class _SignUpOverlayState extends ConsumerState<RecoveryOverlay> {
     );
   }
 
-  void _tryToRecover() {}
+  void _tryToRecover() {
+    ref.read(AppScope.get().showAfterConfirmOverlay.notifier).newState =
+        AppScope.get().showRecoveryOverlay;
+    ref.read(AppScope.get().loggerManager).log('try to recover');
+    ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
+  }
 
   void _backToSignIn() {
     _emailController.clear();

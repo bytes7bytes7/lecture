@@ -1,10 +1,9 @@
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/filter_config.dart';
 
 class FilterNotifier extends StateNotifier<FilterConfig> {
-  FilterNotifier(super.state)
-      : _oldState = state.copyWith();
+  FilterNotifier(super.state) : _oldState = state.copyWith();
 
   FilterConfig _oldState;
 

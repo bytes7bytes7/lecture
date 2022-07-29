@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
-import 'package:riverpod/riverpod.dart';
 
 import '../models/models.dart';
 import '../repositories/impl/impls.dart';
@@ -47,6 +47,8 @@ mixin AppProviders {
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 
+  final showChangePasswdOverlay = StateProvider<bool>((ref) => false);
+
   final showConfirmOverlay = StateProvider<bool>((ref) => false);
 
   final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
@@ -54,6 +56,13 @@ mixin AppProviders {
   final showRecoveryOverlay = StateProvider<bool>((ref) => false);
 
   final showSignInOverlay = StateProvider<bool>((ref) => false);
+
+  late final showAfterConfirmOverlay =
+      StateNotifierProvider<ChangeStateProviderNotifier, StateProvider<bool>>(
+    (ref) {
+      return ChangeStateProviderNotifier(showPersonalInfoOverlay);
+    },
+  );
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
