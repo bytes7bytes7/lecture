@@ -13,10 +13,10 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.signUp)
-  Future<Map<String, String>> signUp(
-    @Query(const_api.login) String login,
-    @Query(const_api.password) String password,
-  );
+  Future<Map<String, String>> signUp({
+    @Query(const_api.login) required String login,
+    @Query(const_api.password) required String password,
+  });
 
   @override
   @POST(const_secret.verifyCode)
@@ -26,14 +26,18 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.setPersonalInfo)
-  Future<void> setPersonalInfo(@Body() User user);
+  Future<Map<String, String?>> setPersonalInfo({
+    @Query(const_api.firstName) required String firstName,
+    @Query(const_api.lastName) required String lastName,
+    @Query(const_api.middleName) required String? middleName,
+  });
 
   @override
   @POST(const_secret.signIn)
-  Future<String> signIn(
-    @Query(const_api.login) String login,
-    @Query(const_api.password) String password,
-  );
+  Future<String> signIn({
+    @Query(const_api.login) required String login,
+    @Query(const_api.password) required String password,
+  });
 
   @override
   @POST(const_secret.recoverPasswd)
@@ -106,10 +110,10 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.getToken)
-  Future<Map<String, String>> getToken(
-    @Query(const_api.login) String login,
-    @Query(const_api.password) String password,
-  );
+  Future<Map<String, String>> getToken({
+    @Query(const_api.login) required String login,
+    @Query(const_api.password) required String password,
+  });
 
   @override
   @POST(const_secret.refreshToken)
@@ -124,6 +128,10 @@ abstract class RetroClient implements RestClient {
   @override
   @POST(const_secret.changeUserInfo)
   Future<void> changeUserInfo(Map<String, dynamic> params);
+
+  @override
+  @GET(const_secret.getMe)
+  Future<User> getMe();
 
   @override
   @GET(const_secret.getUser)

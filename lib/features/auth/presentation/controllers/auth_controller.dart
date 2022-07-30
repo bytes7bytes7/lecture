@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/auth_repo.dart';
 
-class SignUpController extends StateNotifier<AsyncValue<AuthStatus>> {
-  SignUpController({
+class AuthController extends StateNotifier<AsyncValue<AuthStatus>> {
+  AuthController({
     required AuthRepo authRepo,
   })  : _authRepo = authRepo,
         super(const AsyncData(AuthStatus.loggedOut)) {
@@ -35,6 +35,21 @@ class SignUpController extends StateNotifier<AsyncValue<AuthStatus>> {
     state = const AsyncLoading();
     await AsyncValue.guard(
       () => _authRepo.verifyCode(code),
+    );
+  }
+
+  Future<void> setPersonalInfo({
+    required String firstName,
+    required String lastName,
+    required String? middleName,
+  }) async {
+    state = const AsyncLoading();
+    await AsyncValue.guard(
+      () => _authRepo.setPersonalInfo(
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+      ),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quartet.dart';
+import '../../../../structs/quintet.dart';
 import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
@@ -59,6 +59,8 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final state = ref.watch(AppScope.get().authController);
+
     return CardOverlay(
       title: l10n.personalTitle,
       description: l10n.personalDesc,
@@ -67,29 +69,32 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
         child: Column(
           children: [
             ...<
-                Quartet<IconData, String, TextEditingController,
+                Quintet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>>>[
-              Quartet(
+              Quintet(
                 Icons.person,
                 l10n.firstName,
+                state is! AsyncLoading,
                 _nameController,
                 (_) => simpleValidator(
                   value: _nameController.text,
                   l10n: l10n,
                 ),
               ),
-              Quartet(
+              Quintet(
                 Icons.person,
                 l10n.lastName,
+                state is! AsyncLoading,
                 _surnameController,
                 (_) => simpleValidator(
                   value: _surnameController.text,
                   l10n: l10n,
                 ),
               ),
-              Quartet(
+              Quintet(
                 Icons.person,
                 l10n.middleName,
+                state is! AsyncLoading,
                 _middleNameController,
                 // no validator
               ),
@@ -98,8 +103,9 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
                 return SimpleTextField(
                   icon: e.first,
                   hint: e.second,
-                  controller: e.third,
-                  validator: e.fourth,
+                  enabled: e.third,
+                  controller: e.fourth,
+                  validator: e.fifth,
                 );
               },
             ),
@@ -111,7 +117,7 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
         builder: (context, value, child) {
           return SingleButton(
             text: l10n.moveNext,
-            onPressed: value ? _next : null,
+            onPressed: (value && state is! AsyncLoading) ? _next : null,
           );
         },
       ),
@@ -119,7 +125,13 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
   }
 
   void _next() {
+    // TODO: add somewhere modification of user provider
     ref.read(AppScope.get().loggerManager).log('get personal info');
+    ref.read(AppScope.get().authController.notifier).setPersonalInfo(
+          firstName: _nameController.text,
+          lastName: _surnameController.text,
+          middleName: _middleNameController.text,
+        );
     goHome(context);
   }
 }

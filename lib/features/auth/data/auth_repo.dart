@@ -1,6 +1,7 @@
 import '../../../l10n/l10n.dart';
 
 enum AuthStatus {
+  unknown,
   loggedOut,
   signUp,
   wrongCred,
@@ -38,4 +39,12 @@ abstract class AuthRepo {
   Future<void> signUp(String login, String password);
 
   Future<void> verifyCode(String code);
+
+  Future<void> setPersonalInfo({
+    required String firstName,
+    required String lastName,
+    required String? middleName,
+  });
+
+  Future<void> logOut();
 }

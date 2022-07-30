@@ -9,7 +9,7 @@ part 'user.freezed.dart';
 part 'user.g.dart';
 
 const notAuthorizedUser = User(
-  id: -1,
+  id: 0,
   firstName: '',
   lastName: '',
   email: '',

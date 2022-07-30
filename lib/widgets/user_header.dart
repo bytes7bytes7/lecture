@@ -20,6 +20,8 @@ class UserHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
+    final avatar = user.avatar;
+
     final middleN = user.middleName;
     late final String name;
     if (middleN != null) {
@@ -27,8 +29,6 @@ class UserHeader extends ConsumerWidget {
     } else {
       name = '${user.lastName} ${user.firstName}';
     }
-
-    ref.read(AppScope.get().loggerManager).info('Загрузка аватара...');
 
     return Column(
       children: [
@@ -48,40 +48,49 @@ class UserHeader extends ConsumerWidget {
             borderRadius: BorderRadius.circular(
               const_measures.mainBorderRadius,
             ),
-            child: Image.network(
-              user.avatar ?? '',
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, progress) {
-                if (progress == null) {
-                  return child;
-                }
+            child: avatar != null && avatar.isNotEmpty
+                ? Image.network(
+                    avatar,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, progress) {
+                      ref
+                          .read(AppScope.get().loggerManager)
+                          .info('Загрузка аватара...');
+                      if (progress == null) {
+                        return child;
+                      }
 
-                return Icon(
-                  Icons.person,
-                  size: const_measures.bigIconSize,
-                  color: theme.hintColor,
-                );
-              },
-              errorBuilder: (context, error, stackTrace) {
-                ref.read(AppScope.get().loggerManager).error(
-                      'Ошибка загрузки аватара:\n$error\n$stackTrace',
-                    );
+                      return Icon(
+                        Icons.person,
+                        size: const_measures.bigIconSize,
+                        color: theme.hintColor,
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      ref.read(AppScope.get().loggerManager).error(
+                            'Ошибка загрузки аватара:\n$error\n$stackTrace',
+                          );
 
-                if (user.avatar?.isEmpty != false) {
-                  return Icon(
+                      if (avatar.isEmpty) {
+                        return Icon(
+                          Icons.person,
+                          size: const_measures.bigIconSize,
+                          color: theme.hintColor,
+                        );
+                      }
+
+                      return Icon(
+                        Icons.warning_amber_outlined,
+                        size: const_measures.smallIconSize,
+                        color: theme.errorColor,
+                      );
+                    },
+                  )
+                : Icon(
                     Icons.person,
                     size: const_measures.bigIconSize,
                     color: theme.hintColor,
-                  );
-                }
-
-                return Icon(
-                  Icons.warning_amber_outlined,
-                  size: const_measures.smallIconSize,
-                  color: theme.errorColor,
-                );
-              },
-            ),
+                  ),
           ),
         ),
         Padding(

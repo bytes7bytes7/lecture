@@ -66,7 +66,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    final state = ref.watch(AppScope.get().signUpController);
+    final state = ref.watch(AppScope.get().authController);
 
     return CardOverlay(
       title: l10n.signUpTitle,
@@ -179,7 +179,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
   }
 
   void _tryToRegister() {
-    ref.read(AppScope.get().signUpController.notifier).signUp(
+    ref.read(AppScope.get().authController.notifier).signUp(
           _loginController.text,
           _passController.text,
         );

@@ -18,7 +18,8 @@ class _RetroClient implements RetroClient {
   String? baseUrl;
 
   @override
-  Future<Map<String, String>> signUp(login, password) async {
+  Future<Map<String, String>> signUp(
+      {required login, required password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'phone': login,
@@ -53,22 +54,29 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<void> setPersonalInfo(user) async {
+  Future<Map<String, String?>> setPersonalInfo(
+      {required firstName, required lastName, middleName}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'firstName': firstName,
+      r'lastName': lastName,
+      r'middleName': middleName
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(user.toJson());
-    await _dio.fetch<void>(_setStreamType<void>(
-        Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/info',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, String>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/info',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<String, String>();
+    return value;
   }
 
   @override
-  Future<String> signIn(login, password) async {
+  Future<String> signIn({required login, required password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'phone': login,
@@ -284,7 +292,8 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<Map<String, String>> getToken(login, password) async {
+  Future<Map<String, String>> getToken(
+      {required login, required password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'phone': login,
@@ -343,6 +352,21 @@ class _RetroClient implements RetroClient {
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;
+  }
+
+  @override
+  Future<User> getMe() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<User>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = User.fromJson(_result.data!);
+    return value;
   }
 
   @override

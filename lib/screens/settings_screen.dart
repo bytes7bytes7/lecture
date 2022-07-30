@@ -10,15 +10,6 @@ import '../scope/app_scope.dart';
 import '../structs/quartet.dart';
 import '../widgets/widgets.dart';
 
-const _me = User(
-  id: 7776660,
-  firstName: 'Владимир',
-  lastName: 'Соколов',
-  email: 'vladimir.sokolov@some.ru',
-  token: 'TEST_TOKEN',
-  avatar: 'https://www.topsunglasses.net/wp-content/uploads/'
-      '2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',
-);
 const _bodyPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _bookmarks = 7;
 const _my = 3;
@@ -31,6 +22,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final user = ref.watch(AppScope.get().user);
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -39,7 +31,7 @@ class SettingsScreen extends ConsumerWidget {
         prefixOnPressed: () {
           Navigator.pop(context);
         },
-        title: _me.beautifulID,
+        title: user.beautifulID,
         suffix: Icons.exit_to_app,
         suffixTooltip: l10n.tooltipLogOut,
         suffixOnPressed: () {
@@ -51,7 +43,8 @@ class SettingsScreen extends ConsumerWidget {
             },
             primary: l10n.logOut,
             primaryOnPressed: () {
-              ref.read(AppScope.get().user.notifier).logOut();
+              // TODO: call logOut
+              ref.read(AppScope.get().loggerManager).log('log out');
               goAuth(context);
             },
             body: HighlightedTextSpan(
@@ -63,8 +56,8 @@ class SettingsScreen extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
-            const UserHeader(
-              user: _me,
+            UserHeader(
+              user: user,
             ),
             Expanded(
               child: Padding(

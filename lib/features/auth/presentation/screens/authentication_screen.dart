@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../common.dart';
 import '../../../../constants/app.dart' as const_app;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
@@ -119,11 +120,17 @@ class AuthenticationScreen extends ConsumerWidget {
   }
 
   void _onData(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
-    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
+    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().authController,
         (prev, next) {
       final data = next.asData?.value;
       if (data != null) {
         switch (data) {
+          case AuthStatus.loggedOut:
+            goAuth(context);
+            break;
+          case AuthStatus.loggedIn:
+            goHome(context);
+            break;
           case AuthStatus.signUp:
             ref.read(AppScope.get().showVerifyOverlay.notifier).state = true;
             break;

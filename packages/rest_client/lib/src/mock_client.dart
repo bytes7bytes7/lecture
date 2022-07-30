@@ -8,7 +8,10 @@ const _tokenLen = 32;
 
 class MockClient implements RestClient {
   @override
-  Future<Map<String, String>> signUp(String login, String password) async {
+  Future<Map<String, String>> signUp({
+    required String login,
+    required String password,
+  }) async {
     return Future.delayed(
       _dur,
       () {
@@ -42,12 +45,26 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<void> setPersonalInfo(User user) async {
-    return Future.delayed(_dur);
+  Future<Map<String, String?>> setPersonalInfo({
+    required String firstName,
+    required String lastName,
+    required String? middleName,
+  }) async {
+    return Future.delayed(
+      _dur,
+      () => {
+        const_api.firstName: firstName,
+        const_api.lastName: lastName,
+        const_api.middleName: middleName,
+      },
+    );
   }
 
   @override
-  Future<String> signIn(String login, String password) async {
+  Future<String> signIn({
+    required String login,
+    required String password,
+  }) async {
     return Future.delayed(
       _dur,
       () => dev.randomBool()
@@ -135,7 +152,10 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, String>> getToken(String login, String password) async {
+  Future<Map<String, String>> getToken({
+    required String login,
+    required String password,
+  }) async {
     return Future.delayed(
       _dur,
       () {
@@ -179,6 +199,11 @@ class MockClient implements RestClient {
   @override
   Future<void> changeUserInfo(Map<String, dynamic> params) async {
     return Future.delayed(_dur);
+  }
+
+  @override
+  Future<User> getMe() async {
+    return Future.delayed(_dur, User.random);
   }
 
   @override

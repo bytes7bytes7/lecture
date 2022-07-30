@@ -10,9 +10,19 @@ import '../repositories/interface/interfaces.dart';
 import 'src/export.dart';
 
 mixin AppProviders {
-  late final authRepo = Provider.autoDispose<AuthRepo>((ref) {
+  // TODO: after logOut reset all 'show...Overlay' to false and pin to ''
+  late final authController =
+      StateNotifierProvider<AuthController, AsyncValue<AuthStatus>>((ref) {
+    return AuthController(
+      authRepo: ref.watch(authRepo),
+    );
+  });
+
+  late final authRepo = Provider<AuthRepo>((ref) {
     return AuthRepoImpl(
+      ref: ref,
       client: ref.watch(restClient),
+      user: user,
     );
   });
 
@@ -22,7 +32,6 @@ mixin AppProviders {
       ColorTheme.system,
       ref: ref,
       navigatorKey: navigatorKey,
-      user: user,
     );
   });
 
@@ -62,29 +71,11 @@ mixin AppProviders {
 
   final showVerifyOverlay = StateProvider<bool>((ref) => false);
 
-  late final signUpController = StateNotifierProvider.autoDispose<
-      SignUpController, AsyncValue<AuthStatus>>((ref) {
-    return SignUpController(
-      authRepo: ref.watch(authRepo),
-    );
-  });
-
   final verifyPin = StateProvider<String>((ref) => '');
 
-  // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
-    final client = ref.watch(restClient);
     return UserNotifier(
       notAuthorizedUser,
-      client: client,
-      onLogOut: () {
-        ref.read(showChangePasswdOverlay.notifier).state = false;
-        ref.read(showPersonalInfoOverlay.notifier).state = false;
-        ref.read(showVerifyOverlay.notifier).state = false;
-        ref.read(showRecoveryOverlay.notifier).state = false;
-        ref.read(showSignInOverlay.notifier).state = false;
-        ref.read(verifyPin.notifier).state = '';
-      },
     );
   });
 }

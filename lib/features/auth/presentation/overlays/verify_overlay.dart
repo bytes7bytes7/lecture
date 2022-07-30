@@ -43,7 +43,7 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
 
     _onData();
 
-    final state = ref.watch(AppScope.get().signUpController);
+    final state = ref.watch(AppScope.get().authController);
 
     return CardOverlay(
       title: l10n.verificationCodeTitle,
@@ -55,6 +55,7 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
           child: PinEntryTextField(
             errorNotifier: errorNotifier,
             onSubmit: (value) => _pin = value,
+            enabled: state is! AsyncLoading,
           ),
         ),
       ),
@@ -68,7 +69,7 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
   }
 
   void _onData() {
-    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
+    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().authController,
         (prev, next) {
       final data = next.asData?.value;
       if (data == AuthStatus.wrongCode) {
@@ -88,6 +89,6 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
   void _next() {
     ref.read(AppScope.get().loggerManager).log('check PIN');
     final pin = ref.read(AppScope.get().verifyPin);
-    ref.read(AppScope.get().signUpController.notifier).verifyCode(pin);
+    ref.read(AppScope.get().authController.notifier).verifyCode(pin);
   }
 }
