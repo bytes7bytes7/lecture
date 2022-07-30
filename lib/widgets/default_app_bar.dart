@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../constants/measures.dart' as const_measures;
+import 'copy_text.dart';
 import 'sized_icon_button.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
     super.key,
     required this.title,
+    this.canCopyTitle = false,
     this.titleStyle,
     this.prefix,
     this.prefixTooltip,
@@ -17,6 +19,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final String title;
+  final bool canCopyTitle;
   final TextStyle? titleStyle;
   final IconData? prefix;
   final String? prefixTooltip;
@@ -43,10 +46,15 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     final sufOnPressed = suffixOnPressed;
 
     return AppBar(
-      title: Text(
-        title,
-        style: style ?? theme.appBarTheme.titleTextStyle,
-      ),
+      title: canCopyTitle
+          ? CopyText(
+              text: title,
+              style: style ?? theme.appBarTheme.titleTextStyle,
+            )
+          : Text(
+              title,
+              style: style ?? theme.appBarTheme.titleTextStyle,
+            ),
       automaticallyImplyLeading: false,
       leading:
           (prefIcon != null && prefTooltip != null && prefOnPressed != null)

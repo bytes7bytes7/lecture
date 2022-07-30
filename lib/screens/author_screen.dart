@@ -29,6 +29,7 @@ class AuthorScreen extends StatelessWidget {
           Navigator.pop(context);
         },
         title: author.beautifulID,
+        canCopyTitle: true,
       ),
       body: Center(
         // TODO: add RefreshIndicator

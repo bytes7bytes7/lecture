@@ -67,6 +67,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
           Navigator.pop(context);
         },
         title: l10n.lecture,
+        canCopyTitle: true,
         suffix: Icons.more_vert,
         suffixTooltip: l10n.tooltipAdditional,
         suffixOnPressed: () => _showMenu(context, ref),

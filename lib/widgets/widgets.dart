@@ -1,4 +1,5 @@
 export 'badge.dart';
+export 'copy_text.dart';
 export 'default_app_bar.dart';
 export 'double_button.dart';
 export 'drag_container.dart';

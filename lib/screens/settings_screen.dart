@@ -32,6 +32,7 @@ class SettingsScreen extends ConsumerWidget {
           Navigator.pop(context);
         },
         title: user.beautifulID,
+        canCopyTitle: true,
         suffix: Icons.exit_to_app,
         suffixTooltip: l10n.tooltipLogOut,
         suffixOnPressed: () {
