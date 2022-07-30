@@ -140,6 +140,11 @@ final ThemeData lightTheme = ThemeData(
         color: _Colors.cinnabar,
       ),
     ),
+    disabledBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: _Colors.gallery,
+      ),
+    ),
   ),
   popupMenuTheme: PopupMenuThemeData(
     color: _Colors.white,

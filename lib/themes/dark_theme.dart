@@ -147,6 +147,11 @@ final ThemeData darkTheme = ThemeData(
         color: _Colors.cinnabar,
       ),
     ),
+    disabledBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: _Colors.mineShaft,
+      ),
+    ),
   ),
   popupMenuTheme: PopupMenuThemeData(
     color: _Colors.shark,
