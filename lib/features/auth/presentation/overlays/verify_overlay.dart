@@ -52,7 +52,7 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
         child: Container(
           alignment: Alignment.topCenter,
           margin: _pinMargin,
-          child: PinEntryTextField(
+          child: PinTextField(
             errorNotifier: errorNotifier,
             onSubmit: (value) => _pin = value,
             enabled: state is! AsyncLoading,

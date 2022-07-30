@@ -10,7 +10,7 @@ export 'lecture_card.dart';
 export 'lecture_header.dart';
 export 'line_button.dart';
 export 'loading_circle.dart';
-export 'pin_entry_text_field.dart';
+export 'pin_text_field.dart';
 export 'rating_badge.dart';
 export 'rating_stars.dart';
 export 'search_bar.dart';

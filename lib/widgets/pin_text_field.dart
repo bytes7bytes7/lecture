@@ -10,8 +10,8 @@ const _borderWidth = 1.0;
 const _borderWidthBold = 2.0;
 const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
 
-class PinEntryTextField extends StatefulWidget {
-  const PinEntryTextField({
+class PinTextField extends StatefulWidget {
+  const PinTextField({
     super.key,
     required this.errorNotifier,
     required this.onSubmit,
@@ -23,10 +23,10 @@ class PinEntryTextField extends StatefulWidget {
   final bool? enabled;
 
   @override
-  State<PinEntryTextField> createState() => _PinEntryTextFieldState();
+  State<PinTextField> createState() => _PinTextFieldState();
 }
 
-class _PinEntryTextFieldState extends State<PinEntryTextField> {
+class _PinTextFieldState extends State<PinTextField> {
   final _pin = List<String>.generate(_cellAmount, (index) => '');
   final _focusNodes =
       List<FocusNode>.generate(_cellAmount, (index) => FocusNode());
@@ -109,6 +109,15 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
                       borderSide: BorderSide(
                         width: _borderWidthBold,
                         color: theme.primaryColor,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        const_measures.mainBorderRadius,
+                      ),
+                      borderSide: BorderSide(
+                        width: _borderWidth,
+                        color: theme.disabledColor,
                       ),
                     ),
                   ),
