@@ -12,12 +12,14 @@ class SecureTextField extends StatelessWidget {
     required this.obscure,
     this.icon,
     this.hint,
+    this.enabled,
     this.controller,
     this.validator,
   });
 
   final IconData? icon;
   final String? hint;
+  final bool? enabled;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final ValueNotifier<bool> obscure;
@@ -34,6 +36,7 @@ class SecureTextField extends StatelessWidget {
         builder: (context, bool value, child) {
           return TextFormField(
             controller: controller,
+            enabled: enabled,
             style: theme.textTheme.bodyText1,
             cursorColor: theme.primaryColor,
             textAlignVertical: TextAlignVertical.center,

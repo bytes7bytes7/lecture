@@ -1,15 +1,33 @@
 import '../rest_client.dart';
 
 abstract class RestClient {
-  Future<String> signUp(String email, String password);
+  /*
+  ERROR:
+  {
+    "phone": [
+      "The phone number entered is not valid."
+    ],
+    "password": [
+      "This password is too short. It must contain at least 8 characters."
+    ]
+  }
+
+  SUCCESS:
+  {
+    "phone": "+79526549873",
+    "first_name": "string",
+    "last_name": "string"
+  }
+ */
+  Future<Map<String, String>> signUp(String login, String password);
 
   Future<bool> confirmCode(String code);
 
   Future<void> setPersonalInfo(User user);
 
-  Future<String> singIn(String email, String password);
+  Future<String> signIn(String login, String password);
 
-  Future<void> recoverPasswd(String email);
+  Future<void> recoverPasswd(String login);
 
   Future<void> setNewPasswd(String password);
 
@@ -34,6 +52,19 @@ abstract class RestClient {
   Future<void> deleteBookmark(int id);
 
   Future<List<Lecture>> getUserLectures(int id);
+
+  /*
+  ERROR:
+  {
+    "detail": "No active account found with the given credentials"
+  }
+
+  SUCCESS:
+  {
+    "token": "SOME_TOKEN"
+  }
+   */
+  Future<Map<String, String>> getToken(String login, String password);
 
   Future<String> refreshToken(String token);
 

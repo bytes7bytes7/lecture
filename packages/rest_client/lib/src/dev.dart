@@ -6,6 +6,10 @@ const _ru = 'йцукенгшщзхъфывапролджэячсмитьбю ';
 const _en = 'qwertyuiopasdfghjklzxcvbnm ';
 final _rand = Random();
 
+bool randomBool() {
+  return randomInt(2) == 1;
+}
+
 int randomInt(int max) {
   if (max <= 0) {
     return -1;

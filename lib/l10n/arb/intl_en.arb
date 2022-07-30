@@ -76,6 +76,7 @@
   },
   "lightTheme": "Light",
   "link": "Link",
+  "loginAlreadyExists": "The login is taken",
   "logOut": "Log out",
   "logOutAskAgain": "😐\n\nAre you sure you want to ###log out### of your account?",
   "march": "March",
@@ -90,6 +91,7 @@
   "myLectures": "My lectures",
   "newLecture": "New lecture",
   "newLectures": "New",
+  "noLoginFound": "Login not found",
   "notFoundBody": "Where are we? 😳",
   "notFoundTitle": "Platform 9¾",
   "november": "November",
@@ -149,5 +151,6 @@
   "verificationCodeTitle": "Verification code",
   "viewMode": "View mode",
   "wednesday": "Wednesday",
-  "wednesdayAbbr": "We"
+  "wednesdayAbbr": "We",
+  "wrongLoginOrPasswd" : "Wrong login or password"
 }

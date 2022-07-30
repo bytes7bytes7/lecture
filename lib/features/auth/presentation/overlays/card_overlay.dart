@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -55,7 +55,7 @@ class CardOverlay extends ConsumerWidget {
             margin: _titleMargin,
             child: Text(
               title,
-              style: theme.textTheme.headline2,
+              style: theme.textTheme.headline5,
             ),
           ),
           Container(

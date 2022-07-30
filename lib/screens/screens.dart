@@ -1,6 +1,5 @@
 export 'about_app_screen.dart';
 export 'account_screen.dart';
-export 'authentication_screen.dart';
 export 'author_screen.dart';
 export 'bookmark_screen.dart';
 export 'home_screen.dart';

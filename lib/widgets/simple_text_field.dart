@@ -7,12 +7,14 @@ class SimpleTextField extends StatelessWidget {
     super.key,
     this.icon,
     this.hint,
+    this.enabled,
     this.controller,
     this.validator,
   });
 
   final IconData? icon;
   final String? hint;
+  final bool? enabled;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
 
@@ -24,6 +26,7 @@ class SimpleTextField extends StatelessWidget {
       margin: _margin,
       child: TextFormField(
         controller: controller,
+        enabled: enabled,
         style: theme.textTheme.bodyText1,
         textAlignVertical: TextAlignVertical.center,
         validator: validator,

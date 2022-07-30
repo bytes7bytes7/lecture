@@ -3,12 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../features/features.dart';
 import '../models/models.dart';
 import '../repositories/impl/impls.dart';
 import '../repositories/interface/interfaces.dart';
 import 'src/export.dart';
 
 mixin AppProviders {
+  late final authRepo = Provider.autoDispose<AuthRepo>((ref) {
+    return AuthRepoImpl(
+      client: ref.watch(restClient),
+    );
+  });
+
   late final colorTheme =
       StateNotifierProvider<ColorThemeNotifier, ColorTheme>((ref) {
     return ColorThemeNotifier(
@@ -57,7 +64,12 @@ mixin AppProviders {
 
   final showSignInOverlay = StateProvider<bool>((ref) => false);
 
-  final authState = StateProvider<AuthState>((ref) => AuthState.signUp);
+  late final signUpController = StateNotifierProvider.autoDispose<
+      SignUpController, AsyncValue<AuthStatus>>((ref) {
+    return SignUpController(
+      authRepo: ref.watch(authRepo),
+    );
+  });
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {

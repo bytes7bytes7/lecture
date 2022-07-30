@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../rest_client.dart';
+import 'constants/api.dart' as const_api;
 import 'constants/secret.dart' as const_secret;
 
 part 'retro_client.g.dart';
@@ -12,14 +13,16 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.signUp)
-  Future<String> signUp(
-    @Query('username') String login,
-    @Query('password') String password,
+  Future<Map<String, String>> signUp(
+    @Query(const_api.login) String login,
+    @Query(const_api.password) String password,
   );
 
   @override
   @POST(const_secret.confirmCode)
-  Future<bool> confirmCode(@Query('code') String code);
+  Future<bool> confirmCode(
+    @Query(const_api.code) String code,
+  );
 
   @override
   @POST(const_secret.setPersonalInfo)
@@ -27,18 +30,22 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.signIn)
-  Future<String> singIn(
-    @Query('email') String email,
-    @Query('password') String password,
+  Future<String> signIn(
+    @Query(const_api.login) String login,
+    @Query(const_api.password) String password,
   );
 
   @override
   @POST(const_secret.recoverPasswd)
-  Future<void> recoverPasswd(@Query('email') String email);
+  Future<void> recoverPasswd(
+    @Query(const_api.login) String login,
+  );
 
   @override
   @POST(const_secret.setNewPasswd)
-  Future<void> setNewPasswd(@Query('password') String password);
+  Future<void> setNewPasswd(
+    @Query(const_api.password) String password,
+  );
 
   @override
   @POST(const_secret.logOut)
@@ -50,30 +57,40 @@ abstract class RetroClient implements RestClient {
 
   @override
   @DELETE(const_secret.deleteLecture)
-  Future<void> deleteLecture(@Path('id') int id);
+  Future<void> deleteLecture(
+    @Path(const_api.id) int id,
+  );
 
   @override
   @GET(const_secret.getLectures)
   Future<List<Lecture>> getLectures(
-    @Path('id') int? id,
+    @Path(const_api.id) int? id,
     Map<String, dynamic> filter,
   );
 
   @override
   @GET(const_secret.getContent)
-  Future<Content?> getContent(@Path('id') int id);
+  Future<Content?> getContent(
+    @Path(const_api.id) int id,
+  );
 
   @override
   @GET(const_secret.getPhotos)
-  Future<List<int>> getPhoto(@Path('id') int id);
+  Future<List<int>> getPhoto(
+    @Path(const_api.id) int id,
+  );
 
   @override
   @GET(const_secret.getVideos)
-  Future<List<int>> getVideo(@Path('id') int id);
+  Future<List<int>> getVideo(
+    @Path(const_api.id) int id,
+  );
 
   @override
   @GET(const_secret.getAudios)
-  Future<List<int>> getAudio(@Path('id') int id);
+  Future<List<int>> getAudio(
+    @Path(const_api.id) int id,
+  );
 
   @override
   @POST(const_secret.addBookmark)
@@ -88,8 +105,17 @@ abstract class RetroClient implements RestClient {
   Future<List<Lecture>> getUserLectures(int id);
 
   @override
+  @POST(const_secret.getToken)
+  Future<Map<String, String>> getToken(
+    @Query(const_api.login) String login,
+    @Query(const_api.password) String password,
+  );
+
+  @override
   @POST(const_secret.refreshToken)
-  Future<String> refreshToken(@Query('token') String token);
+  Future<String> refreshToken(
+    @Query(const_api.token) String token,
+  );
 
   @override
   @POST(const_secret.deleteUser)

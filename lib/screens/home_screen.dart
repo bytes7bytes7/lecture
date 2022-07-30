@@ -39,7 +39,7 @@ class HomeScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: DefaultAppBar(
           title: const_app.appName,
-          titleStyle: theme.textTheme.headline1,
+          titleStyle: theme.textTheme.headline4,
           prefix: Icons.sort,
           prefixTooltip: l10n.tooltipSettings,
           prefixOnPressed: () {

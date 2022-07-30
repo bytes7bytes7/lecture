@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants/measures.dart' as const_measures;
-import '../l10n/l10n.dart';
-import '../scope/app_scope.dart';
-import '../widgets/widgets.dart';
+import '../../../../constants/measures.dart' as const_measures;
+import '../../../../l10n/l10n.dart';
+import '../../../../scope/app_scope.dart';
+import '../../../../widgets/widgets.dart';
+import '../../data/auth_repo.dart';
 import 'card_overlay.dart';
 
 const _pinMargin = EdgeInsets.symmetric(
@@ -70,16 +71,16 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
     ref.read(AppScope.get().showConfirmOverlay.notifier).state = false;
   }
 
-  void _next() {
+  Future<void> _next() async {
     ref.read(AppScope.get().loggerManager).log('check PIN');
     final pin = ref.read(AppScope.get().confirmPin);
     if (pin.isNotEmpty && pin.length == 4) {
       ref.read(AppScope.get().loggerManager).log('correct PIN');
 
-      final authState = ref.read(AppScope.get().authState);
-      if (authState == AuthState.signUp) {
+      final authState = await ref.read(AppScope.get().authRepo).status.last;
+      if (authState == AuthStatus.signUp) {
         ref.read(AppScope.get().showPersonalInfoOverlay.notifier).state = true;
-      } else if (authState == AuthState.recover) {
+      } else if (authState == AuthStatus.recover) {
         ref.read(AppScope.get().showChangePasswdOverlay.notifier).state = true;
       }
     } else {

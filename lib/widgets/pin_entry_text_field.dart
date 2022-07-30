@@ -62,7 +62,7 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   cursorColor: theme.primaryColor,
-                  style: theme.textTheme.headline2
+                  style: theme.textTheme.headline5
                       ?.copyWith(color: theme.shadowColor),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(

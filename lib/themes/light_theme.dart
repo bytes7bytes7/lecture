@@ -1,37 +1,33 @@
-import 'package:flutter/material.dart';
-
-import '../constants/colors.dart' as const_colors;
-import '../constants/fonts.dart' as const_fonts;
-import '../constants/measures.dart' as const_measures;
+part of 'themes.dart';
 
 final ThemeData lightTheme = ThemeData(
-  primaryColor: const_colors.mountainMeadow,
-  scaffoldBackgroundColor: const_colors.white,
-  shadowColor: const_colors.black,
-  hintColor: const_colors.nobel,
-  disabledColor: const_colors.gallery,
-  indicatorColor: const_colors.hokeyPokey,
-  errorColor: const_colors.cinnabar,
-  dividerColor: const_colors.nobel,
-  textTheme: _textTheme,
+  primaryColor: _Colors.mountainMeadow,
+  scaffoldBackgroundColor: _Colors.white,
+  shadowColor: _Colors.black,
+  hintColor: _Colors.nobel,
+  disabledColor: _Colors.gallery,
+  indicatorColor: _Colors.hokeyPokey,
+  errorColor: _Colors.cinnabar,
+  dividerColor: _Colors.nobel,
+  textTheme: _lightTextTheme,
   appBarTheme: AppBarTheme(
     elevation: const_measures.appBarElevation,
-    backgroundColor: const_colors.white,
+    backgroundColor: _Colors.white,
     centerTitle: true,
-    titleTextStyle: _textTheme.headline2,
+    titleTextStyle: _lightTextTheme.headline5,
     iconTheme: const IconThemeData(
-      color: const_colors.mountainMeadow,
+      color: _Colors.mountainMeadow,
     ),
   ),
   progressIndicatorTheme: const ProgressIndicatorThemeData(
-    color: const_colors.mountainMeadow,
-    linearTrackColor: const_colors.white,
-    circularTrackColor: const_colors.white,
-    refreshBackgroundColor: const_colors.white,
+    color: _Colors.mountainMeadow,
+    linearTrackColor: _Colors.white,
+    circularTrackColor: _Colors.white,
+    refreshBackgroundColor: _Colors.white,
   ),
   cardTheme: CardTheme(
-    shadowColor: const_colors.black,
-    color: const_colors.white,
+    shadowColor: _Colors.black,
+    color: _Colors.white,
     shape: OutlineInputBorder(
       borderRadius: BorderRadius.circular(
         const_measures.mainBorderRadius,
@@ -39,33 +35,33 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   textSelectionTheme: TextSelectionThemeData(
-    cursorColor: const_colors.mountainMeadow,
-    selectionColor: const_colors.mountainMeadow.withOpacity(
+    cursorColor: _Colors.mountainMeadow,
+    selectionColor: _Colors.mountainMeadow.withOpacity(
       const_measures.smallOpacity,
     ),
-    selectionHandleColor: const_colors.mountainMeadow,
+    selectionHandleColor: _Colors.mountainMeadow,
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       overlayColor: MaterialStateProperty.all(
-        const_colors.mountainMeadow.withOpacity(
+        _Colors.mountainMeadow.withOpacity(
           const_measures.tinyOpacity,
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _textTheme.subtitle2?.copyWith(
+        _lightTextTheme.subtitle2?.copyWith(
           decoration: TextDecoration.underline,
         ),
       ),
       foregroundColor: MaterialStateProperty.resolveWith(
         (states) {
           if (states.contains(MaterialState.disabled)) {
-            return const_colors.black.withOpacity(
+            return _Colors.black.withOpacity(
               const_measures.smallOpacity,
             );
           }
 
-          return const_colors.black;
+          return _Colors.black;
         },
       ),
     ),
@@ -80,18 +76,18 @@ final ThemeData lightTheme = ThemeData(
       ),
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
-          return const_colors.mountainMeadow.withOpacity(
+          return _Colors.mountainMeadow.withOpacity(
             const_measures.smallOpacity,
           );
         }
 
-        return const_colors.mountainMeadow;
+        return _Colors.mountainMeadow;
       }),
       foregroundColor: MaterialStateProperty.all(
-        const_colors.white,
+        _Colors.white,
       ),
       overlayColor: MaterialStateProperty.all(
-        const_colors.gallery.withOpacity(
+        _Colors.gallery.withOpacity(
           const_measures.smallOpacity,
         ),
       ),
@@ -108,37 +104,49 @@ final ThemeData lightTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _textTheme.subtitle2?.copyWith(
-          color: const_colors.white,
+        _lightTextTheme.subtitle2?.copyWith(
+          color: _Colors.white,
         ),
       ),
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    hintStyle: _textTheme.bodyText1?.copyWith(
-      color: const_colors.nobel,
+    hintStyle: _lightTextTheme.bodyText1?.copyWith(
+      color: _Colors.nobel,
     ),
     isCollapsed: true,
     enabledBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.nobel,
+        color: _Colors.nobel,
       ),
     ),
     focusedBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.mountainMeadow,
+        color: _Colors.mountainMeadow,
       ),
     ),
     errorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.cinnabar,
+        color: _Colors.cinnabar,
       ),
     ),
   ),
   popupMenuTheme: PopupMenuThemeData(
-    color: const_colors.white,
-    textStyle: _textTheme.bodyText1,
+    color: _Colors.white,
+    textStyle: _lightTextTheme.bodyText1,
     elevation: const_measures.smallElevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        const_measures.mainBorderRadius,
+      ),
+    ),
+  ),
+  snackBarTheme: SnackBarThemeData(
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: _Colors.mountainMeadow,
+    contentTextStyle: _lightTextTheme.subtitle1?.copyWith(
+      color: _Colors.white,
+    ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(
         const_measures.mainBorderRadius,
@@ -147,41 +155,47 @@ final ThemeData lightTheme = ThemeData(
   ),
 );
 
-const _textTheme = TextTheme(
-  headline1: TextStyle(
-    fontSize: const_fonts.headline1Size,
-    fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.playfairDisplaySC,
-    color: const_colors.black,
-  ),
-  headline2: TextStyle(
-    fontSize: const_fonts.headline2Size,
-    fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.black,
-  ),
+const _lightTextTheme = TextTheme(
   headline3: TextStyle(
-    fontSize: const_fonts.headline3Size,
+    fontSize: _Fonts.headline4Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.black,
+    fontFamily: _Fonts.playfairDisplaySC,
+    color: _Colors.white,
+  ),
+  headline4: TextStyle(
+    fontSize: _Fonts.headline4Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.playfairDisplaySC,
+    color: _Colors.black,
+  ),
+  headline5: TextStyle(
+    fontSize: _Fonts.headline5Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
+  ),
+  headline6: TextStyle(
+    fontSize: _Fonts.headline6Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
   ),
   bodyText1: TextStyle(
-    fontSize: const_fonts.bodyText1Size,
+    fontSize: _Fonts.bodyText1Size,
     fontWeight: FontWeight.normal,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.black,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
   ),
   subtitle1: TextStyle(
-    fontSize: const_fonts.subtitle1Size,
+    fontSize: _Fonts.subtitle1Size,
     fontWeight: FontWeight.normal,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.black,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
   ),
   subtitle2: TextStyle(
-    fontSize: const_fonts.subtitle2Size,
+    fontSize: _Fonts.subtitle2Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.black,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
   ),
 );

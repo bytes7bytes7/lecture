@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../common.dart';
-import '../l10n/l10n.dart';
-import '../scope/app_scope.dart';
-import '../structs/quartet.dart';
-import '../widgets/widgets.dart';
+import '../../../../common.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../scope/app_scope.dart';
+import '../../../../structs/quartet.dart';
+import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
 class RecoveryOverlay extends ConsumerStatefulWidget {
@@ -16,7 +16,7 @@ class RecoveryOverlay extends ConsumerStatefulWidget {
 }
 
 class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
-  late final TextEditingController _emailController;
+  late final TextEditingController _loginlController;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
 
@@ -24,7 +24,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController()..addListener(_onChanged);
+    _loginlController = TextEditingController()..addListener(_onChanged);
     _areFieldsValid = ValueNotifier(false);
   }
 
@@ -42,7 +42,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _loginlController.dispose();
     _areFieldsValid.dispose();
 
     super.dispose();
@@ -65,9 +65,9 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
               Quartet(
                 Icons.mail,
                 l10n.email,
-                _emailController,
+                _loginlController,
                 (_) => emailValidator(
-                  value: _emailController.text,
+                  value: _loginlController.text,
                   l10n: l10n,
                 ),
               ),
@@ -104,7 +104,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   }
 
   void _backToSignIn() {
-    _emailController.clear();
+    _loginlController.clear();
     ref.read(AppScope.get().showRecoveryOverlay.notifier).state = false;
   }
 }

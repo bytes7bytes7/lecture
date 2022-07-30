@@ -1,9 +1,6 @@
 const university = 'kubsu';
 const lecture = 'lecture';
-const allFaculties = 'all_faculties';
-const allLevels = 'all_levels';
 const alSubjects = 'all_subjects';
-const maxSemester = 'max_semester';
 
 const id = 'id';
 const faculty = 'faculty';
@@ -19,6 +16,13 @@ const author = 'author';
 const text = 'text';
 const photos = 'photos';
 const videos = 'videos';
+
+const login = 'phone';
+const password = 'password';
+const token = 'token';
+const code = 'code';
+const detail = 'detail';
+const error = 'error';
 
 const firstName = 'firstName';
 const middleName = 'middleName';

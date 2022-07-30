@@ -3,6 +3,7 @@ import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
 
 import 'constants/routes.dart' as const_routes;
+import 'features/auth/auth.dart';
 import 'screens/screens.dart';
 
 part 'custom_route_builder.dart';

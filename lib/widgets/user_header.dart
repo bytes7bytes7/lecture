@@ -88,7 +88,7 @@ class UserHeader extends ConsumerWidget {
           padding: _namePadding,
           child: Text(
             name,
-            style: theme.textTheme.headline3,
+            style: theme.textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),

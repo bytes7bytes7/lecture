@@ -1,3 +1,4 @@
+import 'constants/api.dart' as const_api;
 import 'dev.dart' as dev;
 import 'models/models.dart';
 import 'rest_client.dart';
@@ -7,17 +8,26 @@ const _tokenLen = 32;
 
 class MockClient implements RestClient {
   @override
-  Future<String> signUp(String email, String password) async {
+  Future<Map<String, String>> signUp(String login, String password) async {
     return Future.delayed(
       _dur,
-      () => dev.randomInt(2) == 1
-          ? dev.randomString(
-              _tokenLen,
-              noSpace: true,
-              useEn: true,
-              useNum: true,
-            )
-          : '',
+      () {
+        switch (dev.randomInt(3)) {
+          case 0:
+            return {
+              const_api.login: login,
+              const_api.password: password,
+            };
+          case 1:
+            return {
+              const_api.error: 'The phone number entered is not valid.',
+            };
+          default:
+            return {
+              const_api.error: 'user with this phone already exists.',
+            };
+        }
+      },
     );
   }
 
@@ -25,7 +35,7 @@ class MockClient implements RestClient {
   Future<bool> confirmCode(String code) async {
     return Future.delayed(
       _dur,
-      () => dev.randomInt(2) == 1,
+      dev.randomBool,
     );
   }
 
@@ -35,10 +45,10 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<String> singIn(String email, String password) async {
+  Future<String> signIn(String login, String password) async {
     return Future.delayed(
       _dur,
-      () => dev.randomInt(2) == 1
+      () => dev.randomBool()
           ? dev.randomString(
               _tokenLen,
               noSpace: true,
@@ -50,7 +60,7 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<void> recoverPasswd(String email) async {
+  Future<void> recoverPasswd(String login) async {
     return Future.delayed(_dur);
   }
 
@@ -119,6 +129,30 @@ class MockClient implements RestClient {
     return Future.delayed(
       _dur,
       () => List.generate(dev.randomInt(20), (index) => Lecture.random()),
+    );
+  }
+
+  @override
+  Future<Map<String, String>> getToken(String login, String password) async {
+    return Future.delayed(
+      _dur,
+      () {
+        if (dev.randomBool()) {
+          return <String, String>{
+            const_api.token: dev.randomString(
+              _tokenLen,
+              noSpace: true,
+              useEn: true,
+              useNum: true,
+            ),
+          };
+        } else {
+          return {
+            const_api.detail:
+                'No active account found with the given credentials',
+          };
+        }
+      },
     );
   }
 

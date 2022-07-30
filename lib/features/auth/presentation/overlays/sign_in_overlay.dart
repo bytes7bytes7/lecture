@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../common.dart';
-import '../l10n/l10n.dart';
-import '../scope/app_scope.dart';
-import '../structs/quartet.dart';
-import '../structs/quintet.dart';
-import '../widgets/widgets.dart';
+import '../../../../common.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../scope/app_scope.dart';
+import '../../../../structs/quartet.dart';
+import '../../../../structs/quintet.dart';
+import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
 class SignInOverlay extends ConsumerStatefulWidget {
@@ -17,7 +17,7 @@ class SignInOverlay extends ConsumerStatefulWidget {
 }
 
 class _SignInOverlayState extends ConsumerState<SignInOverlay> {
-  late final TextEditingController _emailController;
+  late final TextEditingController _loginController;
   late final TextEditingController _passController;
   late final ValueNotifier<bool> _passObscure;
   late final ValueNotifier<bool> _areFieldsValid;
@@ -27,7 +27,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController()..addListener(_onChanged);
+    _loginController = TextEditingController()..addListener(_onChanged);
     _passController = TextEditingController()..addListener(_onChanged);
     _passObscure = ValueNotifier(true);
     _areFieldsValid = ValueNotifier(false);
@@ -47,7 +47,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _loginController.dispose();
     _passController.dispose();
     _passObscure.dispose();
     _areFieldsValid.dispose();
@@ -73,9 +73,9 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
               Quartet(
                 Icons.mail,
                 l10n.email,
-                _emailController,
+                _loginController,
                 (_) => emailValidator(
-                  value: _emailController.text,
+                  value: _loginController.text,
                   l10n: l10n,
                 ),
               ),
@@ -166,7 +166,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   }
 
   void _openRegister() {
-    _emailController.clear();
+    _loginController.clear();
     _passController.clear();
     ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
   }

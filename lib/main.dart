@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:quick_quotes_quill/all.dart';
 
 import 'app.dart';
@@ -9,20 +10,28 @@ import 'scope/app_scope.dart';
 
 void main() async {
   final manager = SpreadQuillManager(const_app.loggerManagerName);
+  final quills = <Quill>[];
 
   if (kDebugMode) {
-    final quill = ConsoleQuill(const_app.loggerName);
+    final cq = ConsoleQuill(const_app.loggerName);
 
-    quill
-      ..config = quill.config.copyWith(
+    cq
+      ..config = cq.config.copyWith(
         msgFGColor: CQHIColors.white.fg,
       )
       ..info('Logger is enabled!');
 
-    await manager.initialize([
-      quill,
-    ]);
+    quills.add(cq);
+  } else {
+    final fq = FileQuill(
+      const_app.loggerName,
+      dir: await getApplicationDocumentsDirectory(),
+    )..info('Logger is enabled');
+
+    quills.add(fq);
   }
+
+  await manager.initialize(quills);
 
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(

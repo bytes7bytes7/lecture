@@ -1,38 +1,34 @@
-import 'package:flutter/material.dart';
-
-import '../constants/colors.dart' as const_colors;
-import '../constants/fonts.dart' as const_fonts;
-import '../constants/measures.dart' as const_measures;
+part of 'themes.dart';
 
 // TODO: choose dark mode colors
 final ThemeData darkTheme = ThemeData(
-  primaryColor: const_colors.mountainMeadow,
-  scaffoldBackgroundColor: const_colors.shark,
-  shadowColor: const_colors.silverChalice,
-  hintColor: const_colors.doveGray,
-  disabledColor: const_colors.mineShaft,
-  indicatorColor: const_colors.hokeyPokey,
-  errorColor: const_colors.cinnabar,
-  dividerColor: const_colors.doveGray,
-  textTheme: _textTheme,
+  primaryColor: _Colors.mountainMeadow,
+  scaffoldBackgroundColor: _Colors.shark,
+  shadowColor: _Colors.silverChalice,
+  hintColor: _Colors.doveGray,
+  disabledColor: _Colors.mineShaft,
+  indicatorColor: _Colors.hokeyPokey,
+  errorColor: _Colors.cinnabar,
+  dividerColor: _Colors.doveGray,
+  textTheme: _darkTextTheme,
   appBarTheme: AppBarTheme(
     elevation: const_measures.appBarElevation,
-    backgroundColor: const_colors.shark,
+    backgroundColor: _Colors.shark,
     centerTitle: true,
-    titleTextStyle: _textTheme.headline2,
+    titleTextStyle: _darkTextTheme.headline5,
     iconTheme: const IconThemeData(
-      color: const_colors.mountainMeadow,
+      color: _Colors.mountainMeadow,
     ),
   ),
   progressIndicatorTheme: const ProgressIndicatorThemeData(
-    color: const_colors.mountainMeadow,
-    linearTrackColor: const_colors.shark,
-    circularTrackColor: const_colors.shark,
-    refreshBackgroundColor: const_colors.shark,
+    color: _Colors.mountainMeadow,
+    linearTrackColor: _Colors.shark,
+    circularTrackColor: _Colors.shark,
+    refreshBackgroundColor: _Colors.shark,
   ),
   cardTheme: CardTheme(
-    shadowColor: const_colors.silverChalice,
-    color: const_colors.shark,
+    shadowColor: _Colors.silverChalice,
+    color: _Colors.shark,
     shape: OutlineInputBorder(
       borderRadius: BorderRadius.circular(
         const_measures.mainBorderRadius,
@@ -40,33 +36,33 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   textSelectionTheme: TextSelectionThemeData(
-    cursorColor: const_colors.mountainMeadow,
-    selectionColor: const_colors.mountainMeadow.withOpacity(
+    cursorColor: _Colors.mountainMeadow,
+    selectionColor: _Colors.mountainMeadow.withOpacity(
       const_measures.smallOpacity,
     ),
-    selectionHandleColor: const_colors.mountainMeadow,
+    selectionHandleColor: _Colors.mountainMeadow,
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       overlayColor: MaterialStateProperty.all(
-        const_colors.mountainMeadow.withOpacity(
+        _Colors.mountainMeadow.withOpacity(
           const_measures.tinyOpacity,
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _textTheme.subtitle2?.copyWith(
+        _darkTextTheme.subtitle2?.copyWith(
           decoration: TextDecoration.underline,
         ),
       ),
       foregroundColor: MaterialStateProperty.resolveWith(
         (states) {
           if (states.contains(MaterialState.disabled)) {
-            return const_colors.silverChalice.withOpacity(
+            return _Colors.silverChalice.withOpacity(
               const_measures.smallOpacity,
             );
           }
 
-          return const_colors.silverChalice;
+          return _Colors.silverChalice;
         },
       ),
     ),
@@ -81,24 +77,24 @@ final ThemeData darkTheme = ThemeData(
       ),
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
-          return const_colors.mountainMeadow.withOpacity(
+          return _Colors.mountainMeadow.withOpacity(
             const_measures.smallOpacity,
           );
         }
 
-        return const_colors.mountainMeadow;
+        return _Colors.mountainMeadow;
       }),
       foregroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
-          return const_colors.gallery.withOpacity(
+          return _Colors.gallery.withOpacity(
             const_measures.midOpacity,
           );
         }
 
-        return const_colors.gallery;
+        return _Colors.gallery;
       }),
       overlayColor: MaterialStateProperty.all(
-        const_colors.gallery.withOpacity(
+        _Colors.gallery.withOpacity(
           const_measures.smallOpacity,
         ),
       ),
@@ -115,37 +111,49 @@ final ThemeData darkTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _textTheme.subtitle2?.copyWith(
-          color: const_colors.shark,
+        _darkTextTheme.subtitle2?.copyWith(
+          color: _Colors.shark,
         ),
       ),
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    hintStyle: _textTheme.bodyText1?.copyWith(
-      color: const_colors.doveGray,
+    hintStyle: _darkTextTheme.bodyText1?.copyWith(
+      color: _Colors.doveGray,
     ),
     isCollapsed: true,
     enabledBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.doveGray,
+        color: _Colors.doveGray,
       ),
     ),
     focusedBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.mountainMeadow,
+        color: _Colors.mountainMeadow,
       ),
     ),
     errorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
-        color: const_colors.cinnabar,
+        color: _Colors.cinnabar,
       ),
     ),
   ),
   popupMenuTheme: PopupMenuThemeData(
-    color: const_colors.shark,
-    textStyle: _textTheme.bodyText1,
+    color: _Colors.shark,
+    textStyle: _darkTextTheme.bodyText1,
     elevation: const_measures.smallElevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        const_measures.mainBorderRadius,
+      ),
+    ),
+  ),
+  snackBarTheme: SnackBarThemeData(
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: _Colors.mountainMeadow,
+    contentTextStyle: _darkTextTheme.subtitle1?.copyWith(
+      color: _Colors.gallery,
+    ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(
         const_measures.mainBorderRadius,
@@ -154,41 +162,41 @@ final ThemeData darkTheme = ThemeData(
   ),
 );
 
-const _textTheme = TextTheme(
-  headline1: TextStyle(
-    fontSize: const_fonts.headline1Size,
+const _darkTextTheme = TextTheme(
+  headline4: TextStyle(
+    fontSize: _Fonts.headline4Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.playfairDisplaySC,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.playfairDisplaySC,
+    color: _Colors.silverChalice,
   ),
-  headline2: TextStyle(
-    fontSize: const_fonts.headline2Size,
+  headline5: TextStyle(
+    fontSize: _Fonts.headline5Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
   ),
-  headline3: TextStyle(
-    fontSize: const_fonts.headline3Size,
+  headline6: TextStyle(
+    fontSize: _Fonts.headline6Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
   ),
   bodyText1: TextStyle(
-    fontSize: const_fonts.bodyText1Size,
+    fontSize: _Fonts.bodyText1Size,
     fontWeight: FontWeight.normal,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
   ),
   subtitle1: TextStyle(
-    fontSize: const_fonts.subtitle1Size,
+    fontSize: _Fonts.subtitle1Size,
     fontWeight: FontWeight.normal,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
   ),
   subtitle2: TextStyle(
-    fontSize: const_fonts.subtitle2Size,
+    fontSize: _Fonts.subtitle2Size,
     fontWeight: FontWeight.bold,
-    fontFamily: const_fonts.roboto,
-    color: const_colors.silverChalice,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
   ),
 );

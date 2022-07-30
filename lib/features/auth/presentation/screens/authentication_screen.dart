@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../constants/app.dart' as const_app;
-import '../constants/colors.dart' as const_colors;
+import '../../../../constants/app.dart' as const_app;
+import '../../../../scope/app_scope.dart';
 import '../overlays/overlays.dart';
-import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
 const _logoSeparator = SizedBox(width: 5);
@@ -52,16 +51,14 @@ class AuthenticationScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: theme.textTheme.headline1?.fontSize,
-                              width: theme.textTheme.headline1?.fontSize,
+                              height: theme.textTheme.headline4?.fontSize,
+                              width: theme.textTheme.headline4?.fontSize,
                               child: Image.asset(const_app.logo96),
                             ),
                             _logoSeparator,
                             Text(
                               const_app.appName,
-                              style: theme.textTheme.headline1?.copyWith(
-                                color: const_colors.white,
-                              ),
+                              style: theme.textTheme.headline3,
                             ),
                           ],
                         ),

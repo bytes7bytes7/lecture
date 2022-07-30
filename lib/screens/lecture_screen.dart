@@ -87,7 +87,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                 padding: _topicPadding,
                 child: Text(
                   widget.lecture.topic,
-                  style: theme.textTheme.headline3,
+                  style: theme.textTheme.headline6,
                 ),
               ),
               FutureBuilder<Content?>(

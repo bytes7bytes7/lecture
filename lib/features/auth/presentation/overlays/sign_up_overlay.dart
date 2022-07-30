@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../common.dart';
-import '../l10n/l10n.dart';
-import '../scope/app_scope.dart';
-import '../structs/quartet.dart';
-import '../structs/quintet.dart';
-import '../widgets/widgets.dart';
+import '../../../../common.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../scope/app_scope.dart';
+import '../../../../structs/quintet.dart';
+import '../../../../structs/sextet.dart';
+import '../../../../widgets/widgets.dart';
+import '../../data/auth_repo.dart';
 import 'card_overlay.dart';
 
 class SignUpOverlay extends ConsumerStatefulWidget {
@@ -17,7 +18,7 @@ class SignUpOverlay extends ConsumerStatefulWidget {
 }
 
 class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
-  late final TextEditingController _emailController;
+  late final TextEditingController _loginController;
   late final TextEditingController _passController;
   late final TextEditingController _repPassController;
   late final ValueNotifier<bool> _passObscure;
@@ -29,7 +30,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController()..addListener(_onChanged);
+    _loginController = TextEditingController()..addListener(_onChanged);
     _passController = TextEditingController()..addListener(_onChanged);
     _repPassController = TextEditingController()..addListener(_onChanged);
     _passObscure = ValueNotifier(true);
@@ -51,7 +52,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _loginController.dispose();
     _passController.dispose();
     _repPassController.dispose();
     _passObscure.dispose();
@@ -66,6 +67,11 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    _onData(l10n);
+
+    final state = ref.watch(AppScope.get().signUpController);
+    ref.read(AppScope.get().loggerManager).log('new signUp state: $state');
+
     return CardOverlay(
       title: l10n.signUpTitle,
       description: l10n.signUpDesc,
@@ -74,14 +80,15 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
         child: Column(
           children: [
             ...<
-                Quartet<IconData, String, TextEditingController,
+                Quintet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>>>[
-              Quartet(
+              Quintet(
                 Icons.mail,
                 l10n.email,
-                _emailController,
+                state is! AsyncLoading,
+                _loginController,
                 (_) => emailValidator(
-                  value: _emailController.text,
+                  value: _loginController.text,
                   l10n: l10n,
                 ),
               ),
@@ -90,17 +97,19 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                 return SimpleTextField(
                   icon: e.first,
                   hint: e.second,
-                  controller: e.third,
-                  validator: e.fourth,
+                  enabled: e.third,
+                  controller: e.fourth,
+                  validator: e.fifth,
                 );
               },
             ),
             ...<
-                Quintet<IconData, String, TextEditingController,
+                Sextet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>, ValueNotifier<bool>>>[
-              Quintet(
+              Sextet(
                 Icons.https,
                 l10n.password,
+                state is! AsyncLoading,
                 _passController,
                 (_) => passwdValidator(
                   value: _passController.text,
@@ -108,9 +117,10 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                 ),
                 _passObscure,
               ),
-              Quintet(
+              Sextet(
                 Icons.https,
                 l10n.repeatPassword,
+                state is! AsyncLoading,
                 _repPassController,
                 (_) => repeatPasswdValidator(
                   value: _repPassController.text,
@@ -121,14 +131,15 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
               ),
             ].map(
               (e) {
-                final notifier = e.fifth;
+                final notifier = e.sixth;
 
                 if (notifier != null) {
                   return SecureTextField(
                     icon: e.first,
                     hint: e.second,
-                    controller: e.third,
-                    validator: e.fourth,
+                    enabled: e.third,
+                    controller: e.fourth,
+                    validator: e.fifth,
                     obscure: notifier,
                   );
                 }
@@ -147,7 +158,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
             style: theme.textTheme.bodyText1,
           ),
           TextButton(
-            onPressed: _openSignIn,
+            onPressed: state is! AsyncLoading ? _openSignIn : null,
             child: Text(
               l10n.signIn,
             ),
@@ -159,20 +170,43 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
         builder: (context, value, child) {
           return SingleButton(
             text: l10n.moveNext,
-            onPressed: value ? _tryToRegister : null,
+            onPressed:
+                (value && state is! AsyncLoading) ? _tryToRegister : null,
           );
         },
       ),
     );
   }
 
+  void _onData(AppLocalizations l10n) {
+    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
+        (prev, next) {
+      final data = next.asData?.value;
+      if (data != null) {
+        if (data == AuthStatus.signUp) {
+          ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
+        }
+
+        final info = data.toStr(l10n);
+        if (info.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(info),
+            ),
+          );
+        }
+      }
+    });
+  }
+
   void _openSignIn() {
-    ref.read(AppScope.get().authState.notifier).state = AuthState.recover;
     ref.read(AppScope.get().showSignInOverlay.notifier).state = true;
   }
 
   void _tryToRegister() {
-    ref.read(AppScope.get().authState.notifier).state = AuthState.signUp;
-    ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
+    ref.read(AppScope.get().signUpController.notifier).signUp(
+          _loginController.text,
+          _passController.text,
+        );
   }
 }
