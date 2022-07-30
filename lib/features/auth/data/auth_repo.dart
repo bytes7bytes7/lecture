@@ -3,11 +3,14 @@ import '../../../l10n/l10n.dart';
 enum AuthStatus {
   loggedOut,
   signUp,
-  recover,
   wrongCred,
   noLoginFound,
+  loginAlreadyExists,
+  wrongCode,
+  verifiedSignUp,
+  verifiedRecover,
   loggedIn,
-  loginAlreadyExists;
+  recover;
 
   String toStr(AppLocalizations l10n) {
     switch (this) {
@@ -17,6 +20,8 @@ enum AuthStatus {
         return l10n.noLoginFound;
       case AuthStatus.loginAlreadyExists:
         return l10n.loginAlreadyExists;
+      case AuthStatus.wrongCode:
+        return l10n.wrongCode;
       default:
         return '';
     }
@@ -32,5 +37,5 @@ abstract class AuthRepo {
 
   Future<void> signUp(String login, String password);
 
-// TODO: add other methods
+  Future<void> verifyCode(String code);
 }

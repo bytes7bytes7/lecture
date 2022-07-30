@@ -152,5 +152,6 @@
   "viewMode": "View mode",
   "wednesday": "Wednesday",
   "wednesdayAbbr": "We",
+  "wrongCode": "Неверный код",
   "wrongLoginOrPasswd" : "Wrong login or password"
 }

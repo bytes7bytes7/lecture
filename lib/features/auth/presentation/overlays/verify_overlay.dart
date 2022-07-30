@@ -13,14 +13,14 @@ const _pinMargin = EdgeInsets.symmetric(
   vertical: 20.0,
 );
 
-class ConfirmOverlay extends ConsumerStatefulWidget {
-  const ConfirmOverlay({super.key});
+class VerifyOverlay extends ConsumerStatefulWidget {
+  const VerifyOverlay({super.key});
 
   @override
-  ConsumerState<ConfirmOverlay> createState() => _ConfirmOverlayState();
+  ConsumerState<VerifyOverlay> createState() => _VerifyOverlayState();
 }
 
-class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
+class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
   late final ValueNotifier<bool> errorNotifier;
 
   @override
@@ -41,6 +41,10 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    _onData();
+
+    final state = ref.watch(AppScope.get().signUpController);
+
     return CardOverlay(
       title: l10n.verificationCodeTitle,
       description: l10n.verificationCodeDesc,
@@ -56,36 +60,34 @@ class _ConfirmOverlayState extends ConsumerState<ConfirmOverlay> {
       ),
       footer: DoubleButton(
         secondary: l10n.cancel,
-        secondaryOnPressed: _cancel,
+        secondaryOnPressed: state is! AsyncLoading ? _cancel : null,
         primary: l10n.moveNext,
-        primaryOnPressed: _next,
+        primaryOnPressed: state is! AsyncLoading ? _next : null,
       ),
     );
   }
 
+  void _onData() {
+    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
+        (prev, next) {
+      final data = next.asData?.value;
+      if (data == AuthStatus.wrongCode) {
+        errorNotifier.value = true;
+      }
+    });
+  }
+
   set _pin(String value) {
-    ref.read(AppScope.get().confirmPin.notifier).state = value;
+    ref.read(AppScope.get().verifyPin.notifier).state = value;
   }
 
   void _cancel() {
-    ref.read(AppScope.get().showConfirmOverlay.notifier).state = false;
+    ref.read(AppScope.get().showVerifyOverlay.notifier).state = false;
   }
 
-  Future<void> _next() async {
+  void _next() {
     ref.read(AppScope.get().loggerManager).log('check PIN');
-    final pin = ref.read(AppScope.get().confirmPin);
-    if (pin.isNotEmpty && pin.length == 4) {
-      ref.read(AppScope.get().loggerManager).log('correct PIN');
-
-      final authState = await ref.read(AppScope.get().authRepo).status.last;
-      if (authState == AuthStatus.signUp) {
-        ref.read(AppScope.get().showPersonalInfoOverlay.notifier).state = true;
-      } else if (authState == AuthStatus.recover) {
-        ref.read(AppScope.get().showChangePasswdOverlay.notifier).state = true;
-      }
-    } else {
-      ref.read(AppScope.get().loggerManager).log('wrong PIN');
-      errorNotifier.value = true;
-    }
+    final pin = ref.read(AppScope.get().verifyPin);
+    ref.read(AppScope.get().signUpController.notifier).verifyCode(pin);
   }
 }

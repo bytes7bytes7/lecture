@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app.dart' as const_app;
+import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
+import '../../data/auth_repo.dart';
 import '../overlays/overlays.dart';
 import '../widgets/widgets.dart';
 
 const _logoSeparator = SizedBox(width: 5);
 const _mainFlex = 5;
 
-class AuthenticationScreen extends StatelessWidget {
+class AuthenticationScreen extends ConsumerWidget {
   const AuthenticationScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final size = MediaQuery.of(context).size;
     final padding = MediaQuery.of(context).padding;
     final height = size.height - padding.top - padding.bottom;
@@ -26,6 +30,8 @@ class AuthenticationScreen extends StatelessWidget {
         statusBarColor: Theme.of(context).primaryColor,
       ),
     );
+
+    _onData(context, ref, l10n);
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -83,8 +89,8 @@ class AuthenticationScreen extends StatelessWidget {
                                   overlay: const RecoveryOverlay(),
                                 ),
                                 ListeningOverlay(
-                                  notifier: AppScope.get().showConfirmOverlay,
-                                  overlay: const ConfirmOverlay(),
+                                  notifier: AppScope.get().showVerifyOverlay,
+                                  overlay: const VerifyOverlay(),
                                 ),
                                 ListeningOverlay(
                                   notifier:
@@ -110,5 +116,37 @@ class AuthenticationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onData(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
+        (prev, next) {
+      final data = next.asData?.value;
+      if (data != null) {
+        switch (data) {
+          case AuthStatus.signUp:
+            ref.read(AppScope.get().showVerifyOverlay.notifier).state = true;
+            break;
+          case AuthStatus.verifiedSignUp:
+            ref.read(AppScope.get().showPersonalInfoOverlay.notifier).state =
+                true;
+            break;
+          case AuthStatus.verifiedRecover:
+            ref.read(AppScope.get().showChangePasswdOverlay.notifier).state =
+                true;
+            break;
+          default:
+        }
+
+        final info = data.toStr(l10n);
+        if (info.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(info),
+            ),
+          );
+        }
+      }
+    });
   }
 }

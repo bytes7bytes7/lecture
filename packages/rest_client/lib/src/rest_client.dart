@@ -21,7 +21,7 @@ abstract class RestClient {
  */
   Future<Map<String, String>> signUp(String login, String password);
 
-  Future<bool> confirmCode(String code);
+  Future<Map<String, bool>> verifyCode(String code);
 
   Future<void> setPersonalInfo(User user);
 

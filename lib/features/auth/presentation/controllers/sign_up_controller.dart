@@ -30,4 +30,11 @@ class SignUpController extends StateNotifier<AsyncValue<AuthStatus>> {
       () => _authRepo.signUp(login, password),
     );
   }
+
+  Future<void> verifyCode(String code) async {
+    state = const AsyncLoading();
+    await AsyncValue.guard(
+      () => _authRepo.verifyCode(code),
+    );
+  }
 }

@@ -11,14 +11,16 @@ const _borderWidthBold = 2.0;
 const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
 
 class PinEntryTextField extends StatefulWidget {
-  final ValueNotifier<bool> errorNotifier;
-  final ValueChanged<String> onSubmit;
-
   const PinEntryTextField({
     super.key,
     required this.errorNotifier,
     required this.onSubmit,
+    this.enabled,
   });
+
+  final ValueNotifier<bool> errorNotifier;
+  final ValueChanged<String> onSubmit;
+  final bool? enabled;
 
   @override
   State<PinEntryTextField> createState() => _PinEntryTextFieldState();
@@ -58,6 +60,7 @@ class _PinEntryTextFieldState extends State<PinEntryTextField> {
               builder: (context, error, child) {
                 return TextField(
                   controller: _textControllers[i],
+                  enabled: widget.enabled,
                   focusNode: _focusNodes[i],
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,

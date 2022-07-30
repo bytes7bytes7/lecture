@@ -30,12 +30,23 @@ class AuthRepoImpl implements AuthRepo {
     final rLogin = resp[const_api.login];
     final error = resp[const_api.error];
     if (rLogin == login) {
-      // TODO: maybe I should get token here
       _sink.add(AuthStatus.signUp);
     } else if (error == 'user with this phone already exists.') {
       _sink.add(AuthStatus.loginAlreadyExists);
     } else {
       _sink.add(AuthStatus.wrongCred);
+    }
+  }
+
+  @override
+  Future<void> verifyCode(String code) async {
+    final resp = await _client.verifyCode(code);
+    final verified = resp[const_api.verified];
+    if (verified == true) {
+      // TODO: maybe I should get token here
+      _sink.add(AuthStatus.verifiedSignUp);
+    } else {
+      _sink.add(AuthStatus.wrongCode);
     }
   }
 }

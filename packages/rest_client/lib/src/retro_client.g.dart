@@ -37,17 +37,18 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<bool> confirmCode(code) async {
+  Future<Map<String, bool>> verifyCode(code) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'code': code};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<bool>(_setStreamType<bool>(
-        Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/code',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, bool>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/code',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<String, bool>();
     return value;
   }
 

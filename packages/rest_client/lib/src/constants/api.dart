@@ -1,4 +1,4 @@
-const university = 'kubsu';
+const institution = 'kubsu';
 const lecture = 'lecture';
 const alSubjects = 'all_subjects';
 
@@ -23,6 +23,7 @@ const token = 'token';
 const code = 'code';
 const detail = 'detail';
 const error = 'error';
+const verified = 'verified';
 
 const firstName = 'firstName';
 const middleName = 'middleName';

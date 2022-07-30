@@ -7,7 +7,6 @@ import '../../../../scope/app_scope.dart';
 import '../../../../structs/quintet.dart';
 import '../../../../structs/sextet.dart';
 import '../../../../widgets/widgets.dart';
-import '../../data/auth_repo.dart';
 import 'card_overlay.dart';
 
 class SignUpOverlay extends ConsumerStatefulWidget {
@@ -67,10 +66,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    _onData(l10n);
-
     final state = ref.watch(AppScope.get().signUpController);
-    ref.read(AppScope.get().loggerManager).log('new signUp state: $state');
 
     return CardOverlay(
       title: l10n.signUpTitle,
@@ -176,27 +172,6 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
         },
       ),
     );
-  }
-
-  void _onData(AppLocalizations l10n) {
-    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().signUpController,
-        (prev, next) {
-      final data = next.asData?.value;
-      if (data != null) {
-        if (data == AuthStatus.signUp) {
-          ref.read(AppScope.get().showConfirmOverlay.notifier).state = true;
-        }
-
-        final info = data.toStr(l10n);
-        if (info.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(info),
-            ),
-          );
-        }
-      }
-    });
   }
 
   void _openSignIn() {

@@ -32,10 +32,12 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<bool> confirmCode(String code) async {
+  Future<Map<String, bool>> verifyCode(String code) async {
     return Future.delayed(
       _dur,
-      dev.randomBool,
+      () => {
+        const_api.verified: dev.randomBool(),
+      },
     );
   }
 

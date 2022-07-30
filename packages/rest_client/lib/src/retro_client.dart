@@ -19,8 +19,8 @@ abstract class RetroClient implements RestClient {
   );
 
   @override
-  @POST(const_secret.confirmCode)
-  Future<bool> confirmCode(
+  @POST(const_secret.verifyCode)
+  Future<Map<String, bool>> verifyCode(
     @Query(const_api.code) String code,
   );
 

@@ -26,8 +26,6 @@ mixin AppProviders {
     );
   });
 
-  final confirmPin = StateProvider<String>((ref) => '');
-
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
       FilterConfig.empty,
@@ -58,11 +56,11 @@ mixin AppProviders {
 
   final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
 
-  final showConfirmOverlay = StateProvider<bool>((ref) => false);
-
   final showRecoveryOverlay = StateProvider<bool>((ref) => false);
 
   final showSignInOverlay = StateProvider<bool>((ref) => false);
+
+  final showVerifyOverlay = StateProvider<bool>((ref) => false);
 
   late final signUpController = StateNotifierProvider.autoDispose<
       SignUpController, AsyncValue<AuthStatus>>((ref) {
@@ -70,6 +68,8 @@ mixin AppProviders {
       authRepo: ref.watch(authRepo),
     );
   });
+
+  final verifyPin = StateProvider<String>((ref) => '');
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
@@ -80,10 +80,10 @@ mixin AppProviders {
       onLogOut: () {
         ref.read(showChangePasswdOverlay.notifier).state = false;
         ref.read(showPersonalInfoOverlay.notifier).state = false;
-        ref.read(showConfirmOverlay.notifier).state = false;
+        ref.read(showVerifyOverlay.notifier).state = false;
         ref.read(showRecoveryOverlay.notifier).state = false;
         ref.read(showSignInOverlay.notifier).state = false;
-        ref.read(confirmPin.notifier).state = '';
+        ref.read(verifyPin.notifier).state = '';
       },
     );
   });
