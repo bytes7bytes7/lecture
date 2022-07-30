@@ -60,6 +60,11 @@ class MockClient implements RestClient {
   }
 
   @override
+  Future<void> logOut() async {
+    return Future.delayed(_dur);
+  }
+
+  @override
   Future<int> addLecture(Lecture lecture) async {
     return Future.delayed(_dur, () => dev.randomInt(1000));
   }

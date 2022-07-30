@@ -13,6 +13,8 @@ abstract class RestClient {
 
   Future<void> setNewPasswd(String password);
 
+  Future<void> logOut();
+
   Future<int> addLecture(Lecture lecture);
 
   Future<void> deleteLecture(int id);

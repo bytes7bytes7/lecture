@@ -41,6 +41,10 @@ abstract class RetroClient implements RestClient {
   Future<void> setNewPasswd(@Query('password') String password);
 
   @override
+  @POST(const_secret.logOut)
+  Future<void> logOut();
+
+  @override
   @POST(const_secret.addLecture)
   Future<int> addLecture(@Body() Lecture lecture);
 

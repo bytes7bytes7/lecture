@@ -61,8 +61,10 @@ mixin AppProviders {
 
   // TODO: do not forget ot override it after auth
   late final user = StateNotifierProvider<UserNotifier, User>((ref) {
+    final client = ref.watch(restClient);
     return UserNotifier(
       notAuthorizedUser,
+      client: client,
       onLogOut: () {
         ref.read(showChangePasswdOverlay.notifier).state = false;
         ref.read(showPersonalInfoOverlay.notifier).state = false;

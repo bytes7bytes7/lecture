@@ -14,7 +14,7 @@ const _me = User(
   id: 7776660,
   firstName: 'Владимир',
   lastName: 'Соколов',
-  email: 'vladimir.sokolov@mail.ru',
+  email: 'vladimir.sokolov@some.ru',
   token: 'TEST_TOKEN',
   avatar: 'https://www.topsunglasses.net/wp-content/uploads/'
       '2016/10/Polarized-Sunglasses-for-Men-Photos.jpg',

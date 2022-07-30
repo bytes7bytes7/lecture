@@ -10,7 +10,7 @@ part of 'retro_client.dart';
 
 class _RetroClient implements RetroClient {
   _RetroClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://178.20.40.92:8001/api/';
+    baseUrl ??= 'http://178.20.40.92/api/';
   }
 
   final Dio _dio;
@@ -106,6 +106,20 @@ class _RetroClient implements RetroClient {
     await _dio.fetch<void>(_setStreamType<void>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, '/new_password',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
+  }
+
+  @override
+  Future<void> logOut() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    await _dio.fetch<void>(_setStreamType<void>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/log_out',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;
