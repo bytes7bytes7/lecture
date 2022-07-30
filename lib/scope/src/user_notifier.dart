@@ -20,4 +20,6 @@ class UserNotifier extends StateNotifier<User> {
     _onLogOut();
     state = notAuthorizedUser;
   }
+
+  // TODO: place all auth logic here
 }

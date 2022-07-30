@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:flutter/cupertino.dart';
 import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
@@ -23,6 +21,10 @@ class ScreenRouter {
     }
 
     switch (name) {
+      case const_routes.aboutApp:
+        return _left(const AboutAppScreen());
+      case const_routes.account:
+        return _left(const AccountScreen());
       case const_routes.auth:
         return _up(const AuthenticationScreen());
       case const_routes.author:
@@ -70,6 +72,7 @@ class ScreenRouter {
         end: Offset.zero,
       );
 
+  // ignore: unused_element
   Route _down(Widget page) => CustomRouteBuilder(
         page,
         begin: const Offset(0.0, -1.0),

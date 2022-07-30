@@ -47,6 +47,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: style ?? theme.appBarTheme.titleTextStyle,
       ),
+      automaticallyImplyLeading: false,
       leading:
           (prefIcon != null && prefTooltip != null && prefOnPressed != null)
               ? Container(

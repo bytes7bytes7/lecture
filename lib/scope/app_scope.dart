@@ -1,5 +1,3 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/all.dart';
@@ -27,8 +25,8 @@ class AppScope extends StatelessWidget with AppProviders {
   }) {
     return _inst = AppScope._(
       key: key,
-      child: child,
       spreadQuillManager: spreadQuillManager,
+      child: child,
     );
   }
 

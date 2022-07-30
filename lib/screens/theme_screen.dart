@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,7 +40,7 @@ class ThemeScreen extends StatelessWidget {
             padding: _padding,
             child: Text(
               l10n.colorThemeDesc,
-              style: theme.textTheme.subtitle2,
+              style: theme.textTheme.bodyText1,
             ),
           ),
           const _Body(),
@@ -53,6 +51,7 @@ class ThemeScreen extends StatelessWidget {
 }
 
 class _Body extends ConsumerWidget {
+  // ignore: unused_element
   const _Body({super.key});
 
   @override

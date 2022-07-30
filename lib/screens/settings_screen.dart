@@ -75,26 +75,17 @@ class SettingsScreen extends ConsumerWidget {
                       Quartet(
                         Icons.person,
                         l10n.accountTitle,
-                        () {
-                          ref
-                              .read(AppScope.get().loggerManager)
-                              .info('Аккаунт');
-                        },
+                        () => _openAccount(context),
                       ),
                       Quartet(
                         Icons.brightness_6_rounded,
                         l10n.colorThemeTitle,
-                        () {
-                          Navigator.of(context).pushNamed(const_routes.theme);
-                        },
+                        () => _openColorTheme(context),
                       ),
                       Quartet(
                         Icons.bookmark,
                         l10n.bookmarks,
-                        () {
-                          Navigator.of(context)
-                              .pushNamed(const_routes.bookmark);
-                        },
+                        () => _openBookmarks(context),
                         [
                           const Badge(value: '$_bookmarks'),
                         ],
@@ -102,10 +93,7 @@ class SettingsScreen extends ConsumerWidget {
                       Quartet(
                         Icons.insert_drive_file,
                         l10n.myLectures,
-                        () {
-                          Navigator.of(context)
-                              .pushNamed(const_routes.myLectures);
-                        },
+                        () => _openMyLectures(context),
                         [
                           const Badge(value: '$_my'),
                         ],
@@ -123,11 +111,7 @@ class SettingsScreen extends ConsumerWidget {
                     LineButton(
                       icon: Icons.info,
                       text: l10n.aboutAppTitle,
-                      onPressed: () {
-                        ref
-                            .read(AppScope.get().loggerManager)
-                            .info('О приложении');
-                      },
+                      onPressed: () => _openAboutApp(context),
                     ),
                   ],
                 ),
@@ -137,5 +121,25 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void _openAccount(BuildContext context) {
+    Navigator.of(context).pushNamed(const_routes.account);
+  }
+
+  void _openColorTheme(BuildContext context) {
+    Navigator.of(context).pushNamed(const_routes.theme);
+  }
+
+  void _openBookmarks(BuildContext context) {
+    Navigator.of(context).pushNamed(const_routes.bookmark);
+  }
+
+  void _openMyLectures(BuildContext context) {
+    Navigator.of(context).pushNamed(const_routes.myLectures);
+  }
+
+  void _openAboutApp(BuildContext context) {
+    Navigator.of(context).pushNamed(const_routes.aboutApp);
   }
 }
