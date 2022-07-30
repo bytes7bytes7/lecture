@@ -34,13 +34,10 @@ class App extends ConsumerWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('ru', ''),
-            Locale('en', ''),
-          ],
+          supportedLocales: const_app.supportedLocales,
           onGenerateInitialRoutes: (_) => [
             ScreenRouter.inst.navigate(
-              const RouteSettings(name: const_routes.home),
+              const RouteSettings(name: const_routes.auth),
             ),
           ],
           onGenerateRoute: ScreenRouter.inst.navigate,

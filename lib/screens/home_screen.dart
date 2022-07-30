@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
@@ -7,7 +6,6 @@ import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../l10n/l10n.dart';
-import '../overlays/show_filter_overlay.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -23,12 +21,6 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: theme.scaffoldBackgroundColor,
-      ),
-    );
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -145,8 +137,7 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            showFilterOverlay(context: context, ref: ref);
-            //Navigator.of(context).pushNamed(const_routes.editor);
+            Navigator.of(context).pushNamed(const_routes.editor);
           },
         ),
       ),

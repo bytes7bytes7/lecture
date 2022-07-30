@@ -32,6 +32,7 @@ mixin AppProviders {
       ColorTheme.system,
       ref: ref,
       navigatorKey: navigatorKey,
+      authController: authController,
     );
   });
 

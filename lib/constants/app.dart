@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const projectName = 'Lecture';
 const appName = 'Лекция';
 const loggerName = 'App';
@@ -7,3 +9,7 @@ const minSemester = 1;
 const highlightPattern = '###';
 const minPasswdLen = 8;
 const notSetNumber = '-';
+const supportedLocales =  [
+  Locale('ru', ''),
+  Locale('en', ''),
+];

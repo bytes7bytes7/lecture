@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common.dart';
@@ -25,12 +24,6 @@ class AuthenticationScreen extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final padding = MediaQuery.of(context).padding;
     final height = size.height - padding.top - padding.bottom;
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).primaryColor,
-      ),
-    );
 
     _onData(context, ref, l10n);
 

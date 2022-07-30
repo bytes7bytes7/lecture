@@ -173,6 +173,12 @@ final ThemeData darkTheme = ThemeData(
 );
 
 const _darkTextTheme = TextTheme(
+  headline3: TextStyle(
+    fontSize: _Fonts.headline4Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.playfairDisplaySC,
+    color: _Colors.white,
+  ),
   headline4: TextStyle(
     fontSize: _Fonts.headline4Size,
     fontWeight: FontWeight.bold,
