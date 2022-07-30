@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../l10n/l10n.dart';
 import '../overlays/show_select_overlay.dart';
-import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
@@ -32,7 +30,6 @@ class SelectField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final l10n = context.l10n;
 
     return Container(
       margin: _margin,
@@ -46,34 +43,37 @@ class SelectField extends ConsumerWidget {
           color: theme.primaryColor,
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: (value.isNotEmpty)
-                ? Text(
-                    value,
-                    style: theme.textTheme.bodyText1,
-                  )
-                : Text(
-                    hint,
-                    style: theme.textTheme.bodyText1
-                        ?.copyWith(color: theme.hintColor),
-                  ),
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            showSelectOverlay(
+              context: context,
+              ref: ref,
+              items: items,
+              onChanged: onChanged,
+            );
+          },
+          child: Row(
+            children: [
+              Expanded(
+                child: (value.isNotEmpty)
+                    ? Text(
+                        value,
+                        style: theme.textTheme.bodyText1,
+                      )
+                    : Text(
+                        hint,
+                        style: theme.textTheme.bodyText1
+                            ?.copyWith(color: theme.hintColor),
+                      ),
+              ),
+              const Icon(
+                Icons.search,
+                size: const_measures.smallIconSize,
+              ),
+            ],
           ),
-          SizedIconButton(
-            icon: Icons.search,
-            size: const_measures.smallIconSize,
-            tooltip: l10n.tooltipChoose,
-            onPressed: () async {
-              showSelectOverlay(
-                context: context,
-                ref: ref,
-                items: items,
-                onChanged: onChanged,
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
