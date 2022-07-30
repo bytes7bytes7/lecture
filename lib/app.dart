@@ -40,7 +40,7 @@ class App extends ConsumerWidget {
           ],
           onGenerateInitialRoutes: (_) => [
             ScreenRouter.inst.navigate(
-              const RouteSettings(name: const_routes.auth),
+              const RouteSettings(name: const_routes.home),
             ),
           ],
           onGenerateRoute: ScreenRouter.inst.navigate,

@@ -10,6 +10,16 @@ final ThemeData lightTheme = ThemeData(
   errorColor: _Colors.cinnabar,
   dividerColor: _Colors.nobel,
   textTheme: _lightTextTheme,
+  splashColor: _Colors.mountainMeadow.withOpacity(
+    const_measures.tinyOpacity,
+  ),
+  highlightColor: _Colors.mountainMeadow.withOpacity(
+    const_measures.smallOpacity,
+  ),
+  iconTheme: const IconThemeData(
+    color: _Colors.mountainMeadow,
+    size: const_measures.smallIconSize,
+  ),
   appBarTheme: AppBarTheme(
     elevation: const_measures.appBarElevation,
     backgroundColor: _Colors.white,

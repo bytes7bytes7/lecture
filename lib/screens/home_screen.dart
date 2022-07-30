@@ -7,6 +7,7 @@ import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../l10n/l10n.dart';
+import '../overlays/show_filter_overlay.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -144,7 +145,8 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(const_routes.editor);
+            showFilterOverlay(context: context, ref: ref);
+            //Navigator.of(context).pushNamed(const_routes.editor);
           },
         ),
       ),

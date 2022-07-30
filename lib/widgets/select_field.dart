@@ -33,7 +33,6 @@ class SelectField extends ConsumerWidget {
 
     return Container(
       margin: _margin,
-      padding: _padding,
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(
@@ -43,35 +42,44 @@ class SelectField extends ConsumerWidget {
           color: theme.primaryColor,
         ),
       ),
-      child: Material(
-        child: InkWell(
-          onTap: () {
-            showSelectOverlay(
-              context: context,
-              ref: ref,
-              items: items,
-              onChanged: onChanged,
-            );
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: (value.isNotEmpty)
-                    ? Text(
-                        value,
-                        style: theme.textTheme.bodyText1,
-                      )
-                    : Text(
-                        hint,
-                        style: theme.textTheme.bodyText1
-                            ?.copyWith(color: theme.hintColor),
-                      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+          const_measures.mainBorderRadius,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              showSelectOverlay(
+                context: context,
+                ref: ref,
+                items: items,
+                onChanged: onChanged,
+              );
+            },
+            child: Padding(
+              padding: _padding,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: (value.isNotEmpty)
+                        ? Text(
+                            value,
+                            style: theme.textTheme.bodyText1,
+                          )
+                        : Text(
+                            hint,
+                            style: theme.textTheme.bodyText1
+                                ?.copyWith(color: theme.hintColor),
+                          ),
+                  ),
+                  const Icon(
+                    Icons.search,
+                    size: const_measures.smallIconSize,
+                  ),
+                ],
               ),
-              const Icon(
-                Icons.search,
-                size: const_measures.smallIconSize,
-              ),
-            ],
+            ),
           ),
         ),
       ),
