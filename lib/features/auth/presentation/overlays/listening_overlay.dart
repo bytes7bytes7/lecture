@@ -6,17 +6,16 @@ const _positionedDuration = Duration(milliseconds: 300);
 class ListeningOverlay extends ConsumerWidget {
   const ListeningOverlay({
     super.key,
-    required this.notifier,
+    required this.isOpen,
     required this.overlay,
   });
 
-  final StateProvider<bool> notifier;
+  final bool isOpen;
   final Widget overlay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final isOpen = ref.watch(notifier);
 
     return AnimatedPositioned(
       left: isOpen ? 0 : size.width,

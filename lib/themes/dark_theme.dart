@@ -10,6 +10,9 @@ final ThemeData darkTheme = ThemeData(
   indicatorColor: _Colors.hokeyPokey,
   errorColor: _Colors.cinnabar,
   dividerColor: _Colors.doveGray,
+  colorScheme: const ColorScheme.dark(
+    secondary: _Colors.mountainMeadow,
+  ),
   textTheme: _darkTextTheme,
   splashColor: _Colors.mountainMeadow.withOpacity(
     const_measures.tinyOpacity,

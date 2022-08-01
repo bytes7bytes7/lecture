@@ -126,6 +126,5 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
 
   void _changePasswd() {
     ref.read(AppScope.get().loggerManager).log('change password');
-    goHome(context);
   }
 }

@@ -132,6 +132,5 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
           lastName: _surnameController.text,
           middleName: _middleNameController.text,
         );
-    goHome(context);
   }
 }

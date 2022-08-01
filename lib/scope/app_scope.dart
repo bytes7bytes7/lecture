@@ -2,6 +2,7 @@ import 'app_providers.dart';
 
 export 'src/export.dart';
 
+/// Storage for all app's providers.
 class AppScope with AppProviders {
   factory AppScope() {
     if (_inst != null) {

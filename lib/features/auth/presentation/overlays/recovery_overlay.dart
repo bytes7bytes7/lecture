@@ -98,13 +98,23 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
     );
   }
 
+  // TODO: move logic to AuthController
   void _tryToRecover() {
     ref.read(AppScope.get().loggerManager).log('try to recover');
-    ref.read(AppScope.get().showVerifyOverlay.notifier).state = true;
+    final authConfig = ref.read(AppScope.get().authOverlayConfig);
+    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
+        authConfig.copyWith(
+      showVerify: true,
+    );
   }
 
+  // TODO: move logic to AuthController
   void _backToSignIn() {
     _loginlController.clear();
-    ref.read(AppScope.get().showRecoveryOverlay.notifier).state = false;
+    final authConfig = ref.read(AppScope.get().authOverlayConfig);
+    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
+        authConfig.copyWith(
+      showRecovery: true,
+    );
   }
 }

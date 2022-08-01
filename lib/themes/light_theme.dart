@@ -9,6 +9,9 @@ final ThemeData lightTheme = ThemeData(
   indicatorColor: _Colors.hokeyPokey,
   errorColor: _Colors.cinnabar,
   dividerColor: _Colors.nobel,
+  colorScheme: const ColorScheme.light(
+    secondary: _Colors.mountainMeadow,
+  ),
   textTheme: _lightTextTheme,
   splashColor: _Colors.mountainMeadow.withOpacity(
     const_measures.tinyOpacity,

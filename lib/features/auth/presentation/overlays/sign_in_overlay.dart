@@ -162,17 +162,22 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   }
 
   void _forgotPassword() {
-    ref.read(AppScope.get().showRecoveryOverlay.notifier).state = true;
+    final authConfig = ref.read(AppScope.get().authOverlayConfig);
+    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
+        authConfig.copyWith(
+      showRecovery: true,
+    );
   }
 
   void _openRegister() {
-    _loginController.clear();
-    _passController.clear();
-    ref.read(AppScope.get().showSignInOverlay.notifier).state = false;
+    final authConfig = ref.read(AppScope.get().authOverlayConfig);
+    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
+        authConfig.copyWith(
+      showSignIn: false,
+    );
   }
 
   void _tryToLogIn() {
     ref.read(AppScope.get().loggerManager).log('log in');
-    goHome(context);
   }
 }

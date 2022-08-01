@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,11 +62,11 @@ class _Body extends ConsumerWidget {
     final colorTheme = ref.watch(AppScope.get().colorTheme);
 
     return Column(
-      children: ColorTheme.values.map((e) {
+      children: AdaptiveThemeMode.values.map((e) {
         return LineButton(
           text: _getThemeTitle(e, l10n),
           borderType: LineBorderType.bottom,
-          onPressed: () => _changeTheme(ref, curr: colorTheme, next: e),
+          onPressed: () => _changeTheme(ref: ref, value: e),
           actions: [
             Icon(
               (colorTheme == e)
@@ -80,23 +81,20 @@ class _Body extends ConsumerWidget {
     );
   }
 
-  void _changeTheme(
-    WidgetRef ref, {
-    required ColorTheme curr,
-    required ColorTheme next,
+  void _changeTheme({
+    required WidgetRef ref,
+    required AdaptiveThemeMode value,
   }) {
-    if (curr != next) {
-      ref.read(AppScope.get().colorTheme.notifier).set(next);
-    }
+    ref.read(AppScope.get().colorTheme.notifier).set(value);
   }
 
-  String _getThemeTitle(ColorTheme theme, AppLocalizations l10n) {
+  String _getThemeTitle(AdaptiveThemeMode theme, AppLocalizations l10n) {
     switch (theme) {
-      case ColorTheme.light:
+      case AdaptiveThemeMode.light:
         return l10n.lightTheme;
-      case ColorTheme.dark:
+      case AdaptiveThemeMode.dark:
         return l10n.darkTheme;
-      case ColorTheme.system:
+      case AdaptiveThemeMode.system:
         return l10n.systemTheme;
     }
   }

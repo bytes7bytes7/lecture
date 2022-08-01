@@ -83,7 +83,11 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
   }
 
   void _cancel() {
-    ref.read(AppScope.get().showVerifyOverlay.notifier).state = false;
+    final authConfig = ref.read(AppScope.get().authOverlayConfig);
+    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
+        authConfig.copyWith(
+      showVerify: false,
+    );
   }
 
   void _next() {

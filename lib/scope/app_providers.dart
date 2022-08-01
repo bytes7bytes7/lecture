@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quick_quotes_quill/all.dart';
@@ -10,11 +11,14 @@ import '../repositories/interface/interfaces.dart';
 import 'src/export.dart';
 
 mixin AppProviders {
-  // TODO: after logOut reset all 'show...Overlay' to false and pin to ''
+  // TODO: after logOut reset all 'show...Overlay' to false and pin to '' (maybe autoDispose can deal with it)
   late final authController =
       StateNotifierProvider<AuthController, AsyncValue<AuthStatus>>((ref) {
     return AuthController(
+      ref: ref,
       authRepo: ref.watch(authRepo),
+      navigatorKey: navigatorKey,
+      authOverlayConfig: authOverlayConfig,
     );
   });
 
@@ -27,12 +31,10 @@ mixin AppProviders {
   });
 
   late final colorTheme =
-      StateNotifierProvider<ColorThemeNotifier, ColorTheme>((ref) {
+      StateNotifierProvider<ColorThemeNotifier, AdaptiveThemeMode>((ref) {
     return ColorThemeNotifier(
-      ColorTheme.system,
       ref: ref,
       navigatorKey: navigatorKey,
-      authController: authController,
     );
   });
 
@@ -55,25 +57,21 @@ mixin AppProviders {
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
-  final navigatorKey = Provider((ref) => GlobalKey<NavigatorState>());
+  final navigatorKey =
+      Provider<GlobalKey<NavigatorState>>((ref) => GlobalKey<NavigatorState>());
 
   final restClient = Provider<RestClient>((ref) => throw UnimplementedError());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 
-  final showChangePasswdOverlay = StateProvider<bool>((ref) => false);
-
-  final showPersonalInfoOverlay = StateProvider<bool>((ref) => false);
-
-  final showRecoveryOverlay = StateProvider<bool>((ref) => false);
-
-  final showSignInOverlay = StateProvider<bool>((ref) => false);
-
-  final showVerifyOverlay = StateProvider<bool>((ref) => false);
+  final authOverlayConfig =
+      StateNotifierProvider<AuthOverlayNotifier, AuthOverlayConfig>((ref) {
+    return AuthOverlayNotifier();
+  });
 
   final verifyPin = StateProvider<String>((ref) => '');
 
-  late final user = StateNotifierProvider<UserNotifier, User>((ref) {
+  final user = StateNotifierProvider<UserNotifier, User>((ref) {
     return UserNotifier(
       notAuthorizedUser,
     );
