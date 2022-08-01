@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quick_quotes_quill/all.dart';
+import 'package:rest_client/rest_client.dart';
 
 import 'app.dart';
 import 'constants/app.dart' as const_app;
@@ -40,9 +42,16 @@ void main() async {
     ],
   );
 
+  final appScope = AppScope();
+
   runApp(
-    AppScope(
-      spreadQuillManager: manager,
+    ProviderScope(
+      overrides: [
+        appScope.loggerManager.overrideWithValue(manager),
+        appScope.restClient.overrideWithValue(
+          ClientFactory().createMockClient(),
+        ),
+      ],
       child: const App(),
     ),
   );

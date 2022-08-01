@@ -57,8 +57,7 @@ mixin AppProviders {
 
   final navigatorKey = Provider((ref) => GlobalKey<NavigatorState>());
 
-  final restClient =
-      Provider<RestClient>((ref) => ClientFactory().createMockClient());
+  final restClient = Provider<RestClient>((ref) => throw UnimplementedError());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 

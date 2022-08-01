@@ -1,12 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quick_quotes_quill/all.dart';
-
 import 'app_providers.dart';
 
 export 'src/export.dart';
 
-class AppScope extends StatelessWidget with AppProviders {
+class AppScope with AppProviders {
+  factory AppScope() {
+    if (_inst != null) {
+      throw Exception('AppScope is already created');
+    }
+
+    return _inst = AppScope._();
+  }
+
+  AppScope._();
+
   static AppScope? _inst;
 
   static AppScope get() {
@@ -16,38 +22,5 @@ class AppScope extends StatelessWidget with AppProviders {
     }
 
     throw Exception('AppScope is not created');
-  }
-
-  factory AppScope({
-    Key? key,
-    required Widget child,
-    required SpreadQuillManager spreadQuillManager,
-  }) {
-    return _inst = AppScope._(
-      key: key,
-      spreadQuillManager: spreadQuillManager,
-      child: child,
-    );
-  }
-
-  AppScope._({
-    super.key,
-    required this.child,
-    required this.spreadQuillManager,
-  });
-
-  /// Root widget.
-  final Widget child;
-
-  final SpreadQuillManager spreadQuillManager;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        loggerManager.overrideWithValue(spreadQuillManager),
-      ],
-      child: child,
-    );
   }
 }

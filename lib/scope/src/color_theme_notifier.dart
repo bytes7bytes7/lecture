@@ -4,11 +4,9 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../features/auth/auth.dart';
-import 'user_notifier.dart';
 
 enum ColorTheme {
   light,
@@ -111,5 +109,7 @@ class ColorThemeNotifier extends StateNotifier<ColorTheme> {
     if (mode != null) {
       state = ColorTheme.fromMode(mode);
     }
+
+    // TODO: at first launch set statusBar's color
   }
 }
