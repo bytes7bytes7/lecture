@@ -1,68 +1,64 @@
 import 'dart:async';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
+import 'package:rxdart/rxdart.dart';
 
-import '../../../scope/src/user_notifier.dart';
 import 'auth_repo.dart';
+import 'exceptions.dart';
 
+/// Repo that change current user, change auth overlay state.
 class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({
-    required Ref ref,
-    required StateNotifierProvider<UserNotifier, User> user,
     required RestClient client,
-  })  : _ref = ref,
-        _user = user,
-        _client = client,
-        _statusController = StreamController<AuthStatus>()
-          ..sink.add(AuthStatus.loggedOut);
+  })  : _client = client,
+        _userSubject = BehaviorSubject()..add(notAuthorizedUser);
 
-  final Ref _ref;
   final RestClient _client;
-  final StateNotifierProvider<UserNotifier, User> _user;
-  final StreamController<AuthStatus> _statusController;
-
-  Sink<AuthStatus> get _sink => _statusController.sink;
+  final BehaviorSubject<User> _userSubject;
 
   @override
-  Stream<AuthStatus> get status => _statusController.stream;
+  ValueStream<User> get user => _userSubject.stream;
 
   @override
   void dispose() {
-    _statusController.close();
+    _userSubject.close();
   }
 
   @override
-  Future<void> signUp(String login, String password) async {
+  Future<AuthState> signUp(String login, String password) async {
     final resp = await _client.signUp(login: login, password: password);
     final rLogin = resp[const_api.login];
     final error = resp[const_api.error];
     if (rLogin == login) {
-      final u = _ref.read(_user);
-      _ref.read(_user.notifier).newState = u.copyWith(email: login);
-      _sink.add(AuthStatus.signUp);
+      _userSubject.add(
+        _userSubject.value.copyWith(
+          email: login,
+        ),
+      );
+
+      return AuthState.signedUp;
     } else if (error == 'user with this phone already exists.') {
-      _sink.add(AuthStatus.loginAlreadyExists);
+      throw const AuthException.loginAlreadyExists();
     } else {
-      _sink.add(AuthStatus.wrongCred);
+      throw const AuthException.wrongCred();
     }
   }
 
   @override
-  Future<void> verifyCode(String code) async {
+  Future<AuthState> verifyCode(String code) async {
     final resp = await _client.verifyCode(code);
     final verified = resp[const_api.verified];
     if (verified == true) {
       // TODO: maybe I should get token here
-      _sink.add(AuthStatus.verifiedSignUp);
+      return AuthState.verifiedSignUp;
     } else {
-      _sink.add(AuthStatus.wrongCode);
+      throw const AuthException.wrongCode();
     }
   }
 
   @override
-  Future<void> setPersonalInfo({
+  Future<AuthState> setPersonalInfo({
     required String firstName,
     required String lastName,
     required String? middleName,
@@ -77,17 +73,18 @@ class AuthRepoImpl implements AuthRepo {
         lastName == resp[const_api.lastName] &&
         middleName == resp[const_api.middleName]) {
       final me = await _client.getMe();
-      _ref.read(_user.notifier).newState = me;
+      _userSubject.add(me);
 
-      _sink.add(AuthStatus.loggedIn);
+      return AuthState.loggedIn;
     } else {
-      _sink.add(AuthStatus.unknown);
+      throw const AuthException.unknown();
     }
   }
 
   @override
-  Future<void> logOut() async {
-    _ref.read(_user.notifier).newState = notAuthorizedUser;
+  Future<AuthState> logOut() async {
     // TODO: add _client.logOut()
+    _userSubject.add(notAuthorizedUser);
+    return AuthState.loggedOut;
   }
 }

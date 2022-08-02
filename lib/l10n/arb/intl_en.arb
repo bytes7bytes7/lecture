@@ -148,6 +148,7 @@
   "tryAgain": "Try again",
   "tuesday": "Tuesday",
   "tuesdayAbbr": "Tu",
+  "unknownError": "Unknown error",
   "verificationCodeDesc": "Enter the code that came to your email",
   "verificationCodeTitle": "Verification code",
   "viewMode": "View mode",

@@ -21,7 +21,8 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final user = ref.watch(AppScope.get().user);
+    // TODO: do NOT read Repo; read some controller instead
+    final user = ref.watch(AppScope.get().authRepo).user.value;
 
     return Scaffold(
       appBar: DefaultAppBar(

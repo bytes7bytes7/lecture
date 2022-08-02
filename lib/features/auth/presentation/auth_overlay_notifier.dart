@@ -6,19 +6,19 @@ part 'auth_overlay_notifier.freezed.dart';
 @freezed
 class AuthOverlayConfig with _$AuthOverlayConfig {
   const factory AuthOverlayConfig({
-    required bool showChangePasswd,
+    required bool showVerify,
+    required bool showSignIn,
     required bool showPersonalInfo,
     required bool showRecovery,
-    required bool showSignIn,
-    required bool showVerify,
+    required bool showChangePasswd,
   }) = _AuthOverlayConfig;
 
   factory AuthOverlayConfig.allOff() => const _AuthOverlayConfig(
-        showChangePasswd: false,
+        showVerify: false,
+        showSignIn: false,
         showPersonalInfo: false,
         showRecovery: false,
-        showSignIn: false,
-        showVerify: false,
+        showChangePasswd: false,
       );
 }
 

@@ -21,5 +21,4 @@ export 'select_field.dart';
 export 'simple_text_field.dart';
 export 'single_button.dart';
 export 'sized_icon_button.dart';
-export 'subject_list_view.dart';
 export 'user_header.dart';

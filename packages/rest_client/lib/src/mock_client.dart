@@ -15,7 +15,7 @@ class MockClient implements RestClient {
     return Future.delayed(
       _dur,
       () {
-        switch (dev.randomInt(3)) {
+        switch (dev.randomInt(4)) {
           case 0:
             return {
               const_api.login: login,
@@ -25,10 +25,12 @@ class MockClient implements RestClient {
             return {
               const_api.error: 'The phone number entered is not valid.',
             };
-          default:
+          case 2:
             return {
               const_api.error: 'user with this phone already exists.',
             };
+          default:
+            throw Exception('Mock exception');
         }
       },
     );
@@ -38,8 +40,15 @@ class MockClient implements RestClient {
   Future<Map<String, bool>> verifyCode(String code) async {
     return Future.delayed(
       _dur,
-      () => {
-        const_api.verified: dev.randomBool(),
+      () {
+        switch (dev.randomInt(2)) {
+          case 0:
+            return {
+              const_api.verified: dev.randomBool(),
+            };
+          default:
+            throw Exception('Mock exception');
+        }
       },
     );
   }
@@ -52,10 +61,17 @@ class MockClient implements RestClient {
   }) async {
     return Future.delayed(
       _dur,
-      () => {
-        const_api.firstName: firstName,
-        const_api.lastName: lastName,
-        const_api.middleName: middleName,
+      () {
+        switch (dev.randomInt(2)) {
+          case 0:
+            return {
+              const_api.firstName: firstName,
+              const_api.lastName: lastName,
+              const_api.middleName: middleName,
+            };
+          default:
+            throw Exception('Mock exception');
+        }
       },
     );
   }

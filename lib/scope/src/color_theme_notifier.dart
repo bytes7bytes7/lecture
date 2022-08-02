@@ -20,22 +20,24 @@ class ColorThemeNotifier extends StateNotifier<AdaptiveThemeMode> {
   BuildContext? get _context => _ref.read(_navigatorKey).currentContext;
 
   void set(AdaptiveThemeMode value) {
-    final context = _context;
-    if (context != null) {
-      switch (value) {
-        case AdaptiveThemeMode.light:
-          AdaptiveTheme.of(context).setLight();
-          break;
-        case AdaptiveThemeMode.dark:
-          AdaptiveTheme.of(context).setDark();
-          break;
-        case AdaptiveThemeMode.system:
-          AdaptiveTheme.of(context).setSystem();
-          break;
+    if (value != state) {
+      final context = _context;
+      if (context != null) {
+        switch (value) {
+          case AdaptiveThemeMode.light:
+            AdaptiveTheme.of(context).setLight();
+            break;
+          case AdaptiveThemeMode.dark:
+            AdaptiveTheme.of(context).setDark();
+            break;
+          case AdaptiveThemeMode.system:
+            AdaptiveTheme.of(context).setSystem();
+            break;
+        }
       }
-    }
 
-    state = value;
+      state = value;
+    }
   }
 
   Future<void> _init() async {

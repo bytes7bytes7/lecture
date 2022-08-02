@@ -5,7 +5,6 @@ import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../../widgets/widgets.dart';
-import '../../data/auth_repo.dart';
 import 'card_overlay.dart';
 
 const _pinMargin = EdgeInsets.symmetric(
@@ -13,36 +12,12 @@ const _pinMargin = EdgeInsets.symmetric(
   vertical: 20.0,
 );
 
-class VerifyOverlay extends ConsumerStatefulWidget {
+class VerifyOverlay extends ConsumerWidget {
   const VerifyOverlay({super.key});
 
   @override
-  ConsumerState<VerifyOverlay> createState() => _VerifyOverlayState();
-}
-
-class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
-  late final ValueNotifier<bool> errorNotifier;
-
-  @override
-  void initState() {
-    super.initState();
-
-    errorNotifier = ValueNotifier(false);
-  }
-
-  @override
-  void dispose() {
-    errorNotifier.dispose();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-
-    _onData();
-
     final state = ref.watch(AppScope.get().authController);
 
     return CardOverlay(
@@ -53,36 +28,26 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
           alignment: Alignment.topCenter,
           margin: _pinMargin,
           child: PinTextField(
-            errorNotifier: errorNotifier,
-            onSubmit: (value) => _pin = value,
+            onSubmit: (value) => _setPin(value, ref),
             enabled: state is! AsyncLoading,
           ),
         ),
       ),
       footer: DoubleButton(
         secondary: l10n.cancel,
-        secondaryOnPressed: state is! AsyncLoading ? _cancel : null,
+        secondaryOnPressed: state is! AsyncLoading ? () => _cancel(ref) : null,
         primary: l10n.moveNext,
-        primaryOnPressed: state is! AsyncLoading ? _next : null,
+        primaryOnPressed: state is! AsyncLoading ? () => _next(ref) : null,
       ),
     );
   }
 
-  void _onData() {
-    ref.listen<AsyncValue<AuthStatus>>(AppScope.get().authController,
-        (prev, next) {
-      final data = next.asData?.value;
-      if (data == AuthStatus.wrongCode) {
-        errorNotifier.value = true;
-      }
-    });
-  }
-
-  set _pin(String value) {
+  void _setPin(String value, WidgetRef ref) {
     ref.read(AppScope.get().verifyPin.notifier).state = value;
   }
 
-  void _cancel() {
+  // TODO: move logic
+  void _cancel(WidgetRef ref) {
     final authConfig = ref.read(AppScope.get().authOverlayConfig);
     ref.read(AppScope.get().authOverlayConfig.notifier).newState =
         authConfig.copyWith(
@@ -90,7 +55,7 @@ class _VerifyOverlayState extends ConsumerState<VerifyOverlay> {
     );
   }
 
-  void _next() {
+  void _next(WidgetRef ref) {
     ref.read(AppScope.get().loggerManager).log('check PIN');
     final pin = ref.read(AppScope.get().verifyPin);
     ref.read(AppScope.get().authController.notifier).verifyCode(pin);

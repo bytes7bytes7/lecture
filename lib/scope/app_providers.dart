@@ -13,20 +13,15 @@ import 'src/export.dart';
 mixin AppProviders {
   // TODO: after logOut reset all 'show...Overlay' to false and pin to '' (maybe autoDispose can deal with it)
   late final authController =
-      StateNotifierProvider<AuthController, AsyncValue<AuthStatus>>((ref) {
+      StateNotifierProvider<AuthController, AsyncValue<AuthState>>((ref) {
     return AuthController(
-      ref: ref,
       authRepo: ref.watch(authRepo),
-      navigatorKey: navigatorKey,
-      authOverlayConfig: authOverlayConfig,
     );
   });
 
   late final authRepo = Provider<AuthRepo>((ref) {
     return AuthRepoImpl(
-      ref: ref,
       client: ref.watch(restClient),
-      user: user,
     );
   });
 
@@ -70,10 +65,4 @@ mixin AppProviders {
   });
 
   final verifyPin = StateProvider<String>((ref) => '');
-
-  final user = StateNotifierProvider<UserNotifier, User>((ref) {
-    return UserNotifier(
-      notAuthorizedUser,
-    );
-  });
 }

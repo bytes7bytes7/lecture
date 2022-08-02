@@ -13,12 +13,10 @@ const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
 class PinTextField extends StatefulWidget {
   const PinTextField({
     super.key,
-    required this.errorNotifier,
     required this.onSubmit,
     this.enabled,
   });
 
-  final ValueNotifier<bool> errorNotifier;
   final ValueChanged<String> onSubmit;
   final bool? enabled;
 
@@ -55,76 +53,53 @@ class _PinTextFieldState extends State<PinTextField> {
         (i) {
           return SizedBox(
             width: _cellWidth,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: widget.errorNotifier,
-              builder: (context, error, child) {
-                return TextField(
-                  controller: _textControllers[i],
-                  enabled: widget.enabled,
-                  focusNode: _focusNodes[i],
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  cursorColor: theme.primaryColor,
-                  style: theme.textTheme.headline5
-                      ?.copyWith(color: theme.shadowColor),
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    counterText: '',
-                    contentPadding: _contentPadding,
-                    constraints: const BoxConstraints(
-                      minHeight: _cellHeight,
-                    ),
-                    errorText: error ? '' : null,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.mainBorderRadius,
-                      ),
-                      borderSide: BorderSide(
-                        width: _borderWidth,
-                        color: theme.hintColor,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.mainBorderRadius,
-                      ),
-                      borderSide: BorderSide(
-                        width: _borderWidthBold,
-                        color: theme.primaryColor,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.mainBorderRadius,
-                      ),
-                      borderSide: BorderSide(
-                        width: _borderWidth,
-                        color: theme.errorColor,
-                      ),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.mainBorderRadius,
-                      ),
-                      borderSide: BorderSide(
-                        width: _borderWidthBold,
-                        color: theme.primaryColor,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        const_measures.mainBorderRadius,
-                      ),
-                      borderSide: BorderSide(
-                        width: _borderWidth,
-                        color: theme.disabledColor,
-                      ),
-                    ),
+            child: TextField(
+              controller: _textControllers[i],
+              enabled: widget.enabled,
+              focusNode: _focusNodes[i],
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              cursorColor: theme.primaryColor,
+              style: theme.textTheme.headline5?.copyWith(
+                color: theme.shadowColor,
+              ),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (str) => _onChanged(str, i),
+              onSubmitted: _onSubmitted,
+              decoration: InputDecoration(
+                counterText: '',
+                contentPadding: _contentPadding,
+                constraints: const BoxConstraints(
+                  minHeight: _cellHeight,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    const_measures.mainBorderRadius,
                   ),
-                  onChanged: (str) => _onChanged(str, i),
-                  onSubmitted: _onSubmitted,
-                );
-              },
+                  borderSide: BorderSide(
+                    width: _borderWidth,
+                    color: theme.hintColor,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    const_measures.mainBorderRadius,
+                  ),
+                  borderSide: BorderSide(
+                    width: _borderWidthBold,
+                    color: theme.primaryColor,
+                  ),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    const_measures.mainBorderRadius,
+                  ),
+                  borderSide: BorderSide(
+                    width: _borderWidth,
+                    color: theme.disabledColor,
+                  ),
+                ),
+              ),
             ),
           );
         },
@@ -133,8 +108,6 @@ class _PinTextFieldState extends State<PinTextField> {
   }
 
   void _onChanged(String str, int i) {
-    widget.errorNotifier.value = false;
-
     if (str.isEmpty) {
       _pin[i] = '';
     } else {

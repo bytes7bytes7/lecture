@@ -148,6 +148,7 @@
   "tryAgain": "Повторить",
   "tuesday": "Вторник",
   "tuesdayAbbr": "Вт",
+  "unknownError": "Неизестная ошибка",
   "verificationCodeDesc": "Введите код, который пришел на электронную почту",
   "verificationCodeTitle": "Код подтверждения",
   "viewMode": "Режим просмотра",
