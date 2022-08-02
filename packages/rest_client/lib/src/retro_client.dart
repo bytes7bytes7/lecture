@@ -41,7 +41,7 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.recoverPasswd)
-  Future<void> recoverPasswd(
+  Future<Map<String, bool>> recover(
     @Query(const_api.login) String login,
   );
 

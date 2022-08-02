@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quartet.dart';
+import '../../../../structs/quintet.dart';
 import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
@@ -16,7 +16,7 @@ class RecoveryOverlay extends ConsumerStatefulWidget {
 }
 
 class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
-  late final TextEditingController _loginlController;
+  late final TextEditingController _loginController;
   late final ValueNotifier<bool> _areFieldsValid;
   final _formKey = GlobalKey<FormState>();
 
@@ -24,7 +24,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   void initState() {
     super.initState();
 
-    _loginlController = TextEditingController()..addListener(_onChanged);
+    _loginController = TextEditingController()..addListener(_onChanged);
     _areFieldsValid = ValueNotifier(false);
   }
 
@@ -42,7 +42,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
 
   @override
   void dispose() {
-    _loginlController.dispose();
+    _loginController.dispose();
     _areFieldsValid.dispose();
 
     super.dispose();
@@ -52,6 +52,8 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final state = ref.watch(AppScope.get().authController);
+
     return CardOverlay(
       title: l10n.recoveryTitle,
       description: l10n.recoveryDesc,
@@ -60,14 +62,15 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
         child: Column(
           children: [
             ...<
-                Quartet<IconData, String, TextEditingController,
+                Quintet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>>>[
-              Quartet(
+              Quintet(
                 Icons.mail,
                 l10n.email,
-                _loginlController,
+                state is! AsyncLoading,
+                _loginController,
                 (_) => emailValidator(
-                  value: _loginlController.text,
+                  value: _loginController.text,
                   l10n: l10n,
                 ),
               ),
@@ -76,8 +79,9 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
                 return SimpleTextField(
                   icon: e.first,
                   hint: e.second,
-                  controller: e.third,
-                  validator: e.fourth,
+                  enabled: e.third,
+                  controller: e.fourth,
+                  validator: e.fifth,
                 );
               },
             ),
@@ -89,32 +93,23 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
         builder: (context, value, child) {
           return DoubleButton(
             primary: l10n.moveNext,
-            primaryOnPressed: value ? _tryToRecover : null,
+            primaryOnPressed:
+                (value && state is! AsyncLoading) ? _tryToRecover : null,
             secondary: l10n.cancel,
-            secondaryOnPressed: _backToSignIn,
+            secondaryOnPressed: state is! AsyncLoading ? _backToSignIn : null,
           );
         },
       ),
     );
   }
 
-  // TODO: move logic to AuthController
   void _tryToRecover() {
-    ref.read(AppScope.get().loggerManager).log('try to recover');
-    final authConfig = ref.read(AppScope.get().authOverlayConfig);
-    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-        authConfig.copyWith(
-      openVerify: true,
-    );
+    ref
+        .read(AppScope.get().authController.notifier)
+        .recover(_loginController.text);
   }
 
-  // TODO: move logic to AuthController
   void _backToSignIn() {
-    _loginlController.clear();
-    final authConfig = ref.read(AppScope.get().authOverlayConfig);
-    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-        authConfig.copyWith(
-      openRecovery: true,
-    );
+    ref.read(AppScope.get().authController.notifier).cancelRecovery();
   }
 }

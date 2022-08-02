@@ -101,6 +101,19 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
+  Future<AuthState> recover(String login) async {
+    final resp = await _client.recover(login);
+    final sentEmail = resp[const_api.sentEmail];
+    if (sentEmail == true) {
+      return AuthState.requestedRecover;
+    } else if (sentEmail == false) {
+      throw const AuthException.noLoginFound();
+    } else {
+      throw const AuthException.unknown();
+    }
+  }
+
+  @override
   Future<AuthState> logOut() async {
     // TODO: add _client.logOut()
     _userSubject.add(notAuthorizedUser);

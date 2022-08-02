@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../common.dart';
 import '../l10n/l10n.dart';
 
-class CopyText extends StatelessWidget {
+class CopyText extends ConsumerWidget {
   const CopyText({
     super.key,
     required this.text,
@@ -14,7 +16,7 @@ class CopyText extends StatelessWidget {
   final TextStyle? style;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
 
     return GestureDetector(
@@ -24,12 +26,9 @@ class CopyText extends StatelessWidget {
             text: text,
           ),
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              l10n.textCopied,
-            ),
-          ),
+        showSnackBar(
+          ref,
+          l10n.textCopied,
         );
       },
       child: Text(

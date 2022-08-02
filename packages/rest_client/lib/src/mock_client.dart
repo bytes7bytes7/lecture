@@ -126,8 +126,20 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<void> recoverPasswd(String login) async {
-    return Future.delayed(_dur);
+  Future<Map<String, bool>> recover(String login) async {
+    return Future.delayed(
+      _dur,
+      () {
+        switch (dev.randomInt(2)) {
+          case 0:
+            return {
+              const_api.sentEmail: dev.randomBool(),
+            };
+          default:
+            throw Exception('Mock exception');
+        }
+      },
+    );
   }
 
   @override

@@ -34,7 +34,7 @@ abstract class RestClient {
 
   Future<Map<String, String?>> signIn({required String login, required String password});
 
-  Future<void> recoverPasswd(String login);
+  Future<Map<String, bool>> recover(String login);
 
   Future<void> setNewPasswd(String password);
 

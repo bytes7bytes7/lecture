@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../common.dart';
 import '../../../../constants/app.dart' as const_app;
 import '../../../../constants/routes.dart' as const_routes;
 import '../../../../l10n/l10n.dart';
@@ -148,19 +149,9 @@ class AuthenticationScreen extends ConsumerWidget {
       final overlayNotifier =
           ref.read(AppScope.get().authOverlayConfig.notifier);
       switch (data) {
-        case AuthState.openSignUp:
+        case AuthState.cancelRecovery:
           overlayNotifier.newState = authConfig.copyWith(
-            openSignIn: false,
-          );
-          break;
-        case AuthState.openSignIn:
-          overlayNotifier.newState = authConfig.copyWith(
-            openSignIn: true,
-          );
-          break;
-        case AuthState.openRecover:
-          overlayNotifier.newState = authConfig.copyWith(
-            openRecovery: true,
+            openRecovery: false,
           );
           break;
         case AuthState.cancelVerification:
@@ -172,13 +163,10 @@ class AuthenticationScreen extends ConsumerWidget {
           final context = ref.read(AppScope.get().navigatorKey).currentContext;
           if (context != null) {
             final l10n = context.l10n;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  l10n.loggedInSuccess(
-                    ref.read(AppScope.get().authRepo).user.value.email ?? '?',
-                  ),
-                ),
+            showSnackBar(
+              ref,
+              l10n.loggedInSuccess(
+                ref.read(AppScope.get().authRepo).user.value.email ?? '?',
               ),
             );
           }
@@ -187,19 +175,39 @@ class AuthenticationScreen extends ConsumerWidget {
         case AuthState.loggedOut:
           _goAuth(ref);
           break;
+        case AuthState.openRecover:
+          overlayNotifier.newState = authConfig.copyWith(
+            openRecovery: true,
+          );
+          break;
+        case AuthState.openSignIn:
+          overlayNotifier.newState = authConfig.copyWith(
+            openSignIn: true,
+          );
+          break;
+        case AuthState.openSignUp:
+          overlayNotifier.newState = authConfig.copyWith(
+            openSignIn: false,
+          );
+          break;
+        case AuthState.requestedRecover:
+          overlayNotifier.newState = authConfig.copyWith(
+            openVerify: true,
+          );
+          break;
         case AuthState.signedUp:
           overlayNotifier.newState = authConfig.copyWith(
             openVerify: true,
           );
           break;
-        case AuthState.verifiedSignUp:
-          overlayNotifier.newState = authConfig.copyWith(
-            openPersonalInfo: true,
-          );
-          break;
         case AuthState.verifiedRecover:
           overlayNotifier.newState = authConfig.copyWith(
             openChangePasswd: true,
+          );
+          break;
+        case AuthState.verifiedSignUp:
+          overlayNotifier.newState = authConfig.copyWith(
+            openPersonalInfo: true,
           );
           break;
         default:
@@ -212,11 +220,7 @@ class AuthenticationScreen extends ConsumerWidget {
         final l10n = context.l10n;
         final info = _getReason(next.error, l10n);
         if (info.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(info),
-            ),
-          );
+          showSnackBar(ref, info);
         }
       }
     }

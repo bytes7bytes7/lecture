@@ -25,6 +25,7 @@ const refresh = 'refresh';
 const code = 'code';
 const detail = 'detail';
 const verified = 'verified';
+const sentEmail = 'sentMail';
 
 const firstName = 'firstName';
 const middleName = 'middleName';

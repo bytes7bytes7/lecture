@@ -65,4 +65,15 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
       () => _authRepo.signIn(login, password),
     );
   }
+
+  Future<void> recover(String login) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => _authRepo.recover(login),
+    );
+  }
+
+  Future<void> cancelRecovery() async {
+    state = const AsyncData(AuthState.cancelRecovery);
+  }
 }
