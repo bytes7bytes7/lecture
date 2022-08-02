@@ -46,13 +46,8 @@ class VerifyOverlay extends ConsumerWidget {
     ref.read(AppScope.get().verifyPin.notifier).state = value;
   }
 
-  // TODO: move logic
   void _cancel(WidgetRef ref) {
-    final authConfig = ref.read(AppScope.get().authOverlayConfig);
-    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-        authConfig.copyWith(
-      showVerify: false,
-    );
+    ref.read(AppScope.get().authController.notifier).cancelVerification();
   }
 
   void _next(WidgetRef ref) {

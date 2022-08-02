@@ -42,15 +42,13 @@ void main() async {
     ],
   );
 
-  final appScope = AppScope();
-
   runApp(
     ProviderScope(
       overrides: [
-        appScope.loggerManager.overrideWithValue(manager),
-        appScope.restClient.overrideWithValue(
-          ClientFactory().createMockClient(),
-        ),
+        AppScope.get().loggerManager.overrideWithValue(manager),
+        AppScope.get().restClient.overrideWithValue(
+              ClientFactory().createMockClient(),
+            ),
       ],
       child: const App(),
     ),

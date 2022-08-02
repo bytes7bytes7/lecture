@@ -83,7 +83,7 @@ class AuthenticationScreen extends ConsumerWidget {
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.showSignIn,
+                                        (value) => value.openSignIn,
                                       ),
                                     ),
                                     overlay: const SignInOverlay(),
@@ -91,7 +91,7 @@ class AuthenticationScreen extends ConsumerWidget {
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.showRecovery,
+                                        (value) => value.openRecovery,
                                       ),
                                     ),
                                     overlay: const RecoveryOverlay(),
@@ -99,7 +99,7 @@ class AuthenticationScreen extends ConsumerWidget {
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.showVerify,
+                                        (value) => value.openVerify,
                                       ),
                                     ),
                                     overlay: const VerifyOverlay(),
@@ -107,7 +107,7 @@ class AuthenticationScreen extends ConsumerWidget {
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.showPersonalInfo,
+                                        (value) => value.openPersonalInfo,
                                       ),
                                     ),
                                     overlay: const PersonalInfoOverlay(),
@@ -115,7 +115,7 @@ class AuthenticationScreen extends ConsumerWidget {
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.showChangePasswd,
+                                        (value) => value.openChangePasswd,
                                       ),
                                     ),
                                     overlay: const ChangePasswordOverlay(),
@@ -145,29 +145,61 @@ class AuthenticationScreen extends ConsumerWidget {
     final data = next.asData?.value;
     if (data != null) {
       final authConfig = ref.read(AppScope.get().authOverlayConfig);
+      final overlayNotifier =
+          ref.read(AppScope.get().authOverlayConfig.notifier);
       switch (data) {
+        case AuthState.openSignUp:
+          overlayNotifier.newState = authConfig.copyWith(
+            openSignIn: false,
+          );
+          break;
+        case AuthState.openSignIn:
+          overlayNotifier.newState = authConfig.copyWith(
+            openSignIn: true,
+          );
+          break;
+        case AuthState.openRecover:
+          overlayNotifier.newState = authConfig.copyWith(
+            openRecovery: true,
+          );
+          break;
+        case AuthState.cancelVerification:
+          overlayNotifier.newState = authConfig.copyWith(
+            openVerify: false,
+          );
+          break;
+        case AuthState.loggedIn:
+          final context = ref.read(AppScope.get().navigatorKey).currentContext;
+          if (context != null) {
+            final l10n = context.l10n;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  l10n.loggedInSuccess(
+                    ref.read(AppScope.get().authRepo).user.value.email ?? '?',
+                  ),
+                ),
+              ),
+            );
+          }
+          _goHome(ref);
+          break;
         case AuthState.loggedOut:
           _goAuth(ref);
           break;
-        case AuthState.loggedIn:
-          _goHome(ref);
-          break;
         case AuthState.signedUp:
-          ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-              authConfig.copyWith(
-            showVerify: true,
+          overlayNotifier.newState = authConfig.copyWith(
+            openVerify: true,
           );
           break;
         case AuthState.verifiedSignUp:
-          ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-              authConfig.copyWith(
-            showPersonalInfo: true,
+          overlayNotifier.newState = authConfig.copyWith(
+            openPersonalInfo: true,
           );
           break;
         case AuthState.verifiedRecover:
-          ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-              authConfig.copyWith(
-            showChangePasswd: true,
+          overlayNotifier.newState = authConfig.copyWith(
+            openChangePasswd: true,
           );
           break;
         default:

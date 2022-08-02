@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quartet.dart';
 import '../../../../structs/quintet.dart';
+import '../../../../structs/sextet.dart';
 import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
@@ -60,6 +60,8 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    final state = ref.watch(AppScope.get().authController);
+
     return CardOverlay(
       title: l10n.signInTitle,
       description: l10n.signInDesc,
@@ -68,11 +70,12 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
         child: Column(
           children: [
             ...<
-                Quartet<IconData, String, TextEditingController,
+                Quintet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>>>[
-              Quartet(
+              Quintet(
                 Icons.mail,
                 l10n.email,
+                state is! AsyncLoading,
                 _loginController,
                 (_) => emailValidator(
                   value: _loginController.text,
@@ -84,17 +87,19 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
                 return SimpleTextField(
                   icon: e.first,
                   hint: e.second,
-                  controller: e.third,
-                  validator: e.fourth,
+                  enabled: e.third,
+                  controller: e.fourth,
+                  validator: e.fifth,
                 );
               },
             ),
             ...<
-                Quintet<IconData, String, TextEditingController,
+                Sextet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>, ValueNotifier<bool>>>[
-              Quintet(
+              Sextet(
                 Icons.https,
                 l10n.password,
+                state is! AsyncLoading,
                 _passController,
                 (_) => passwdValidator(
                   value: _passController.text,
@@ -104,14 +109,15 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
               ),
             ].map(
               (e) {
-                final notifier = e.fifth;
+                final notifier = e.sixth;
 
                 if (notifier != null) {
                   return SecureTextField(
                     icon: e.first,
                     hint: e.second,
-                    controller: e.third,
-                    validator: e.fourth,
+                    enabled: e.third,
+                    controller: e.fourth,
+                    validator: e.fifth,
                     obscure: notifier,
                   );
                 }
@@ -122,7 +128,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: _forgotPassword,
+                onPressed: state is! AsyncLoading ? _forgotPassword : null,
                 child: Text(
                   l10n.forgotPassword,
                   style: theme.textTheme.subtitle1?.copyWith(
@@ -142,7 +148,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
             style: theme.textTheme.bodyText1,
           ),
           TextButton(
-            onPressed: _openRegister,
+            onPressed: state is! AsyncLoading ? _openRegister : null,
             child: Text(
               l10n.createAccount,
             ),
@@ -154,7 +160,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
         builder: (context, value, child) {
           return SingleButton(
             text: l10n.moveNext,
-            onPressed: value ? _tryToLogIn : null,
+            onPressed: (value && state is! AsyncLoading) ? _tryToLogIn : null,
           );
         },
       ),
@@ -162,22 +168,17 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   }
 
   void _forgotPassword() {
-    final authConfig = ref.read(AppScope.get().authOverlayConfig);
-    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-        authConfig.copyWith(
-      showRecovery: true,
-    );
+    ref.read(AppScope.get().authController.notifier).openRecover();
   }
 
   void _openRegister() {
-    final authConfig = ref.read(AppScope.get().authOverlayConfig);
-    ref.read(AppScope.get().authOverlayConfig.notifier).newState =
-        authConfig.copyWith(
-      showSignIn: false,
-    );
+    ref.read(AppScope.get().authController.notifier).openSignUp();
   }
 
   void _tryToLogIn() {
-    ref.read(AppScope.get().loggerManager).log('log in');
+    ref.read(AppScope.get().authController.notifier).signIn(
+          _loginController.text,
+          _passController.text,
+        );
   }
 }

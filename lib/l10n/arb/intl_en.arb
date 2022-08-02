@@ -76,6 +76,14 @@
   },
   "lightTheme": "Light",
   "link": "Link",
+  "loggedInSuccess": "Logged in as {login}",
+  "@loggedInSuccess": {
+    "placeholders": {
+      "login": {
+        "type": "String"
+      }
+    }
+  },
   "loginAlreadyExists": "The login is taken",
   "logOut": "Log out",
   "logOutAskAgain": "😐\n\nAre you sure you want to ###log out### of your account?",
@@ -155,5 +163,5 @@
   "wednesday": "Wednesday",
   "wednesdayAbbr": "We",
   "wrongCode": "Неверный код",
-  "wrongLoginOrPasswd" : "Wrong login or password"
+  "wrongLoginOrPasswd": "Wrong login or password"
 }

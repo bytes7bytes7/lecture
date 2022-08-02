@@ -20,15 +20,19 @@ const videos = 'videos';
 const login = 'phone';
 const password = 'password';
 const token = 'token';
+const access = 'access';
+const refresh = 'refresh';
 const code = 'code';
 const detail = 'detail';
-const error = 'error';
 const verified = 'verified';
 
 const firstName = 'firstName';
 const middleName = 'middleName';
 const lastName = 'lastName';
 const avatar = 'avatar';
+
+const userAlreadyExists =  'user with this phone already exists.';
+const noAccount = 'No active account found with the given credentials';
 
 const idLength = 8;
 const unknownStr = '?';

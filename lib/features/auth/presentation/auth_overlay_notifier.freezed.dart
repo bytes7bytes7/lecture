@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthOverlayConfig {
-  bool get showVerify => throw _privateConstructorUsedError;
-  bool get showSignIn => throw _privateConstructorUsedError;
-  bool get showPersonalInfo => throw _privateConstructorUsedError;
-  bool get showRecovery => throw _privateConstructorUsedError;
-  bool get showChangePasswd => throw _privateConstructorUsedError;
+  bool get openVerify => throw _privateConstructorUsedError;
+  bool get openSignIn => throw _privateConstructorUsedError;
+  bool get openPersonalInfo => throw _privateConstructorUsedError;
+  bool get openRecovery => throw _privateConstructorUsedError;
+  bool get openChangePasswd => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthOverlayConfigCopyWith<AuthOverlayConfig> get copyWith =>
@@ -33,11 +33,11 @@ abstract class $AuthOverlayConfigCopyWith<$Res> {
           AuthOverlayConfig value, $Res Function(AuthOverlayConfig) then) =
       _$AuthOverlayConfigCopyWithImpl<$Res>;
   $Res call(
-      {bool showVerify,
-      bool showSignIn,
-      bool showPersonalInfo,
-      bool showRecovery,
-      bool showChangePasswd});
+      {bool openVerify,
+      bool openSignIn,
+      bool openPersonalInfo,
+      bool openRecovery,
+      bool openChangePasswd});
 }
 
 /// @nodoc
@@ -51,32 +51,32 @@ class _$AuthOverlayConfigCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? showVerify = freezed,
-    Object? showSignIn = freezed,
-    Object? showPersonalInfo = freezed,
-    Object? showRecovery = freezed,
-    Object? showChangePasswd = freezed,
+    Object? openVerify = freezed,
+    Object? openSignIn = freezed,
+    Object? openPersonalInfo = freezed,
+    Object? openRecovery = freezed,
+    Object? openChangePasswd = freezed,
   }) {
     return _then(_value.copyWith(
-      showVerify: showVerify == freezed
-          ? _value.showVerify
-          : showVerify // ignore: cast_nullable_to_non_nullable
+      openVerify: openVerify == freezed
+          ? _value.openVerify
+          : openVerify // ignore: cast_nullable_to_non_nullable
               as bool,
-      showSignIn: showSignIn == freezed
-          ? _value.showSignIn
-          : showSignIn // ignore: cast_nullable_to_non_nullable
+      openSignIn: openSignIn == freezed
+          ? _value.openSignIn
+          : openSignIn // ignore: cast_nullable_to_non_nullable
               as bool,
-      showPersonalInfo: showPersonalInfo == freezed
-          ? _value.showPersonalInfo
-          : showPersonalInfo // ignore: cast_nullable_to_non_nullable
+      openPersonalInfo: openPersonalInfo == freezed
+          ? _value.openPersonalInfo
+          : openPersonalInfo // ignore: cast_nullable_to_non_nullable
               as bool,
-      showRecovery: showRecovery == freezed
-          ? _value.showRecovery
-          : showRecovery // ignore: cast_nullable_to_non_nullable
+      openRecovery: openRecovery == freezed
+          ? _value.openRecovery
+          : openRecovery // ignore: cast_nullable_to_non_nullable
               as bool,
-      showChangePasswd: showChangePasswd == freezed
-          ? _value.showChangePasswd
-          : showChangePasswd // ignore: cast_nullable_to_non_nullable
+      openChangePasswd: openChangePasswd == freezed
+          ? _value.openChangePasswd
+          : openChangePasswd // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -90,11 +90,11 @@ abstract class _$$_AuthOverlayConfigCopyWith<$Res>
       __$$_AuthOverlayConfigCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool showVerify,
-      bool showSignIn,
-      bool showPersonalInfo,
-      bool showRecovery,
-      bool showChangePasswd});
+      {bool openVerify,
+      bool openSignIn,
+      bool openPersonalInfo,
+      bool openRecovery,
+      bool openChangePasswd});
 }
 
 /// @nodoc
@@ -110,32 +110,32 @@ class __$$_AuthOverlayConfigCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? showVerify = freezed,
-    Object? showSignIn = freezed,
-    Object? showPersonalInfo = freezed,
-    Object? showRecovery = freezed,
-    Object? showChangePasswd = freezed,
+    Object? openVerify = freezed,
+    Object? openSignIn = freezed,
+    Object? openPersonalInfo = freezed,
+    Object? openRecovery = freezed,
+    Object? openChangePasswd = freezed,
   }) {
     return _then(_$_AuthOverlayConfig(
-      showVerify: showVerify == freezed
-          ? _value.showVerify
-          : showVerify // ignore: cast_nullable_to_non_nullable
+      openVerify: openVerify == freezed
+          ? _value.openVerify
+          : openVerify // ignore: cast_nullable_to_non_nullable
               as bool,
-      showSignIn: showSignIn == freezed
-          ? _value.showSignIn
-          : showSignIn // ignore: cast_nullable_to_non_nullable
+      openSignIn: openSignIn == freezed
+          ? _value.openSignIn
+          : openSignIn // ignore: cast_nullable_to_non_nullable
               as bool,
-      showPersonalInfo: showPersonalInfo == freezed
-          ? _value.showPersonalInfo
-          : showPersonalInfo // ignore: cast_nullable_to_non_nullable
+      openPersonalInfo: openPersonalInfo == freezed
+          ? _value.openPersonalInfo
+          : openPersonalInfo // ignore: cast_nullable_to_non_nullable
               as bool,
-      showRecovery: showRecovery == freezed
-          ? _value.showRecovery
-          : showRecovery // ignore: cast_nullable_to_non_nullable
+      openRecovery: openRecovery == freezed
+          ? _value.openRecovery
+          : openRecovery // ignore: cast_nullable_to_non_nullable
               as bool,
-      showChangePasswd: showChangePasswd == freezed
-          ? _value.showChangePasswd
-          : showChangePasswd // ignore: cast_nullable_to_non_nullable
+      openChangePasswd: openChangePasswd == freezed
+          ? _value.openChangePasswd
+          : openChangePasswd // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -145,26 +145,26 @@ class __$$_AuthOverlayConfigCopyWithImpl<$Res>
 
 class _$_AuthOverlayConfig implements _AuthOverlayConfig {
   const _$_AuthOverlayConfig(
-      {required this.showVerify,
-      required this.showSignIn,
-      required this.showPersonalInfo,
-      required this.showRecovery,
-      required this.showChangePasswd});
+      {required this.openVerify,
+      required this.openSignIn,
+      required this.openPersonalInfo,
+      required this.openRecovery,
+      required this.openChangePasswd});
 
   @override
-  final bool showVerify;
+  final bool openVerify;
   @override
-  final bool showSignIn;
+  final bool openSignIn;
   @override
-  final bool showPersonalInfo;
+  final bool openPersonalInfo;
   @override
-  final bool showRecovery;
+  final bool openRecovery;
   @override
-  final bool showChangePasswd;
+  final bool openChangePasswd;
 
   @override
   String toString() {
-    return 'AuthOverlayConfig(showVerify: $showVerify, showSignIn: $showSignIn, showPersonalInfo: $showPersonalInfo, showRecovery: $showRecovery, showChangePasswd: $showChangePasswd)';
+    return 'AuthOverlayConfig(openVerify: $openVerify, openSignIn: $openSignIn, openPersonalInfo: $openPersonalInfo, openRecovery: $openRecovery, openChangePasswd: $openChangePasswd)';
   }
 
   @override
@@ -173,25 +173,25 @@ class _$_AuthOverlayConfig implements _AuthOverlayConfig {
         (other.runtimeType == runtimeType &&
             other is _$_AuthOverlayConfig &&
             const DeepCollectionEquality()
-                .equals(other.showVerify, showVerify) &&
+                .equals(other.openVerify, openVerify) &&
             const DeepCollectionEquality()
-                .equals(other.showSignIn, showSignIn) &&
+                .equals(other.openSignIn, openSignIn) &&
             const DeepCollectionEquality()
-                .equals(other.showPersonalInfo, showPersonalInfo) &&
+                .equals(other.openPersonalInfo, openPersonalInfo) &&
             const DeepCollectionEquality()
-                .equals(other.showRecovery, showRecovery) &&
+                .equals(other.openRecovery, openRecovery) &&
             const DeepCollectionEquality()
-                .equals(other.showChangePasswd, showChangePasswd));
+                .equals(other.openChangePasswd, openChangePasswd));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(showVerify),
-      const DeepCollectionEquality().hash(showSignIn),
-      const DeepCollectionEquality().hash(showPersonalInfo),
-      const DeepCollectionEquality().hash(showRecovery),
-      const DeepCollectionEquality().hash(showChangePasswd));
+      const DeepCollectionEquality().hash(openVerify),
+      const DeepCollectionEquality().hash(openSignIn),
+      const DeepCollectionEquality().hash(openPersonalInfo),
+      const DeepCollectionEquality().hash(openRecovery),
+      const DeepCollectionEquality().hash(openChangePasswd));
 
   @JsonKey(ignore: true)
   @override
@@ -202,22 +202,22 @@ class _$_AuthOverlayConfig implements _AuthOverlayConfig {
 
 abstract class _AuthOverlayConfig implements AuthOverlayConfig {
   const factory _AuthOverlayConfig(
-      {required final bool showVerify,
-      required final bool showSignIn,
-      required final bool showPersonalInfo,
-      required final bool showRecovery,
-      required final bool showChangePasswd}) = _$_AuthOverlayConfig;
+      {required final bool openVerify,
+      required final bool openSignIn,
+      required final bool openPersonalInfo,
+      required final bool openRecovery,
+      required final bool openChangePasswd}) = _$_AuthOverlayConfig;
 
   @override
-  bool get showVerify => throw _privateConstructorUsedError;
+  bool get openVerify => throw _privateConstructorUsedError;
   @override
-  bool get showSignIn => throw _privateConstructorUsedError;
+  bool get openSignIn => throw _privateConstructorUsedError;
   @override
-  bool get showPersonalInfo => throw _privateConstructorUsedError;
+  bool get openPersonalInfo => throw _privateConstructorUsedError;
   @override
-  bool get showRecovery => throw _privateConstructorUsedError;
+  bool get openRecovery => throw _privateConstructorUsedError;
   @override
-  bool get showChangePasswd => throw _privateConstructorUsedError;
+  bool get openChangePasswd => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AuthOverlayConfigCopyWith<_$_AuthOverlayConfig> get copyWith =>

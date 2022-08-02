@@ -59,8 +59,11 @@ class User with _$User {
     final middleName = dev.randomInt(2) == 1
         ? dev.randomString(dev.randomInt(5) + 7, noSpace: true)
         : null;
-    final email =
-        '${dev.randomString(dev.randomInt(5) + 7, noSpace: true)}@mail.ru';
+    final email = '${dev.randomString(
+      dev.randomInt(5) + 7,
+      noSpace: true,
+      useEn: true,
+    )}@mail.ru';
     final token = dev.randomString(
       64,
       noSpace: true,

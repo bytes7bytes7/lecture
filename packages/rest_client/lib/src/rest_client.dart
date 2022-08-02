@@ -19,7 +19,7 @@ abstract class RestClient {
     "last_name": "string"
   }
  */
-  Future<Map<String, String>> signUp({
+  Future<Map<String, String?>> signUp({
     required String login,
     required String password,
   });
@@ -32,7 +32,7 @@ abstract class RestClient {
     required String? middleName,
   });
 
-  Future<String> signIn({required String login, required String password});
+  Future<Map<String, String?>> signIn({required String login, required String password});
 
   Future<void> recoverPasswd(String login);
 

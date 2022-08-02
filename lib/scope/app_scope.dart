@@ -4,14 +4,6 @@ export 'src/export.dart';
 
 /// Storage for all app's providers.
 class AppScope with AppProviders {
-  factory AppScope() {
-    if (_inst != null) {
-      throw Exception('AppScope is already created');
-    }
-
-    return _inst = AppScope._();
-  }
-
   AppScope._();
 
   static AppScope? _inst;
@@ -22,6 +14,6 @@ class AppScope with AppProviders {
       return inst;
     }
 
-    throw Exception('AppScope is not created');
+    return _inst = AppScope._();
   }
 }

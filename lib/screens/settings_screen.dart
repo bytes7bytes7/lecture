@@ -10,7 +10,6 @@ import '../structs/quartet.dart';
 import '../widgets/widgets.dart';
 
 const _bodyPadding = EdgeInsets.symmetric(vertical: 15.0);
-const _bookmarks = 7;
 const _my = 3;
 
 class SettingsScreen extends ConsumerWidget {
@@ -80,7 +79,8 @@ class SettingsScreen extends ConsumerWidget {
                         l10n.bookmarks,
                         () => _openBookmarks(context),
                         [
-                          const Badge(value: '$_bookmarks'),
+                          if (user.bookmarks?.isNotEmpty == true)
+                            Badge(value: '${user.bookmarks?.length}'),
                         ],
                       ),
                       Quartet(

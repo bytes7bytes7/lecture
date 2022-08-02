@@ -13,7 +13,7 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.signUp)
-  Future<Map<String, String>> signUp({
+  Future<Map<String, String?>> signUp({
     @Query(const_api.login) required String login,
     @Query(const_api.password) required String password,
   });
@@ -34,7 +34,7 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.signIn)
-  Future<String> signIn({
+  Future<Map<String, String?>> signIn({
     @Query(const_api.login) required String login,
     @Query(const_api.password) required String password,
   });

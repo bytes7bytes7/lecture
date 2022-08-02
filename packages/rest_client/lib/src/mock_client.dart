@@ -8,7 +8,7 @@ const _tokenLen = 32;
 
 class MockClient implements RestClient {
   @override
-  Future<Map<String, String>> signUp({
+  Future<Map<String, String?>> signUp({
     required String login,
     required String password,
   }) async {
@@ -19,15 +19,28 @@ class MockClient implements RestClient {
           case 0:
             return {
               const_api.login: login,
-              const_api.password: password,
+              const_api.firstName: dev.randomString(
+                dev.randomInt(10),
+                noSpace: true,
+              ),
+              const_api.lastName: dev.randomString(
+                dev.randomInt(10),
+                noSpace: true,
+              ),
+              const_api.middleName: dev.randomBool()
+                  ? dev.randomString(
+                      dev.randomInt(10),
+                      noSpace: true,
+                    )
+                  : null,
             };
           case 1:
             return {
-              const_api.error: 'The phone number entered is not valid.',
+              const_api.detail: 'The phone number entered is not valid.',
             };
           case 2:
             return {
-              const_api.error: 'user with this phone already exists.',
+              const_api.detail: 'user with this phone already exists.',
             };
           default:
             throw Exception('Mock exception');
@@ -77,20 +90,38 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<String> signIn({
+  Future<Map<String, String>> signIn({
     required String login,
     required String password,
   }) async {
     return Future.delayed(
       _dur,
-      () => dev.randomBool()
-          ? dev.randomString(
-              _tokenLen,
-              noSpace: true,
-              useEn: true,
-              useNum: true,
-            )
-          : '',
+      () {
+        switch (dev.randomInt(3)) {
+          case 0:
+            return {
+              const_api.refresh: dev.randomString(
+                _tokenLen,
+                noSpace: true,
+                useEn: true,
+                useNum: true,
+              ),
+              const_api.access: dev.randomString(
+                _tokenLen,
+                noSpace: true,
+                useEn: true,
+                useNum: true,
+              ),
+            };
+          case 1:
+            return {
+              const_api.detail:
+                  'No active account found with the given credentials',
+            };
+          default:
+            throw Exception('Mock exception');
+        }
+      },
     );
   }
 

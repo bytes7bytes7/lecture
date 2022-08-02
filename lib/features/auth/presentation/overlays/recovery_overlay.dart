@@ -104,7 +104,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
     final authConfig = ref.read(AppScope.get().authOverlayConfig);
     ref.read(AppScope.get().authOverlayConfig.notifier).newState =
         authConfig.copyWith(
-      showVerify: true,
+      openVerify: true,
     );
   }
 
@@ -114,7 +114,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
     final authConfig = ref.read(AppScope.get().authOverlayConfig);
     ref.read(AppScope.get().authOverlayConfig.notifier).newState =
         authConfig.copyWith(
-      showRecovery: true,
+      openRecovery: true,
     );
   }
 }

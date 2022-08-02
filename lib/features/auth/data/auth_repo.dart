@@ -2,12 +2,15 @@ import 'package:rest_client/rest_client.dart';
 import 'package:rxdart/rxdart.dart';
 
 enum AuthState {
+  cancelVerification,
+  loggedIn,
   loggedOut,
+  openSignUp,
+  openSignIn,
+  openRecover,
   signedUp,
   verifiedSignUp,
   verifiedRecover,
-  loggedIn,
-  recover,
 }
 
 abstract class AuthRepo {
@@ -26,6 +29,8 @@ abstract class AuthRepo {
     required String lastName,
     required String? middleName,
   });
+
+  Future<AuthState> signIn(String login, String password);
 
   Future<AuthState> logOut();
 }
