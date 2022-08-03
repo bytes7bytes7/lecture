@@ -119,7 +119,7 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
         valueListenable: _areFieldsValid,
         builder: (context, value, child) {
           return SingleButton(
-            text: l10n.moveNext,
+            text: l10n.moveNextBtn,
             onPressed:
                 (value && state is! AsyncLoading) ? _changePassword : null,
           );

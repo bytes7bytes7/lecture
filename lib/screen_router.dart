@@ -57,7 +57,16 @@ class ScreenRouter {
 
         return navigate(const RouteSettings(name: ''));
       case const_routes.meta:
-        return _left(const LectureMetaScreen());
+        final lecture = args[const_api.lecture];
+        if (lecture is Lecture?) {
+          return _left(
+            LectureMetaScreen(
+              lecture: lecture,
+            ),
+          );
+        }
+
+        return navigate(const RouteSettings(name: ''));
       case const_routes.myLectures:
         return _left(const MyLecturesScreen());
       case const_routes.settings:

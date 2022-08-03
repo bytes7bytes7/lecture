@@ -34,9 +34,9 @@ class VerifyOverlay extends ConsumerWidget {
         ),
       ),
       footer: DoubleButton(
-        secondary: l10n.cancel,
+        secondary: l10n.cancelBtn,
         secondaryOnPressed: state is! AsyncLoading ? () => _cancel(ref) : null,
-        primary: l10n.moveNext,
+        primary: l10n.moveNextBtn,
         primaryOnPressed: state is! AsyncLoading ? () => _next(ref) : null,
       ),
     );

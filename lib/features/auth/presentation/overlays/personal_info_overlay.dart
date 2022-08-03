@@ -114,7 +114,7 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
         valueListenable: _areFieldsValid,
         builder: (context, value, child) {
           return SingleButton(
-            text: l10n.moveNext,
+            text: l10n.moveNextBtn,
             onPressed: (value && state is! AsyncLoading) ? _next : null,
           );
         },

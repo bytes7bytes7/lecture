@@ -1,3 +1,4 @@
+export 'calendar.dart';
 export 'copy_text.dart';
 export 'default_app_bar.dart';
 export 'double_button.dart';
@@ -8,4 +9,5 @@ export 'pin_text_field.dart';
 export 'secure_text_field.dart';
 export 'simple_text_field.dart';
 export 'single_button.dart';
+export 'sized_icon.dart';
 export 'sized_icon_button.dart';

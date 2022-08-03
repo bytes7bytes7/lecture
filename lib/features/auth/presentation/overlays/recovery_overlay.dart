@@ -92,10 +92,10 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
         valueListenable: _areFieldsValid,
         builder: (context, value, child) {
           return DoubleButton(
-            primary: l10n.moveNext,
+            primary: l10n.moveNextBtn,
             primaryOnPressed:
                 (value && state is! AsyncLoading) ? _tryToRecover : null,
-            secondary: l10n.cancel,
+            secondary: l10n.cancelBtn,
             secondaryOnPressed: state is! AsyncLoading ? _backToSignIn : null,
           );
         },

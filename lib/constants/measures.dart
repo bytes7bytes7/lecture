@@ -6,7 +6,6 @@ const appBarHeight = 56.0;
 const badgeMargin = 2.0;
 const badgeOffset = Offset(0, 4);
 const bigIconSize = 36.0;
-const bottomOverlayHeight = 250.0;
 const buttonBorderRadius = 30.0;
 const buttonHeight = 56.0;
 const cardHeight = 160.0;

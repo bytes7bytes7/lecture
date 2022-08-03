@@ -37,7 +37,7 @@ class SettingsScreen extends ConsumerWidget {
           showBottomOverlay(
             context: context,
             text: l10n.logOutAskAgain,
-            secondary: l10n.cancel,
+            secondary: l10n.cancelBtn,
             secondaryOnPressed: () {
               Navigator.pop(context);
             },

@@ -4,7 +4,11 @@ import '../../../constants/measures.dart' as const_measures;
 import 'widgets/widgets.dart';
 
 const _textPadding = EdgeInsets.symmetric(
-  horizontal: 2 * const_measures.mainHorMargin,
+  horizontal: const_measures.mainHorMargin,
+  vertical: 2 * const_measures.mainVerMargin,
+);
+const _btnPadding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
 );
 
 void showBottomOverlay({
@@ -20,38 +24,41 @@ void showBottomOverlay({
   showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
+    isScrollControlled: true,
     builder: (BuildContext context) {
-      // TODO: find way to dynamically change size
-      return Container(
-        height: const_measures.bottomOverlayHeight,
-        decoration: BoxDecoration(
-          color: theme.scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(const_measures.overlayBorderRadius),
-            topRight: Radius.circular(const_measures.overlayBorderRadius),
-          ),
-        ),
-        child: Center(
-          child: Column(
-            children: [
-              const DragContainer(),
-              Expanded(
-                child: Padding(
+      return Wrap(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: theme.scaffoldBackgroundColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(const_measures.overlayBorderRadius),
+                topRight: Radius.circular(const_measures.overlayBorderRadius),
+              ),
+            ),
+            child: Column(
+              children: [
+                const DragContainer(),
+                Container(
+                  alignment: Alignment.center,
                   padding: _textPadding,
                   child: HighlightedTextSpan(
                     text: text,
                   ),
                 ),
-              ),
-              DoubleButton(
-                secondary: secondary,
-                secondaryOnPressed: secondaryOnPressed,
-                primary: primary,
-                primaryOnPressed: primaryOnPressed,
-              ),
-            ],
+                Padding(
+                  padding: _btnPadding,
+                  child: DoubleButton(
+                    secondary: secondary,
+                    secondaryOnPressed: secondaryOnPressed,
+                    primary: primary,
+                    primaryOnPressed: primaryOnPressed,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       );
     },
   );

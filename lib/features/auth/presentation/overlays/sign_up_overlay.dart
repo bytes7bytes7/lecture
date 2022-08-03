@@ -164,7 +164,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
         valueListenable: _areFieldsValid,
         builder: (context, value, child) {
           return SingleButton(
-            text: l10n.moveNext,
+            text: l10n.moveNextBtn,
             onPressed:
                 (value && state is! AsyncLoading) ? _tryToRegister : null,
           );

@@ -5,8 +5,7 @@ import '../constants/measures.dart' as const_measures;
 import '../overlays/show_select_overlay.dart';
 
 const _margin = EdgeInsets.symmetric(
-  horizontal: const_measures.mainHorMargin,
-  vertical: 12.0,
+  vertical: const_measures.mainVerMargin,
 );
 const _padding = EdgeInsets.symmetric(
   horizontal: 20.0,
