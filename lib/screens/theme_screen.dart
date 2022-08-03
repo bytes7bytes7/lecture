@@ -8,11 +8,9 @@ import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/line_button.dart';
 
-const _padding = EdgeInsets.fromLTRB(
-  const_measures.mainHorMargin,
-  15.0,
-  const_measures.mainHorMargin,
-  20.0,
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+  vertical: const_measures.mainVerMargin,
 );
 
 class ThemeScreen extends StatelessWidget {

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../widgets/widgets.dart';
 
-const _authorPadding = EdgeInsets.symmetric(vertical: 15);
+const _authorPadding = EdgeInsets.symmetric(
+  vertical: const_measures.mainVerMargin,
+);
 const _amount = 8;
 
 class AuthorScreen extends StatelessWidget {
@@ -39,27 +42,27 @@ class AuthorScreen extends StatelessWidget {
           physics: const AlwaysBouncingScrollPhysics(),
           itemCount: _amount + 1,
           itemBuilder: (context, index) {
-            if (index != 0) {
-              return LectureCard(
-                lecture: Lecture.random(),
+            if (index == 0) {
+              return Padding(
+                padding: _authorPadding,
+                child: Column(
+                  children: [
+                    UserHeader(
+                      user: author,
+                    ),
+                    Text(
+                      l10n.amountOfLectures(_amount),
+                      style: theme.textTheme.bodyText1
+                          ?.copyWith(color: theme.hintColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               );
             }
 
-            return Padding(
-              padding: _authorPadding,
-              child: Column(
-                children: [
-                  UserHeader(
-                    user: author,
-                  ),
-                  Text(
-                    l10n.amountOfLectures(_amount),
-                    style: theme.textTheme.bodyText1
-                        ?.copyWith(color: theme.hintColor),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+            return LectureCard(
+              lecture: Lecture.random(),
             );
           },
         ),

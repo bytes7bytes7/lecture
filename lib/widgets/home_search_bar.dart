@@ -9,7 +9,7 @@ import '../overlays/show_filter_overlay.dart';
 const _height = 56.0;
 const _margin = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
-  vertical: 15.0,
+  vertical: const_measures.mainVerMargin,
 );
 const _borderRadius = 20.0;
 const _buttonBorderRadius = 18.0;

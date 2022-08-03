@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../widgets/lecture_card.dart';
+
+const _padding = EdgeInsets.only(
+  top: const_measures.mainVerMargin,
+);
 
 class BookmarkScreen extends StatelessWidget {
   const BookmarkScreen({
@@ -25,14 +30,17 @@ class BookmarkScreen extends StatelessWidget {
         title: l10n.bookmarks,
       ),
       body: Center(
-        child: ListView.builder(
-          physics: const AlwaysBouncingScrollPhysics(),
-          itemCount: 7,
-          itemBuilder: (context, index) {
-            return LectureCard(
-              lecture: Lecture.random(),
-            );
-          },
+        child: Padding(
+          padding: _padding,
+          child: ListView.builder(
+            physics: const AlwaysBouncingScrollPhysics(),
+            itemCount: 7,
+            itemBuilder: (context, index) {
+              return LectureCard(
+                lecture: Lecture.random(),
+              );
+            },
+          ),
         ),
       ),
     );

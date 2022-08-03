@@ -1,4 +1,6 @@
 {
+  "abortEditAskAgain": "Are you sure you want to ###abort### lecture creation? Unsaved data will be ###lost###!",
+  "abortBtn": "Abort",
   "aboutAppTitle": "About the app",
   "accountTitle": "Account",
   "addABookmark": "Add a bookmark",
@@ -55,8 +57,6 @@
   "goBack": "Back",
   "goToAuthor": "Go to the author",
   "institution": "Institution",
-  "interruptNewLecture": "Abort",
-  "interruptNewLectureAskAgain": "Are you sure you want to ###abort### lecture creation? Unsaved data will be ###lost###!",
   "invalid": "Invalid",
   "january": "January",
   "januaryAbbr": "Jan",
@@ -142,6 +142,7 @@
   "textCopied": "Copied",
   "thursday": "Thursday",
   "thursdayAbbr": "Th",
+  "tooltipAbortEdit": "Abort",
   "tooltipAdditional": "More",
   "tooltipBack": "Back",
   "tooltipChoose": "Choose",

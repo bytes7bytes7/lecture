@@ -1,4 +1,6 @@
 {
+  "abortEditAskAgain": "Вы действительно хотите ###прервать### создание лекции? Несохраненные данные будут ###утеряны###!",
+  "abortBtn": "Прервать",
   "aboutAppTitle": "О приложении",
   "accountTitle": "Аккаунт",
   "addABookmark": "В закладки",
@@ -55,8 +57,6 @@
   "goBack": "Назад",
   "goToAuthor": "К автору",
   "institution": "Учреждение",
-  "interruptNewLecture": "Прервать",
-  "interruptNewLectureAskAgain": "Вы действительно хотите ###прервать### создание лекции? Несохраненные данные будут ###утеряны###!",
   "invalid": "Недопустимо",
   "january": "Январь",
   "januaryAbbr": "Янв",
@@ -142,6 +142,7 @@
   "textCopied": "Скопировано",
   "thursday": "Четверг",
   "thursdayAbbr": "Чт",
+  "tooltipAbortEdit": "Прервать",
   "tooltipAdditional": "Дополнительно",
   "tooltipBack": "Назад",
   "tooltipChoose": "Выбрать",

@@ -36,6 +36,7 @@ class SettingsScreen extends ConsumerWidget {
         suffixOnPressed: () {
           showBottomOverlay(
             context: context,
+            text: l10n.logOutAskAgain,
             secondary: l10n.cancel,
             secondaryOnPressed: () {
               Navigator.pop(context);
@@ -45,7 +46,6 @@ class SettingsScreen extends ConsumerWidget {
               // TODO: call logOut
               ref.read(AppScope.get().loggerManager).log('log out');
             },
-            text: l10n.logOutAskAgain,
           );
         },
       ),

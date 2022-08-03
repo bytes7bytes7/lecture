@@ -8,7 +8,7 @@ import '../../../common/common.dart';
 
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
-  vertical: 15.0,
+  vertical: const_measures.mainVerMargin,
 );
 const _separator = SizedBox(height: 25);
 const _topicContentPadding = EdgeInsets.all(10);

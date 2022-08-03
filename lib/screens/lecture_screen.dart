@@ -19,7 +19,7 @@ const _menuTopOffset = 100.0;
 const _menuBottomOffset = 0.0;
 const _contentPadding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
-  vertical: 15.0,
+  vertical: const_measures.mainVerMargin,
 );
 const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
