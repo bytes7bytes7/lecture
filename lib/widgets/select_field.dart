@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../overlays/show_select_overlay.dart';
+import '../features/common/presentation/select_overlay.dart';
 
 const _margin = EdgeInsets.symmetric(
   vertical: const_measures.mainVerMargin,

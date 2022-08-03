@@ -13,10 +13,10 @@ final ThemeData lightTheme = ThemeData(
     secondary: _Colors.mountainMeadow,
   ),
   textTheme: _lightTextTheme,
-  splashColor: _Colors.mountainMeadow.withOpacity(
-    const_measures.tinyOpacity,
+  splashColor: _Colors.gallery.withOpacity(
+    const_measures.midOpacity,
   ),
-  highlightColor: _Colors.mountainMeadow.withOpacity(
+  highlightColor: _Colors.gallery.withOpacity(
     const_measures.smallOpacity,
   ),
   iconTheme: const IconThemeData(

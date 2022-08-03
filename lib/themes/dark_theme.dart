@@ -14,10 +14,10 @@ final ThemeData darkTheme = ThemeData(
     secondary: _Colors.mountainMeadow,
   ),
   textTheme: _darkTextTheme,
-  splashColor: _Colors.mountainMeadow.withOpacity(
-    const_measures.tinyOpacity,
+  splashColor: _Colors.silverChalice.withOpacity(
+    const_measures.midOpacity,
   ),
-  highlightColor: _Colors.mountainMeadow.withOpacity(
+  highlightColor: _Colors.silverChalice.withOpacity(
     const_measures.smallOpacity,
   ),
   iconTheme: const IconThemeData(

@@ -73,19 +73,19 @@ class LectureMetaScreen extends ConsumerWidget {
                 value: '',
                 onChanged: (value) {},
                 hint: l10n.institution,
-                items: const [],
+                items: const ['1', '2'],
               ),
               SelectField(
                 value: '',
                 onChanged: (value) {},
                 hint: l10n.subject,
-                items: const [],
+                items: const ['1', '2'],
               ),
               SelectField(
                 value: '',
                 onChanged: (value) {},
                 hint: l10n.fullNameOfLecturer,
-                items: const [],
+                items: const ['1', '2'],
               ),
               _separator,
               DoubleButton(

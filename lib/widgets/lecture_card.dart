@@ -42,7 +42,7 @@ class LectureCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: theme.shadowColor.withOpacity(const_measures.smallOpacity),
-            offset: const_measures.badgeOffset,
+            offset: const_measures.shadowOffset,
             blurRadius: _blurRadius,
           ),
         ],
