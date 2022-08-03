@@ -5,7 +5,6 @@ import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
-import '../widgets/widgets.dart';
 
 const _heightFactor = 0.9;
 const _itemMargin = EdgeInsets.symmetric(
@@ -14,6 +13,9 @@ const _itemMargin = EdgeInsets.symmetric(
 );
 const _offset = Offset(0, 4);
 const _blurRadius = 8.0;
+const _padding = EdgeInsets.symmetric(
+  horizontal: const_measures.mainHorMargin,
+);
 const _textPadding = EdgeInsets.symmetric(
   horizontal: 20.0,
   vertical: 15.0,
@@ -45,7 +47,8 @@ void showSelectOverlay({
             topRight: Radius.circular(const_measures.overlayBorderRadius),
           ),
         ),
-        child: Center(
+        child: Padding(
+          padding: _padding,
           child: Column(
             children: [
               const DragContainer(),

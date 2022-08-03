@@ -98,7 +98,7 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
               ),
             ].map(
               (e) {
-                return SimpleTextField(
+                return DefaultTextField(
                   icon: e.first,
                   hint: e.second,
                   enabled: e.third,

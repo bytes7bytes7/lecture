@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 const _margin = EdgeInsets.symmetric(vertical: 8);
 
-class SimpleTextField extends StatelessWidget {
-  const SimpleTextField({
+class DefaultTextField extends StatelessWidget {
+  const DefaultTextField({
     super.key,
     this.icon,
     this.hint,

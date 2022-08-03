@@ -75,7 +75,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
               ),
             ].map(
               (e) {
-                return SimpleTextField(
+                return DefaultTextField(
                   icon: e.first,
                   hint: e.second,
                   enabled: e.third,

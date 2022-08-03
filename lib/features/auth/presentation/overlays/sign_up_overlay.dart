@@ -88,7 +88,7 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
               ),
             ].map(
               (e) {
-                return SimpleTextField(
+                return DefaultTextField(
                   icon: e.first,
                   hint: e.second,
                   enabled: e.third,

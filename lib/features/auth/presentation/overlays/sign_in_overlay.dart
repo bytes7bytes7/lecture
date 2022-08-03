@@ -82,7 +82,7 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
               ),
             ].map(
               (e) {
-                return SimpleTextField(
+                return DefaultTextField(
                   icon: e.first,
                   hint: e.second,
                   enabled: e.third,

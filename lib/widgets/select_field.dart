@@ -8,8 +8,8 @@ const _margin = EdgeInsets.symmetric(
   vertical: const_measures.mainVerMargin,
 );
 const _padding = EdgeInsets.symmetric(
-  horizontal: 20.0,
-  vertical: 10.0,
+  horizontal: const_measures.midPadding,
+  vertical: const_measures.smallPadding,
 );
 
 class SelectField extends ConsumerWidget {

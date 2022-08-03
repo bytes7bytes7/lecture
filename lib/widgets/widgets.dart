@@ -6,7 +6,6 @@ export 'lecture_header.dart';
 export 'line_button.dart';
 export 'rating_badge.dart';
 export 'rating_stars.dart';
-export 'search_bar.dart';
 export 'section_title.dart';
 export 'select_date_field.dart';
 export 'select_field.dart';
