@@ -62,7 +62,7 @@ final ThemeData lightTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _lightTextTheme.subtitle2?.copyWith(
+        _lightTextTheme.subtitle1?.copyWith(
           decoration: TextDecoration.underline,
         ),
       ),

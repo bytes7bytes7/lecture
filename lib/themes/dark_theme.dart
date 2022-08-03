@@ -63,7 +63,7 @@ final ThemeData darkTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _darkTextTheme.subtitle2?.copyWith(
+        _darkTextTheme.subtitle1?.copyWith(
           decoration: TextDecoration.underline,
         ),
       ),

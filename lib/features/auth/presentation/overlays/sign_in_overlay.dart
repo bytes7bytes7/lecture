@@ -131,9 +131,6 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
                 onPressed: state is! AsyncLoading ? _forgotPassword : null,
                 child: Text(
                   l10n.forgotPassword,
-                  style: theme.textTheme.subtitle1?.copyWith(
-                    decoration: TextDecoration.underline,
-                  ),
                 ),
               ),
             ),
