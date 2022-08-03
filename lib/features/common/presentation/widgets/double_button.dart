@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
 const _margin = EdgeInsets.only(bottom: 20.0);
 const _primaryFlex = 5;

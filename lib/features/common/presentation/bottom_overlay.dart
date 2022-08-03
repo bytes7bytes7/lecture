@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
-import '../widgets/double_button.dart';
-import '../widgets/drag_container.dart';
+import '../../../constants/measures.dart' as const_measures;
+import 'widgets/widgets.dart';
 
 const _textPadding = EdgeInsets.symmetric(
   horizontal: 2 * const_measures.mainHorMargin,
@@ -10,7 +9,7 @@ const _textPadding = EdgeInsets.symmetric(
 
 void showBottomOverlay({
   required BuildContext context,
-  required Widget body,
+  required String text,
   required String primary,
   required VoidCallback primaryOnPressed,
   required String secondary,
@@ -39,7 +38,9 @@ void showBottomOverlay({
               Expanded(
                 child: Padding(
                   padding: _textPadding,
-                  child: body,
+                  child: HighlightedTextSpan(
+                    text: text,
+                  ),
                 ),
               ),
               DoubleButton(

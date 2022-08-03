@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
-import 'single_button.dart';
 
 class ErrorLabel extends StatelessWidget {
   const ErrorLabel({

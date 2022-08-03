@@ -5,6 +5,7 @@ import 'package:rest_client/rest_client.dart';
 import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
 import '../custom/always_bouncing_scroll_physics.dart';
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
@@ -137,7 +138,7 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(const_routes.editor);
+            Navigator.of(context).pushNamed(const_routes.meta);
           },
         ),
       ),

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quintet.dart';
-import '../../../../widgets/widgets.dart';
+import '../../../common/common.dart';
 import 'card_overlay.dart';
 
 class PersonalInfoOverlay extends ConsumerStatefulWidget {

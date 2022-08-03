@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
-import '../l10n/l10n.dart';
+import '../../../../constants/measures.dart' as const_measures;
+import '../../../../l10n/l10n.dart';
 import 'sized_icon_button.dart';
 
 const _margin = EdgeInsets.symmetric(vertical: 8);

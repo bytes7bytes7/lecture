@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
 const _splashRadius = 22.0;
 const _showDuration = Duration(seconds: 2);

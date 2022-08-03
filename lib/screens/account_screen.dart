@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
-import '../widgets/default_app_bar.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({

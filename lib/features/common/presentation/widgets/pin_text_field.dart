@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
 const _cellWidth = 50.0;
 const _cellHeight = 76.0;

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
-import '../widgets/default_app_bar.dart';
 import '../widgets/line_button.dart';
 
 const _padding = EdgeInsets.fromLTRB(

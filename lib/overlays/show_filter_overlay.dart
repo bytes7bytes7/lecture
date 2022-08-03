@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
@@ -61,7 +62,7 @@ void showFilterOverlay({
                   value: ref.watch(
                     AppScope.get().filter.select((value) => value.lecturer),
                   ),
-                  hint: l10n.lecturer,
+                  hint: l10n.fullNameOfLecturer,
                   items: const ['1', '2'],
                   onChanged: (String value) {
                     ref.read(AppScope.get().filter.notifier).lecturer = value;

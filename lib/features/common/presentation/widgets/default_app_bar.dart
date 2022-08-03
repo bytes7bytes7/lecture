@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 import 'copy_text.dart';
 import 'sized_icon_button.dart';
 

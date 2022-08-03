@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../overlays/show_filter_overlay.dart';
-import 'sized_icon_button.dart';
 
 const _height = 56.0;
 const _margin = EdgeInsets.symmetric(

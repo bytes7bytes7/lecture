@@ -4,7 +4,7 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../structs/trio.dart';
+import '../features/common/common.dart';
 import 'rating_badge.dart';
 
 const _margin = EdgeInsets.symmetric(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
-import '../structs/trio.dart';
 import 'rating_badge.dart';
 
 const _labelPadding = EdgeInsets.symmetric(vertical: 3);

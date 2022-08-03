@@ -3,10 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../constants/routes.dart' as const_routes;
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
-import '../overlays/show_bottom_overlay.dart';
 import '../scope/app_scope.dart';
-import '../structs/quartet.dart';
 import '../widgets/widgets.dart';
 
 const _bodyPadding = EdgeInsets.symmetric(vertical: 15.0);
@@ -46,9 +45,7 @@ class SettingsScreen extends ConsumerWidget {
               // TODO: call logOut
               ref.read(AppScope.get().loggerManager).log('log out');
             },
-            body: HighlightedTextSpan(
-              src: l10n.logOutAskAgain,
-            ),
+            text: l10n.logOutAskAgain,
           );
         },
       ),

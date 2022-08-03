@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
-import '../constants/measures.dart' as const_measures;
-import '../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
-import '../l10n/l10n.dart';
-import '../widgets/default_app_bar.dart';
+import '../../../../constants/measures.dart' as const_measures;
+import '../../../../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../common/common.dart';
 
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
@@ -64,7 +64,7 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
           prefixOnPressed: () {
             Navigator.pop(context);
           },
-          title: l10n.newLecture,
+          title: l10n.editor,
           suffix: Icons.more_vert,
           suffixTooltip: l10n.tooltipAdditional,
           suffixOnPressed: () {},

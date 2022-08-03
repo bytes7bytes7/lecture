@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app.dart' as const_app;
+import '../../../../constants/app.dart' as const_app;
 
 class HighlightedTextSpan extends StatelessWidget {
   const HighlightedTextSpan({
     super.key,
-    required this.src,
+    required this.text,
   });
 
-  final String src;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,12 @@ class HighlightedTextSpan extends StatelessWidget {
       color: theme.errorColor,
     );
 
-    var splitIndex = src.indexOf(const_app.highlightPattern);
+    var splitIndex = text.indexOf(const_app.highlightPattern);
     var style = defaultStyle;
 
     final lst = <TextSpan>[];
     final buffer = StringBuffer();
-    for (var i = 0; i < src.length; i++) {
+    for (var i = 0; i < text.length; i++) {
       if (i == splitIndex) {
         lst.add(
           TextSpan(
@@ -33,10 +33,10 @@ class HighlightedTextSpan extends StatelessWidget {
         );
         buffer.clear();
         style = style == defaultStyle ? highlightStyle : defaultStyle;
-        splitIndex = src.indexOf(const_app.highlightPattern, i + 1);
+        splitIndex = text.indexOf(const_app.highlightPattern, i + 1);
         i += const_app.highlightPattern.length - 1;
       } else {
-        buffer.write(src[i]);
+        buffer.write(text[i]);
       }
     }
 

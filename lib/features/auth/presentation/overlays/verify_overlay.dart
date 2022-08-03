@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../widgets/widgets.dart';
+import '../../../common/common.dart';
 import 'card_overlay.dart';
 
 const _pinMargin = EdgeInsets.symmetric(

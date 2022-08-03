@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
+import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
-import '../widgets/drag_container.dart';
-import '../widgets/search_bar.dart';
+import '../widgets/widgets.dart';
 
 const _heightFactor = 0.9;
 const _itemMargin = EdgeInsets.symmetric(

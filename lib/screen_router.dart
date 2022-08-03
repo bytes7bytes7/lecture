@@ -3,7 +3,7 @@ import 'package:rest_client/constants.dart' as const_api;
 import 'package:rest_client/rest_client.dart';
 
 import 'constants/routes.dart' as const_routes;
-import 'features/auth/auth.dart';
+import 'features/features.dart';
 import 'screens/screens.dart';
 
 part 'custom_route_builder.dart';
@@ -41,10 +41,10 @@ class ScreenRouter {
         return navigate(const RouteSettings(name: ''));
       case const_routes.bookmark:
         return _left(const BookmarkScreen());
-      case const_routes.home:
-        return _up(const HomeScreen());
       case const_routes.editor:
         return _left(const LectureEditorScreen());
+      case const_routes.home:
+        return _up(const HomeScreen());
       case const_routes.lecture:
         final lecture = args[const_api.lecture];
         if (lecture is Lecture) {
@@ -56,6 +56,8 @@ class ScreenRouter {
         }
 
         return navigate(const RouteSettings(name: ''));
+      case const_routes.meta:
+        return _left(const LectureMetaScreen());
       case const_routes.myLectures:
         return _left(const MyLecturesScreen());
       case const_routes.settings:
