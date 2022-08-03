@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quintet.dart';
 import '../../../../structs/sextet.dart';
 import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
@@ -76,12 +75,13 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
         child: Column(
           children: [
             ...<
-                Quintet<IconData, String, bool, TextEditingController,
-                    FormFieldValidator<String>>>[
-              Quintet(
+                Sextet<IconData, String, bool, TextInputType,
+                    TextEditingController, FormFieldValidator<String>>>[
+              Sextet(
                 Icons.mail,
                 l10n.email,
                 state is! AsyncLoading,
+                TextInputType.emailAddress,
                 _loginController,
                 (_) => emailValidator(
                   value: _loginController.text,
@@ -94,8 +94,9 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                   icon: e.first,
                   hint: e.second,
                   enabled: e.third,
-                  controller: e.fourth,
-                  validator: e.fifth,
+                  inputType: e.fourth,
+                  controller: e.fifth,
+                  validator: e.sixth,
                 );
               },
             ),

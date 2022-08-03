@@ -10,6 +10,7 @@ class SimpleTextField extends StatelessWidget {
     this.enabled,
     this.controller,
     this.validator,
+    this.inputType,
   });
 
   final IconData? icon;
@@ -17,6 +18,7 @@ class SimpleTextField extends StatelessWidget {
   final bool? enabled;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final TextInputType? inputType;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class SimpleTextField extends StatelessWidget {
       margin: _margin,
       child: TextFormField(
         controller: controller,
+        keyboardType: inputType,
         enabled: enabled,
         style: theme.textTheme.bodyText1,
         textAlignVertical: TextAlignVertical.center,

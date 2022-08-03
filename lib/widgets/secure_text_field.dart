@@ -15,6 +15,7 @@ class SecureTextField extends StatelessWidget {
     this.enabled,
     this.controller,
     this.validator,
+    this.inputType,
   });
 
   final IconData? icon;
@@ -23,6 +24,7 @@ class SecureTextField extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final ValueNotifier<bool> obscure;
+  final TextInputType? inputType;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class SecureTextField extends StatelessWidget {
         builder: (context, bool value, child) {
           return TextFormField(
             controller: controller,
+            keyboardType: inputType,
             enabled: enabled,
             style: theme.textTheme.bodyText1,
             cursorColor: theme.primaryColor,
