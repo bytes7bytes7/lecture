@@ -8,7 +8,7 @@ const _tokenLen = 32;
 
 class MockClient implements RestClient {
   @override
-  Future<Map<String, String?>> signUp({
+  Future<SignUpResp> signUp({
     required String login,
     required String password,
   }) async {
@@ -17,31 +17,31 @@ class MockClient implements RestClient {
       () {
         switch (dev.randomInt(4)) {
           case 0:
-            return {
-              const_api.login: login,
-              const_api.firstName: dev.randomString(
+            return SignUpResp(
+              login: login,
+              firstName: dev.randomString(
                 dev.randomInt(10),
                 noSpace: true,
               ),
-              const_api.lastName: dev.randomString(
+              lastName: dev.randomString(
                 dev.randomInt(10),
                 noSpace: true,
               ),
-              const_api.middleName: dev.randomBool()
+              middleName: dev.randomBool()
                   ? dev.randomString(
                       dev.randomInt(10),
                       noSpace: true,
                     )
                   : null,
-            };
+            );
           case 1:
-            return {
-              const_api.detail: 'The phone number entered is not valid.',
-            };
+            return SignUpResp(
+              detail: const_api.notValidLogin,
+            );
           case 2:
-            return {
-              const_api.detail: 'user with this phone already exists.',
-            };
+            return SignUpResp(
+              detail: const_api.loginAlreadyInUse,
+            );
           default:
             throw Exception('Mock exception');
         }
@@ -50,15 +50,15 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, bool>> verifyCode(String code) async {
+  Future<VerifyCodeResp> verifyCode(String code) async {
     return Future.delayed(
       _dur,
       () {
         switch (dev.randomInt(2)) {
           case 0:
-            return {
-              const_api.verified: dev.randomBool(),
-            };
+            return VerifyCodeResp(
+              verified: dev.randomBool(),
+            );
           default:
             throw Exception('Mock exception');
         }
@@ -67,7 +67,7 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, String?>> setPersonalInfo({
+  Future<SetPersonalInfoResp> setPersonalInfo({
     required String firstName,
     required String lastName,
     required String? middleName,
@@ -77,11 +77,11 @@ class MockClient implements RestClient {
       () {
         switch (dev.randomInt(2)) {
           case 0:
-            return {
-              const_api.firstName: firstName,
-              const_api.lastName: lastName,
-              const_api.middleName: middleName,
-            };
+            return SetPersonalInfoResp(
+              firstName: firstName,
+              lastName: lastName,
+              middleName: middleName,
+            );
           default:
             throw Exception('Mock exception');
         }
@@ -90,7 +90,7 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, String>> signIn({
+  Future<SignInResp> signIn({
     required String login,
     required String password,
   }) async {
@@ -99,25 +99,24 @@ class MockClient implements RestClient {
       () {
         switch (dev.randomInt(3)) {
           case 0:
-            return {
-              const_api.refresh: dev.randomString(
+            return SignInResp(
+              refresh: dev.randomString(
                 _tokenLen,
                 noSpace: true,
                 useEn: true,
                 useNum: true,
               ),
-              const_api.access: dev.randomString(
+              access: dev.randomString(
                 _tokenLen,
                 noSpace: true,
                 useEn: true,
                 useNum: true,
               ),
-            };
+            );
           case 1:
-            return {
-              const_api.detail:
-                  'No active account found with the given credentials',
-            };
+            return SignInResp(
+              detail: const_api.noAccount,
+            );
           default:
             throw Exception('Mock exception');
         }
@@ -126,15 +125,15 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, bool>> recover(String login) async {
+  Future<RecoverResp> recover(String login) async {
     return Future.delayed(
       _dur,
       () {
         switch (dev.randomInt(2)) {
           case 0:
-            return {
-              const_api.sentEmail: dev.randomBool(),
-            };
+            return RecoverResp(
+              sentEmail: dev.randomBool(),
+            );
           default:
             throw Exception('Mock exception');
         }
@@ -143,8 +142,31 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<void> setNewPasswd(String password) async {
-    return Future.delayed(_dur);
+  Future<ChangePasswordResp> changePassword(String password) async {
+    return Future.delayed(
+      _dur,
+      () {
+        switch (dev.randomInt(2)) {
+          case 0:
+            return ChangePasswordResp(
+              refresh: dev.randomString(
+                _tokenLen,
+                noSpace: true,
+                useEn: true,
+                useNum: true,
+              ),
+              access: dev.randomString(
+                _tokenLen,
+                noSpace: true,
+                useEn: true,
+                useNum: true,
+              ),
+            );
+          default:
+            throw Exception('Mock exception');
+        }
+      },
+    );
   }
 
   @override
@@ -211,7 +233,7 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<Map<String, String>> getToken({
+  Future<GetTokenResp> getToken({
     required String login,
     required String password,
   }) async {
@@ -219,19 +241,18 @@ class MockClient implements RestClient {
       _dur,
       () {
         if (dev.randomBool()) {
-          return <String, String>{
-            const_api.token: dev.randomString(
+          return GetTokenResp(
+            token: dev.randomString(
               _tokenLen,
               noSpace: true,
               useEn: true,
               useNum: true,
             ),
-          };
+          );
         } else {
-          return {
-            const_api.detail:
-                'No active account found with the given credentials',
-          };
+          return GetTokenResp(
+            detail: const_api.noAccount,
+          );
         }
       },
     );

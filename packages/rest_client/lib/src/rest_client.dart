@@ -19,24 +19,27 @@ abstract class RestClient {
     "last_name": "string"
   }
  */
-  Future<Map<String, String?>> signUp({
+  Future<SignUpResp> signUp({
     required String login,
     required String password,
   });
 
-  Future<Map<String, bool>> verifyCode(String code);
+  Future<VerifyCodeResp> verifyCode(String code);
 
-  Future<Map<String, String?>> setPersonalInfo({
+  Future<SetPersonalInfoResp> setPersonalInfo({
     required String firstName,
     required String lastName,
     required String? middleName,
   });
 
-  Future<Map<String, String?>> signIn({required String login, required String password});
+  Future<SignInResp> signIn({
+    required String login,
+    required String password,
+  });
 
-  Future<Map<String, bool>> recover(String login);
+  Future<RecoverResp> recover(String login);
 
-  Future<void> setNewPasswd(String password);
+  Future<ChangePasswordResp> changePassword(String password);
 
   Future<void> logOut();
 
@@ -71,7 +74,7 @@ abstract class RestClient {
     "token": "SOME_TOKEN"
   }
    */
-  Future<Map<String, String>> getToken({
+  Future<GetTokenResp> getToken({
     required String login,
     required String password,
   });

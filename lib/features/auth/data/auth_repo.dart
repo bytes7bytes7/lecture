@@ -1,19 +1,7 @@
 import 'package:rest_client/rest_client.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum AuthState {
-  cancelRecovery,
-  cancelVerification,
-  loggedIn,
-  loggedOut,
-  openRecover,
-  openSignIn,
-  openSignUp,
-  requestedRecover,
-  signedUp,
-  verifiedRecover,
-  verifiedSignUp,
-}
+
 
 abstract class AuthRepo {
   const AuthRepo();
@@ -22,19 +10,21 @@ abstract class AuthRepo {
 
   void dispose();
 
-  Future<AuthState> signUp(String login, String password);
+  Future<void> signUp(String login, String password);
 
-  Future<AuthState> verifyCode(String code);
+  Future<void> verifyCode(String code);
 
-  Future<AuthState> setPersonalInfo({
+  Future<void> setPersonalInfo({
     required String firstName,
     required String lastName,
     required String? middleName,
   });
 
-  Future<AuthState> signIn(String login, String password);
+  Future<void> signIn(String login, String password);
 
-  Future<AuthState> recover(String login);
+  Future<void> recover(String login);
 
-  Future<AuthState> logOut();
+  Future<void> changePassword(String password);
+
+  Future<void> logOut();
 }

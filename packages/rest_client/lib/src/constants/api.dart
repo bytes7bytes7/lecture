@@ -20,20 +20,16 @@ const videos = 'videos';
 const login = 'phone';
 const password = 'password';
 const token = 'token';
-const access = 'access';
-const refresh = 'refresh';
 const code = 'code';
-const detail = 'detail';
-const verified = 'verified';
-const sentEmail = 'sentMail';
 
 const firstName = 'firstName';
 const middleName = 'middleName';
 const lastName = 'lastName';
 const avatar = 'avatar';
 
-const userAlreadyExists =  'user with this phone already exists.';
 const noAccount = 'No active account found with the given credentials';
+const loginAlreadyInUse = 'user with this phone already exists.';
+const notValidLogin = 'The phone number entered is not valid.';
 
 const idLength = 8;
 const unknownStr = '?';

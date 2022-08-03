@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../structs/quintet.dart';
+import '../../../../structs/sextet.dart';
 import '../../../../widgets/widgets.dart';
 import 'card_overlay.dart';
 
@@ -61,6 +61,8 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final state = ref.watch(AppScope.get().authController);
+
     return CardOverlay(
       title: l10n.changePasswordTitle,
       description: l10n.changePasswordDesc,
@@ -69,11 +71,12 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
         child: Column(
           children: [
             ...<
-                Quintet<IconData, String, TextEditingController,
+                Sextet<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>, ValueNotifier<bool>>>[
-              Quintet(
+              Sextet(
                 Icons.https,
                 l10n.password,
+                state is! AsyncLoading,
                 _passController,
                 (_) => passwdValidator(
                   value: _passController.text,
@@ -81,9 +84,10 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 ),
                 _passObscure,
               ),
-              Quintet(
+              Sextet(
                 Icons.https,
                 l10n.repeatPassword,
+                state is! AsyncLoading,
                 _repPassController,
                 (_) => repeatPasswdValidator(
                   value: _repPassController.text,
@@ -94,14 +98,15 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
               ),
             ].map(
               (e) {
-                final notifier = e.fifth;
+                final notifier = e.sixth;
 
                 if (notifier != null) {
                   return SecureTextField(
                     icon: e.first,
                     hint: e.second,
-                    controller: e.third,
-                    validator: e.fourth,
+                    enabled: e.third,
+                    controller: e.fourth,
+                    validator: e.fifth,
                     obscure: notifier,
                   );
                 }
@@ -117,14 +122,17 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
         builder: (context, value, child) {
           return SingleButton(
             text: l10n.moveNext,
-            onPressed: value ? _changePasswd : null,
+            onPressed:
+                (value && state is! AsyncLoading) ? _changePassword : null,
           );
         },
       ),
     );
   }
 
-  void _changePasswd() {
-    ref.read(AppScope.get().loggerManager).log('change password');
+  void _changePassword() {
+    ref
+        .read(AppScope.get().authController.notifier)
+        .changePassword(_passController.text);
   }
 }

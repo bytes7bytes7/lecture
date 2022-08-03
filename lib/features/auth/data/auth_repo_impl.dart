@@ -26,38 +26,39 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<AuthState> signUp(String login, String password) async {
+  Future<void> signUp(String login, String password) async {
     final resp = await _client.signUp(login: login, password: password);
-    final rLogin = resp[const_api.login];
-    final detail = resp[const_api.detail];
+    final rLogin = resp.login;
+    final detail = resp.detail;
+
     if (rLogin == login) {
       _userSubject.add(
         _userSubject.value.copyWith(
           email: login,
         ),
       );
-
-      return AuthState.signedUp;
-    } else if (detail == const_api.userAlreadyExists) {
-      throw const AuthException.loginAlreadyExists();
     } else {
-      throw const AuthException.wrongCred();
+      _throwException(detail);
     }
   }
 
   @override
-  Future<AuthState> verifyCode(String code) async {
+  Future<void> verifyCode(String code) async {
     final resp = await _client.verifyCode(code);
-    final verified = resp[const_api.verified];
+    final verified = resp.verified;
+    final detail = resp.detail;
+
     if (verified == true) {
-      return AuthState.verifiedSignUp;
-    } else {
+      return;
+    } else if (verified == false) {
       throw const AuthException.wrongCode();
+    } else {
+      _throwException(detail);
     }
   }
 
   @override
-  Future<AuthState> setPersonalInfo({
+  Future<void> setPersonalInfo({
     required String firstName,
     required String lastName,
     required String? middleName,
@@ -67,56 +68,81 @@ class AuthRepoImpl implements AuthRepo {
       lastName: lastName,
       middleName: middleName,
     );
+    final detail = resp.detail;
 
-    if (firstName == resp[const_api.firstName] &&
-        lastName == resp[const_api.lastName] &&
-        middleName == resp[const_api.middleName]) {
+    if (firstName == resp.firstName &&
+        lastName == resp.lastName &&
+        middleName == resp.middleName) {
       final me = await _client.getMe();
       _userSubject.add(me);
       // TODO: maybe I should get token here
-      return AuthState.loggedIn;
+      return;
     } else {
-      throw const AuthException.loginAlreadyExists();
+      _throwException(detail);
     }
   }
 
   @override
-  Future<AuthState> signIn(String login, String password) async {
+  Future<void> signIn(String login, String password) async {
     final resp = await _client.signIn(login: login, password: password);
-    final access = resp[const_api.access];
-    final detail = resp[const_api.detail];
+    final access = resp.access;
+    final detail = resp.detail;
+
     if (access != null) {
       _userSubject.add(
         _userSubject.value.copyWith(
           email: login,
         ),
       );
-
-      return AuthState.loggedIn;
-    } else if (detail == const_api.noAccount) {
-      throw const AuthException.wrongCred();
     } else {
-      throw const AuthException.unknown();
+      _throwException(detail);
     }
   }
 
   @override
-  Future<AuthState> recover(String login) async {
+  Future<void> recover(String login) async {
     final resp = await _client.recover(login);
-    final sentEmail = resp[const_api.sentEmail];
+    final sentEmail = resp.sentEmail;
+    final detail = resp.detail;
+
     if (sentEmail == true) {
-      return AuthState.requestedRecover;
+      return;
     } else if (sentEmail == false) {
+      throw const AuthException.noLoginFound();
+    } else {
+      _throwException(detail);
+    }
+  }
+
+  @override
+  Future<void> changePassword(String password) async {
+    final resp = await _client.changePassword(password);
+    final access = resp.access;
+    final detail = resp.detail;
+
+    if (access != null) {
+      final me = await _client.getMe();
+      _userSubject.add(me);
+    } else {
+      _throwException(detail);
+    }
+  }
+
+  @override
+  Future<void> logOut() async {
+    // TODO: add _client.logOut()
+    _userSubject.add(notAuthorizedUser);
+  }
+
+  void _throwException(Object? detail) {
+    if (detail == const_api.loginAlreadyInUse) {
+      throw const AuthException.loginAlreadyInUse();
+    } else if (detail == const_api.notValidLogin) {
+      throw const AuthException.notValidLogin();
+    } else if (detail == const_api.noAccount) {
       throw const AuthException.noLoginFound();
     } else {
       throw const AuthException.unknown();
     }
-  }
-
-  @override
-  Future<AuthState> logOut() async {
-    // TODO: add _client.logOut()
-    _userSubject.add(notAuthorizedUser);
-    return AuthState.openSignUp;
   }
 }

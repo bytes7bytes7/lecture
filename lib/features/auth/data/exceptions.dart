@@ -1,7 +1,9 @@
 class AuthException implements Exception {
   const AuthException();
 
-  const factory AuthException.loginAlreadyExists() = LoginAlreadyInUse;
+  const factory AuthException.unknown() = Unknown;
+
+  const factory AuthException.loginAlreadyInUse() = LoginAlreadyInUse;
 
   const factory AuthException.wrongCred() = WrongCred;
 
@@ -9,7 +11,11 @@ class AuthException implements Exception {
 
   const factory AuthException.noLoginFound() = NoLoginFound;
 
-  const factory AuthException.unknown() = Unknown;
+  const factory AuthException.notValidLogin() = NotValidLogin;
+}
+
+class Unknown extends AuthException {
+  const Unknown();
 }
 
 class LoginAlreadyInUse extends AuthException {
@@ -28,6 +34,6 @@ class NoLoginFound extends AuthException {
   const NoLoginFound();
 }
 
-class Unknown extends AuthException {
-  const Unknown();
+class NotValidLogin extends AuthException {
+  const NotValidLogin();
 }

@@ -7,6 +7,7 @@ import '../../../../constants/routes.dart' as const_routes;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../data/data.dart';
+import '../auth_controller.dart';
 import '../overlays/overlays.dart';
 import '../widgets/widgets.dart';
 
