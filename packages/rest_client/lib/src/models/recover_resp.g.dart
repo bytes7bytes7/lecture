@@ -7,12 +7,14 @@ part of 'recover_resp.dart';
 // **************************************************************************
 
 RecoverResp _$RecoverRespFromJson(Map<String, dynamic> json) => RecoverResp(
-      sentEmail: json['sentEmail'] as bool?,
-      detail: json['detail'] as String?,
+      sentEmail: json['sent_email'] as bool?,
+      error: json['error'] == null
+          ? null
+          : RespError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RecoverRespToJson(RecoverResp instance) =>
     <String, dynamic>{
-      'detail': instance.detail,
-      'sentEmail': instance.sentEmail,
+      'error': instance.error,
+      'sent_email': instance.sentEmail,
     };

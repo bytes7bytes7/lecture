@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -22,17 +24,23 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   late final ListenableTextController _controller;
+  late final StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _controller = ListenableTextController()
-      ..stream.debounceTime(_requestDelay).listen(widget.onSubmitted);
+
+    _controller = ListenableTextController();
+    _sub = _controller.stream
+        .debounceTime(_requestDelay)
+        .listen(widget.onSubmitted);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _sub.cancel();
+
     super.dispose();
   }
 

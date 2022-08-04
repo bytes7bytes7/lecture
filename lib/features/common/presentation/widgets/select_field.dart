@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants/measures.dart' as const_measures;
-import '../features/common/presentation/select_overlay.dart';
+import '../../../../constants/measures.dart' as const_measures;
+import '../select_overlay.dart';
 
 const _margin = EdgeInsets.symmetric(
   vertical: const_measures.mainVerMargin,
@@ -38,7 +38,7 @@ class SelectField extends ConsumerWidget {
           const_measures.mainBorderRadius,
         ),
         border: Border.all(
-          color: theme.primaryColor,
+          color: theme.hintColor,
         ),
       ),
       child: ClipRRect(
@@ -71,10 +71,6 @@ class SelectField extends ConsumerWidget {
                             style: theme.textTheme.bodyText1
                                 ?.copyWith(color: theme.hintColor),
                           ),
-                  ),
-                  const Icon(
-                    Icons.search,
-                    size: const_measures.smallIconSize,
                   ),
                 ],
               ),

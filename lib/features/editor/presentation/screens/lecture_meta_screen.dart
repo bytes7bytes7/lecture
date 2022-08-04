@@ -5,7 +5,6 @@ import 'package:rest_client/rest_client.dart';
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
-import '../../../../widgets/widgets.dart';
 import '../../../common/common.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -69,6 +68,7 @@ class LectureMetaScreen extends ConsumerWidget {
                 canSelectRange: false,
               ),
               _separator,
+              // TODO: create lectureEdit provider and work with it
               SelectField(
                 value: '',
                 onChanged: (value) {},

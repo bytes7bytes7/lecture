@@ -1,23 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'change_password_resp.dart';
+part of 'verify_token_resp.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChangePasswordResp _$ChangePasswordRespFromJson(Map<String, dynamic> json) =>
-    ChangePasswordResp(
-      access: json['access'] as String?,
-      refresh: json['refresh'] as String?,
+VerifyTokenResp _$VerifyTokenRespFromJson(Map<String, dynamic> json) =>
+    VerifyTokenResp(
       error: json['error'] == null
           ? null
           : RespError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ChangePasswordRespToJson(ChangePasswordResp instance) =>
+Map<String, dynamic> _$VerifyTokenRespToJson(VerifyTokenResp instance) =>
     <String, dynamic>{
       'error': instance.error,
-      'access': instance.access,
-      'refresh': instance.refresh,
     };

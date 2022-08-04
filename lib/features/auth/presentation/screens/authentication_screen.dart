@@ -247,8 +247,8 @@ class AuthenticationScreen extends ConsumerWidget {
     switch (error.runtimeType) {
       case WrongCred:
         return l10n.wrongLoginOrPasswd;
-      case NoLoginFound:
-        return l10n.noLoginFound;
+      case NoAccountFound:
+        return l10n.noAccountFound;
       case LoginAlreadyInUse:
         return l10n.loginAlreadyExists;
       case WrongCode:

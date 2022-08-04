@@ -1,6 +1,5 @@
 export 'change_password_resp.dart';
 export 'content.dart';
-export 'get_token_resp.dart';
 export 'lecture.dart';
 export 'recover_resp.dart';
 export 'resp.dart';
@@ -9,3 +8,4 @@ export 'sign_in_resp.dart';
 export 'sign_up_resp.dart';
 export 'user.dart';
 export 'verify_code_resp.dart';
+export 'verify_token_resp.dart';

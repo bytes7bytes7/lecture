@@ -22,10 +22,19 @@ const password = 'password';
 const token = 'token';
 const code = 'code';
 
-const firstName = 'firstName';
-const middleName = 'middleName';
-const lastName = 'lastName';
+const firstName = 'first_name';
+const middleName = 'middle_name';
+const lastName = 'last_name';
 const avatar = 'avatar';
+const error = 'error';
+const details = 'details';
+const detail = 'detail';
+const statusCode = 'status_code';
+const message = 'message';
+const verified = 'verified';
+const refresh = 'refresh';
+const access = 'access';
+const sentEmail = 'sent_email';
 
 const noAccount = 'No active account found with the given credentials';
 const loginAlreadyInUse = 'user with this phone already exists.';

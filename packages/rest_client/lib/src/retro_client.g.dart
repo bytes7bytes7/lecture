@@ -57,9 +57,9 @@ class _RetroClient implements RetroClient {
       {required firstName, required lastName, middleName}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'firstName': firstName,
-      r'lastName': lastName,
-      r'middleName': middleName
+      r'first_name': firstName,
+      r'last_name': lastName,
+      r'middle_name': middleName
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
@@ -296,21 +296,18 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<GetTokenResp> getToken({required login, required password}) async {
+  Future<VerifyTokenResp> verifyToken(token) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'phone': login,
-      r'password': password
-    };
+    final queryParameters = <String, dynamic>{r'token': token};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetTokenResp>(
+        _setStreamType<VerifyTokenResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/token/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GetTokenResp.fromJson(_result.data!);
+    final value = VerifyTokenResp.fromJson(_result.data!);
     return value;
   }
 

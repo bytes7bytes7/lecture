@@ -110,10 +110,9 @@ abstract class RetroClient implements RestClient {
 
   @override
   @POST(const_secret.getToken)
-  Future<GetTokenResp> getToken({
-    @Query(const_api.login) required String login,
-    @Query(const_api.password) required String password,
-  });
+  Future<VerifyTokenResp> verifyToken(
+    @Query(const_api.token) String token,
+  );
 
   @override
   @POST(const_secret.refreshToken)

@@ -7,18 +7,20 @@ part of 'sign_up_resp.dart';
 // **************************************************************************
 
 SignUpResp _$SignUpRespFromJson(Map<String, dynamic> json) => SignUpResp(
-      login: json['login'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      middleName: json['middleName'] as String?,
-      detail: json['detail'] as String?,
+      login: json['phone'] as String?,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      middleName: json['middle_name'] as String?,
+      error: json['error'] == null
+          ? null
+          : RespError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SignUpRespToJson(SignUpResp instance) =>
     <String, dynamic>{
-      'detail': instance.detail,
-      'login': instance.login,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'middleName': instance.middleName,
+      'error': instance.error,
+      'phone': instance.login,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'middle_name': instance.middleName,
     };

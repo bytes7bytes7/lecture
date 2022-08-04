@@ -19,6 +19,7 @@ const _separator = SizedBox(
 void showSelectOverlay({
   required BuildContext context,
   required WidgetRef ref,
+  // TODO: remove items, place some logic for API request
   required List<String> items,
   required void Function(String value) onChanged,
 }) {
@@ -67,9 +68,8 @@ void showSelectOverlay({
                       return SelectItem(
                         value: items[index],
                         onSelect: () {
-                          ref
-                              .read(AppScope.get().loggerManager)
-                              .log('selected ${items[index]}');
+                          onChanged(items[index]);
+                          Navigator.of(context).pop();
                         },
                       );
                     },

@@ -9,7 +9,7 @@ class AuthException implements Exception {
 
   const factory AuthException.wrongCode() = WrongCode;
 
-  const factory AuthException.noLoginFound() = NoLoginFound;
+  const factory AuthException.noAccountFound() = NoAccountFound;
 
   const factory AuthException.notValidLogin() = NotValidLogin;
 }
@@ -30,8 +30,8 @@ class WrongCode extends AuthException {
   const WrongCode();
 }
 
-class NoLoginFound extends AuthException {
-  const NoLoginFound();
+class NoAccountFound extends AuthException {
+  const NoAccountFound();
 }
 
 class NotValidLogin extends AuthException {

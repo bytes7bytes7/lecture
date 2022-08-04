@@ -36,11 +36,27 @@ class MockClient implements RestClient {
             );
           case 1:
             return SignUpResp(
-              detail: const_api.notValidLogin,
+              error: RespError(
+                statusCode: 400,
+                message: 'Bad request syntax or unsupported method',
+                details: {
+                  const_api.login: [
+                    const_api.notValidLogin,
+                  ],
+                },
+              ),
             );
           case 2:
             return SignUpResp(
-              detail: const_api.loginAlreadyInUse,
+              error: RespError(
+                statusCode: 400,
+                message: 'Bad request syntax or unsupported method',
+                details: {
+                  const_api.login: [
+                    const_api.loginAlreadyInUse,
+                  ],
+                },
+              ),
             );
           default:
             throw Exception('Mock exception');
@@ -115,7 +131,15 @@ class MockClient implements RestClient {
             );
           case 1:
             return SignInResp(
-              detail: const_api.noAccount,
+              error: RespError(
+                statusCode: 401,
+                message: 'No permission -- see authorization schemes',
+                details: {
+                  const_api.detail: [
+                    const_api.noAccount,
+                  ],
+                },
+              ),
             );
           default:
             throw Exception('Mock exception');
@@ -233,25 +257,26 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<GetTokenResp> getToken({
-    required String login,
-    required String password,
-  }) async {
+  Future<VerifyTokenResp> verifyToken(String token) async {
     return Future.delayed(
       _dur,
       () {
         if (dev.randomBool()) {
-          return GetTokenResp(
-            token: dev.randomString(
-              _tokenLen,
-              noSpace: true,
-              useEn: true,
-              useNum: true,
-            ),
-          );
+          return VerifyTokenResp();
         } else {
-          return GetTokenResp(
-            detail: const_api.noAccount,
+          return VerifyTokenResp(
+            error: RespError(
+              statusCode: 401,
+              message: 'No permission -- see authorization schemes',
+              details: {
+                const_api.detail: [
+                  'Token is invalid or expired',
+                ],
+                const_api.code: [
+                  'token_not_valid',
+                ],
+              },
+            ),
           );
         }
       },

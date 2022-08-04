@@ -7,9 +7,11 @@ part of 'resp.dart';
 // **************************************************************************
 
 Resp _$RespFromJson(Map<String, dynamic> json) => Resp(
-      detail: json['detail'] as String?,
+      error: json['error'] == null
+          ? null
+          : RespError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RespToJson(Resp instance) => <String, dynamic>{
-      'detail': instance.detail,
+      'error': instance.error,
     };

@@ -74,10 +74,7 @@ abstract class RestClient {
     "token": "SOME_TOKEN"
   }
    */
-  Future<GetTokenResp> getToken({
-    required String login,
-    required String password,
-  });
+  Future<VerifyTokenResp> verifyToken(String token);
 
   Future<String> refreshToken(String token);
 

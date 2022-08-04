@@ -37,7 +37,7 @@ class App extends ConsumerWidget {
           supportedLocales: const_app.supportedLocales,
           onGenerateInitialRoutes: (_) => [
             ScreenRouter.inst.navigate(
-              const RouteSettings(name: const_routes.home),
+              const RouteSettings(name: const_routes.auth),
             ),
           ],
           onGenerateRoute: ScreenRouter.inst.navigate,

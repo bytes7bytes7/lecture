@@ -29,7 +29,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> signUp(String login, String password) async {
     final resp = await _client.signUp(login: login, password: password);
     final rLogin = resp.login;
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (rLogin == login) {
       _userSubject.add(
@@ -38,7 +38,7 @@ class AuthRepoImpl implements AuthRepo {
         ),
       );
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -46,14 +46,14 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> verifyCode(String code) async {
     final resp = await _client.verifyCode(code);
     final verified = resp.verified;
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (verified == true) {
       return;
     } else if (verified == false) {
       throw const AuthException.wrongCode();
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -68,7 +68,7 @@ class AuthRepoImpl implements AuthRepo {
       lastName: lastName,
       middleName: middleName,
     );
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (firstName == resp.firstName &&
         lastName == resp.lastName &&
@@ -78,7 +78,7 @@ class AuthRepoImpl implements AuthRepo {
       // TODO: maybe I should get token here
       return;
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -86,7 +86,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> signIn(String login, String password) async {
     final resp = await _client.signIn(login: login, password: password);
     final access = resp.access;
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (access != null) {
       _userSubject.add(
@@ -95,7 +95,7 @@ class AuthRepoImpl implements AuthRepo {
         ),
       );
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -103,14 +103,14 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> recover(String login) async {
     final resp = await _client.recover(login);
     final sentEmail = resp.sentEmail;
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (sentEmail == true) {
       return;
     } else if (sentEmail == false) {
-      throw const AuthException.noLoginFound();
+      throw const AuthException.noAccountFound();
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -118,13 +118,13 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> changePassword(String password) async {
     final resp = await _client.changePassword(password);
     final access = resp.access;
-    final detail = resp.detail;
+    final error = resp.error;
 
     if (access != null) {
       final me = await _client.getMe();
       _userSubject.add(me);
     } else {
-      _throwException(detail);
+      _throwException(error);
     }
   }
 
@@ -134,15 +134,23 @@ class AuthRepoImpl implements AuthRepo {
     _userSubject.add(notAuthorizedUser);
   }
 
-  void _throwException(Object? detail) {
-    if (detail == const_api.loginAlreadyInUse) {
-      throw const AuthException.loginAlreadyInUse();
-    } else if (detail == const_api.notValidLogin) {
-      throw const AuthException.notValidLogin();
-    } else if (detail == const_api.noAccount) {
-      throw const AuthException.noLoginFound();
-    } else {
-      throw const AuthException.unknown();
+  void _throwException(RespError? error) {
+    final details = error?.details;
+
+    if (details != null) {
+      for (final pair in details.entries) {
+        for (final reason in pair.value) {
+          if (reason == const_api.loginAlreadyInUse) {
+            throw const AuthException.loginAlreadyInUse();
+          } else if (reason == const_api.notValidLogin) {
+            throw const AuthException.notValidLogin();
+          } else if (reason == const_api.noAccount) {
+            throw const AuthException.noAccountFound();
+          }
+        }
+      }
     }
+
+    throw const AuthException.unknown();
   }
 }

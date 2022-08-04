@@ -10,6 +10,7 @@ export 'mod_text_field.dart';
 export 'pin_text_field.dart';
 export 'search_bar.dart';
 export 'secure_text_field.dart';
+export 'select_field.dart';
 export 'select_item.dart';
 export 'single_button.dart';
 export 'sized_icon.dart';
