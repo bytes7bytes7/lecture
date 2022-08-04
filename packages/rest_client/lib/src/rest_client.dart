@@ -1,4 +1,6 @@
-import '../rest_client.dart';
+import 'package:common/common.dart';
+
+import 'models/models.dart';
 
 abstract class RestClient {
   /*

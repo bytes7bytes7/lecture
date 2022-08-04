@@ -1,6 +1,6 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rest_client/rest_client.dart';
 
 import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;

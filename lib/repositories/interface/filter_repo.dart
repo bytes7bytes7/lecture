@@ -1,4 +1,4 @@
-import 'package:rest_client/rest_client.dart';
+import 'package:common/common.dart';
 
 abstract class FilterRepo {
   Future<List<String>> findInstitution(String query);

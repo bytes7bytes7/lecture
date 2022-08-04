@@ -1,4 +1,4 @@
-import 'package:rest_client/rest_client.dart';
+import 'package:common/common.dart';
 
 /// Local Storage Repo.
 abstract class StorageRepo {

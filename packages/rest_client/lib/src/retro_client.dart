@@ -1,9 +1,11 @@
+import 'package:common/common.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../rest_client.dart';
 import 'constants/api.dart' as const_api;
 import 'constants/secret.dart' as const_secret;
+import 'models/models.dart';
+import 'rest_client.dart';
 
 part 'retro_client.g.dart';
 
@@ -109,7 +111,7 @@ abstract class RetroClient implements RestClient {
   Future<List<Lecture>> getUserLectures(int id);
 
   @override
-  @POST(const_secret.getToken)
+  @POST(const_secret.verifyToken)
   Future<VerifyTokenResp> verifyToken(
     @Query(const_api.token) String token,
   );

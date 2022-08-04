@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../constants/api.dart' as const_api;
 import '../dev.dart' as dev;
 import '../extensions/iterable_ext.dart';
 
@@ -17,7 +16,7 @@ const notAuthorizedUser = User(
 
 extension UserExt on User {
   String get beautifulID =>
-      'id${id.toString().padLeft(const_api.idLength, '0')}';
+      'id${id.toString().padLeft(8, '0')}';
 
   String getFio() {
     final buffer = StringBuffer()..write(lastName);

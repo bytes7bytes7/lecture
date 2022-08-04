@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import '../constants/api.dart' as const_api;
 import '../dev.dart' as dev;
 import '../extensions/string_ext.dart';
 import 'user.dart';
@@ -70,9 +69,9 @@ class Lecture {
   // TODO: remove it
   static Lecture random({bool isPublished = true}) {
     final id = dev.randomInt(pow(10, 6).toInt());
-    final institution = const_api.unknownStr;
-    final subject = const_api.unknownStr;
-    final topic = dev.randomString(dev.randomInt(10) + 10).capitalize;
+    final institution = dev.randomString(dev.randomInt(10) + 10).capitalized;
+    final subject = dev.randomString(dev.randomInt(10) + 10).capitalized;
+    final topic = dev.randomString(dev.randomInt(5) + 10).capitalized;
 
     final year = (dev.randomInt(5) + 2015).toString();
 
@@ -83,23 +82,23 @@ class Lecture {
     final rating = dev.randomDouble(5);
 
     final firstName =
-        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize;
+        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalized;
     final middleName =
-        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize;
+        dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalized;
     final lastName =
-        dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalize;
+        dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalized;
 
     final lecturer = [lastName, firstName, middleName].join(' ');
 
     final author = User(
       id: dev.randomInt(pow(10, 6).toInt()),
       firstName:
-          dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalize,
+          dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalized,
       lastName:
-          dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalize,
+          dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalized,
       email: '${dev.randomString(dev.randomInt(4) + 6, noSpace: true)}@mail.ru',
       middleName: dev.randomInt(2) == 1
-          ? dev.randomString(dev.randomInt(6) + 8, noSpace: true).capitalize
+          ? dev.randomString(dev.randomInt(6) + 8, noSpace: true).capitalized
           : null,
       avatar: dev.randomInt(2) == 1
           ? dev.randomString(dev.randomInt(20) + 10, noSpace: true, useEn: true)

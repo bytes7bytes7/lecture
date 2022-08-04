@@ -1,5 +1,5 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:rest_client/rest_client.dart';
 
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';

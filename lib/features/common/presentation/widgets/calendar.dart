@@ -1,9 +1,9 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
-import '../../domain/string_x.dart';
 import 'sized_icon.dart';
 
 const _delta = Duration(days: 365 * 100);

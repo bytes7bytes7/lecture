@@ -1,6 +1,6 @@
+import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rest_client/constants.dart' as const_api;
-import 'package:rest_client/rest_client.dart';
 
 import 'constants/routes.dart' as const_routes;
 import 'features/features.dart';

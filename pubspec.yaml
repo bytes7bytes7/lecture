@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
 
   # internal
+  common:
+    path: packages/common
   rest_client:
     path: packages/rest_client
 

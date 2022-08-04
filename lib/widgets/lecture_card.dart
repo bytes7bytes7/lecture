@@ -1,6 +1,6 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:rest_client/constants.dart' as const_api;
-import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;

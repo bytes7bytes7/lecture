@@ -39,8 +39,3 @@ const sentEmail = 'sent_email';
 const noAccount = 'No active account found with the given credentials';
 const loginAlreadyInUse = 'user with this phone already exists.';
 const notValidLogin = 'The phone number entered is not valid.';
-
-const idLength = 8;
-const unknownStr = '?';
-const unknownInt = 0;
-const unknownDouble = 0.0;
