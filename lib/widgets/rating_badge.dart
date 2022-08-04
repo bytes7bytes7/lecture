@@ -3,8 +3,8 @@ import 'package:rest_client/rest_client.dart';
 
 import '../constants/measures.dart' as const_measures;
 
-const _badgeIconSize = 14.0;
 const _textPadding = EdgeInsets.symmetric(horizontal: 10.0);
+const _margin = 2.0;
 
 class RatingBadge extends StatelessWidget {
   const RatingBadge({
@@ -31,7 +31,7 @@ class RatingBadge extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(
-              const_measures.badgeMargin,
+              _margin,
             ),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -39,12 +39,12 @@ class RatingBadge extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(
-                const_measures.badgeMargin,
+                _margin,
               ),
               child: Icon(
                 Icons.star,
                 color: theme.scaffoldBackgroundColor,
-                size: _badgeIconSize,
+                size: const_measures.smallIconSize,
               ),
             ),
           ),

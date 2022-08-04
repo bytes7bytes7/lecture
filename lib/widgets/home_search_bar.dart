@@ -47,7 +47,7 @@ class HomeSearchBar extends ConsumerWidget {
                 prefixIcon: Icon(
                   Icons.search,
                   color: theme.hintColor,
-                  size: const_measures.smallIconSize,
+                  size: const_measures.midIconSize,
                 ),
                 hintText: l10n.search,
                 hintStyle: theme.textTheme.bodyText1?.copyWith(
@@ -67,7 +67,7 @@ class HomeSearchBar extends ConsumerWidget {
               borderRadius: BorderRadius.circular(_buttonBorderRadius),
               child: SizedIconButton(
                 icon: Icons.tune,
-                size: const_measures.smallIconSize,
+                size: const_measures.midIconSize,
                 tooltip: l10n.tooltipFilter,
                 color: theme.scaffoldBackgroundColor,
                 onPressed: () {

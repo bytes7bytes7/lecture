@@ -102,7 +102,7 @@ class LectureCard extends StatelessWidget {
                       Icon(
                         first,
                         color: theme.primaryColor,
-                        size: const_measures.smallIconSize,
+                        size: const_measures.midIconSize,
                       ),
                       _verSizedBox,
                     ],

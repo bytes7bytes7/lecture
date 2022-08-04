@@ -92,9 +92,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                 ),
               ),
               FutureBuilder<Content?>(
-                future: ref
-                    .read(AppScope.get().lectureRepo)
-                    .getContent(widget.lecture.id),
+                future: Future.value(Content.random()),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ErrorLabel(
@@ -192,7 +190,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
               Icon(
                 e.second,
                 color: theme.primaryColor,
-                size: const_measures.smallIconSize,
+                size: const_measures.midIconSize,
               ),
               _menuItemSeparator,
               Text(

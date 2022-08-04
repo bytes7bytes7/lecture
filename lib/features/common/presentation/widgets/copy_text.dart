@@ -27,8 +27,8 @@ class CopyText extends ConsumerWidget {
           ),
         );
         showSnackBar(
-          ref,
-          l10n.textCopied,
+          ref: ref,
+          text: l10n.textCopied,
         );
       },
       child: Text(

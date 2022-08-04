@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
-import '../string_x.dart';
+import '../../domain/string_x.dart';
 import 'sized_icon.dart';
 
 const _delta = Duration(days: 365 * 100);
@@ -63,12 +63,12 @@ class _CalendarState extends State<Calendar> {
         formatButtonVisible: false,
         leftChevronIcon: SizedIcon(
           icon: Icons.keyboard_arrow_left,
-          size: const_measures.smallIconSize,
+          size: const_measures.midIconSize,
           color: theme.iconTheme.color,
         ),
         rightChevronIcon: SizedIcon(
           icon: Icons.keyboard_arrow_right,
-          size: const_measures.smallIconSize,
+          size: const_measures.midIconSize,
           color: theme.iconTheme.color,
         ),
         titleTextStyle: theme.textTheme.headline5?.copyWith(

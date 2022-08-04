@@ -21,7 +21,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   iconTheme: const IconThemeData(
     color: _Colors.mountainMeadow,
-    size: const_measures.smallIconSize,
+    size: const_measures.midIconSize,
   ),
   appBarTheme: AppBarTheme(
     elevation: const_measures.appBarElevation,

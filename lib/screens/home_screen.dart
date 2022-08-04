@@ -146,11 +146,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Future<void> _onRefresh(WidgetRef ref) async {
-    await ref.read(AppScope.get().lectureRepo).getLectures(null);
-
     ref.read(AppScope.get().loggerManager).log('_onRefresh');
-
-    return;
   }
 }
 

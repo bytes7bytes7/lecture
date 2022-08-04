@@ -53,7 +53,7 @@ class SecureTextField extends StatelessWidget {
               ),
               suffixIcon: SizedIconButton(
                 icon: value ? Icons.visibility : Icons.visibility_off,
-                size: const_measures.smallIconSize,
+                size: const_measures.midIconSize,
                 tooltip: value ? l10n.tooltipShow : l10n.tooltipHide,
                 onPressed: () {
                   obscure.value = !obscure.value;

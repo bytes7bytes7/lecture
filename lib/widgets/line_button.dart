@@ -5,10 +5,9 @@ import '../constants/measures.dart' as const_measures;
 const _borderWidth = 1.0;
 
 enum LineBorderType {
-  left,
   top,
-  right,
   bottom,
+  vertical,
   none,
 }
 
@@ -45,35 +44,22 @@ class LineButton extends StatelessWidget {
           horizontal: const_measures.mainHorMargin,
         ),
         decoration: BoxDecoration(
-          border: (borderType == LineBorderType.left)
-              ? Border(
-                  left: BorderSide(
+          border: Border(
+            top: (borderType == LineBorderType.top ||
+                    borderType == LineBorderType.vertical)
+                ? BorderSide(
                     color: theme.hintColor,
                     width: _borderWidth,
-                  ),
-                )
-              : (borderType == LineBorderType.top)
-                  ? Border(
-                      top: BorderSide(
-                        color: theme.hintColor,
-                        width: _borderWidth,
-                      ),
-                    )
-                  : (borderType == LineBorderType.right)
-                      ? Border(
-                          right: BorderSide(
-                            color: theme.hintColor,
-                            width: _borderWidth,
-                          ),
-                        )
-                      : (borderType == LineBorderType.bottom)
-                          ? Border(
-                              bottom: BorderSide(
-                                color: theme.hintColor,
-                                width: _borderWidth,
-                              ),
-                            )
-                          : null,
+                  )
+                : BorderSide.none,
+            bottom: (borderType == LineBorderType.bottom ||
+                    borderType == LineBorderType.vertical)
+                ? BorderSide(
+                    color: theme.hintColor,
+                    width: _borderWidth,
+                  )
+                : BorderSide.none,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,9 +70,9 @@ class LineButton extends StatelessWidget {
                   Icon(
                     iconData,
                     color: theme.primaryColor,
-                    size: const_measures.smallIconSize,
+                    size: const_measures.midIconSize,
                   ),
-                const SizedBox(width: const_measures.smallIconSize / 2),
+                const SizedBox(width: const_measures.midIconSize / 2),
                 Text(
                   text,
                   style: theme.textTheme.bodyText1,

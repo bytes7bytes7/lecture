@@ -165,8 +165,8 @@ class AuthenticationScreen extends ConsumerWidget {
           if (context != null) {
             final l10n = context.l10n;
             showSnackBar(
-              ref,
-              l10n.loggedInSuccess(
+              ref: ref,
+              text: l10n.loggedInSuccess(
                 ref.read(AppScope.get().authRepo).user.value.email ?? '?',
               ),
             );
@@ -221,7 +221,10 @@ class AuthenticationScreen extends ConsumerWidget {
         final l10n = context.l10n;
         final info = _getReason(next.error, l10n);
         if (info.isNotEmpty) {
-          showSnackBar(ref, info);
+          showSnackBar(
+            ref: ref,
+            text: info,
+          );
         }
       }
     }

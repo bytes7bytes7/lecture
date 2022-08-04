@@ -71,7 +71,7 @@ class _Body extends ConsumerWidget {
                   ? Icons.radio_button_on
                   : Icons.radio_button_off,
               color: theme.primaryColor,
-              size: const_measures.smallIconSize,
+              size: const_measures.midIconSize,
             ),
           ],
         );

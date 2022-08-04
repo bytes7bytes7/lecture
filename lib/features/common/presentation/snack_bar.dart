@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../scope/app_scope.dart';
 
-void showSnackBar(WidgetRef ref, String text) {
+void showSnackBar({required WidgetRef ref, required String text}) {
   final context = ref.read(AppScope.get().navigatorKey).currentContext;
   if (context != null) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();

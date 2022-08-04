@@ -81,7 +81,7 @@ class UserHeader extends ConsumerWidget {
 
                       return Icon(
                         Icons.warning_amber_outlined,
-                        size: const_measures.smallIconSize,
+                        size: const_measures.midIconSize,
                         color: theme.errorColor,
                       );
                     },

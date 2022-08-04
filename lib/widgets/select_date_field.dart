@@ -74,7 +74,7 @@ class SelectDateField extends ConsumerWidget {
           ),
           SizedIconButton(
             icon: Icons.date_range,
-            size: const_measures.smallIconSize,
+            size: const_measures.midIconSize,
             tooltip: l10n.tooltipChoose,
             onPressed: () {
               // try use showDatePicker()

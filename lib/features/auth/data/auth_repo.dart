@@ -1,8 +1,6 @@
 import 'package:rest_client/rest_client.dart';
 import 'package:rxdart/rxdart.dart';
 
-
-
 abstract class AuthRepo {
   const AuthRepo();
 

@@ -161,7 +161,7 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
                                     child: Icon(
                                       Icons.https_outlined,
                                       color: theme.primaryColor,
-                                      size: const_measures.smallIconSize,
+                                      size: const_measures.midIconSize,
                                     ),
                                   ),
                                 ),

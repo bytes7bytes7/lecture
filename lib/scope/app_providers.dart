@@ -47,7 +47,7 @@ mixin AppProviders {
     return ref.read(filter.notifier).hasStateChanged;
   });
 
-  final lectureRepo = Provider<LectureRepo>(LectureRepoImpl.new);
+  final lectureRepo = Provider<LectureRepo>((ref) => LectureRepoImpl());
 
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());

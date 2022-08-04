@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rest_client/rest_client.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
+import '../../../../constants/routes.dart' as const_routes;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
@@ -37,20 +38,7 @@ class LectureMetaScreen extends ConsumerWidget {
       appBar: DefaultAppBar(
         prefix: Icons.close,
         prefixTooltip: l10n.tooltipAbortEdit,
-        prefixOnPressed: () {
-          showBottomOverlay(
-            context: context,
-            text: l10n.abortEditAskAgain,
-            secondary: l10n.cancelBtn,
-            secondaryOnPressed: () {
-              Navigator.pop(context);
-            },
-            primary: l10n.abortBtn,
-            primaryOnPressed: () {
-              ref.read(AppScope.get().loggerManager).log('abort edit');
-            },
-          );
-        },
+        prefixOnPressed: () => _abort(ref),
         title: l10n.editor,
       ),
       body: SingleChildScrollView(
@@ -88,11 +76,9 @@ class LectureMetaScreen extends ConsumerWidget {
                 items: const ['1', '2'],
               ),
               _separator,
-              DoubleButton(
-                primary: l10n.moveNextBtn,
-                primaryOnPressed: () => _openEditor(ref),
-                secondary: l10n.cancelBtn,
-                secondaryOnPressed: () => _abort(ref),
+              SingleButton(
+                text: l10n.moveNextBtn,
+                onPressed: () => _openEditor(ref),
               ),
             ],
           ),
@@ -101,11 +87,33 @@ class LectureMetaScreen extends ConsumerWidget {
     );
   }
 
-  void _openEditor(WidgetRef ref) {
-    ref.read(AppScope.get().loggerManager).log('open editor');
+  void _abort(WidgetRef ref) {
+    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    if (context != null) {
+      final l10n = context.l10n;
+
+      showBottomOverlay(
+        context: context,
+        text: l10n.abortEditAskAgain,
+        secondary: l10n.cancelBtn,
+        secondaryOnPressed: () {
+          Navigator.pop(context);
+        },
+        primary: l10n.abortBtn,
+        primaryOnPressed: () {
+          Navigator.of(context).pop();
+          ref.read(AppScope.get().loggerManager).log('abort editing');
+          Navigator.of(context).pop();
+        },
+      );
+    }
   }
 
-  void _abort(WidgetRef ref) {
-    ref.read(AppScope.get().loggerManager).log('abort editing');
+  void _openEditor(WidgetRef ref) {
+    ref.read(AppScope.get().loggerManager).log('open editor');
+    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    if (context != null) {
+      Navigator.of(context).pushNamed(const_routes.editor);
+    }
   }
 }
