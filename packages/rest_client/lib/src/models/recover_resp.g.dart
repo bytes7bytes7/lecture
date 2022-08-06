@@ -15,6 +15,6 @@ RecoverResp _$RecoverRespFromJson(Map<String, dynamic> json) => RecoverResp(
 
 Map<String, dynamic> _$RecoverRespToJson(RecoverResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'sent_email': instance.sentEmail,
     };

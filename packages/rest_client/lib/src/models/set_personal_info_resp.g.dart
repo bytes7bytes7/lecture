@@ -19,7 +19,7 @@ SetPersonalInfoResp _$SetPersonalInfoRespFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SetPersonalInfoRespToJson(
         SetPersonalInfoResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'middle_name': instance.middleName,

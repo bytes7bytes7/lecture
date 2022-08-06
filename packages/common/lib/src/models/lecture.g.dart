@@ -6,7 +6,7 @@ part of 'lecture.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Lecture _$LectureFromJson(Map<String, dynamic> json) => Lecture(
+_$_Lecture _$$_LectureFromJson(Map<String, dynamic> json) => _$_Lecture(
       id: json['id'] as int,
       institution: json['institution'] as String,
       subject: json['subject'] as String,
@@ -17,7 +17,8 @@ Lecture _$LectureFromJson(Map<String, dynamic> json) => Lecture(
       author: User.fromJson(json['author'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$LectureToJson(Lecture instance) => <String, dynamic>{
+Map<String, dynamic> _$$_LectureToJson(_$_Lecture instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'institution': instance.institution,
       'subject': instance.subject,
@@ -25,5 +26,5 @@ Map<String, dynamic> _$LectureToJson(Lecture instance) => <String, dynamic>{
       'lecturer': instance.lecturer,
       'date': instance.date,
       'rating': instance.rating,
-      'author': instance.author,
+      'author': instance.author.toJson(),
     };

@@ -260,7 +260,7 @@ packages:
     source: sdk
     version: "0.0.0"
   freezed:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: freezed
       url: "https://pub.dartlang.org"
@@ -349,14 +349,14 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.0"
+    version: "4.6.0"
   json_serializable:
     dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.2.0"
+    version: "6.3.1"
   lint:
     dependency: transitive
     description:
@@ -371,6 +371,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  local_db:
+    dependency: "direct main"
+    description:
+      path: "packages/local_db"
+      relative: true
+    source: path
+    version: "0.0.1"
   logging:
     dependency: transitive
     description:
@@ -567,6 +574,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.4"
+  sembast:
+    dependency: transitive
+    description:
+      name: sembast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0+1"
   shared_preferences:
     dependency: transitive
     description:
@@ -705,6 +719,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0+2"
   table_calendar:
     dependency: "direct main"
     description:

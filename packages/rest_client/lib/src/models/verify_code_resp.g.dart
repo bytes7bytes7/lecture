@@ -16,6 +16,6 @@ VerifyCodeResp _$VerifyCodeRespFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$VerifyCodeRespToJson(VerifyCodeResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'verified': instance.verified,
     };

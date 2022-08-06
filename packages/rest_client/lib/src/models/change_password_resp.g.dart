@@ -17,7 +17,7 @@ ChangePasswordResp _$ChangePasswordRespFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ChangePasswordRespToJson(ChangePasswordResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'access': instance.access,
       'refresh': instance.refresh,
     };

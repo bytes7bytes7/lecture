@@ -16,7 +16,7 @@ SignInResp _$SignInRespFromJson(Map<String, dynamic> json) => SignInResp(
 
 Map<String, dynamic> _$SignInRespToJson(SignInResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'refresh': instance.refresh,
       'access': instance.access,
     };

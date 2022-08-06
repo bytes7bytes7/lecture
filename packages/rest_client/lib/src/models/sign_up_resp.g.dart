@@ -18,7 +18,7 @@ SignUpResp _$SignUpRespFromJson(Map<String, dynamic> json) => SignUpResp(
 
 Map<String, dynamic> _$SignUpRespToJson(SignUpResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
       'phone': instance.login,
       'first_name': instance.firstName,
       'last_name': instance.lastName,

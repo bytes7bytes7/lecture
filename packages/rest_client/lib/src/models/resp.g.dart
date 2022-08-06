@@ -13,5 +13,5 @@ Resp _$RespFromJson(Map<String, dynamic> json) => Resp(
     );
 
 Map<String, dynamic> _$RespToJson(Resp instance) => <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
     };

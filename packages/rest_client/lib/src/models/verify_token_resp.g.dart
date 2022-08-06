@@ -15,5 +15,5 @@ VerifyTokenResp _$VerifyTokenRespFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$VerifyTokenRespToJson(VerifyTokenResp instance) =>
     <String, dynamic>{
-      'error': instance.error,
+      'error': instance.error?.toJson(),
     };

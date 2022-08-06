@@ -1,10 +1,12 @@
 import 'dart:math';
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../dev.dart' as dev;
 import '../extensions/string_ext.dart';
 import 'user.dart';
+
+part 'lecture.freezed.dart';
 
 part 'lecture.g.dart';
 
@@ -27,33 +29,7 @@ enum Rating {
   unknown,
 }
 
-@JsonSerializable()
-class Lecture {
-  const Lecture({
-    required this.id,
-    required this.institution,
-    required this.subject,
-    required this.topic,
-    required this.lecturer,
-    required this.date,
-    required this.rating,
-    required this.author,
-  });
-
-  final int id;
-  final String institution;
-  final String subject;
-  final String topic;
-  final String lecturer;
-  final String date;
-  final double rating;
-  final User author;
-
-  factory Lecture.fromJson(Map<String, dynamic> json) =>
-      _$LectureFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LectureToJson(this);
-
+extension LectureX on Lecture {
   Rating getRating() {
     if (rating >= 4.0) {
       return Rating.excellent;
@@ -65,6 +41,23 @@ class Lecture {
 
     return Rating.bad;
   }
+}
+
+@freezed
+class Lecture with _$Lecture {
+  const factory Lecture({
+    required int id,
+    required String institution,
+    required String subject,
+    required String topic,
+    required String lecturer,
+    required String date,
+    required double rating,
+    required User author,
+  }) = _Lecture;
+
+  factory Lecture.fromJson(Map<String, Object?> json) =>
+      _$LectureFromJson(json);
 
   // TODO: remove it
   static Lecture random({bool isPublished = true}) {
