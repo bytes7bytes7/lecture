@@ -6,7 +6,7 @@ import 'dao.dart';
 
 class LectureDao implements Dao<Lecture> {
   LectureDao(this.name, this._localDB)
-      : _store = intMapStoreFactory.store(name);
+      : _store = StoreRef<int, Map<String, Object?>>(name);
 
   @override
   final String name;
@@ -17,6 +17,20 @@ class LectureDao implements Dao<Lecture> {
   Future<Database> get _db async => _localDB.db;
 
   @override
+  Future<Lecture?> get(int id) async {
+    final snapshot = await _store.findFirst(
+      await _db,
+      finder: _finder(id),
+    );
+
+    if (snapshot != null) {
+      return Lecture.fromJson(snapshot.value);
+    }
+
+    return null;
+  }
+
+  @override
   Future<List<Lecture>> getAll() async {
     final snapshots = await _store.find(await _db);
 
@@ -24,41 +38,34 @@ class LectureDao implements Dao<Lecture> {
   }
 
   @override
-  Future<int> insert(Lecture lecture) async {
-    // not published yet
-    if (lecture.id == 0) {
-      return _store.add(
-        await _db,
-        lecture.copyWith(id: DateTime.now().millisecondsSinceEpoch).toJson(),
-      );
-    }
-
-    return _store.add(await _db, lecture.toJson());
+  Future<int> insert(Lecture value) async {
+    return _store.add(await _db, value.toJson());
   }
 
   @override
-  Future<int> update(Lecture lecture) async {
-    final finder = Finder(
-      filter: Filter.custom((e) {
-        final value = e.value;
-        if (value is Map<String, Object?>) {
-          return value['id'] == lecture.id;
-        }
-
-        return false;
-      }),
-    );
-
+  Future<int> update(Lecture value) async {
     return _store.update(
       await _db,
-      lecture.toJson(),
-      finder: finder,
+      value.toJson(),
+      finder: _finder(value.id),
     );
   }
 
   @override
-  Future<int> delete(Lecture lecture) async {
-    final finder = Finder(filter: Filter.byKey(lecture.id));
+  Future<int> put(Lecture value) async {
+    final snapshot =
+        await _store.findFirst(await _db, finder: _finder(value.id));
+
+    if (snapshot != null) {
+      return update(value);
+    }
+
+    return insert(value);
+  }
+
+  @override
+  Future<int> delete(Lecture value) async {
+    final finder = Finder(filter: Filter.byKey(value.id));
 
     return _store.delete(await _db, finder: finder);
   }
@@ -66,5 +73,18 @@ class LectureDao implements Dao<Lecture> {
   @override
   Future<int> clear() async {
     return _store.delete(await _db);
+  }
+
+  Finder _finder(int id) {
+    return Finder(
+      filter: Filter.custom((e) {
+        final value = e.value;
+        if (value is Map<String, Object?>) {
+          return value['id'] == id;
+        }
+
+        return false;
+      }),
+    );
   }
 }

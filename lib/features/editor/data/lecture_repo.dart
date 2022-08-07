@@ -10,5 +10,5 @@ abstract class LectureRepo {
 
   Future<void> saveDraft(Lecture draft);
 
-  Future<void> loadDraft();
+  Future<void> loadDraft(int id);
 }

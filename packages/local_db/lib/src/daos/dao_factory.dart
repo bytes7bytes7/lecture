@@ -7,7 +7,7 @@ class DaoFactory {
 
   final LocalDB _localDB;
 
-  Dao notPublishedDrafts() => LectureDao('not_published_drafts', _localDB);
+  Dao drafts() => LectureDao('drafts', _localDB);
 
-  Dao publishedDrafts() => LectureDao('published_drafts', _localDB);
+  Dao bookmarks() => LectureDao('bookmarks', _localDB);
 }
