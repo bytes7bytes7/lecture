@@ -47,7 +47,7 @@ void main() async {
       overrides: [
         AppScope.get().loggerManager.overrideWithValue(manager),
         AppScope.get().restClient.overrideWithValue(
-              ClientFactory().createMockClient(),
+              const ClientFactory().createMockClient(),
             ),
       ],
       child: const App(),

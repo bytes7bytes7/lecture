@@ -35,5 +35,14 @@ void main() {
       final updated = lecture.copyWith(topic: 'newTopic');
       expect(await dao.update(updated), 1);
     });
+
+    test('update not existing object', () async {
+      final updated = lecture.copyWith(id: 1);
+      expect(await dao.update(updated), 0);
+    });
+
+    test('getAll', () async {
+      expect(await dao.getAll(), isNotEmpty);
+    });
   });
 }
