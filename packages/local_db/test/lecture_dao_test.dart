@@ -24,22 +24,49 @@ void main() {
       rating: 0,
     );
 
-    test('insert', () async {
-      expect(await dao.insert(lecture), isPositive);
+    test('insert existing object', () async {
+      await dao.clear();
+      await dao.insert(lecture);
+      expect(await dao.insert(lecture), null);
     });
 
-    test('clear', () async {
+    test('insert NOT existing object', () async {
+      await dao.clear();
+      expect(await dao.insert(lecture), lectureId);
+    });
+
+    test('delete existing object', () async {
+      await dao.insert(lecture);
+      expect(await dao.delete(lecture), isPositive);
+    });
+
+    test('delete NOT existing object', () async {
+      await dao.clear();
+      expect(await dao.delete(lecture), 0);
+    });
+
+    test('clear full store', () async {
       await dao.insert(lecture);
       expect(await dao.clear(), isPositive);
     });
 
-    test('get', () async {
+    test('clear empty store', () async {
+      await dao.clear();
+      expect(await dao.clear(), 0);
+    });
+
+    test('get existing object', () async {
       await dao.clear();
       await dao.insert(lecture);
       expect(await dao.get(lectureId), lecture);
     });
 
-    test('update', () async {
+    test('get not existing object', () async {
+      await dao.clear();
+      expect(await dao.get(lectureId), null);
+    });
+
+    test('update existing object', () async {
       await dao.clear();
       await dao.insert(lecture);
       final updated = lecture.copyWith(topic: 'newTopic');
@@ -51,20 +78,25 @@ void main() {
       expect(await dao.update(lecture), 0);
     });
 
-    test('getAll', () async {
+    test('getAll from full store', () async {
       await dao.insert(lecture);
       expect(await dao.getAll(), isNotEmpty);
     });
 
-    test('put object that does NOT exist', () async {
+    test('getAll from empty store', () async {
       await dao.clear();
-      expect(await dao.put(lecture), 1);
+      expect(await dao.getAll(), isEmpty);
     });
 
-    test('put object that DOES exist', () async {
+    test('put existing object', () async {
       await dao.clear();
       await dao.insert(lecture);
-      expect(await dao.put(lecture), 1);
+      expect(await dao.put(lecture), lecture);
+    });
+
+    test('put NOT existing object', () async {
+      await dao.clear();
+      expect(await dao.put(lecture), lecture);
     });
   });
 }

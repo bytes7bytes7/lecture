@@ -8,13 +8,13 @@ abstract class Dao<T> {
   Future<List<T>> getAll();
 
   /// Add new object to store.
-  Future<int> insert(T value);
+  Future<int?> insert(T value);
 
   /// Update value if the object exists in store.
   Future<int> update(T value);
 
   /// Update value if the object exists in store otherwise add new object to store.
-  Future<int> put(T value);
+  Future<T> put(T value);
 
   Future<int> delete(T value);
 

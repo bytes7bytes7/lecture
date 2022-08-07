@@ -18,9 +18,13 @@ class LectureDao implements Dao<Lecture> {
 
   @override
   Future<Lecture?> get(int id) async {
+    final finder = Finder(
+      filter: Filter.byKey(id),
+    );
+
     final snapshot = await _store.findFirst(
       await _db,
-      finder: _finder(id),
+      finder: finder,
     );
 
     if (snapshot != null) {
@@ -38,29 +42,27 @@ class LectureDao implements Dao<Lecture> {
   }
 
   @override
-  Future<int> insert(Lecture value) async {
-    return _store.add(await _db, value.toJson());
+  Future<int?> insert(Lecture value) async {
+    return _store.record(value.id).add(await _db, value.toJson());
   }
 
   @override
   Future<int> update(Lecture value) async {
+    final finder = Finder(
+      filter: Filter.byKey(value.id),
+    );
+
     return _store.update(
       await _db,
       value.toJson(),
-      finder: _finder(value.id),
+      finder: finder,
     );
   }
 
   @override
-  Future<int> put(Lecture value) async {
-    final snapshot =
-        await _store.findFirst(await _db, finder: _finder(value.id));
-
-    if (snapshot != null) {
-      return update(value);
-    }
-
-    return insert(value);
+  Future<Lecture> put(Lecture value) async {
+    final map = await _store.record(value.id).put(await _db, value.toJson());
+    return Lecture.fromJson(map);
   }
 
   @override
@@ -73,18 +75,5 @@ class LectureDao implements Dao<Lecture> {
   @override
   Future<int> clear() async {
     return _store.delete(await _db);
-  }
-
-  Finder _finder(int id) {
-    return Finder(
-      filter: Filter.custom((e) {
-        final value = e.value;
-        if (value is Map<String, Object?>) {
-          return value['id'] == id;
-        }
-
-        return false;
-      }),
-    );
   }
 }
