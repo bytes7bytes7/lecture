@@ -6,7 +6,6 @@ import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
-import '../widgets/line_button.dart';
 
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
@@ -61,23 +60,28 @@ class _Body extends ConsumerWidget {
     final l10n = context.l10n;
     final colorTheme = ref.watch(AppScope.get().colorTheme);
 
-    return Column(
-      children: AdaptiveThemeMode.values.map((e) {
-        return LineButton(
-          text: _getThemeTitle(e, l10n),
-          borderType: LineBorderType.bottom,
-          onPressed: () => _changeTheme(ref: ref, value: e),
-          actions: [
-            Icon(
-              (colorTheme == e)
-                  ? Icons.radio_button_on
-                  : Icons.radio_button_off,
-              color: theme.primaryColor,
-              size: const_measures.midIconSize,
-            ),
-          ],
-        );
-      }).toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: const_measures.mainHorMargin,
+      ),
+      child: Column(
+        children: AdaptiveThemeMode.values.map((e) {
+          return LineButton(
+            text: _getThemeTitle(e, l10n),
+            borderType: LineBorderType.bottom,
+            onPressed: () => _changeTheme(ref: ref, value: e),
+            actions: [
+              Icon(
+                (colorTheme == e)
+                    ? Icons.radio_button_on
+                    : Icons.radio_button_off,
+                color: theme.primaryColor,
+                size: const_measures.midIconSize,
+              ),
+            ],
+          );
+        }).toList(),
+      ),
     );
   }
 

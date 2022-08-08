@@ -6,6 +6,7 @@ import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
+import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
@@ -13,10 +14,6 @@ const _padding = EdgeInsets.symmetric(
 );
 const _separator = SizedBox(height: 25);
 const _topicContentPadding = EdgeInsets.all(10);
-const _editorPadding = EdgeInsets.symmetric(
-  horizontal: const_measures.smallPadding,
-  vertical: const_measures.smallPadding,
-);
 const _blockPadding = EdgeInsets.all(8.0);
 const _blockBottomOffset = 50.0;
 
@@ -189,7 +186,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                   Expanded(
                     child: ValueListenableBuilder(
                       valueListenable: _editMode,
-                      builder: (context, bool value, child) {
+                      builder: (context, bool isLocked, child) {
                         return Stack(
                           children: [
                             Positioned.fill(
@@ -202,22 +199,15 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                                     const_measures.mainBorderRadius,
                                   ),
                                 ),
-                                child: fq.QuillEditor(
+                                child: Editor(
                                   controller: _controller,
-                                  focusNode: _editorFocus,
-                                  scrollController: _editorScroll,
-                                  scrollable: true,
-                                  padding: _editorPadding,
-                                  autoFocus: false,
-                                  readOnly: !value,
-                                  expands: true,
-                                  locale: locale,
-                                  scrollPhysics: const BouncingScrollPhysics(),
-                                  placeholder: l10n.lectureText,
+                                  focus: _editorFocus,
+                                  scroll: _editorScroll,
+                                  isLocked: isLocked,
                                 ),
                               ),
                             ),
-                            if (!value)
+                            if (!isLocked)
                               Positioned(
                                 right: 0,
                                 left: 0,

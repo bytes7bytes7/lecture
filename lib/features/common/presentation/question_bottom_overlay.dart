@@ -11,7 +11,7 @@ const _btnPadding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
 );
 
-void showBottomOverlay({
+void showQuestionBottomOverlay({
   required BuildContext context,
   required String text,
   required String primary,
@@ -32,8 +32,12 @@ void showBottomOverlay({
             decoration: BoxDecoration(
               color: theme.scaffoldBackgroundColor,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(const_measures.overlayBorderRadius),
-                topRight: Radius.circular(const_measures.overlayBorderRadius),
+                topLeft: Radius.circular(
+                  const_measures.overlayBorderRadius,
+                ),
+                topRight: Radius.circular(
+                  const_measures.overlayBorderRadius,
+                ),
               ),
             ),
             child: Column(

@@ -5,6 +5,7 @@ export 'default_text_field.dart';
 export 'double_button.dart';
 export 'drag_container.dart';
 export 'highlighted_rich_text.dart';
+export 'line_button.dart';
 export 'loading_circle.dart';
 export 'mod_text_field.dart';
 export 'pin_text_field.dart';

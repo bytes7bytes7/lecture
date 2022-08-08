@@ -2,13 +2,17 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
-const _bodyPadding = EdgeInsets.symmetric(vertical: 15.0);
+const _bodyPadding = EdgeInsets.symmetric(
+  vertical: 15.0,
+  horizontal: const_measures.mainHorMargin,
+);
 const _my = 3;
 
 class SettingsScreen extends ConsumerWidget {
@@ -37,7 +41,7 @@ class SettingsScreen extends ConsumerWidget {
           icon: Icons.exit_to_app,
           tooltip: l10n.tooltipLogOut,
           onPressed: () {
-            showBottomOverlay(
+            showQuestionBottomOverlay(
               context: context,
               text: l10n.logOutAskAgain,
               secondary: l10n.cancelBtn,

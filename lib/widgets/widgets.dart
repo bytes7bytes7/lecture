@@ -3,7 +3,6 @@ export 'error_label.dart';
 export 'home_search_bar.dart';
 export 'lecture_card.dart';
 export 'lecture_header.dart';
-export 'line_button.dart';
 export 'rating_badge.dart';
 export 'rating_stars.dart';
 export 'section_title.dart';

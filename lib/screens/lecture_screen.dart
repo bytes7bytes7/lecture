@@ -81,7 +81,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
               Trio(
                 _PopupCallback.addBookmark,
                 Icons.bookmark_border,
-                l10n.addABookmark,
+                l10n.addBookmark,
               ),
               Trio(
                 _PopupCallback.goToAuthor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
 const _borderWidth = 1.0;
 
@@ -39,9 +39,6 @@ class LineButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 12.0,
-        ),
-        margin: const EdgeInsets.symmetric(
-          horizontal: const_measures.mainHorMargin,
         ),
         decoration: BoxDecoration(
           border: Border(

@@ -94,7 +94,7 @@ class LectureMetaScreen extends ConsumerWidget {
     if (context != null) {
       final l10n = context.l10n;
 
-      showBottomOverlay(
+      showQuestionBottomOverlay(
         context: context,
         text: l10n.abortEditAskAgain,
         secondary: l10n.cancelBtn,
