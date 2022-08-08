@@ -24,32 +24,36 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: DefaultAppBar(
-        prefix: Icons.arrow_back,
-        prefixTooltip: l10n.tooltipBack,
-        prefixOnPressed: () {
-          Navigator.pop(context);
-        },
+        prefixConfig: AppBarButtonConfig(
+          icon: Icons.arrow_back,
+          tooltip: l10n.tooltipBack,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: user.beautifulID,
         canCopyTitle: true,
-        suffix: Icons.exit_to_app,
-        suffixTooltip: l10n.tooltipLogOut,
-        suffixOnPressed: () {
-          showBottomOverlay(
-            context: context,
-            text: l10n.logOutAskAgain,
-            secondary: l10n.cancelBtn,
-            secondaryOnPressed: () {
-              Navigator.pop(context);
-            },
-            primary: l10n.logOut,
-            primaryOnPressed: () {
-              // TODO: call logOut via controller
-              ref.read(AppScope.get().loggerManager).log('log out');
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.of(context).pushNamed(const_routes.auth);
-            },
-          );
-        },
+        suffixConfig: AppBarButtonConfig(
+          icon: Icons.exit_to_app,
+          tooltip: l10n.tooltipLogOut,
+          onPressed: () {
+            showBottomOverlay(
+              context: context,
+              text: l10n.logOutAskAgain,
+              secondary: l10n.cancelBtn,
+              secondaryOnPressed: () {
+                Navigator.pop(context);
+              },
+              primary: l10n.logOut,
+              primaryOnPressed: () {
+                // TODO: call logOut via controller
+                ref.read(AppScope.get().loggerManager).log('log out');
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pushNamed(const_routes.auth);
+              },
+            );
+          },
+        ),
       ),
       body: Center(
         child: Column(

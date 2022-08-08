@@ -17,11 +17,13 @@ class NotFoundScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: DefaultAppBar(
-        prefix: Icons.arrow_back,
-        prefixTooltip: l10n.tooltipBack,
-        prefixOnPressed: () {
-          Navigator.pop(context);
-        },
+        prefixConfig: AppBarButtonConfig(
+          icon: Icons.arrow_back,
+          tooltip: l10n.tooltipBack,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: l10n.notFoundTitle,
       ),
       body: Center(

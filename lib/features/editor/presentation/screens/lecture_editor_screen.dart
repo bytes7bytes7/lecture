@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -18,16 +20,17 @@ const _zefyrPadding = EdgeInsets.symmetric(
 const _blockPadding = EdgeInsets.all(8.0);
 const _blockBottomOffset = 50.0;
 
-class LectureEditorScreen extends StatefulWidget {
+class LectureEditorScreen extends ConsumerStatefulWidget {
   const LectureEditorScreen({
     super.key,
   });
 
   @override
-  State<LectureEditorScreen> createState() => _LectureEditorScreenState();
+  ConsumerState<LectureEditorScreen> createState() =>
+      _LectureEditorScreenState();
 }
 
-class _LectureEditorScreenState extends State<LectureEditorScreen> {
+class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
   late final ZefyrController _controller;
   late final ValueNotifier<bool> _editMode;
 
@@ -59,15 +62,21 @@ class _LectureEditorScreenState extends State<LectureEditorScreen> {
       },
       child: Scaffold(
         appBar: DefaultAppBar(
-          prefix: Icons.arrow_back,
-          prefixTooltip: l10n.tooltipBack,
-          prefixOnPressed: () {
-            Navigator.pop(context);
-          },
+          prefixConfig: AppBarButtonConfig(
+            icon: Icons.arrow_back,
+            tooltip: l10n.tooltipBack,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: l10n.editor,
-          suffix: Icons.more_vert,
-          suffixTooltip: l10n.tooltipAdditional,
-          suffixOnPressed: () {},
+          suffixConfig: AppBarButtonConfig(
+            icon: Icons.more_vert,
+            tooltip: l10n.tooltipAdditional,
+            onPressed: () {
+              ref.read(AppScope.get().loggerManager).log('open menu');
+            },
+          ),
         ),
         body: SafeArea(
           child: Center(

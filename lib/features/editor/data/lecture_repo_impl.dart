@@ -22,11 +22,17 @@ class LectureRepoImpl implements LectureRepo {
   @override
   Future<void> saveDraft(Lecture draft) async {
     if (draft.id == 0) {
-      final updated = draft.copyWith(id: -DateTime.now().millisecondsSinceEpoch);
-      final res = _dao.insert(updated);
-      _draftSubject.add(updated);
+      final updated =
+          draft.copyWith(id: -DateTime.now().millisecondsSinceEpoch);
+      final id = await _dao.insert(updated);
+      if (id != null) {
+        _draftSubject.add(updated);
+      } else {
+        throw const EditorException.notAddedDraft();
+      }
     } else {
-
+      final saved = await _dao.put(draft);
+      _draftSubject.add(saved);
     }
   }
 

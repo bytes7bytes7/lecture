@@ -176,6 +176,7 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
+
 );
 
 const _lightTextTheme = TextTheme(

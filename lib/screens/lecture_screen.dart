@@ -1,10 +1,9 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rest_client/constants.dart' as const_api;
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/routes.dart' as const_routes;
+
 import '../custom/always_bouncing_scroll_physics.dart';
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
@@ -15,8 +14,7 @@ const _ratingInitValue = 0;
 const _dividerHeight = 20.0;
 const _dividerThickness = 1.0;
 const _dividerIndent = 15.0;
-const _menuTopOffset = 100.0;
-const _menuBottomOffset = 0.0;
+
 const _contentPadding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
   vertical: const_measures.mainVerMargin,
@@ -24,6 +22,11 @@ const _contentPadding = EdgeInsets.symmetric(
 const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
 const _menuItemSeparator = SizedBox(width: 10);
+
+enum _PopupCallback {
+  addBookmark,
+  goToAuthor,
+}
 
 class LectureScreen extends ConsumerStatefulWidget {
   const LectureScreen({
@@ -61,16 +64,52 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
 
     return Scaffold(
       appBar: DefaultAppBar(
-        prefix: Icons.arrow_back,
-        prefixTooltip: l10n.tooltipBack,
-        prefixOnPressed: () {
-          Navigator.pop(context);
-        },
+        prefixConfig: AppBarButtonConfig(
+          icon: Icons.arrow_back,
+          tooltip: l10n.tooltipBack,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: l10n.lecture,
         canCopyTitle: true,
-        suffix: Icons.more_vert,
-        suffixTooltip: l10n.tooltipAdditional,
-        suffixOnPressed: () => _showMenu(context, ref),
+        suffix: PopupMenuButton<_PopupCallback>(
+          onSelected: _onPopupSelected,
+          itemBuilder: (context) {
+            return <Trio<_PopupCallback, IconData, String>>[
+              Trio(
+                _PopupCallback.addBookmark,
+                Icons.bookmark_border,
+                l10n.addABookmark,
+              ),
+              Trio(
+                _PopupCallback.goToAuthor,
+                Icons.person_outline,
+                l10n.goToAuthor,
+              ),
+            ].map<PopupMenuItem<_PopupCallback>>((e) {
+              // do NOT add navigation to onTap,
+              // because it does NOT work until this menu closes
+              return PopupMenuItem(
+                value: e.first,
+                child: Row(
+                  children: [
+                    Icon(
+                      e.second,
+                      color: theme.primaryColor,
+                      size: const_measures.midIconSize,
+                    ),
+                    _menuItemSeparator,
+                    Text(
+                      '${e.third}',
+                      style: theme.textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         physics: const AlwaysBouncingScrollPhysics(),
@@ -156,67 +195,14 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
     );
   }
 
-  void _showMenu(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final l10n = context.l10n;
-
-    showMenu(
-      context: context,
-      // add 1 to left component to move menu to the right
-      position: const RelativeRect.fromLTRB(
-        const_measures.mainHorMargin + 1,
-        _menuTopOffset,
-        const_measures.mainHorMargin,
-        _menuBottomOffset,
-      ),
-      items: <Trio<int, IconData, String>>[
-        Trio(
-          0,
-          Icons.bookmark_border,
-          l10n.addABookmark,
-        ),
-        Trio(
-          1,
-          Icons.person_outline,
-          l10n.goToAuthor,
-        ),
-      ].map<PopupMenuItem>((e) {
-        // do NOT add navigation to onTap,
-        // because it does NOT work until this menu closes
-        return PopupMenuItem(
-          value: e.first,
-          child: Row(
-            children: [
-              Icon(
-                e.second,
-                color: theme.primaryColor,
-                size: const_measures.midIconSize,
-              ),
-              _menuItemSeparator,
-              Text(
-                '${e.third}',
-                style: theme.textTheme.bodyText1,
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    ).then((value) {
-      switch (value) {
-        case 0:
-          // TODO: add action "add a bookmark"
-          ref.read(AppScope.get().loggerManager).info('Добавить в закладки');
-          break;
-        case 1:
-          ref.read(AppScope.get().loggerManager).info('К автору');
-          Navigator.of(context).pushNamed(
-            const_routes.author,
-            arguments: <String, Object?>{
-              const_api.author: widget.lecture.author,
-            },
-          );
-          break;
-      }
-    });
+  void _onPopupSelected(_PopupCallback value) {
+    switch (value) {
+      case _PopupCallback.addBookmark:
+        ref.read(AppScope.get().loggerManager).log('add bookmark');
+        break;
+      case _PopupCallback.goToAuthor:
+        ref.read(AppScope.get().loggerManager).log('go to the author');
+        break;
+    }
   }
 }

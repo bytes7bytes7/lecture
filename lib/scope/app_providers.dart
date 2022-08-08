@@ -1,9 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_db/local_db.dart';
 import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
 
+import '../constants/app.dart' as const_app;
 import '../features/features.dart';
 import '../models/models.dart';
 import '../repositories/impl/impls.dart';
@@ -33,6 +35,9 @@ mixin AppProviders {
     );
   });
 
+  late final daoFactory =
+      Provider<DaoFactory>((ref) => DaoFactory(ref.watch(localDB)));
+
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
       FilterConfig.empty,
@@ -47,7 +52,11 @@ mixin AppProviders {
     return ref.read(filter.notifier).hasStateChanged;
   });
 
-  final lectureRepo = Provider<LectureRepo>((ref) => LectureRepoImpl());
+  late final draftRepo = Provider<LectureRepo>(
+    (ref) => LectureRepoImpl(ref.watch(daoFactory).drafts()),
+  );
+
+  final localDB = Provider<LocalDB>((ref) => LocalDB(const_app.localDBName));
 
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());

@@ -30,13 +30,15 @@ class HomeScreen extends ConsumerWidget {
       },
       child: Scaffold(
         appBar: DefaultAppBar(
+          prefixConfig: AppBarButtonConfig(
+            icon: Icons.sort,
+            tooltip: l10n.tooltipSettings,
+            onPressed: () {
+              Navigator.of(context).pushNamed(const_routes.settings);
+            },
+          ),
           title: const_app.appName,
           titleStyle: theme.textTheme.headline4,
-          prefix: Icons.sort,
-          prefixTooltip: l10n.tooltipSettings,
-          prefixOnPressed: () {
-            Navigator.of(context).pushNamed(const_routes.settings);
-          },
         ),
         body: RefreshIndicator(
           onRefresh: () => _onRefresh(ref),

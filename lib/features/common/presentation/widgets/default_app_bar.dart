@@ -4,6 +4,18 @@ import '../../../../constants/measures.dart' as const_measures;
 import 'copy_text.dart';
 import 'sized_icon_button.dart';
 
+class AppBarButtonConfig {
+  AppBarButtonConfig({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+}
+
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
     super.key,
@@ -11,22 +23,25 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.canCopyTitle = false,
     this.titleStyle,
     this.prefix,
-    this.prefixTooltip,
-    this.prefixOnPressed,
+    this.prefixConfig,
     this.suffix,
-    this.suffixTooltip,
-    this.suffixOnPressed,
-  });
+    this.suffixConfig,
+  })  : assert(
+          prefix == null || prefixConfig == null,
+          'set prefix or prefixConf',
+        ),
+        assert(
+          suffix == null || suffixConfig == null,
+          'set suffix or suffixConf',
+        );
 
   final String title;
   final bool canCopyTitle;
   final TextStyle? titleStyle;
-  final IconData? prefix;
-  final String? prefixTooltip;
-  final VoidCallback? prefixOnPressed;
-  final IconData? suffix;
-  final String? suffixTooltip;
-  final VoidCallback? suffixOnPressed;
+  final Widget? prefix;
+  final AppBarButtonConfig? prefixConfig;
+  final Widget? suffix;
+  final AppBarButtonConfig? suffixConfig;
 
   @override
   Size get preferredSize => const Size.fromHeight(const_measures.appBarHeight);
@@ -37,13 +52,11 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final style = titleStyle;
 
-    final prefIcon = prefix;
-    final prefTooltip = prefixTooltip;
-    final prefOnPressed = prefixOnPressed;
+    final pref = prefix;
+    final prefCon = prefixConfig;
 
-    final sufIcon = suffix;
-    final sufTooltip = suffixTooltip;
-    final sufOnPressed = suffixOnPressed;
+    final suf = suffix;
+    final sufCon = suffixConfig;
 
     return AppBar(
       title: canCopyTitle
@@ -56,32 +69,35 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: style ?? theme.appBarTheme.titleTextStyle,
             ),
       automaticallyImplyLeading: false,
-      leading:
-          (prefIcon != null && prefTooltip != null && prefOnPressed != null)
-              ? Container(
+      leading: (prefCon != null)
+          ? Container(
+              margin: const EdgeInsets.only(
+                left: const_measures.mainHorMargin,
+              ),
+              child: SizedIconButton(
+                icon: prefCon.icon,
+                tooltip: prefCon.tooltip,
+                onPressed: prefCon.onPressed,
+              ),
+            )
+          : (pref != null)
+              ? pref
+              : null,
+      actions: (suf != null)
+          ? [suf]
+          : [
+              if (sufCon != null)
+                Container(
                   margin: const EdgeInsets.only(
-                    left: const_measures.mainHorMargin,
+                    right: const_measures.mainHorMargin,
                   ),
                   child: SizedIconButton(
-                    icon: prefIcon,
-                    tooltip: prefTooltip,
-                    onPressed: prefOnPressed,
+                    icon: sufCon.icon,
+                    tooltip: sufCon.tooltip,
+                    onPressed: sufCon.onPressed,
                   ),
-                )
-              : null,
-      actions: [
-        if (sufIcon != null && sufTooltip != null && sufOnPressed != null)
-          Container(
-            margin: const EdgeInsets.only(
-              right: const_measures.mainHorMargin,
-            ),
-            child: SizedIconButton(
-              icon: sufIcon,
-              tooltip: sufTooltip,
-              onPressed: sufOnPressed,
-            ),
-          )
-      ],
+                ),
+            ],
     );
   }
 }

@@ -36,9 +36,11 @@ class LectureMetaScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: DefaultAppBar(
-        prefix: Icons.close,
-        prefixTooltip: l10n.tooltipAbortEdit,
-        prefixOnPressed: () => _abort(ref),
+        prefixConfig: AppBarButtonConfig(
+          icon: Icons.close,
+          tooltip: l10n.tooltipAbortEdit,
+          onPressed: () => _abort(ref),
+        ),
         title: l10n.editor,
       ),
       body: SingleChildScrollView(

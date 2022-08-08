@@ -1,3 +1,5 @@
+import 'package:common/common.dart';
+
 import '../local_db.dart';
 import 'dao.dart';
 import 'lecture_dao.dart';
@@ -7,7 +9,7 @@ class DaoFactory {
 
   final LocalDB _localDB;
 
-  Dao drafts() => LectureDao('drafts', _localDB);
+  Dao<Lecture> drafts() => LectureDao('drafts', _localDB);
 
-  Dao bookmarks() => LectureDao('bookmarks', _localDB);
+  Dao<Lecture> bookmarks() => LectureDao('bookmarks', _localDB);
 }
