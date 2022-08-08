@@ -1,6 +1,5 @@
 part of 'themes.dart';
 
-// TODO: choose dark mode colors
 final ThemeData darkTheme = ThemeData(
   primaryColor: _Colors.mountainMeadow,
   scaffoldBackgroundColor: _Colors.shark,
@@ -10,16 +9,16 @@ final ThemeData darkTheme = ThemeData(
   indicatorColor: _Colors.hokeyPokey,
   errorColor: _Colors.cinnabar,
   dividerColor: _Colors.doveGray,
-  colorScheme: const ColorScheme.dark(
-    secondary: _Colors.mountainMeadow,
-  ),
-  textTheme: _darkTextTheme,
   splashColor: _Colors.silverChalice.withOpacity(
     const_measures.midOpacity,
   ),
   highlightColor: _Colors.silverChalice.withOpacity(
     const_measures.smallOpacity,
   ),
+  colorScheme: const ColorScheme.dark(
+    secondary: _Colors.mountainMeadow,
+  ),
+  textTheme: _darkTextTheme,
   iconTheme: const IconThemeData(
     color: _Colors.mountainMeadow,
     size: const_measures.midIconSize,
@@ -124,17 +123,18 @@ final ThemeData darkTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _darkTextTheme.subtitle2?.copyWith(
+        _darkTextTheme.bodyText2?.copyWith(
           color: _Colors.shark,
         ),
       ),
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
+    isCollapsed: true,
     hintStyle: _darkTextTheme.bodyText1?.copyWith(
       color: _Colors.doveGray,
     ),
-    isCollapsed: true,
+    labelStyle: _lightTextTheme.subtitle2,
     enabledBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
         color: _Colors.doveGray,
@@ -216,6 +216,12 @@ const _darkTextTheme = TextTheme(
     fontFamily: _Fonts.roboto,
     color: _Colors.silverChalice,
   ),
+  bodyText2: TextStyle(
+    fontSize: _Fonts.bodyText2Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.silverChalice,
+  ),
   subtitle1: TextStyle(
     fontSize: _Fonts.subtitle1Size,
     fontWeight: FontWeight.normal,
@@ -224,8 +230,8 @@ const _darkTextTheme = TextTheme(
   ),
   subtitle2: TextStyle(
     fontSize: _Fonts.subtitle2Size,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     fontFamily: _Fonts.roboto,
-    color: _Colors.silverChalice,
+    color: _Colors.mountainMeadow,
   ),
 );

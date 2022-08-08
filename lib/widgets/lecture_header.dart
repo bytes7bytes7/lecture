@@ -61,7 +61,7 @@ class LectureHeader extends StatelessWidget {
               children: [
                 Text(
                   '${e.first}',
-                  style: theme.textTheme.subtitle2?.copyWith(
+                  style: theme.textTheme.bodyText2?.copyWith(
                     color: theme.primaryColor,
                   ),
                 ),

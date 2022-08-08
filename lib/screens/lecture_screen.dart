@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/measures.dart' as const_measures;
 
-import '../custom/always_bouncing_scroll_physics.dart';
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
@@ -21,7 +20,6 @@ const _contentPadding = EdgeInsets.symmetric(
 );
 const _topicPadding = EdgeInsets.symmetric(vertical: 15.0);
 const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
-const _menuItemSeparator = SizedBox(width: 10);
 
 enum _PopupCallback {
   addBookmark,
@@ -75,6 +73,9 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         canCopyTitle: true,
         suffix: PopupMenuButton<_PopupCallback>(
           onSelected: _onPopupSelected,
+          iconSize: const_measures.bigIconSize,
+          position: PopupMenuPosition.under,
+          tooltip: l10n.tooltipAdditional,
           itemBuilder: (context) {
             return <Trio<_PopupCallback, IconData, String>>[
               Trio(
@@ -99,7 +100,9 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                       color: theme.primaryColor,
                       size: const_measures.midIconSize,
                     ),
-                    _menuItemSeparator,
+                    const SizedBox(
+                      width: const_measures.smallPadding,
+                    ),
                     Text(
                       '${e.third}',
                       style: theme.textTheme.bodyText1,
@@ -167,7 +170,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                             ),
                             Text(
                               l10n.ratingTitle,
-                              style: theme.textTheme.subtitle2?.copyWith(
+                              style: theme.textTheme.bodyText2?.copyWith(
                                 color: theme.primaryColor,
                               ),
                             ),

@@ -77,6 +77,7 @@
       }
     }
   },
+  "lectureText": "Lecture's text...",
   "lightTheme": "Light",
   "link": "Link",
   "loggedInSuccess": "Logged in as {login}",

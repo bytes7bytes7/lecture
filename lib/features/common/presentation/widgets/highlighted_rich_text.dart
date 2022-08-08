@@ -14,7 +14,7 @@ class HighlightedTextSpan extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final defaultStyle = theme.textTheme.bodyText1;
-    final highlightStyle = theme.textTheme.subtitle2?.copyWith(
+    final highlightStyle = theme.textTheme.bodyText2?.copyWith(
       color: theme.errorColor,
     );
 

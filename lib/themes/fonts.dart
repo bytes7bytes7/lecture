@@ -8,8 +8,9 @@ class _Fonts {
   static const headline5Size = 23.0;
   static const headline6Size = 20.0;
   static const bodyText1Size = 17.0;
+  static const bodyText2Size = 17.0;
   static const subtitle1Size = 17.0;
-  static const subtitle2Size = 17.0;
+  static const subtitle2Size = 14.0;
 
   // families
   static const playfairDisplaySC = 'PlayfairDisplaySC';

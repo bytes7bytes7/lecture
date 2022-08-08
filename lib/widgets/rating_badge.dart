@@ -110,7 +110,7 @@ class RatingBadge extends StatelessWidget {
 
     return Text(
       text,
-      style: theme.textTheme.subtitle2?.copyWith(
+      style: theme.textTheme.bodyText2?.copyWith(
         color: color,
       ),
     );

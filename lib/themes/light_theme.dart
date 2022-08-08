@@ -9,16 +9,16 @@ final ThemeData lightTheme = ThemeData(
   indicatorColor: _Colors.hokeyPokey,
   errorColor: _Colors.cinnabar,
   dividerColor: _Colors.nobel,
-  colorScheme: const ColorScheme.light(
-    secondary: _Colors.mountainMeadow,
-  ),
-  textTheme: _lightTextTheme,
   splashColor: _Colors.gallery.withOpacity(
     const_measures.midOpacity,
   ),
   highlightColor: _Colors.gallery.withOpacity(
     const_measures.smallOpacity,
   ),
+  colorScheme: const ColorScheme.light(
+    secondary: _Colors.mountainMeadow,
+  ),
+  textTheme: _lightTextTheme,
   iconTheme: const IconThemeData(
     color: _Colors.mountainMeadow,
     size: const_measures.midIconSize,
@@ -117,17 +117,18 @@ final ThemeData lightTheme = ThemeData(
         ),
       ),
       textStyle: MaterialStateProperty.all(
-        _lightTextTheme.subtitle2?.copyWith(
+        _lightTextTheme.bodyText2?.copyWith(
           color: _Colors.white,
         ),
       ),
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
+    isCollapsed: true,
     hintStyle: _lightTextTheme.bodyText1?.copyWith(
       color: _Colors.nobel,
     ),
-    isCollapsed: true,
+    labelStyle: _lightTextTheme.subtitle2,
     enabledBorder: const UnderlineInputBorder(
       borderSide: BorderSide(
         color: _Colors.nobel,
@@ -176,7 +177,6 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
-
 );
 
 const _lightTextTheme = TextTheme(
@@ -210,6 +210,12 @@ const _lightTextTheme = TextTheme(
     fontFamily: _Fonts.roboto,
     color: _Colors.black,
   ),
+  bodyText2: TextStyle(
+    fontSize: _Fonts.bodyText2Size,
+    fontWeight: FontWeight.bold,
+    fontFamily: _Fonts.roboto,
+    color: _Colors.black,
+  ),
   subtitle1: TextStyle(
     fontSize: _Fonts.subtitle1Size,
     fontWeight: FontWeight.normal,
@@ -218,8 +224,8 @@ const _lightTextTheme = TextTheme(
   ),
   subtitle2: TextStyle(
     fontSize: _Fonts.subtitle2Size,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     fontFamily: _Fonts.roboto,
-    color: _Colors.black,
+    color: _Colors.mountainMeadow,
   ),
 );

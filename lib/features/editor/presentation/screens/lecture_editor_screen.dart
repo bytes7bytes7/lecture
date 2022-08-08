@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' as fq;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:zefyrka/zefyrka.dart' hide ToggleStyleButton, LinkStyleButton;
 
 import '../../../../constants/measures.dart' as const_measures;
-import '../../../../custom/zefyr_lite_toolbar/zefyr_lite_toolbar.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
@@ -14,11 +13,17 @@ const _padding = EdgeInsets.symmetric(
 );
 const _separator = SizedBox(height: 25);
 const _topicContentPadding = EdgeInsets.all(10);
-const _zefyrPadding = EdgeInsets.symmetric(
-  horizontal: 10.0,
+const _editorPadding = EdgeInsets.symmetric(
+  horizontal: const_measures.smallPadding,
+  vertical: const_measures.smallPadding,
 );
 const _blockPadding = EdgeInsets.all(8.0);
 const _blockBottomOffset = 50.0;
+
+enum _PopupCallback {
+  publish,
+  saveDraft,
+}
 
 class LectureEditorScreen extends ConsumerStatefulWidget {
   const LectureEditorScreen({
@@ -31,20 +36,26 @@ class LectureEditorScreen extends ConsumerStatefulWidget {
 }
 
 class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
-  late final ZefyrController _controller;
+  late final fq.QuillController _controller;
+  late final FocusNode _editorFocus;
+  late final ScrollController _editorScroll;
   late final ValueNotifier<bool> _editMode;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = ZefyrController();
-    _editMode = ValueNotifier<bool>(true);
+    _controller = fq.QuillController.basic();
+    _editorFocus = FocusNode();
+    _editorScroll = ScrollController();
+    _editMode = ValueNotifier(true);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _editorFocus.dispose();
+    _editorScroll.dispose();
     _editMode.dispose();
 
     super.dispose();
@@ -54,6 +65,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final locale = Localizations.localeOf(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -70,11 +82,46 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
             },
           ),
           title: l10n.editor,
-          suffixConfig: AppBarButtonConfig(
-            icon: Icons.more_vert,
+          suffix: PopupMenuButton<_PopupCallback>(
+            onSelected: _onPopupSelected,
+            iconSize: const_measures.bigIconSize,
+            position: PopupMenuPosition.under,
             tooltip: l10n.tooltipAdditional,
-            onPressed: () {
-              ref.read(AppScope.get().loggerManager).log('open menu');
+            itemBuilder: (context) {
+              return <Trio<_PopupCallback, IconData, String>>[
+                Trio(
+                  _PopupCallback.publish,
+                  Icons.cloud_upload,
+                  l10n.publish,
+                ),
+                Trio(
+                  _PopupCallback.saveDraft,
+                  Icons.save_alt,
+                  l10n.addToDrafts,
+                ),
+              ].map<PopupMenuItem<_PopupCallback>>((e) {
+                // do NOT add navigation to onTap,
+                // because it does NOT work until this menu closes
+                return PopupMenuItem(
+                  value: e.first,
+                  child: Row(
+                    children: [
+                      Icon(
+                        e.second,
+                        color: theme.primaryColor,
+                        size: const_measures.midIconSize,
+                      ),
+                      const SizedBox(
+                        width: const_measures.smallPadding,
+                      ),
+                      Text(
+                        '${e.third}',
+                        style: theme.textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                );
+              }).toList();
             },
           ),
         ),
@@ -84,10 +131,21 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
               padding: _padding,
               child: Column(
                 children: [
-                  ZefyrLiteToolbar(
+                  fq.QuillToolbar.basic(
                     controller: _controller,
-                    notifier: _editMode,
-                    dividerColor: theme.scaffoldBackgroundColor,
+                    locale: locale,
+                    iconTheme: fq.QuillIconTheme(
+                      iconUnselectedColor: theme.primaryColor,
+                      iconUnselectedFillColor: theme.disabledColor,
+                      iconSelectedColor: theme.scaffoldBackgroundColor,
+                      iconSelectedFillColor: theme.primaryColor,
+                      disabledIconColor: theme.hintColor,
+                      disabledIconFillColor: Colors.transparent,
+                    ),
+                    dialogTheme: fq.QuillDialogTheme(
+                      dialogBackgroundColor: theme.scaffoldBackgroundColor,
+                      inputTextStyle: theme.textTheme.bodyText1,
+                    ),
                   ),
                   _separator,
                   TextField(
@@ -144,13 +202,18 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                                     const_measures.mainBorderRadius,
                                   ),
                                 ),
-                                child: ZefyrEditor(
+                                child: fq.QuillEditor(
                                   controller: _controller,
-                                  autofocus: true,
+                                  focusNode: _editorFocus,
+                                  scrollController: _editorScroll,
+                                  scrollable: true,
+                                  padding: _editorPadding,
+                                  autoFocus: false,
                                   readOnly: !value,
-                                  scrollPhysics: const BouncingScrollPhysics(),
-                                  padding: _zefyrPadding,
                                   expands: true,
+                                  locale: locale,
+                                  scrollPhysics: const BouncingScrollPhysics(),
+                                  placeholder: l10n.lectureText,
                                 ),
                               ),
                             ),
@@ -187,5 +250,16 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
         ),
       ),
     );
+  }
+
+  void _onPopupSelected(_PopupCallback value) {
+    switch (value) {
+      case _PopupCallback.publish:
+        ref.read(AppScope.get().loggerManager).log('publish');
+        break;
+      case _PopupCallback.saveDraft:
+        ref.read(AppScope.get().loggerManager).log('save draft');
+        break;
+    }
   }
 }

@@ -50,7 +50,7 @@ class DoubleButton extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     secondary,
-                    style: theme.textTheme.subtitle2?.copyWith(
+                    style: theme.textTheme.bodyText2?.copyWith(
                       color: theme.hintColor,
                     ),
                   ),

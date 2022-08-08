@@ -110,7 +110,7 @@ class LectureCard extends StatelessWidget {
                       child: Text(
                         '${triple.second}',
                         style: (first == null)
-                            ? theme.textTheme.subtitle2
+                            ? theme.textTheme.bodyText2
                             : theme.textTheme.bodyText1,
                         overflow: TextOverflow.ellipsis,
                       ),

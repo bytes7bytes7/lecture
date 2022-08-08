@@ -33,7 +33,7 @@ class NotFoundScreen extends ConsumerWidget {
             const Spacer(),
             Text(
               l10n.notFoundBody,
-              style: theme.textTheme.subtitle2,
+              style: theme.textTheme.bodyText2,
             ),
             const Spacer(),
             SingleButton(

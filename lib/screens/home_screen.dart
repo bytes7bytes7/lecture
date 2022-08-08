@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/app.dart' as const_app;
 import '../constants/routes.dart' as const_routes;
-import '../custom/always_bouncing_scroll_physics.dart';
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../scope/app_scope.dart';
