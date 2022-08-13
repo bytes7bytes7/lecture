@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
@@ -70,18 +71,20 @@ class SettingsScreen extends ConsumerWidget {
                 padding: _bodyPadding,
                 child: Column(
                   children: [
-                    ...<Quartet<IconData, String, VoidCallback, List<Widget>>>[
-                      Quartet(
+                    ...<Tuple4<IconData, String, VoidCallback, List<Widget>>>[
+                      Tuple4(
                         Icons.person,
                         l10n.accountTitle,
                         () => _openAccount(context),
+                        const [],
                       ),
-                      Quartet(
+                      Tuple4(
                         Icons.brightness_6_rounded,
                         l10n.colorThemeTitle,
                         () => _openColorTheme(context),
+                        const [],
                       ),
-                      Quartet(
+                      Tuple4(
                         Icons.bookmark,
                         l10n.bookmarks,
                         () => _openBookmarks(context),
@@ -90,7 +93,7 @@ class SettingsScreen extends ConsumerWidget {
                             Badge(value: '${user.bookmarks?.length}'),
                         ],
                       ),
-                      Quartet(
+                      Tuple4(
                         Icons.insert_drive_file,
                         l10n.myLectures,
                         () => _openMyLectures(context),
@@ -100,10 +103,10 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                     ].map((e) {
                       return LineButton(
-                        icon: e.first,
-                        text: '${e.second}',
-                        onPressed: e.third ?? () {},
-                        actions: e.fourth ?? [],
+                        icon: e.item1,
+                        text: e.item2,
+                        onPressed: e.item3,
+                        actions: e.item4,
                         borderType: LineBorderType.bottom,
                       );
                     }),

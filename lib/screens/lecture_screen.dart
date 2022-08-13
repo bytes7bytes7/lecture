@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
 
@@ -77,13 +78,13 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
           position: PopupMenuPosition.under,
           tooltip: l10n.tooltipAdditional,
           itemBuilder: (context) {
-            return <Trio<_PopupCallback, IconData, String>>[
-              Trio(
+            return <Tuple3<_PopupCallback, IconData, String>>[
+              Tuple3(
                 _PopupCallback.addBookmark,
                 Icons.bookmark_border,
                 l10n.addBookmark,
               ),
-              Trio(
+              Tuple3(
                 _PopupCallback.goToAuthor,
                 Icons.person_outline,
                 l10n.goToAuthor,
@@ -92,11 +93,11 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
               // do NOT add navigation to onTap,
               // because it does NOT work until this menu closes
               return PopupMenuItem(
-                value: e.first,
+                value: e.item1,
                 child: Row(
                   children: [
                     Icon(
-                      e.second,
+                      e.item2,
                       color: theme.primaryColor,
                       size: const_measures.midIconSize,
                     ),
@@ -104,7 +105,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                       width: const_measures.smallPadding,
                     ),
                     Text(
-                      '${e.third}',
+                      e.item3,
                       style: theme.textTheme.bodyText1,
                     ),
                   ],

@@ -1,10 +1,10 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:rest_client/constants.dart' as const_api;
+import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
 import '../constants/routes.dart' as const_routes;
-import '../features/common/common.dart';
 import 'rating_badge.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -62,8 +62,8 @@ class LectureCard extends StatelessWidget {
             );
           },
           child: Column(
-            children: [
-              Trio(
+            children: <Tuple3<IconData?, String, Widget?>>[
+              Tuple3(
                 null,
                 lecture.topic,
                 RatingBadge(
@@ -71,15 +71,17 @@ class LectureCard extends StatelessWidget {
                   amount: lecture.rating,
                 ),
               ),
-              Trio(
+              Tuple3(
                 Icons.record_voice_over,
                 shortFIO(lecture.lecturer),
+                null,
               ),
-              Trio(
+              Tuple3(
                 Icons.school,
                 lecture.subject,
+                null,
               ),
-              Trio(
+              Tuple3(
                 Icons.person,
                 lecture.author.getFio(),
                 Text(
@@ -89,9 +91,9 @@ class LectureCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ].map((triple) {
-              final first = triple.first;
-              final third = triple.third;
+            ].map((e) {
+              final first = e.item1;
+              final third = e.item3;
 
               return Padding(
                 padding: (first == null) ? _titlePadding : _subtitlePadding,
@@ -108,7 +110,7 @@ class LectureCard extends StatelessWidget {
                     ],
                     Expanded(
                       child: Text(
-                        '${triple.second}',
+                        e.item2,
                         style: (first == null)
                             ? theme.textTheme.bodyText2
                             : theme.textTheme.bodyText1,

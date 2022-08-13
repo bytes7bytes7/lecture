@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
@@ -69,9 +70,9 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
         child: Column(
           children: [
             ...<
-                Sextet<IconData, String, bool, TextEditingController,
+                Tuple6<IconData, String, bool, TextEditingController,
                     FormFieldValidator<String>, ValueNotifier<bool>>>[
-              Sextet(
+              Tuple6(
                 Icons.https,
                 l10n.password,
                 state is! AsyncLoading,
@@ -82,7 +83,7 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
                 ),
                 _passObscure,
               ),
-              Sextet(
+              Tuple6(
                 Icons.https,
                 l10n.repeatPassword,
                 state is! AsyncLoading,
@@ -96,20 +97,14 @@ class _ChangeOverlayState extends ConsumerState<ChangePasswordOverlay> {
               ),
             ].map(
               (e) {
-                final notifier = e.sixth;
-
-                if (notifier != null) {
-                  return SecureTextField(
-                    icon: e.first,
-                    hint: e.second,
-                    enabled: e.third,
-                    controller: e.fourth,
-                    validator: e.fifth,
-                    obscure: notifier,
-                  );
-                }
-
-                return const SizedBox.shrink();
+                return SecureTextField(
+                  icon: e.item1,
+                  hint: e.item2,
+                  enabled: e.item3,
+                  controller: e.item4,
+                  validator: e.item5,
+                  obscure: e.item6,
+                );
               },
             ),
           ],

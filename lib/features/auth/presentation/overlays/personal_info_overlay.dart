@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
@@ -67,9 +68,9 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
         child: Column(
           children: [
             ...<
-                Quintet<IconData, String, bool, TextEditingController,
-                    FormFieldValidator<String>>>[
-              Quintet(
+                Tuple5<IconData, String, bool, TextEditingController,
+                    FormFieldValidator<String>?>>[
+              Tuple5(
                 Icons.person,
                 l10n.firstName,
                 state is! AsyncLoading,
@@ -79,7 +80,7 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
                   l10n: l10n,
                 ),
               ),
-              Quintet(
+              Tuple5(
                 Icons.person,
                 l10n.lastName,
                 state is! AsyncLoading,
@@ -89,21 +90,21 @@ class _PersonalInfoOverlayState extends ConsumerState<PersonalInfoOverlay> {
                   l10n: l10n,
                 ),
               ),
-              Quintet(
+              Tuple5(
                 Icons.person,
                 l10n.middleName,
                 state is! AsyncLoading,
                 _middleNameController,
-                // no validator
+                null,
               ),
             ].map(
               (e) {
                 return DefaultTextField(
-                  icon: e.first,
-                  hint: e.second,
-                  enabled: e.third,
-                  controller: e.fourth,
-                  validator: e.fifth,
+                  icon: e.item1,
+                  hint: e.item2,
+                  enabled: e.item3,
+                  controller: e.item4,
+                  validator: e.item5,
                 );
               },
             ),

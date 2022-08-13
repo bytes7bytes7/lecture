@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
@@ -60,9 +61,9 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
         child: Column(
           children: [
             ...<
-                Sextet<IconData, String, bool, TextInputType,
+                Tuple6<IconData, String, bool, TextInputType,
                     TextEditingController, FormFieldValidator<String>>>[
-              Sextet(
+              Tuple6(
                 Icons.mail,
                 l10n.email,
                 state is! AsyncLoading,
@@ -76,12 +77,12 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
             ].map(
               (e) {
                 return DefaultTextField(
-                  icon: e.first,
-                  hint: e.second,
-                  enabled: e.third,
-                  inputType: e.fourth,
-                  controller: e.fifth,
-                  validator: e.sixth,
+                  icon: e.item1,
+                  hint: e.item2,
+                  enabled: e.item3,
+                  inputType: e.item4,
+                  controller: e.item5,
+                  validator: e.item6,
                 );
               },
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as fq;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
@@ -85,13 +86,13 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
             position: PopupMenuPosition.under,
             tooltip: l10n.tooltipAdditional,
             itemBuilder: (context) {
-              return <Trio<_PopupCallback, IconData, String>>[
-                Trio(
+              return <Tuple3<_PopupCallback, IconData, String>>[
+                Tuple3(
                   _PopupCallback.publish,
                   Icons.cloud_upload,
                   l10n.publish,
                 ),
-                Trio(
+                Tuple3(
                   _PopupCallback.saveDraft,
                   Icons.save_alt,
                   l10n.addToDrafts,
@@ -100,11 +101,11 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                 // do NOT add navigation to onTap,
                 // because it does NOT work until this menu closes
                 return PopupMenuItem(
-                  value: e.first,
+                  value: e.item1,
                   child: Row(
                     children: [
                       Icon(
-                        e.second,
+                        e.item2,
                         color: theme.primaryColor,
                         size: const_measures.midIconSize,
                       ),
@@ -112,7 +113,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                         width: const_measures.smallPadding,
                       ),
                       Text(
-                        '${e.third}',
+                        e.item3,
                         style: theme.textTheme.bodyText1,
                       ),
                     ],

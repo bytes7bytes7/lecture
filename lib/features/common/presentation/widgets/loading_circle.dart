@@ -8,8 +8,10 @@ class LoadingCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: CircularProgressIndicator(
-        strokeWidth: _strokeWidth,
+      child: RepaintBoundary(
+        child: CircularProgressIndicator(
+          strokeWidth: _strokeWidth,
+        ),
       ),
     );
   }
