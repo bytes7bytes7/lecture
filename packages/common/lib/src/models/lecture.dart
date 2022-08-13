@@ -59,6 +59,19 @@ class Lecture with _$Lecture {
   factory Lecture.fromJson(Map<String, Object?> json) =>
       _$LectureFromJson(json);
 
+  static Lecture empty(User me) {
+    return Lecture(
+      id: 0,
+      institution: '',
+      subject: '',
+      topic: '',
+      lecturer: '',
+      date: '',
+      rating: 0,
+      author: me,
+    );
+  }
+
   // TODO: remove it
   static Lecture random({bool isPublished = true}) {
     final id = dev.randomInt(pow(10, 6).toInt());

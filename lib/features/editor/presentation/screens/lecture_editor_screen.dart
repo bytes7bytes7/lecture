@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as fq;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +36,8 @@ class LectureEditorScreen extends ConsumerStatefulWidget {
 }
 
 class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
-  late final fq.QuillController _controller;
+  late final TextEditingController _topicController;
+  late final fq.QuillController _draftController;
   late final FocusNode _editorFocus;
   late final ScrollController _editorScroll;
   late final ValueNotifier<bool> _editMode;
@@ -43,7 +46,8 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
   void initState() {
     super.initState();
 
-    _controller = fq.QuillController.basic();
+    _topicController = TextEditingController();
+    _draftController = fq.QuillController.basic();
     _editorFocus = FocusNode();
     _editorScroll = ScrollController();
     _editMode = ValueNotifier(true);
@@ -51,7 +55,8 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _topicController.dispose();
+    _draftController.dispose();
     _editorFocus.dispose();
     _editorScroll.dispose();
     _editMode.dispose();
@@ -130,7 +135,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
               child: Column(
                 children: [
                   fq.QuillToolbar.basic(
-                    controller: _controller,
+                    controller: _draftController,
                     locale: locale,
                     iconTheme: fq.QuillIconTheme(
                       iconUnselectedColor: theme.primaryColor,
@@ -147,6 +152,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                   ),
                   _separator,
                   TextField(
+                    controller: _topicController,
                     autofocus: true,
                     scrollPhysics: const BouncingScrollPhysics(),
                     style: theme.textTheme.bodyText1,
@@ -201,7 +207,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                                   ),
                                 ),
                                 child: Editor(
-                                  controller: _controller,
+                                  controller: _draftController,
                                   focus: _editorFocus,
                                   scroll: _editorScroll,
                                   isLocked: isLocked,
@@ -247,9 +253,35 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
     switch (value) {
       case _PopupCallback.publish:
         ref.read(AppScope.get().loggerManager).log('publish');
+
+        final editorRepo = ref.read(AppScope.get().editorRepo);
+
+        final lecture = editorRepo.lecture.value.copyWith(
+          topic: _topicController.text,
+        );
+        final content = editorRepo.content.value.copyWith(
+          text: jsonEncode(_draftController.document.toDelta().toJson()),
+        );
+
+        ref
+            .read(AppScope.get().editorController.notifier)
+            .publish(lecture, content);
         break;
       case _PopupCallback.saveDraft:
         ref.read(AppScope.get().loggerManager).log('save draft');
+        final editorRepo = ref.read(AppScope.get().editorRepo);
+
+        final lecture = editorRepo.lecture.value.copyWith(
+          topic: _topicController.text,
+        );
+
+        final content = editorRepo.content.value.copyWith(
+          text: jsonEncode(_draftController.document.toDelta().toJson()),
+        );
+
+        ref
+            .read(AppScope.get().editorController.notifier)
+            .saveDraft(lecture, content);
         break;
     }
   }

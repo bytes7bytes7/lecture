@@ -1,30 +1,29 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:math';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../dev.dart' as dev;
 
+part 'content.freezed.dart';
+
 part 'content.g.dart';
 
-@JsonSerializable()
-class Content {
-  Content({
-    required this.text,
-    required this.photos,
-    required this.videos,
-    required this.audios,
-  });
-
-  final String text;
-  final List<String> photos;
-  final List<String> videos;
-  final List<String> audios;
+@freezed
+class Content with _$Content {
+  const factory Content({
+    required int id,
+    required String text,
+    required List<String> photos,
+    required List<String> videos,
+    required List<String> audios,
+  }) = _Content;
 
   factory Content.fromJson(Map<String, dynamic> json) =>
       _$ContentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ContentToJson(this);
-
   // TODO: remove it
   static Content random() {
+    final id = dev.randomInt(pow(10, 6).toInt());
     final text = dev.randomString(dev.randomInt(300) + 5000);
     final photos = List<String>.generate(
       dev.randomInt(10),
@@ -40,6 +39,7 @@ class Content {
     );
 
     return Content(
+      id: id,
       text: text,
       photos: photos,
       videos: videos,

@@ -38,6 +38,21 @@ mixin AppProviders {
   late final daoFactory =
       Provider<DaoFactory>((ref) => DaoFactory(ref.watch(localDB)));
 
+  late final editorController =
+      StateNotifierProvider<EditorController, AsyncValue<void>>((ref) {
+    return EditorController(editorRepo: ref.watch(editorRepo));
+  });
+
+  late final editorRepo = Provider<EditorRepo>(
+    (ref) {
+      final factory = ref.watch(daoFactory);
+      return EditorRepoImpl(
+        factory.draftLecture(),
+        factory.draftContent(),
+      );
+    },
+  );
+
   final filter = StateNotifierProvider<FilterNotifier, FilterConfig>((ref) {
     return FilterNotifier(
       FilterConfig.empty,
@@ -51,10 +66,6 @@ mixin AppProviders {
     ref.watch(filter);
     return ref.read(filter.notifier).hasStateChanged;
   });
-
-  late final draftRepo = Provider<LectureRepo>(
-    (ref) => LectureRepoImpl(ref.watch(daoFactory).drafts()),
-  );
 
   final localDB = Provider<LocalDB>((ref) => LocalDB(const_app.localDBName));
 
