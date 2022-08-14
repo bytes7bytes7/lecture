@@ -4,6 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'features/features.dart';
 import 'screens/screens.dart';
 
+extension AppRoutesX on GoRoute {
+  String get title {
+    final n = name;
+    if (n != null) {
+      return n;
+    }
+
+    throw Exception('Route has no name!');
+  }
+}
+
 class AppRoutes {
   AppRoutes._();
 

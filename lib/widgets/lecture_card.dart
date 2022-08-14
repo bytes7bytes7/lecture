@@ -55,7 +55,7 @@ class LectureCard extends StatelessWidget {
           padding: _padding,
           onPressed: () {
             // TODO: pass parameters
-            context.go(AppRoutes.get().lecture.path);
+            context.goNamed(AppRoutes.get().lecture.title);
           },
           child: Column(
             children: <Tuple3<IconData?, String, Widget?>>[

@@ -1,6 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_db/local_db.dart';
 import 'package:quick_quotes_quill/all.dart';
 import 'package:rest_client/rest_client.dart';
@@ -27,12 +27,9 @@ mixin AppProviders {
     );
   });
 
-  late final colorTheme =
+  final colorTheme =
       StateNotifierProvider<ColorThemeNotifier, AdaptiveThemeMode>((ref) {
-    return ColorThemeNotifier(
-      ref: ref,
-      navigatorKey: navigatorKey,
-    );
+    return ColorThemeNotifier();
   });
 
   late final daoFactory =
@@ -73,6 +70,8 @@ mixin AppProviders {
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
   final restClient = Provider<RestClient>((ref) => throw UnimplementedError());
+
+  final router = Provider<GoRouter>((ref) => throw UnimplementedError());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
 

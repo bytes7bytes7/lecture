@@ -163,7 +163,7 @@ class AuthScreen extends ConsumerWidget {
           break;
         case AuthState.loggedIn:
           // TODO: GoRouter must redirect to home after login
-          final context = ref.read(AppScope.get().navigatorKey).currentContext;
+          final context = ref.read(AppScope.get().router).navigator?.context;
           if (context != null) {
             final l10n = context.l10n;
             showSnackBar(
@@ -219,7 +219,7 @@ class AuthScreen extends ConsumerWidget {
     }
 
     if (next is AsyncError<AuthState>) {
-      final context = ref.read(AppScope.get().navigatorKey).currentContext;
+      final context = ref.read(AppScope.get().router).navigator?.context;
       if (context != null) {
         final l10n = context.l10n;
         final info = _getReason(next.error, l10n);
@@ -234,18 +234,18 @@ class AuthScreen extends ConsumerWidget {
   }
 
   void _goHome(WidgetRef ref) {
-    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    final context = ref.read(AppScope.get().router).navigator?.context;
     if (context != null) {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      context.go(AppRoutes.get().home.path);
+      context.goNamed(AppRoutes.get().home.title);
     }
   }
 
   void _goAuth(WidgetRef ref) {
-    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    final context = ref.read(AppScope.get().router).navigator?.context;
     if (context != null) {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      context.go(AppRoutes.get().auth.path);
+      context.goNamed(AppRoutes.get().auth.title);
     }
   }
 

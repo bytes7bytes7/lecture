@@ -56,7 +56,7 @@ class SettingsScreen extends ConsumerWidget {
                 // TODO: GoRouter must redirect
                 ref.read(AppScope.get().loggerManager).log('log out');
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                context.go(AppRoutes.get().auth.path);
+                context.goNamed(AppRoutes.get().auth.title);
               },
             );
           },
@@ -129,22 +129,22 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _openAccount(BuildContext context) {
-    context.go(AppRoutes.get().account.path);
+    context.goNamed(AppRoutes.get().account.title);
   }
 
   void _openColorTheme(BuildContext context) {
-    context.go(AppRoutes.get().theme.path);
+    context.goNamed(AppRoutes.get().theme.title);
   }
 
   void _openBookmarks(BuildContext context) {
-    context.go(AppRoutes.get().bookmarks.path);
+    context.goNamed(AppRoutes.get().bookmarks.title);
   }
 
   void _openMyLectures(BuildContext context) {
-    context.go(AppRoutes.get().myLectures.path);
+    context.goNamed(AppRoutes.get().myLectures.title);
   }
 
   void _openAboutApp(BuildContext context) {
-    context.go(AppRoutes.get().aboutApp.path);
+    context.goNamed(AppRoutes.get().aboutApp.title);
   }
 }

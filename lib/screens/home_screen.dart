@@ -34,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.sort,
             tooltip: l10n.tooltipSettings,
             onPressed: () {
-              context.go(AppRoutes.get().settings.path);
+              context.goNamed(AppRoutes.get().settings.title);
             },
           ),
           title: const_app.appName,
@@ -140,7 +140,7 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            context.go(AppRoutes.get().editorInfo.path);
+            context.goNamed(AppRoutes.get().editorInfo.title);
           },
         ),
       ),

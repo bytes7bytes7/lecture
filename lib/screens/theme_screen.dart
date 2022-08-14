@@ -69,7 +69,7 @@ class _Body extends ConsumerWidget {
           return LineButton(
             text: _getThemeTitle(e, l10n),
             borderType: LineBorderType.bottom,
-            onPressed: () => _changeTheme(ref: ref, value: e),
+            onPressed: () => _changeTheme(context, ref, e),
             actions: [
               Icon(
                 (colorTheme == e)
@@ -85,11 +85,12 @@ class _Body extends ConsumerWidget {
     );
   }
 
-  void _changeTheme({
-    required WidgetRef ref,
-    required AdaptiveThemeMode value,
-  }) {
-    ref.read(AppScope.get().colorTheme.notifier).set(value);
+  void _changeTheme(
+    BuildContext context,
+    WidgetRef ref,
+    AdaptiveThemeMode value,
+  ) {
+    ref.read(AppScope.get().colorTheme.notifier).set(context, value);
   }
 
   String _getThemeTitle(AdaptiveThemeMode theme, AppLocalizations l10n) {

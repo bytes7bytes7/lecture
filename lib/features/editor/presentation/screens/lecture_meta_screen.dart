@@ -91,7 +91,7 @@ class LectureMetaScreen extends ConsumerWidget {
   }
 
   void _abort(WidgetRef ref) {
-    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    final context = ref.read(AppScope.get().router).navigator?.context;
     if (context != null) {
       final l10n = context.l10n;
 
@@ -114,9 +114,9 @@ class LectureMetaScreen extends ConsumerWidget {
 
   void _openEditor(WidgetRef ref) {
     ref.read(AppScope.get().loggerManager).log('open editor');
-    final context = ref.read(AppScope.get().navigatorKey).currentContext;
+    final context = ref.read(AppScope.get().router).navigator?.context;
     if (context != null) {
-      context.go(AppRoutes.get().editor.path);
+      context.goNamed(AppRoutes.get().editor.title);
     }
   }
 }

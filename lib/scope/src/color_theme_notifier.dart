@@ -5,35 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ColorThemeNotifier extends StateNotifier<AdaptiveThemeMode> {
-  ColorThemeNotifier({
-    required Ref ref,
-    required Provider<GlobalKey<NavigatorState>> navigatorKey,
-  })  : _ref = ref,
-        _navigatorKey = navigatorKey,
-        super(AdaptiveThemeMode.system) {
+  ColorThemeNotifier() : super(AdaptiveThemeMode.system) {
     _init();
   }
 
-  final Ref _ref;
-  final Provider<GlobalKey<NavigatorState>> _navigatorKey;
-
-  BuildContext? get _context => _ref.read(_navigatorKey).currentContext;
-
-  void set(AdaptiveThemeMode value) {
+  void set(BuildContext context, AdaptiveThemeMode value) {
     if (value != state) {
-      final context = _context;
-      if (context != null) {
-        switch (value) {
-          case AdaptiveThemeMode.light:
-            AdaptiveTheme.of(context).setLight();
-            break;
-          case AdaptiveThemeMode.dark:
-            AdaptiveTheme.of(context).setDark();
-            break;
-          case AdaptiveThemeMode.system:
-            AdaptiveTheme.of(context).setSystem();
-            break;
-        }
+      switch (value) {
+        case AdaptiveThemeMode.light:
+          AdaptiveTheme.of(context).setLight();
+          break;
+        case AdaptiveThemeMode.dark:
+          AdaptiveTheme.of(context).setDark();
+          break;
+        case AdaptiveThemeMode.system:
+          AdaptiveTheme.of(context).setSystem();
+          break;
       }
 
       state = value;
