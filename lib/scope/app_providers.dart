@@ -72,9 +72,6 @@ mixin AppProviders {
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
-  final navigatorKey =
-      Provider<GlobalKey<NavigatorState>>((ref) => GlobalKey<NavigatorState>());
-
   final restClient = Provider<RestClient>((ref) => throw UnimplementedError());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);

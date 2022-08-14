@@ -1,11 +1,12 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../constants/app.dart' as const_app;
-import '../constants/routes.dart' as const_routes;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -33,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.sort,
             tooltip: l10n.tooltipSettings,
             onPressed: () {
-              Navigator.of(context).pushNamed(const_routes.settings);
+              context.go(AppRoutes.get().settings.path);
             },
           ),
           title: const_app.appName,
@@ -139,7 +140,7 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(const_routes.meta);
+            context.go(AppRoutes.get().editorInfo.path);
           },
         ),
       ),

@@ -50,7 +50,7 @@ void main() async {
               const ClientFactory().createMockClient(),
             ),
       ],
-      child: const App(),
+      child: App(),
     ),
   );
 }

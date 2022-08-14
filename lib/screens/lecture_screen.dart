@@ -30,10 +30,10 @@ enum _PopupCallback {
 class LectureScreen extends ConsumerStatefulWidget {
   const LectureScreen({
     super.key,
-    required this.lecture,
+    required this.lectureId,
   });
 
-  final Lecture lecture;
+  final int lectureId;
 
   @override
   ConsumerState<LectureScreen> createState() => _LectureScreenState();
@@ -60,6 +60,9 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+
+    // TODO: make request
+    final lecture = Lecture.random();
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -121,7 +124,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
           padding: _contentPadding,
           child: Column(
             children: [
-              LectureHeader(lecture: widget.lecture),
+              LectureHeader(lecture: lecture),
               Divider(
                 height: _dividerHeight,
                 thickness: _dividerThickness,
@@ -130,7 +133,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
               Padding(
                 padding: _topicPadding,
                 child: Text(
-                  widget.lecture.topic,
+                  lecture.topic,
                   style: theme.textTheme.headline6,
                 ),
               ),

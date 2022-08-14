@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app.dart' as const_app;
-import '../../../../constants/routes.dart' as const_routes;
 import '../../../../l10n/l10n.dart';
+import '../../../../routes.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 import '../../data/data.dart';
@@ -14,8 +15,8 @@ import '../widgets/widgets.dart';
 const _logoSeparator = SizedBox(width: 5);
 const _mainFlex = 5;
 
-class AuthenticationScreen extends ConsumerWidget {
-  const AuthenticationScreen({
+class AuthScreen extends ConsumerWidget {
+  const AuthScreen({
     super.key,
   });
 
@@ -161,6 +162,7 @@ class AuthenticationScreen extends ConsumerWidget {
           );
           break;
         case AuthState.loggedIn:
+          // TODO: GoRouter must redirect to home after login
           final context = ref.read(AppScope.get().navigatorKey).currentContext;
           if (context != null) {
             final l10n = context.l10n;
@@ -174,6 +176,7 @@ class AuthenticationScreen extends ConsumerWidget {
           _goHome(ref);
           break;
         case AuthState.loggedOut:
+          // TODO: GoRouter must redirect to home after login
           _goAuth(ref);
           break;
         case AuthState.openRecover:
@@ -234,7 +237,7 @@ class AuthenticationScreen extends ConsumerWidget {
     final context = ref.read(AppScope.get().navigatorKey).currentContext;
     if (context != null) {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.of(context).pushReplacementNamed(const_routes.home);
+      context.go(AppRoutes.get().home.path);
     }
   }
 
@@ -242,7 +245,7 @@ class AuthenticationScreen extends ConsumerWidget {
     final context = ref.read(AppScope.get().navigatorKey).currentContext;
     if (context != null) {
       Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.of(context).pushReplacementNamed(const_routes.auth);
+      context.go(AppRoutes.get().auth.path);
     }
   }
 

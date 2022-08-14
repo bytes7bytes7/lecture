@@ -14,15 +14,17 @@ const _amount = 8;
 class AuthorScreen extends StatelessWidget {
   const AuthorScreen({
     super.key,
-    required this.author,
+    required this.authorId,
   });
 
-  final User author;
+  final int authorId;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    // TODO: make a request
+    final author = User.random();
 
     return Scaffold(
       appBar: DefaultAppBar(

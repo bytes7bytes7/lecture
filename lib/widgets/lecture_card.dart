@@ -1,10 +1,10 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:rest_client/constants.dart' as const_api;
+import 'package:go_router/go_router.dart';
 import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/routes.dart' as const_routes;
+import '../routes.dart';
 import 'rating_badge.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -54,12 +54,8 @@ class LectureCard extends StatelessWidget {
         child: MaterialButton(
           padding: _padding,
           onPressed: () {
-            Navigator.of(context).pushNamed(
-              const_routes.lecture,
-              arguments: <String, Object?>{
-                const_api.lecture: lecture,
-              },
-            );
+            // TODO: pass parameters
+            context.go(AppRoutes.get().lecture.path);
           },
           child: Column(
             children: <Tuple3<IconData?, String, Widget?>>[

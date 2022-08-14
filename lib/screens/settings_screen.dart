@@ -1,12 +1,13 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../constants/routes.dart' as const_routes;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -52,9 +53,10 @@ class SettingsScreen extends ConsumerWidget {
               primary: l10n.logOut,
               primaryOnPressed: () {
                 // TODO: call logOut via controller
+                // TODO: GoRouter must redirect
                 ref.read(AppScope.get().loggerManager).log('log out');
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.of(context).pushNamed(const_routes.auth);
+                context.go(AppRoutes.get().auth.path);
               },
             );
           },
@@ -127,22 +129,22 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _openAccount(BuildContext context) {
-    Navigator.of(context).pushNamed(const_routes.account);
+    context.go(AppRoutes.get().account.path);
   }
 
   void _openColorTheme(BuildContext context) {
-    Navigator.of(context).pushNamed(const_routes.theme);
+    context.go(AppRoutes.get().theme.path);
   }
 
   void _openBookmarks(BuildContext context) {
-    Navigator.of(context).pushNamed(const_routes.bookmark);
+    context.go(AppRoutes.get().bookmarks.path);
   }
 
   void _openMyLectures(BuildContext context) {
-    Navigator.of(context).pushNamed(const_routes.myLectures);
+    context.go(AppRoutes.get().myLectures.path);
   }
 
   void _openAboutApp(BuildContext context) {
-    Navigator.of(context).pushNamed(const_routes.aboutApp);
+    context.go(AppRoutes.get().aboutApp.path);
   }
 }

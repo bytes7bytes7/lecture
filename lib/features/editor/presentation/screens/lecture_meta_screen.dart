@@ -1,10 +1,11 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
-import '../../../../constants/routes.dart' as const_routes;
 import '../../../../l10n/l10n.dart';
+import '../../../../routes.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 
@@ -18,20 +19,20 @@ const _separator = SizedBox(height: 30);
 class LectureMetaScreen extends ConsumerWidget {
   const LectureMetaScreen({
     super.key,
-    required this.lecture,
+    required this.lectureId,
   });
 
-  final Lecture? lecture;
+  final int? lectureId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    // TODO: make request
     DateTime? date;
-    final dateStr = lecture?.date;
-    if (dateStr != null) {
-      date = DateTime.parse(dateStr);
+    if (lectureId != null) {
+      date = DateTime.parse(Lecture.random().date);
     }
 
     return Scaffold(
@@ -115,7 +116,7 @@ class LectureMetaScreen extends ConsumerWidget {
     ref.read(AppScope.get().loggerManager).log('open editor');
     final context = ref.read(AppScope.get().navigatorKey).currentContext;
     if (context != null) {
-      Navigator.of(context).pushNamed(const_routes.editor);
+      context.go(AppRoutes.get().editor.path);
     }
   }
 }
