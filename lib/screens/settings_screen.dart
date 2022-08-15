@@ -52,11 +52,9 @@ class SettingsScreen extends ConsumerWidget {
               },
               primary: l10n.logOut,
               primaryOnPressed: () {
-                // TODO: call logOut via controller
-                // TODO: GoRouter must redirect
                 ref.read(AppScope.get().loggerManager).log('log out');
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                context.goNamed(AppRoutes.get().auth.title);
+                // TODO: call logOut via controller
+                ref.read(AppScope.get().authRepo).logOut();
               },
             );
           },

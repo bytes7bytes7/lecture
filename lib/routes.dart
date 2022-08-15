@@ -4,7 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'features/features.dart';
 import 'screens/screens.dart';
 
-extension AppRoutesX on GoRoute {
+extension GoRouteStateX on GoRouterState {
+  String? get from {
+    return queryParams['from'];
+  }
+}
+
+extension GoRouteX on GoRoute {
   String get title {
     final n = name;
     if (n != null) {
@@ -28,6 +34,8 @@ class AppRoutes {
 
     return _inst = AppRoutes._();
   }
+
+  String fromLoc(String loc) => '?from=$loc';
 
   final aboutApp = GoRoute(
     path: 'about_app',

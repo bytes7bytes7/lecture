@@ -30,7 +30,7 @@ class AuthScreen extends ConsumerWidget {
 
     ref.listen<AsyncValue<AuthState>>(
       AppScope.get().authController,
-      (prev, next) => _onData(prev, next, ref),
+      (prev, next) => _onData(context, ref, prev, next),
     );
 
     return GestureDetector(
@@ -141,9 +141,10 @@ class AuthScreen extends ConsumerWidget {
   }
 
   void _onData(
+    BuildContext context,
+    WidgetRef ref,
     AsyncValue<AuthState>? prev,
     AsyncValue<AuthState> next,
-    WidgetRef ref,
   ) {
     final data = next.asData?.value;
     if (data != null) {
@@ -162,22 +163,16 @@ class AuthScreen extends ConsumerWidget {
           );
           break;
         case AuthState.loggedIn:
-          // TODO: GoRouter must redirect to home after login
-          final context = ref.read(AppScope.get().router).navigator?.context;
-          if (context != null) {
-            final l10n = context.l10n;
-            showSnackBar(
-              ref: ref,
-              text: l10n.loggedInSuccess(
-                ref.read(AppScope.get().authRepo).user.value.email ?? '?',
-              ),
-            );
-          }
-          _goHome(ref);
+          final l10n = context.l10n;
+          showSnackBar(
+            context,
+            l10n.loggedInSuccess(
+              ref.read(AppScope.get().authRepo).user.value.email ?? '?',
+            ),
+          );
+
           break;
         case AuthState.loggedOut:
-          // TODO: GoRouter must redirect to home after login
-          _goAuth(ref);
           break;
         case AuthState.openRecover:
           overlayNotifier.newState = authConfig.copyWith(
@@ -219,33 +214,11 @@ class AuthScreen extends ConsumerWidget {
     }
 
     if (next is AsyncError<AuthState>) {
-      final context = ref.read(AppScope.get().router).navigator?.context;
-      if (context != null) {
-        final l10n = context.l10n;
-        final info = _getReason(next.error, l10n);
-        if (info.isNotEmpty) {
-          showSnackBar(
-            ref: ref,
-            text: info,
-          );
-        }
+      final l10n = context.l10n;
+      final info = _getReason(next.error, l10n);
+      if (info.isNotEmpty) {
+        showSnackBar(context, info);
       }
-    }
-  }
-
-  void _goHome(WidgetRef ref) {
-    final context = ref.read(AppScope.get().router).navigator?.context;
-    if (context != null) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      context.goNamed(AppRoutes.get().home.title);
-    }
-  }
-
-  void _goAuth(WidgetRef ref) {
-    final context = ref.read(AppScope.get().router).navigator?.context;
-    if (context != null) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      context.goNamed(AppRoutes.get().auth.title);
     }
   }
 

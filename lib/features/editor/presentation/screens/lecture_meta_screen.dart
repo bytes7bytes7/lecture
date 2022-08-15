@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../routes.dart';
-import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 
 const _padding = EdgeInsets.symmetric(
@@ -40,7 +39,7 @@ class LectureMetaScreen extends ConsumerWidget {
         prefixConfig: AppBarButtonConfig(
           icon: Icons.close,
           tooltip: l10n.tooltipAbortEdit,
-          onPressed: () => _abort(ref),
+          onPressed: () => _abort(context),
         ),
         title: l10n.editor,
       ),
@@ -81,7 +80,7 @@ class LectureMetaScreen extends ConsumerWidget {
               _separator,
               SingleButton(
                 text: l10n.moveNextBtn,
-                onPressed: () => _openEditor(ref),
+                onPressed: () => _openEditor(context),
               ),
             ],
           ),
@@ -90,33 +89,25 @@ class LectureMetaScreen extends ConsumerWidget {
     );
   }
 
-  void _abort(WidgetRef ref) {
-    final context = ref.read(AppScope.get().router).navigator?.context;
-    if (context != null) {
-      final l10n = context.l10n;
+  void _abort(BuildContext context) {
+    final l10n = context.l10n;
 
-      showQuestionBottomOverlay(
-        context: context,
-        text: l10n.abortEditAskAgain,
-        secondary: l10n.cancelBtn,
-        secondaryOnPressed: () {
-          Navigator.pop(context);
-        },
-        primary: l10n.abortBtn,
-        primaryOnPressed: () {
-          Navigator.of(context).pop();
-          ref.read(AppScope.get().loggerManager).log('abort editing');
-          Navigator.of(context).pop();
-        },
-      );
-    }
+    showQuestionBottomOverlay(
+      context: context,
+      text: l10n.abortEditAskAgain,
+      secondary: l10n.cancelBtn,
+      secondaryOnPressed: () {
+        Navigator.pop(context);
+      },
+      primary: l10n.abortBtn,
+      primaryOnPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
   }
 
-  void _openEditor(WidgetRef ref) {
-    ref.read(AppScope.get().loggerManager).log('open editor');
-    final context = ref.read(AppScope.get().router).navigator?.context;
-    if (context != null) {
-      context.goNamed(AppRoutes.get().editor.title);
-    }
+  void _openEditor(BuildContext context) {
+    context.goNamed(AppRoutes.get().editor.title);
   }
 }
