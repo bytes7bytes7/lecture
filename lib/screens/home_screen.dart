@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants/app.dart' as const_app;
 import '../features/common/common.dart';
@@ -34,7 +33,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.sort,
             tooltip: l10n.tooltipSettings,
             onPressed: () {
-              context.goNamed(AppRoutes.get().settings.title);
+              SettingsRoute().go(context);
             },
           ),
           title: const_app.appName,
@@ -114,8 +113,13 @@ class HomeScreen extends ConsumerWidget {
                           );
                         }
 
+                        final lecture = data[index - 1];
+
                         return LectureCard(
-                          lecture: data[index - 1],
+                          lecture: lecture,
+                          onPressed: () {
+                            LectureRoute(lid: lecture.id).go(context);
+                          },
                         );
                       },
                     ),
@@ -140,7 +144,7 @@ class HomeScreen extends ConsumerWidget {
             size: _floatButtonSize,
           ),
           onPressed: () {
-            context.goNamed(AppRoutes.get().editorInfo.title);
+            EditorInfoRoute(lid: 0).go(context);
           },
         ),
       ),

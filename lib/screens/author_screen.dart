@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../widgets/widgets.dart';
 
 const _authorPadding = EdgeInsets.symmetric(
@@ -64,8 +65,13 @@ class AuthorScreen extends StatelessWidget {
               );
             }
 
+            final lecture = Lecture.random();
+
             return LectureCard(
-              lecture: Lecture.random(),
+              lecture: lecture,
+              onPressed: () {
+                AuthorLectureRoute(lid: lecture.id).go(context);
+              },
             );
           },
         ),

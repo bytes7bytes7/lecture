@@ -30,39 +30,39 @@ class _AppState extends ConsumerState<App> {
     _router = GoRouter(
       debugLogDiagnostics: kDebugMode,
       urlPathStrategy: UrlPathStrategy.path,
-      initialLocation: AppRoutes.get().auth.path,
+      initialLocation: AuthRoute().route.path,
       refreshListenable: GoRouterRefreshStream(
         ref.read(AppScope.get().authRepo).user,
       ),
       redirect: (state) {
         final loggedIn = ref.read(AppScope.get().authRepo).user.value.id !=
             notAuthorizedUser.id;
-        final loggingIn = state.subloc == AppRoutes.get().auth.path;
+        final loggingIn = state.subloc == AuthRoute().route.path;
 
-        final from = state.subloc == AppRoutes.get().home.path
+        final from = state.subloc == HomeRoute().route.path
             ? ''
-            : AppRoutes.get().fromLoc(state.subloc);
+            : CosyRoute.fromLoc(state.subloc);
 
         if (!loggedIn) {
           if (loggingIn) {
             return null;
           }
 
-          return '${AppRoutes.get().auth.path}$from';
+          return '${AuthRoute().route.path}$from';
         }
 
         if (loggingIn) {
-          return state.from ?? AppRoutes.get().home.path;
+          return state.from ?? HomeRoute().route.path;
         }
 
         return null;
       },
       routes: [
-        AppRoutes.get().auth,
-        AppRoutes.get().home,
-        AppRoutes.get().notFound,
+        AuthRoute().route,
+        HomeRoute().route,
+        NotFoundRoute().route,
       ],
-      errorPageBuilder: AppRoutes.get().notFound.pageBuilder,
+      errorPageBuilder: NotFoundRoute().route.pageBuilder,
       observers: [
         NavObserver(
           ref.read(AppScope.get().loggerManager),

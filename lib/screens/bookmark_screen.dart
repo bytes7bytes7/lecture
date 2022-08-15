@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../widgets/lecture_card.dart';
 
 const _padding = EdgeInsets.only(
@@ -37,8 +38,13 @@ class BookmarkScreen extends StatelessWidget {
             physics: const AlwaysBouncingScrollPhysics(),
             itemCount: 7,
             itemBuilder: (context, index) {
+              final lecture = Lecture.random();
+
               return LectureCard(
-                lecture: Lecture.random(),
+                lecture: lecture,
+                onPressed: () {
+                  BookmarkRoute(lid: lecture.id).go(context);
+                },
               );
             },
           ),

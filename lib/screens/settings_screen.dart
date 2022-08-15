@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
@@ -127,22 +126,22 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _openAccount(BuildContext context) {
-    context.goNamed(AppRoutes.get().account.title);
+    AccountRoute().go(context);
   }
 
   void _openColorTheme(BuildContext context) {
-    context.goNamed(AppRoutes.get().theme.title);
+    ThemeRoute().go(context);
   }
 
   void _openBookmarks(BuildContext context) {
-    context.goNamed(AppRoutes.get().bookmarks.title);
+    BookmarksRoute().go(context);
   }
 
   void _openMyLectures(BuildContext context) {
-    context.goNamed(AppRoutes.get().myLectures.title);
+    MyLecturesRoute().go(context);
   }
 
   void _openAboutApp(BuildContext context) {
-    context.goNamed(AppRoutes.get().aboutApp.title);
+    AboutAppRoute().go(context);
   }
 }

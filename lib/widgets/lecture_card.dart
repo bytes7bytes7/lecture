@@ -1,10 +1,8 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tuple/tuple.dart';
 
 import '../constants/measures.dart' as const_measures;
-import '../routes.dart';
 import 'rating_badge.dart';
 
 const _margin = EdgeInsets.symmetric(
@@ -21,9 +19,11 @@ class LectureCard extends StatelessWidget {
   const LectureCard({
     super.key,
     required this.lecture,
+    required this.onPressed,
   });
 
   final Lecture lecture;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +53,7 @@ class LectureCard extends StatelessWidget {
         ),
         child: MaterialButton(
           padding: _padding,
-          onPressed: () {
-            // TODO: pass parameters
-            context.goNamed(AppRoutes.get().lecture.title);
-          },
+          onPressed: onPressed,
           child: Column(
             children: <Tuple3<IconData?, String, Widget?>>[
               Tuple3(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../widgets/lecture_card.dart';
 
 const _tabAmount = 2;
@@ -69,8 +70,13 @@ class MyLecturesScreen extends StatelessWidget {
                     physics: const AlwaysBouncingScrollPhysics(),
                     itemCount: _published,
                     itemBuilder: (context, index) {
+                      final lecture = Lecture.random();
+
                       return LectureCard(
-                        lecture: Lecture.random(),
+                        lecture: lecture,
+                        onPressed: () {
+                          MyLectureRoute(lid: lecture.id).go(context);
+                        },
                       );
                     },
                   ),
@@ -79,9 +85,15 @@ class MyLecturesScreen extends StatelessWidget {
                     physics: const AlwaysBouncingScrollPhysics(),
                     itemCount: _drafts,
                     itemBuilder: (context, index) {
+                      final lecture = Lecture.random(
+                        isPublished: false,
+                      );
+
                       return LectureCard(
-                        key: ValueKey('${_draftListKey.value}/index'),
-                        lecture: Lecture.random(isPublished: false),
+                        lecture: lecture,
+                        onPressed: () {
+                          MyLectureRoute(lid: lecture.id).go(context);
+                        },
                       );
                     },
                     itemExtent: const_measures.cardHeight +
