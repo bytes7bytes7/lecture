@@ -90,11 +90,8 @@ class AuthRepoImpl implements AuthRepo {
     final error = resp.error;
 
     if (access != null) {
-      _userSubject.add(
-        _userSubject.value.copyWith(
-          email: login,
-        ),
-      );
+      final me = await _client.getMe();
+      _userSubject.add(me);
     } else {
       _throwException(error);
     }

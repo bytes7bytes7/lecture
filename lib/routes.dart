@@ -42,6 +42,8 @@ class AppRoutes {
     name: 'about_app',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const AboutAppScreen(),
       transitionsBuilder: _left,
     ),
@@ -52,6 +54,8 @@ class AppRoutes {
     name: 'account',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const AccountScreen(),
       transitionsBuilder: _left,
     ),
@@ -62,6 +66,8 @@ class AppRoutes {
     name: 'auth',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const AuthScreen(),
       transitionsBuilder: _up,
     ),
@@ -75,6 +81,8 @@ class AppRoutes {
 
       return CustomTransitionPage(
         key: state.pageKey,
+        name: _name(state),
+        arguments: _args(state),
         child: AuthorScreen(
           authorId: id,
         ),
@@ -83,14 +91,37 @@ class AppRoutes {
     },
   );
 
-  final bookmarks = GoRoute(
+  final bookmark = GoRoute(
+    path: ':lid',
+    name: 'bookmark',
+    pageBuilder: (context, state) {
+      final id = int.parse(state.params['lid']!);
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _name(state),
+        arguments: _args(state),
+        child: LectureScreen(
+          lectureId: id,
+        ),
+        transitionsBuilder: _left,
+      );
+    },
+  );
+
+  late final bookmarks = GoRoute(
     path: 'bookmarks',
     name: 'bookmarks',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const BookmarkScreen(),
       transitionsBuilder: _left,
     ),
+    routes: [
+      bookmark,
+    ],
   );
 
   final editor = GoRoute(
@@ -98,6 +129,8 @@ class AppRoutes {
     name: 'editor',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const LectureEditorScreen(),
       transitionsBuilder: _left,
     ),
@@ -111,6 +144,8 @@ class AppRoutes {
 
       return CustomTransitionPage(
         key: state.pageKey,
+        name: _name(state),
+        arguments: _args(state),
         child: LectureMetaScreen(
           lectureId: id,
         ),
@@ -127,6 +162,8 @@ class AppRoutes {
     name: 'home',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const HomeScreen(),
       transitionsBuilder: _up,
     ),
@@ -146,6 +183,8 @@ class AppRoutes {
 
       return CustomTransitionPage(
         key: state.pageKey,
+        name: _name(state),
+        arguments: _args(state),
         child: LectureScreen(
           lectureId: id,
         ),
@@ -154,14 +193,37 @@ class AppRoutes {
     },
   );
 
-  final myLectures = GoRoute(
+  final myLecture = GoRoute(
+    path: ':lid',
+    name: 'my_lecture',
+    pageBuilder: (context, state) {
+      final id = int.parse(state.params['lid']!);
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _name(state),
+        arguments: _args(state),
+        child: LectureScreen(
+          lectureId: id,
+        ),
+        transitionsBuilder: _left,
+      );
+    },
+  );
+
+  late final myLectures = GoRoute(
     path: 'my_lectures',
     name: 'my_lectures',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const MyLecturesScreen(),
       transitionsBuilder: _left,
     ),
+    routes: [
+      myLecture,
+    ],
   );
 
   final notFound = GoRoute(
@@ -169,6 +231,8 @@ class AppRoutes {
     name: 'not_found',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const NotFoundScreen(),
       transitionsBuilder: _up,
     ),
@@ -179,6 +243,8 @@ class AppRoutes {
     name: 'settings',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const SettingsScreen(),
       transitionsBuilder: _right,
     ),
@@ -196,10 +262,20 @@ class AppRoutes {
     name: 'theme',
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
+      name: _name(state),
+      arguments: _args(state),
       child: const ThemeScreen(),
       transitionsBuilder: _left,
     ),
   );
+
+  static String _name(GoRouterState state) => state.name ?? state.subloc;
+
+  static Map<String, Object?> _args(GoRouterState state) => {
+        'params': state.params,
+        'queryParams': state.queryParams,
+        'extra': state.extra,
+      };
 
   static Widget _up(
     BuildContext context,

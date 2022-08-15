@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import 'constants/app.dart' as const_app;
 import 'l10n/l10n.dart';
+import 'router_observer.dart';
 import 'routes.dart';
 import 'scope/app_scope.dart';
 import 'themes/themes.dart';
@@ -62,6 +63,11 @@ class _AppState extends ConsumerState<App> {
         AppRoutes.get().notFound,
       ],
       errorPageBuilder: AppRoutes.get().notFound.pageBuilder,
+      observers: [
+        NavObserver(
+          ref.read(AppScope.get().loggerManager),
+        ),
+      ],
     );
   }
 
