@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 part of 'routes.dart';
 
 extension GoRouteX on GoRoute {
@@ -14,10 +16,13 @@ extension GoRouteX on GoRoute {
 abstract class CosyRoute {
   GoRoute get route;
 
+  // Convert required fields to Map.
   Map<String, String> params() => const {};
 
+  // Convert non-required fields to Map.
   Map<String, String> queryParams() => const {};
 
+  @Deprecated('Try to use params() or queryParams()')
   Object? extra() => null;
 
   static String fromLoc(String loc) => '?from=$loc';

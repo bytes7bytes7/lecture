@@ -7,6 +7,7 @@ import '../constants/measures.dart' as const_measures;
 
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
+import '../routes.dart';
 import '../scope/app_scope.dart';
 import '../widgets/widgets.dart';
 
@@ -76,7 +77,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         title: l10n.lecture,
         canCopyTitle: true,
         suffix: PopupMenuButton<_PopupCallback>(
-          onSelected: _onPopupSelected,
+          onSelected: (value) => _onPopupSelected(lecture, value),
           iconSize: const_measures.bigIconSize,
           position: PopupMenuPosition.under,
           tooltip: l10n.tooltipAdditional,
@@ -202,13 +203,15 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
     );
   }
 
-  void _onPopupSelected(_PopupCallback value) {
+  void _onPopupSelected(Lecture lecture, _PopupCallback value) {
     switch (value) {
       case _PopupCallback.addBookmark:
         ref.read(AppScope.get().loggerManager).log('add bookmark');
         break;
       case _PopupCallback.goToAuthor:
         ref.read(AppScope.get().loggerManager).log('go to the author');
+
+        AuthorRoute(aid: lecture.author.id).go(context);
         break;
     }
   }
