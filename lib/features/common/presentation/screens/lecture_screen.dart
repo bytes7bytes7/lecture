@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
-import '../features/common/common.dart';
-import '../l10n/l10n.dart';
-import '../routes.dart';
-import '../scope/app_scope.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../routes.dart';
+import '../../../../scope/app_scope.dart';
+import '../always_bouncing_scroll_physics.dart';
 import '../widgets/widgets.dart';
 
 const _ratingInitValue = 0;
@@ -158,10 +158,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
 
                   return Column(
                     children: [
-                      Text(
-                        data.text,
-                        style: theme.textTheme.bodyText1,
-                      ),
+
                       Padding(
                         padding: _conclusionPadding,
                         child: Row(

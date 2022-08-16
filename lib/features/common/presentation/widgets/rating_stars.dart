@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/common/common.dart';
+import 'sized_icon_button.dart';
 
 const _amountOfStars = 5;
 const _starPadding = EdgeInsets.symmetric(horizontal: 7.0);

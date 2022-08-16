@@ -2,7 +2,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-import '../l10n/l10n.dart';
+import '../../../../l10n/l10n.dart';
 import 'rating_badge.dart';
 
 const _labelPadding = EdgeInsets.symmetric(vertical: 3);

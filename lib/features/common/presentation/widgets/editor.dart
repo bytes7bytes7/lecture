@@ -4,7 +4,8 @@ import 'package:tuple/tuple.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
-import '../../../common/common.dart';
+import '../list_bottom_overlay.dart';
+import 'line_button.dart';
 
 const _editorPadding = EdgeInsets.symmetric(
   horizontal: const_measures.smallPadding,

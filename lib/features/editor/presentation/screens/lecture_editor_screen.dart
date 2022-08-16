@@ -9,7 +9,6 @@ import '../../../../constants/measures.dart' as const_measures;
 import '../../../../l10n/l10n.dart';
 import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
-import '../widgets/widgets.dart';
 
 const _padding = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,

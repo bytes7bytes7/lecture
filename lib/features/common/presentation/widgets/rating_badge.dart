@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/measures.dart' as const_measures;
+import '../../../../constants/measures.dart' as const_measures;
 
 const _textPadding = EdgeInsets.symmetric(horizontal: 10.0);
 const _margin = 2.0;
