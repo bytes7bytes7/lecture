@@ -45,48 +45,29 @@ class AuthorRoute extends CosyRoute {
       };
 }
 
-class AuthorLectureRoute extends CosyRoute {
-  AuthorLectureRoute({required this.lid});
-
-  final int lid;
-
-  @override
-  final route = _AppRoutes.authorLecture;
-
-  @override
-  Map<String, String> params() => {
-        'lid': '$lid',
-      };
-}
-
-class BookmarkRoute extends CosyRoute {
-  BookmarkRoute({required this.lid});
-
-  final int lid;
-
-  @override
-  final route = _AppRoutes.bookmark;
-
-  @override
-  Map<String, String> params() => {
-        'lid': '$lid',
-      };
-}
-
 class BookmarksRoute extends CosyRoute {
   @override
   final route = _AppRoutes.bookmarks;
 }
 
 class EditorRoute extends CosyRoute {
+  EditorRoute({this.lid});
+
   @override
   final route = _AppRoutes.editor;
+
+  final int? lid;
+
+  @override
+  Map<String, String> params() => {
+    'lid': '$lid',
+  };
 }
 
 class EditorInfoRoute extends CosyRoute {
-  EditorInfoRoute({required this.lid});
+  EditorInfoRoute({this.lid});
 
-  final int lid;
+  final int? lid;
 
   @override
   final route = _AppRoutes.editorInfo;
@@ -109,20 +90,6 @@ class LectureRoute extends CosyRoute {
 
   @override
   final route = _AppRoutes.lecture;
-
-  @override
-  Map<String, String> params() => {
-        'lid': '$lid',
-      };
-}
-
-class MyLectureRoute extends CosyRoute {
-  MyLectureRoute({required this.lid});
-
-  final int lid;
-
-  @override
-  final route = _AppRoutes.myLecture;
 
   @override
   Map<String, String> params() => {

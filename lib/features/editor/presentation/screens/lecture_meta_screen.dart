@@ -28,10 +28,9 @@ class LectureMetaScreen extends ConsumerWidget {
     final l10n = context.l10n;
 
     // TODO: make request
-    DateTime? date;
-    if (lectureId != null) {
-      date = DateTime.parse(Lecture.random().date);
-    }
+    final lecture = Lecture.random();
+
+    final date = _parseDate(lecture);
 
     return Scaffold(
       appBar: DefaultAppBar(
@@ -53,7 +52,7 @@ class LectureMetaScreen extends ConsumerWidget {
                 style: theme.textTheme.bodyText1,
               ),
               Calendar(
-                focusedDay: date,
+                selectedDay: date,
                 canSelectRange: false,
               ),
               _separator,
@@ -79,13 +78,23 @@ class LectureMetaScreen extends ConsumerWidget {
               _separator,
               SingleButton(
                 text: l10n.moveNextBtn,
-                onPressed: () => _openEditor(context),
+                onPressed: () => _openEditor(context, lectureId),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  DateTime _parseDate(Lecture lecture) {
+    final lst = lecture.date.split('.');
+
+    final day = int.parse(lst[0]);
+    final month = int.parse(lst[1]);
+    final year = int.parse(lst[2]);
+
+    return DateTime(year, month, day);
   }
 
   void _abort(BuildContext context) {
@@ -96,17 +105,19 @@ class LectureMetaScreen extends ConsumerWidget {
       text: l10n.abortEditAskAgain,
       secondary: l10n.cancelBtn,
       secondaryOnPressed: () {
-        Navigator.pop(context);
+        // Use Navigator to proper pop bottom sheet
+        Navigator.of(context).pop();
       },
       primary: l10n.abortBtn,
       primaryOnPressed: () {
+        // Use Navigator to proper pop bottom sheet
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
     );
   }
 
-  void _openEditor(BuildContext context) {
-    EditorRoute().go(context);
+  void _openEditor(BuildContext context, int? lectureId) {
+    EditorRoute(lid: lectureId).push(context);
   }
 }

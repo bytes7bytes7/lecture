@@ -33,7 +33,7 @@ class AuthorScreen extends StatelessWidget {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: author.beautifulID,
@@ -70,7 +70,7 @@ class AuthorScreen extends StatelessWidget {
             return LectureCard(
               lecture: lecture,
               onPressed: () {
-                AuthorLectureRoute(lid: lecture.id).go(context);
+                LectureRoute(lid: lecture.id).push(context);
               },
             );
           },

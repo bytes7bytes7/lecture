@@ -71,7 +71,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: l10n.lecture,
@@ -211,7 +211,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
       case _PopupCallback.goToAuthor:
         ref.read(AppScope.get().loggerManager).log('go to the author');
 
-        AuthorRoute(aid: lecture.author.id).go(context);
+        AuthorRoute(aid: lecture.author.id).push(context);
         break;
     }
   }

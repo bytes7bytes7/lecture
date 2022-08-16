@@ -104,5 +104,5 @@ void _dropFilter(WidgetRef ref) {
 
 void _onDone(BuildContext context, WidgetRef ref) {
   ref.read(AppScope.get().filter.notifier).updateFilter();
-  Navigator.pop(context);
+  Navigator.of(context).pop();
 }

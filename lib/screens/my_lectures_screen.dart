@@ -31,7 +31,7 @@ class MyLecturesScreen extends StatelessWidget {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: l10n.myLectures,
@@ -75,7 +75,7 @@ class MyLecturesScreen extends StatelessWidget {
                       return LectureCard(
                         lecture: lecture,
                         onPressed: () {
-                          MyLectureRoute(lid: lecture.id).go(context);
+                          LectureRoute(lid: lecture.id).push(context);
                         },
                       );
                     },
@@ -92,7 +92,7 @@ class MyLecturesScreen extends StatelessWidget {
                       return LectureCard(
                         lecture: lecture,
                         onPressed: () {
-                          MyLectureRoute(lid: lecture.id).go(context);
+                          LectureRoute(lid: lecture.id).push(context);
                         },
                       );
                     },

@@ -62,7 +62,11 @@ class _AppState extends ConsumerState<App> {
         HomeRoute().route,
         NotFoundRoute().route,
       ],
-      errorPageBuilder: NotFoundRoute().route.pageBuilder,
+      errorPageBuilder: (context, state) {
+        ref.read(AppScope.get().loggerManager).error(state.error);
+
+        return NotFoundRoute().route.pageBuilder!(context, state);
+      },
       observers: [
         NavObserver(
           ref.read(AppScope.get().loggerManager),

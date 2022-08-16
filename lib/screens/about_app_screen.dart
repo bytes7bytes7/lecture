@@ -18,7 +18,7 @@ class AboutAppScreen extends StatelessWidget {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: l10n.aboutAppTitle,

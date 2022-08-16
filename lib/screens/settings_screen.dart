@@ -33,7 +33,7 @@ class SettingsScreen extends ConsumerWidget {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: user.beautifulID,
@@ -47,7 +47,7 @@ class SettingsScreen extends ConsumerWidget {
               text: l10n.logOutAskAgain,
               secondary: l10n.cancelBtn,
               secondaryOnPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               primary: l10n.logOut,
               primaryOnPressed: () {

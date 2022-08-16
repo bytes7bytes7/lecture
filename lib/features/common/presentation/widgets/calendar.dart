@@ -13,11 +13,11 @@ const _radius = 2 * const_measures.mainBorderRadius;
 class Calendar extends StatefulWidget {
   const Calendar({
     super.key,
-    this.focusedDay,
+    this.selectedDay,
     this.canSelectRange = true,
   });
 
-  final DateTime? focusedDay;
+  final DateTime? selectedDay;
   final bool canSelectRange;
 
   @override
@@ -35,7 +35,7 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
-    _focused = widget.focusedDay ?? DateTime.now();
+    _focused = _selected = widget.selectedDay ?? DateTime.now();
   }
 
   @override

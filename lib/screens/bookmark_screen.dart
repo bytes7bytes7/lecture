@@ -26,7 +26,7 @@ class BookmarkScreen extends StatelessWidget {
           icon: Icons.arrow_back,
           tooltip: l10n.tooltipBack,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         title: l10n.bookmarks,
@@ -43,7 +43,7 @@ class BookmarkScreen extends StatelessWidget {
               return LectureCard(
                 lecture: lecture,
                 onPressed: () {
-                  BookmarkRoute(lid: lecture.id).go(context);
+                  LectureRoute(lid: lecture.id).push(context);
                 },
               );
             },

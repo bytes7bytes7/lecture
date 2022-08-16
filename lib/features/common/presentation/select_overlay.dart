@@ -69,6 +69,7 @@ void showSelectOverlay({
                         value: items[index],
                         onSelect: () {
                           onChanged(items[index]);
+                          // Use Navigator to proper pop bottom sheet
                           Navigator.of(context).pop();
                         },
                       );

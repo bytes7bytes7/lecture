@@ -63,45 +63,6 @@ class _AppRoutes {
         transitionsBuilder: _RouteTransitions.left,
       );
     },
-    routes: [
-      authorLecture,
-    ],
-  );
-
-  static final authorLecture = GoRoute(
-    path: ':lid',
-    name: 'author_lecture',
-    pageBuilder: (context, state) {
-      final id = int.parse(state.params['lid']!);
-
-      return CustomTransitionPage(
-        key: state.pageKey,
-        name: _name(state),
-        arguments: _args(state),
-        child: LectureScreen(
-          lectureId: id,
-        ),
-        transitionsBuilder: _RouteTransitions.left,
-      );
-    },
-  );
-
-  static final bookmark = GoRoute(
-    path: ':lid',
-    name: 'bookmark',
-    pageBuilder: (context, state) {
-      final id = int.parse(state.params['lid']!);
-
-      return CustomTransitionPage(
-        key: state.pageKey,
-        name: _name(state),
-        arguments: _args(state),
-        child: LectureScreen(
-          lectureId: id,
-        ),
-        transitionsBuilder: _RouteTransitions.left,
-      );
-    },
   );
 
   static final bookmarks = GoRoute(
@@ -114,9 +75,6 @@ class _AppRoutes {
       child: const BookmarkScreen(),
       transitionsBuilder: _RouteTransitions.left,
     ),
-    routes: [
-      bookmark,
-    ],
   );
 
   static final editor = GoRoute(
@@ -135,14 +93,14 @@ class _AppRoutes {
     path: 'editor/:lid',
     name: 'editor_info',
     pageBuilder: (context, state) {
-      final id = int.parse(state.params['lid']!);
+      final id = state.params['lid'];
 
       return CustomTransitionPage(
         key: state.pageKey,
         name: _name(state),
         arguments: _args(state),
         child: LectureMetaScreen(
-          lectureId: id,
+          lectureId: id != null ? int.parse(id) : null,
         ),
         transitionsBuilder: _RouteTransitions.left,
       );
@@ -163,34 +121,16 @@ class _AppRoutes {
       transitionsBuilder: _RouteTransitions.up,
     ),
     routes: [
-      lecture,
-      editorInfo,
-      settings,
       author,
+      editorInfo,
+      lecture,
+      settings,
     ],
   );
 
   static final lecture = GoRoute(
-    path: 'lectures/:lid',
+    path: 'lecture/:lid',
     name: 'lecture',
-    pageBuilder: (context, state) {
-      final id = int.parse(state.params['lid']!);
-
-      return CustomTransitionPage(
-        key: state.pageKey,
-        name: _name(state),
-        arguments: _args(state),
-        child: LectureScreen(
-          lectureId: id,
-        ),
-        transitionsBuilder: _RouteTransitions.left,
-      );
-    },
-  );
-
-  static final myLecture = GoRoute(
-    path: ':lid',
-    name: 'my_lecture',
     pageBuilder: (context, state) {
       final id = int.parse(state.params['lid']!);
 
@@ -216,9 +156,6 @@ class _AppRoutes {
       child: const MyLecturesScreen(),
       transitionsBuilder: _RouteTransitions.left,
     ),
-    routes: [
-      myLecture,
-    ],
   );
 
   static final notFound = GoRoute(
