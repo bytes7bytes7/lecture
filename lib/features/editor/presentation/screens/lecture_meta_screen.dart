@@ -32,55 +32,62 @@ class LectureMetaScreen extends ConsumerWidget {
 
     final date = _parseDate(lecture);
 
-    return Scaffold(
-      appBar: DefaultAppBar(
-        prefixConfig: AppBarButtonConfig(
-          icon: Icons.close,
-          tooltip: l10n.tooltipAbortEdit,
-          onPressed: () => _abort(context),
+    return WillPopScope(
+      onWillPop: () async {
+        _abort(context);
+
+        return false;
+      },
+      child: Scaffold(
+        appBar: DefaultAppBar(
+          prefixConfig: AppBarButtonConfig(
+            icon: Icons.close,
+            tooltip: l10n.tooltipAbortEdit,
+            onPressed: () => _abort(context),
+          ),
+          title: l10n.editor,
         ),
-        title: l10n.editor,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: _padding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                l10n.lectureDate,
-                style: theme.textTheme.bodyText1,
-              ),
-              Calendar(
-                selectedDay: date,
-                canSelectRange: false,
-              ),
-              _separator,
-              // TODO: create lectureEdit provider and work with it
-              SelectField(
-                value: '',
-                onChanged: (value) {},
-                hint: l10n.institution,
-                items: const ['1', '2'],
-              ),
-              SelectField(
-                value: '',
-                onChanged: (value) {},
-                hint: l10n.subject,
-                items: const ['1', '2'],
-              ),
-              SelectField(
-                value: '',
-                onChanged: (value) {},
-                hint: l10n.fullNameOfLecturer,
-                items: const ['1', '2'],
-              ),
-              _separator,
-              SingleButton(
-                text: l10n.moveNextBtn,
-                onPressed: () => _openEditor(context, lectureId),
-              ),
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: _padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  l10n.lectureDate,
+                  style: theme.textTheme.bodyText1,
+                ),
+                Calendar(
+                  selectedDay: date,
+                  canSelectRange: false,
+                ),
+                _separator,
+                // TODO: create lectureEdit provider and work with it
+                SelectField(
+                  value: '',
+                  onChanged: (value) {},
+                  hint: l10n.institution,
+                  items: const ['1', '2'],
+                ),
+                SelectField(
+                  value: '',
+                  onChanged: (value) {},
+                  hint: l10n.subject,
+                  items: const ['1', '2'],
+                ),
+                SelectField(
+                  value: '',
+                  onChanged: (value) {},
+                  hint: l10n.fullNameOfLecturer,
+                  items: const ['1', '2'],
+                ),
+                _separator,
+                SingleButton(
+                  text: l10n.moveNextBtn,
+                  onPressed: () => _openEditor(context, lectureId),
+                ),
+              ],
+            ),
           ),
         ),
       ),
