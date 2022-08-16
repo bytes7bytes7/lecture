@@ -5,7 +5,6 @@ import '../constants/measures.dart' as const_measures;
 import '../features/common/common.dart';
 import '../l10n/l10n.dart';
 import '../routes.dart';
-import '../features/common/presentation/widgets/lecture_card.dart';
 
 const _padding = EdgeInsets.only(
   top: const_measures.mainVerMargin,

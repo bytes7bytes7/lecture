@@ -20,13 +20,13 @@ class Editor extends StatelessWidget {
     required this.controller,
     required this.focus,
     required this.scroll,
-    required this.isLocked,
+    required this.readOnly,
   });
 
   final fq.QuillController controller;
   final FocusNode focus;
   final ScrollController scroll;
-  final bool isLocked;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,11 @@ class Editor extends StatelessWidget {
       controller: controller,
       focusNode: focus,
       scrollController: scroll,
-      scrollable: true,
+      scrollable: false,
       padding: _editorPadding,
       autoFocus: false,
-      readOnly: !isLocked,
+      readOnly: readOnly,
+      showCursor: !readOnly,
       expands: true,
       locale: locale,
       scrollPhysics: const BouncingScrollPhysics(),

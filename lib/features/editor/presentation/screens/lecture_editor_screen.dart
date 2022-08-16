@@ -39,7 +39,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
   late final fq.QuillController _draftController;
   late final FocusNode _editorFocus;
   late final ScrollController _editorScroll;
-  late final ValueNotifier<bool> _editMode;
+  late final ValueNotifier<bool> _readOnly;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
     _draftController = fq.QuillController.basic();
     _editorFocus = FocusNode();
     _editorScroll = ScrollController();
-    _editMode = ValueNotifier(true);
+    _readOnly = ValueNotifier(false);
   }
 
   @override
@@ -58,7 +58,7 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
     _draftController.dispose();
     _editorFocus.dispose();
     _editorScroll.dispose();
-    _editMode.dispose();
+    _readOnly.dispose();
 
     super.dispose();
   }
@@ -191,8 +191,8 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                   _separator,
                   Expanded(
                     child: ValueListenableBuilder(
-                      valueListenable: _editMode,
-                      builder: (context, bool isLocked, child) {
+                      valueListenable: _readOnly,
+                      builder: (context, bool readOnly, child) {
                         return Stack(
                           children: [
                             Positioned.fill(
@@ -209,11 +209,11 @@ class _LectureEditorScreenState extends ConsumerState<LectureEditorScreen> {
                                   controller: _draftController,
                                   focus: _editorFocus,
                                   scroll: _editorScroll,
-                                  isLocked: isLocked,
+                                  readOnly: readOnly,
                                 ),
                               ),
                             ),
-                            if (!isLocked)
+                            if (readOnly)
                               Positioned(
                                 right: 0,
                                 left: 0,

@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' as fq;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
-
 import '../../../../l10n/l10n.dart';
 import '../../../../routes.dart';
 import '../../../../scope/app_scope.dart';
@@ -124,6 +126,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         child: Padding(
           padding: _contentPadding,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               LectureHeader(lecture: lecture),
               Divider(
@@ -131,15 +134,8 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                 thickness: _dividerThickness,
                 color: theme.hintColor,
               ),
-              Padding(
-                padding: _topicPadding,
-                child: Text(
-                  lecture.topic,
-                  style: theme.textTheme.headline6,
-                ),
-              ),
               FutureBuilder<Content?>(
-                future: Future.value(Content.random()),
+                future: _loadContent(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return ErrorLabel(
@@ -151,14 +147,26 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                     );
                   }
 
-                  final data = snapshot.data;
-                  if (data == null) {
+                  final content = snapshot.data;
+                  if (content == null) {
                     return const LoadingCircle();
                   }
 
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-
+                      Padding(
+                        padding: _topicPadding,
+                        child: Text(
+                          lecture.topic,
+                          style: theme.textTheme.headline6,
+                        ),
+                      ),
+                      IntrinsicHeight(
+                        child: _ContentBody(
+                          content: content,
+                        ),
+                      ),
                       Padding(
                         padding: _conclusionPadding,
                         child: Row(
@@ -200,6 +208,11 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
     );
   }
 
+  Future<Content> _loadContent() {
+    // TODO: Use request
+    return Future.delayed(const Duration(seconds: 1), Content.random);
+  }
+
   void _onPopupSelected(Lecture lecture, _PopupCallback value) {
     switch (value) {
       case _PopupCallback.addBookmark:
@@ -211,5 +224,56 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         AuthorRoute(aid: lecture.author.id).push(context);
         break;
     }
+  }
+}
+
+class _ContentBody extends StatefulWidget {
+  const _ContentBody({
+    // ignore: unused_element
+    super.key,
+    required this.content,
+  });
+
+  final Content content;
+
+  @override
+  State<_ContentBody> createState() => _ContentBodyState();
+}
+
+class _ContentBodyState extends State<_ContentBody> {
+  late final fq.QuillController _contentController;
+  late final FocusNode _focus;
+  late final ScrollController _scroll;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // TODO: load and pass json
+    _contentController = fq.QuillController(
+      document: fq.Document.fromJson(jsonDecode(widget.content.text)),
+      selection: const TextSelection.collapsed(offset: 0),
+    );
+    _focus = FocusNode();
+    _scroll = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _contentController.dispose();
+    _focus.dispose();
+    _scroll.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Editor(
+      controller: _contentController,
+      focus: _focus,
+      scroll: _scroll,
+      readOnly: true,
+    );
   }
 }
