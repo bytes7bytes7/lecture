@@ -20,6 +20,11 @@ mixin AppProviders {
     );
   });
 
+  final authOverlayConfig =
+      StateNotifierProvider<AuthOverlayNotifier, AuthOverlayConfig>((ref) {
+    return AuthOverlayNotifier();
+  });
+
   late final authRepo = Provider<AuthRepo>((ref) {
     return AuthRepoImpl(
       client: ref.watch(restClient),
@@ -68,14 +73,11 @@ mixin AppProviders {
   final loggerManager =
       Provider<SpreadQuillManager>((ref) => throw UnimplementedError());
 
+  final pin = StateNotifierProvider<PinNotifier, String>((ref) {
+    return PinNotifier();
+  });
+
   final restClient = Provider<RestClient>((ref) => throw UnimplementedError());
 
   final storageRepo = Provider<StorageRepo>(StorageRepoImpl.new);
-
-  final authOverlayConfig =
-      StateNotifierProvider<AuthOverlayNotifier, AuthOverlayConfig>((ref) {
-    return AuthOverlayNotifier();
-  });
-
-  final verifyPin = StateProvider<String>((ref) => '');
 }

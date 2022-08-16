@@ -20,6 +20,10 @@ class VerifyOverlay extends ConsumerWidget {
     final l10n = context.l10n;
     final state = ref.watch(AppScope.get().authController);
 
+    // To change [validPin] when pin changes
+    ref.watch(AppScope.get().pin);
+    final validPin = ref.read(AppScope.get().pin.notifier).isValid;
+
     return CardOverlay(
       title: l10n.verificationCodeTitle,
       description: l10n.verificationCodeDesc,
@@ -28,7 +32,7 @@ class VerifyOverlay extends ConsumerWidget {
           alignment: Alignment.topCenter,
           margin: _pinMargin,
           child: PinTextField(
-            onSubmit: (value) => _setPin(value, ref),
+            onChanged: (value) => _setPin(value, ref),
             enabled: state is! AsyncLoading,
           ),
         ),
@@ -37,13 +41,14 @@ class VerifyOverlay extends ConsumerWidget {
         secondary: l10n.cancelBtn,
         secondaryOnPressed: state is! AsyncLoading ? () => _cancel(ref) : null,
         primary: l10n.moveNextBtn,
-        primaryOnPressed: state is! AsyncLoading ? () => _next(ref) : null,
+        primaryOnPressed:
+            (state is! AsyncLoading && validPin) ? () => _next(ref) : null,
       ),
     );
   }
 
   void _setPin(String value, WidgetRef ref) {
-    ref.read(AppScope.get().verifyPin.notifier).state = value;
+    ref.read(AppScope.get().pin.notifier).newState = value;
   }
 
   void _cancel(WidgetRef ref) {
@@ -52,7 +57,7 @@ class VerifyOverlay extends ConsumerWidget {
 
   void _next(WidgetRef ref) {
     ref.read(AppScope.get().loggerManager).log('check PIN');
-    final pin = ref.read(AppScope.get().verifyPin);
+    final pin = ref.read(AppScope.get().pin);
     ref.read(AppScope.get().authController.notifier).verifyCode(pin);
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../constants/app.dart' as const_app;
 import '../../../../constants/measures.dart' as const_measures;
 
 const _cellWidth = 50.0;
 const _cellHeight = 76.0;
-const _cellAmount = 4;
 const _borderWidth = 1.0;
 const _borderWidthBold = 2.0;
 const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
@@ -13,11 +13,11 @@ const _contentPadding = EdgeInsets.symmetric(vertical: 15.0);
 class PinTextField extends StatefulWidget {
   const PinTextField({
     super.key,
-    required this.onSubmit,
+    required this.onChanged,
     this.enabled,
   });
 
-  final ValueChanged<String> onSubmit;
+  final ValueChanged<String> onChanged;
   final bool? enabled;
 
   @override
@@ -25,11 +25,11 @@ class PinTextField extends StatefulWidget {
 }
 
 class _PinTextFieldState extends State<PinTextField> {
-  final _pin = List<String>.generate(_cellAmount, (index) => '');
+  final _pin = List<String>.generate(const_app.pinLen, (index) => '');
   final _focusNodes =
-      List<FocusNode>.generate(_cellAmount, (index) => FocusNode());
+      List<FocusNode>.generate(const_app.pinLen, (index) => FocusNode());
   final _textControllers = List<TextEditingController>.generate(
-    _cellAmount,
+    const_app.pinLen,
     (index) => TextEditingController(),
   );
 
@@ -49,7 +49,7 @@ class _PinTextFieldState extends State<PinTextField> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
-        _cellAmount,
+        const_app.pinLen,
         (i) {
           return SizedBox(
             width: _cellWidth,
@@ -65,7 +65,6 @@ class _PinTextFieldState extends State<PinTextField> {
               ),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (str) => _onChanged(str, i),
-              onSubmitted: _onSubmitted,
               decoration: InputDecoration(
                 counterText: '',
                 contentPadding: _contentPadding,
@@ -112,23 +111,15 @@ class _PinTextFieldState extends State<PinTextField> {
       _pin[i] = '';
     } else {
       final lst = str.split('');
-      for (var j = i; j < _cellAmount && j - i < str.length; j++) {
+      for (var j = i; j < const_app.pinLen && j - i < str.length; j++) {
         _textControllers[j].text = _pin[j] = lst[j - i];
         _focusNodes[j].unfocus();
-        if (j < _cellAmount - 1) {
+        if (j < const_app.pinLen - 1) {
           FocusScope.of(context).requestFocus(_focusNodes[j + 1]);
         }
       }
     }
 
-    if (_pin.every((digit) => digit.isNotEmpty)) {
-      widget.onSubmit(_pin.join());
-    }
-  }
-
-  void _onSubmitted(String str) {
-    if (_pin.every((digit) => digit.isNotEmpty)) {
-      widget.onSubmit(_pin.join());
-    }
+    widget.onChanged(_pin.join());
   }
 }

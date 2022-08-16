@@ -9,6 +9,7 @@ const localDBName = 'data';
 const highlightPattern = '###';
 const minPasswdLen = 8;
 const notSetNumber = '-';
+const pinLen = 4;
 const supportedLocales =  [
   Locale('ru', ''),
   Locale('en', ''),
