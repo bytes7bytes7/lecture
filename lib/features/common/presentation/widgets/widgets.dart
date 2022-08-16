@@ -22,3 +22,4 @@ export 'select_item.dart';
 export 'single_button.dart';
 export 'sized_icon.dart';
 export 'sized_icon_button.dart';
+export 'status_badge.dart';

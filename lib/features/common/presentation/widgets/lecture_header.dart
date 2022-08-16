@@ -4,6 +4,7 @@ import 'package:tuple/tuple.dart';
 
 import '../../../../l10n/l10n.dart';
 import 'rating_badge.dart';
+import 'status_badge.dart';
 
 const _labelPadding = EdgeInsets.symmetric(vertical: 3);
 const _labelAndValueSeparator = SizedBox(width: 6);
@@ -26,10 +27,16 @@ class LectureHeader extends StatelessWidget {
         Tuple3(
           l10n.lecturer,
           shortFIO(lecture.lecturer),
-          RatingBadge(
-            rating: lecture.getRating(),
-            amount: lecture.rating,
-          ),
+          lecture.status == Status.notPublished
+              ? null
+              : lecture.status == Status.published
+                  ? RatingBadge(
+                      rating: lecture.getRating(),
+                      amount: lecture.rating,
+                    )
+                  : StatusBadge(
+                      status: lecture.status,
+                    ),
         ),
         Tuple3(
           l10n.subject,

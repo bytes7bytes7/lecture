@@ -4,6 +4,7 @@ import 'package:tuple/tuple.dart';
 
 import '../../../../constants/measures.dart' as const_measures;
 import 'rating_badge.dart';
+import 'status_badge.dart';
 
 const _margin = EdgeInsets.symmetric(
   horizontal: const_measures.mainHorMargin,
@@ -59,10 +60,16 @@ class LectureCard extends StatelessWidget {
               Tuple3(
                 null,
                 lecture.topic,
-                RatingBadge(
-                  rating: lecture.getRating(),
-                  amount: lecture.rating,
-                ),
+                lecture.status == Status.notPublished
+                    ? null
+                    : lecture.status == Status.published
+                        ? RatingBadge(
+                            rating: lecture.getRating(),
+                            amount: lecture.rating,
+                          )
+                        : StatusBadge(
+                            status: lecture.status,
+                          ),
               ),
               Tuple3(
                 Icons.record_voice_over,

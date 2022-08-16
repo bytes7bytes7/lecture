@@ -81,6 +81,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
         suffix: PopupMenuButton<_PopupCallback>(
           onSelected: (value) => _onPopupSelected(lecture, value),
           iconSize: const_measures.bigIconSize,
+          color: theme.scaffoldBackgroundColor,
           position: PopupMenuPosition.under,
           tooltip: l10n.tooltipAdditional,
           itemBuilder: (context) {

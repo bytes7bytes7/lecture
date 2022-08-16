@@ -21,7 +21,8 @@ void main() {
       lecturer: 'lecturer',
       subject: 'subj',
       date: DateTime(2020, 1, 1).toString(),
-      rating: 0,
+      rating: 4.5,
+      status: Status.published,
     );
 
     test('insert existing object', () async {

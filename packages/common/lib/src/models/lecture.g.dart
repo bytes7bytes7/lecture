@@ -14,6 +14,7 @@ _$_Lecture _$$_LectureFromJson(Map<String, dynamic> json) => _$_Lecture(
       lecturer: json['lecturer'] as String,
       date: json['date'] as String,
       rating: (json['rating'] as num).toDouble(),
+      status: $enumDecode(_$StatusEnumMap, json['status']),
       author: User.fromJson(json['author'] as Map<String, dynamic>),
     );
 
@@ -26,5 +27,13 @@ Map<String, dynamic> _$$_LectureToJson(_$_Lecture instance) =>
       'lecturer': instance.lecturer,
       'date': instance.date,
       'rating': instance.rating,
+      'status': _$StatusEnumMap[instance.status]!,
       'author': instance.author.toJson(),
     };
+
+const _$StatusEnumMap = {
+  Status.onMod: 'on_moderation',
+  Status.declined: 'declined',
+  Status.notPublished: 'not_published',
+  Status.published: 'published',
+};

@@ -27,6 +27,7 @@ mixin _$Lecture {
   String get lecturer => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
   double get rating => throw _privateConstructorUsedError;
+  Status get status => throw _privateConstructorUsedError;
   User get author => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $LectureCopyWith<$Res> {
       String lecturer,
       String date,
       double rating,
+      Status status,
       User author});
 
   $UserCopyWith<$Res> get author;
@@ -68,6 +70,7 @@ class _$LectureCopyWithImpl<$Res> implements $LectureCopyWith<$Res> {
     Object? lecturer = freezed,
     Object? date = freezed,
     Object? rating = freezed,
+    Object? status = freezed,
     Object? author = freezed,
   }) {
     return _then(_value.copyWith(
@@ -99,6 +102,10 @@ class _$LectureCopyWithImpl<$Res> implements $LectureCopyWith<$Res> {
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -128,6 +135,7 @@ abstract class _$$_LectureCopyWith<$Res> implements $LectureCopyWith<$Res> {
       String lecturer,
       String date,
       double rating,
+      Status status,
       User author});
 
   @override
@@ -152,6 +160,7 @@ class __$$_LectureCopyWithImpl<$Res> extends _$LectureCopyWithImpl<$Res>
     Object? lecturer = freezed,
     Object? date = freezed,
     Object? rating = freezed,
+    Object? status = freezed,
     Object? author = freezed,
   }) {
     return _then(_$_Lecture(
@@ -183,6 +192,10 @@ class __$$_LectureCopyWithImpl<$Res> extends _$LectureCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -202,6 +215,7 @@ class _$_Lecture implements _Lecture {
       required this.lecturer,
       required this.date,
       required this.rating,
+      required this.status,
       required this.author});
 
   factory _$_Lecture.fromJson(Map<String, dynamic> json) =>
@@ -222,11 +236,13 @@ class _$_Lecture implements _Lecture {
   @override
   final double rating;
   @override
+  final Status status;
+  @override
   final User author;
 
   @override
   String toString() {
-    return 'Lecture(id: $id, institution: $institution, subject: $subject, topic: $topic, lecturer: $lecturer, date: $date, rating: $rating, author: $author)';
+    return 'Lecture(id: $id, institution: $institution, subject: $subject, topic: $topic, lecturer: $lecturer, date: $date, rating: $rating, status: $status, author: $author)';
   }
 
   @override
@@ -242,6 +258,7 @@ class _$_Lecture implements _Lecture {
             const DeepCollectionEquality().equals(other.lecturer, lecturer) &&
             const DeepCollectionEquality().equals(other.date, date) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
+            const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.author, author));
   }
 
@@ -256,6 +273,7 @@ class _$_Lecture implements _Lecture {
       const DeepCollectionEquality().hash(lecturer),
       const DeepCollectionEquality().hash(date),
       const DeepCollectionEquality().hash(rating),
+      const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(author));
 
   @JsonKey(ignore: true)
@@ -280,6 +298,7 @@ abstract class _Lecture implements Lecture {
       required final String lecturer,
       required final String date,
       required final double rating,
+      required final Status status,
       required final User author}) = _$_Lecture;
 
   factory _Lecture.fromJson(Map<String, dynamic> json) = _$_Lecture.fromJson;
@@ -298,6 +317,8 @@ abstract class _Lecture implements Lecture {
   String get date;
   @override
   double get rating;
+  @override
+  Status get status;
   @override
   User get author;
   @override

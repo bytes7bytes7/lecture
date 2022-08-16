@@ -177,6 +177,15 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
+  tooltipTheme: TooltipThemeData(
+    textStyle: _lightTextTheme.bodyText1?.copyWith(
+      color: _Colors.black,
+    ),
+    decoration: BoxDecoration(
+      color: _Colors.white,
+      borderRadius: BorderRadius.circular(_tooltipRadius),
+    ),
+  ),
 );
 
 const _lightTextTheme = TextTheme(

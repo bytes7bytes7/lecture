@@ -29,6 +29,17 @@ enum Rating {
   unknown,
 }
 
+enum Status {
+  @JsonValue('on_moderation')
+  onMod,
+  @JsonValue('declined')
+  declined,
+  @JsonValue('not_published')
+  notPublished,
+  @JsonValue('published')
+  published,
+}
+
 extension LectureX on Lecture {
   Rating getRating() {
     if (rating >= 4.0) {
@@ -53,6 +64,7 @@ class Lecture with _$Lecture {
     required String lecturer,
     required String date,
     required double rating,
+    required Status status,
     required User author,
   }) = _Lecture;
 
@@ -68,6 +80,7 @@ class Lecture with _$Lecture {
       lecturer: '',
       date: '',
       rating: 0,
+      status: Status.notPublished,
       author: me,
     );
   }
@@ -96,6 +109,8 @@ class Lecture with _$Lecture {
 
     final lecturer = [lastName, firstName, middleName].join(' ');
 
+    final status = Status.values[dev.randomInt(Status.values.length)];
+
     final author = User(
       id: dev.randomInt(pow(10, 6).toInt()),
       firstName:
@@ -119,6 +134,7 @@ class Lecture with _$Lecture {
       lecturer: lecturer,
       date: '$day.$month.$year',
       rating: isPublished ? rating : 0,
+      status: status,
       author: author,
     );
   }

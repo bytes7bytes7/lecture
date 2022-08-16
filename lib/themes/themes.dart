@@ -9,3 +9,5 @@ part 'fonts.dart';
 part 'dark_theme.dart';
 
 part 'light_theme.dart';
+
+part 'common.dart';

@@ -183,6 +183,18 @@ final ThemeData darkTheme = ThemeData(
       ),
     ),
   ),
+  tooltipTheme: TooltipThemeData(
+    textStyle: _lightTextTheme.bodyText1?.copyWith(
+      color: _Colors.silverChalice,
+    ),
+    decoration: BoxDecoration(
+      color: _Colors.shark,
+      borderRadius: BorderRadius.circular(_tooltipRadius),
+      border: Border.all(
+        color: _Colors.silverChalice,
+      ),
+    ),
+  ),
 );
 
 const _darkTextTheme = TextTheme(
