@@ -11,7 +11,7 @@ const _tokenLen = 32;
 
 class MockClient implements RestClient {
   @override
-  Future<SignUpResp> signUp({
+  Future<RegisterResp> register({
     required String login,
     required String password,
   }) async {
@@ -20,7 +20,7 @@ class MockClient implements RestClient {
       () {
         switch (dev.randomInt(4)) {
           case 0:
-            return SignUpResp(
+            return RegisterResp(
               login: login,
               firstName: dev.randomString(
                 dev.randomInt(10),
@@ -38,7 +38,7 @@ class MockClient implements RestClient {
                   : null,
             );
           case 1:
-            return SignUpResp(
+            return RegisterResp(
               error: RespError(
                 statusCode: 400,
                 message: 'Bad request syntax or unsupported method',
@@ -50,7 +50,7 @@ class MockClient implements RestClient {
               ),
             );
           case 2:
-            return SignUpResp(
+            return RegisterResp(
               error: RespError(
                 statusCode: 400,
                 message: 'Bad request syntax or unsupported method',
@@ -109,7 +109,7 @@ class MockClient implements RestClient {
   }
 
   @override
-  Future<SignInResp> signIn({
+  Future<LogInResp> logIn({
     required String login,
     required String password,
   }) async {
@@ -118,7 +118,7 @@ class MockClient implements RestClient {
       () {
         switch (dev.randomInt(3)) {
           case 0:
-            return SignInResp(
+            return LogInResp(
               refresh: dev.randomString(
                 _tokenLen,
                 noSpace: true,
@@ -133,7 +133,7 @@ class MockClient implements RestClient {
               ),
             );
           case 1:
-            return SignInResp(
+            return LogInResp(
               error: RespError(
                 statusCode: 401,
                 message: 'No permission -- see authorization schemes',

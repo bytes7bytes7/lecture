@@ -14,8 +14,8 @@ abstract class RetroClient implements RestClient {
   factory RetroClient(Dio dio, {String baseUrl}) = _RetroClient;
 
   @override
-  @POST(const_secret.signUp)
-  Future<SignUpResp> signUp({
+  @POST(const_secret.register)
+  Future<RegisterResp> register({
     @Query(const_api.login) required String login,
     @Query(const_api.password) required String password,
   });
@@ -35,8 +35,8 @@ abstract class RetroClient implements RestClient {
   });
 
   @override
-  @POST(const_secret.signIn)
-  Future<SignInResp> signIn({
+  @POST(const_secret.logIn)
+  Future<LogInResp> logIn({
     @Query(const_api.login) required String login,
     @Query(const_api.password) required String password,
   });

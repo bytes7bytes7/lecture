@@ -97,7 +97,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
             primaryOnPressed:
                 (value && state is! AsyncLoading) ? _tryToRecover : null,
             secondary: l10n.cancelBtn,
-            secondaryOnPressed: state is! AsyncLoading ? _backToSignIn : null,
+            secondaryOnPressed: state is! AsyncLoading ? _backToLogIn : null,
           );
         },
       ),
@@ -110,7 +110,7 @@ class _RecoveryOverlayState extends ConsumerState<RecoveryOverlay> {
         .recover(_loginController.text);
   }
 
-  void _backToSignIn() {
+  void _backToLogIn() {
     ref.read(AppScope.get().authController.notifier).cancelRecovery();
   }
 }

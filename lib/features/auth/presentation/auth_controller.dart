@@ -11,16 +11,16 @@ enum AuthState {
   loggedIn,
   loggedOut,
   openRecover,
-  openSignIn,
-  openSignUp,
+  openLogIn,
+  openRegister,
   requestedRecover,
   signedUp,
   verifiedRecover,
-  verifiedSignUp,
+  verifiedRegister,
 }
 
 enum AuthFlow {
-  signUp,
+  register,
   recover,
 }
 
@@ -28,7 +28,7 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
   AuthController({
     required AuthRepo authRepo,
   })  : _authRepo = authRepo,
-        _flow = AuthFlow.signUp,
+        _flow = AuthFlow.register,
         super(
           const AsyncData(AuthState.loggedOut),
         );
@@ -36,12 +36,12 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
   final AuthRepo _authRepo;
   AuthFlow _flow;
 
-  Future<void> openSignUp() async {
-    state = const AsyncData(AuthState.openSignUp);
+  Future<void> openRegister() async {
+    state = const AsyncData(AuthState.openRegister);
   }
 
-  Future<void> openSignIn() async {
-    state = const AsyncData(AuthState.openSignIn);
+  Future<void> openLogIn() async {
+    state = const AsyncData(AuthState.openLogIn);
   }
 
   Future<void> openRecover() async {
@@ -52,11 +52,11 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
     state = const AsyncData(AuthState.cancelVerification);
   }
 
-  Future<void> signUp(String login, String password) async {
-    _flow = AuthFlow.signUp;
+  Future<void> register(String login, String password) async {
+    _flow = AuthFlow.register;
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => _authRepo.signUp(login, password).then((_) => AuthState.signedUp),
+      () => _authRepo.register(login, password).then((_) => AuthState.signedUp),
     );
   }
 
@@ -64,8 +64,8 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(
       () => _authRepo.verifyCode(code).then((value) {
-        if (_flow == AuthFlow.signUp) {
-          return AuthState.verifiedSignUp;
+        if (_flow == AuthFlow.register) {
+          return AuthState.verifiedRegister;
         }
 
         return AuthState.verifiedRecover;
@@ -90,10 +90,10 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
     );
   }
 
-  Future<void> signIn(String login, String password) async {
+  Future<void> logIn(String login, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => _authRepo.signIn(login, password).then((_) => AuthState.loggedIn),
+      () => _authRepo.logIn(login, password).then((_) => AuthState.loggedIn),
     );
   }
 

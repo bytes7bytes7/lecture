@@ -8,7 +8,7 @@ abstract class AuthRepo {
 
   void dispose();
 
-  Future<void> signUp(String login, String password);
+  Future<void> register(String login, String password);
 
   Future<void> verifyCode(String code);
 
@@ -18,7 +18,7 @@ abstract class AuthRepo {
     required String? middleName,
   });
 
-  Future<void> signIn(String login, String password);
+  Future<void> logIn(String login, String password);
 
   Future<void> recover(String login);
 

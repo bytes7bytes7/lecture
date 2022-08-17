@@ -3,11 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 import '../constants/api.dart' as const_api;
 import 'resp.dart';
 
-part 'sign_in_resp.g.dart';
+part 'log_in_resp.g.dart';
 
 @JsonSerializable()
-class SignInResp extends Resp {
-  const SignInResp({
+class LogInResp extends Resp {
+  const LogInResp({
     this.refresh,
     this.access,
     super.error,
@@ -19,9 +19,9 @@ class SignInResp extends Resp {
   @JsonKey(name: const_api.access)
   final String? access;
 
-  factory SignInResp.fromJson(Map<String, dynamic> json) =>
-      _$SignInRespFromJson(json);
+  factory LogInResp.fromJson(Map<String, dynamic> json) =>
+      _$LogInRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$SignInRespToJson(this);
+  Map<String, dynamic> toJson() => _$LogInRespToJson(this);
 }

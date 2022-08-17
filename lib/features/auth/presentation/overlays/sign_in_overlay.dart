@@ -7,14 +7,14 @@ import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 import 'card_overlay.dart';
 
-class SignInOverlay extends ConsumerStatefulWidget {
-  const SignInOverlay({super.key});
+class LogInOverlay extends ConsumerStatefulWidget {
+  const LogInOverlay({super.key});
 
   @override
-  ConsumerState<SignInOverlay> createState() => _SignInOverlayState();
+  ConsumerState<LogInOverlay> createState() => _LogInOverlayState();
 }
 
-class _SignInOverlayState extends ConsumerState<SignInOverlay> {
+class _LogInOverlayState extends ConsumerState<LogInOverlay> {
   late final TextEditingController _loginController;
   late final TextEditingController _passController;
   late final ValueNotifier<bool> _passObscure;
@@ -61,8 +61,8 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
     final state = ref.watch(AppScope.get().authController);
 
     return CardOverlay(
-      title: l10n.signInTitle,
-      description: l10n.signInDesc,
+      title: l10n.logInTitle,
+      description: l10n.logInDesc,
       body: Form(
         key: _formKey,
         child: Column(
@@ -163,11 +163,11 @@ class _SignInOverlayState extends ConsumerState<SignInOverlay> {
   }
 
   void _openRegister() {
-    ref.read(AppScope.get().authController.notifier).openSignUp();
+    ref.read(AppScope.get().authController.notifier).openRegister();
   }
 
   void _tryToLogIn() {
-    ref.read(AppScope.get().authController.notifier).signIn(
+    ref.read(AppScope.get().authController.notifier).logIn(
           _loginController.text,
           _passController.text,
         );

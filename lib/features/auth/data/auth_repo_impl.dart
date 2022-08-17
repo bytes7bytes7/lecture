@@ -27,8 +27,8 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<void> signUp(String login, String password) async {
-    final resp = await _client.signUp(login: login, password: password);
+  Future<void> register(String login, String password) async {
+    final resp = await _client.register(login: login, password: password);
     final rLogin = resp.login;
     final error = resp.error;
 
@@ -80,8 +80,8 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<void> signIn(String login, String password) async {
-    final resp = await _client.signIn(login: login, password: password);
+  Future<void> logIn(String login, String password) async {
+    final resp = await _client.logIn(login: login, password: password);
     final access = resp.access;
     final error = resp.error;
 

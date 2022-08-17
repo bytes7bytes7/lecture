@@ -7,14 +7,14 @@ import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 import 'card_overlay.dart';
 
-class SignUpOverlay extends ConsumerStatefulWidget {
-  const SignUpOverlay({super.key});
+class RegisterOverlay extends ConsumerStatefulWidget {
+  const RegisterOverlay({super.key});
 
   @override
-  ConsumerState<SignUpOverlay> createState() => _SignUpOverlayState();
+  ConsumerState<RegisterOverlay> createState() => _RegisterOverlayState();
 }
 
-class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
+class _RegisterOverlayState extends ConsumerState<RegisterOverlay> {
   late final TextEditingController _loginController;
   late final TextEditingController _passController;
   late final TextEditingController _repPassController;
@@ -67,8 +67,8 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     final state = ref.watch(AppScope.get().authController);
 
     return CardOverlay(
-      title: l10n.signUpTitle,
-      description: l10n.signUpDesc,
+      title: l10n.registerTitle,
+      description: l10n.registerDesc,
       body: Form(
         key: _formKey,
         child: Column(
@@ -148,9 +148,9 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
             style: theme.textTheme.bodyText1,
           ),
           TextButton(
-            onPressed: state is! AsyncLoading ? _openSignIn : null,
+            onPressed: state is! AsyncLoading ? _openLogIn : null,
             child: Text(
-              l10n.signIn,
+              l10n.logIn,
             ),
           ),
         ],
@@ -168,12 +168,12 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
     );
   }
 
-  void _openSignIn() {
-    ref.read(AppScope.get().authController.notifier).openSignIn();
+  void _openLogIn() {
+    ref.read(AppScope.get().authController.notifier).openLogIn();
   }
 
   void _tryToRegister() {
-    ref.read(AppScope.get().authController.notifier).signUp(
+    ref.read(AppScope.get().authController.notifier).register(
           _loginController.text,
           _passController.text,
         );

@@ -80,14 +80,14 @@ class AuthScreen extends ConsumerWidget {
                               child: Stack(
                                 clipBehavior: Clip.none,
                                 children: [
-                                  const SignUpOverlay(),
+                                  const RegisterOverlay(),
                                   ListeningOverlay(
                                     isOpen: ref.watch(
                                       authConfig.select(
-                                        (value) => value.openSignIn,
+                                        (value) => value.openLogIn,
                                       ),
                                     ),
-                                    overlay: const SignInOverlay(),
+                                    overlay: const LogInOverlay(),
                                   ),
                                   ListeningOverlay(
                                     isOpen: ref.watch(
@@ -177,14 +177,14 @@ class AuthScreen extends ConsumerWidget {
             openRecovery: true,
           );
           break;
-        case AuthState.openSignIn:
+        case AuthState.openLogIn:
           overlayNotifier.newState = authConfig.copyWith(
-            openSignIn: true,
+            openLogIn: true,
           );
           break;
-        case AuthState.openSignUp:
+        case AuthState.openRegister:
           overlayNotifier.newState = authConfig.copyWith(
-            openSignIn: false,
+            openLogIn: false,
           );
           break;
         case AuthState.requestedRecover:
@@ -202,7 +202,7 @@ class AuthScreen extends ConsumerWidget {
             openChangePasswd: true,
           );
           break;
-        case AuthState.verifiedSignUp:
+        case AuthState.verifiedRegister:
           overlayNotifier.newState = authConfig.copyWith(
             openPersonalInfo: true,
           );

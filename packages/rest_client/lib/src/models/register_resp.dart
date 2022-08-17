@@ -3,11 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 import '../constants/api.dart' as const_api;
 import 'resp.dart';
 
-part 'sign_up_resp.g.dart';
+part 'register_resp.g.dart';
 
 @JsonSerializable()
-class SignUpResp extends Resp {
-  const SignUpResp({
+class RegisterResp extends Resp {
+  const RegisterResp({
     this.login,
     this.firstName,
     this.lastName,
@@ -27,9 +27,9 @@ class SignUpResp extends Resp {
   @JsonKey(name: const_api.middleName)
   final String? middleName;
 
-  factory SignUpResp.fromJson(Map<String, dynamic> json) =>
-      _$SignUpRespFromJson(json);
+  factory RegisterResp.fromJson(Map<String, dynamic> json) =>
+      _$RegisterRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$SignUpRespToJson(this);
+  Map<String, dynamic> toJson() => _$RegisterRespToJson(this);
 }

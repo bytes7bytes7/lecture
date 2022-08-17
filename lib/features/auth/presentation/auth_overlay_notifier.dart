@@ -7,7 +7,7 @@ part 'auth_overlay_notifier.freezed.dart';
 class AuthOverlayConfig with _$AuthOverlayConfig {
   const factory AuthOverlayConfig({
     required bool openVerify,
-    required bool openSignIn,
+    required bool openLogIn,
     required bool openPersonalInfo,
     required bool openRecovery,
     required bool openChangePasswd,
@@ -15,7 +15,7 @@ class AuthOverlayConfig with _$AuthOverlayConfig {
 
   factory AuthOverlayConfig.allOff() => const _AuthOverlayConfig(
         openVerify: false,
-        openSignIn: false,
+        openLogIn: false,
         openPersonalInfo: false,
         openRecovery: false,
         openChangePasswd: false,

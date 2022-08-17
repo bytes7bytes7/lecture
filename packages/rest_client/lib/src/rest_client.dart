@@ -21,7 +21,7 @@ abstract class RestClient {
     "last_name": "string"
   }
  */
-  Future<SignUpResp> signUp({
+  Future<RegisterResp> register({
     required String login,
     required String password,
   });
@@ -34,7 +34,7 @@ abstract class RestClient {
     required String? middleName,
   });
 
-  Future<SignInResp> signIn({
+  Future<LogInResp> logIn({
     required String login,
     required String password,
   });

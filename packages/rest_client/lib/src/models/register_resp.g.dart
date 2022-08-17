@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sign_up_resp.dart';
+part of 'register_resp.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-SignUpResp _$SignUpRespFromJson(Map<String, dynamic> json) => SignUpResp(
+RegisterResp _$RegisterRespFromJson(Map<String, dynamic> json) => RegisterResp(
       login: json['phone'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
@@ -16,7 +16,7 @@ SignUpResp _$SignUpRespFromJson(Map<String, dynamic> json) => SignUpResp(
           : RespError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SignUpRespToJson(SignUpResp instance) =>
+Map<String, dynamic> _$RegisterRespToJson(RegisterResp instance) =>
     <String, dynamic>{
       'error': instance.error?.toJson(),
       'phone': instance.login,

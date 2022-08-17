@@ -18,7 +18,7 @@ class _RetroClient implements RetroClient {
   String? baseUrl;
 
   @override
-  Future<SignUpResp> signUp({required login, required password}) async {
+  Future<RegisterResp> register({required login, required password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'phone': login,
@@ -27,12 +27,12 @@ class _RetroClient implements RetroClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<SignUpResp>(
+        _setStreamType<RegisterResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/register',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = SignUpResp.fromJson(_result.data!);
+    final value = RegisterResp.fromJson(_result.data!);
     return value;
   }
 
@@ -75,7 +75,7 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<SignInResp> signIn({required login, required password}) async {
+  Future<LogInResp> logIn({required login, required password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'phone': login,
@@ -84,12 +84,12 @@ class _RetroClient implements RetroClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<SignInResp>(
+        _setStreamType<LogInResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/token',
+                .compose(_dio.options, '/login',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = SignInResp.fromJson(_result.data!);
+    final value = LogInResp.fromJson(_result.data!);
     return value;
   }
 
