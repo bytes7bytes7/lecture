@@ -31,7 +31,7 @@ final _emailRegex = RegExp(
   caseSensitive: false,
 );
 
-String? emailValidator({
+String? loginlValidator({
   required String? value,
   required AppLocalizations l10n,
 }) {

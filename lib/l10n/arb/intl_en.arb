@@ -47,7 +47,6 @@
   "draftIsSaved": "Saved in drafts",
   "edit": "Edit",
   "editor": "Editor",
-  "email": "Email",
   "empty": "Empty 😢",
   "error": "Error\n\n👉🏻👈🏻",
   "february": "February",
@@ -92,6 +91,7 @@
       }
     }
   },
+  "login": "Email",
   "loginAlreadyExists": "The login is taken",
   "logOut": "Log out",
   "logOutAskAgain": "😐\n\nAre you sure you want to ###log out### of your account?",

@@ -117,7 +117,7 @@ class Lecture with _$Lecture {
           dev.randomString(dev.randomInt(4) + 6, noSpace: true).capitalized,
       lastName:
           dev.randomString(dev.randomInt(8) + 6, noSpace: true).capitalized,
-      email: '${dev.randomString(dev.randomInt(4) + 6, noSpace: true)}@mail.ru',
+      login: '${dev.randomString(dev.randomInt(4) + 6, noSpace: true)}@mail.ru',
       middleName: dev.randomInt(2) == 1
           ? dev.randomString(dev.randomInt(6) + 8, noSpace: true).capitalized
           : null,

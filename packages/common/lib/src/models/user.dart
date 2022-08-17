@@ -11,12 +11,11 @@ const notAuthorizedUser = User(
   id: 0,
   firstName: '',
   lastName: '',
-  email: '',
+  login: '',
 );
 
 extension UserExt on User {
-  String get beautifulID =>
-      'id${id.toString().padLeft(8, '0')}';
+  String get beautifulID => 'id${id.toString().padLeft(8, '0')}';
 
   String getFio() {
     final buffer = StringBuffer()..write(lastName);
@@ -41,7 +40,7 @@ class User with _$User {
     required int id,
     required String firstName,
     required String lastName,
-    required String? email,
+    required String? login,
     String? middleName,
     String? token,
     String? avatar,
@@ -58,7 +57,7 @@ class User with _$User {
     final middleName = dev.randomInt(2) == 1
         ? dev.randomString(dev.randomInt(5) + 7, noSpace: true)
         : null;
-    final email = '${dev.randomString(
+    final login = '${dev.randomString(
       dev.randomInt(5) + 7,
       noSpace: true,
       useEn: true,
@@ -81,7 +80,7 @@ class User with _$User {
       id: id,
       firstName: firstName,
       lastName: lastName,
-      email: email,
+      login: login,
       middleName: middleName,
       token: token,
       avatar: avatar,

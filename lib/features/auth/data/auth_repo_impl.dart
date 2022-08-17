@@ -33,11 +33,7 @@ class AuthRepoImpl implements AuthRepo {
     final error = resp.error;
 
     if (rLogin == login) {
-      _userSubject.add(
-        _userSubject.value.copyWith(
-          email: login,
-        ),
-      );
+      return;
     } else {
       _throwException(error);
     }
@@ -136,19 +132,35 @@ class AuthRepoImpl implements AuthRepo {
     final details = error?.details;
 
     if (details != null) {
-      for (final pair in details.entries) {
-        for (final reason in pair.value) {
-          if (reason == const_api.loginAlreadyInUse) {
-            throw const AuthException.loginAlreadyInUse();
-          } else if (reason == const_api.notValidLogin) {
-            throw const AuthException.notValidLogin();
-          } else if (reason == const_api.noAccount) {
-            throw const AuthException.noAccountFound();
+      for (final field in details.values) {
+        if (field is List<String>) {
+          for (final reason in field) {
+            _checkReason(reason);
           }
+        } else if (field is String) {
+          _checkReason(field);
         }
       }
     }
 
     throw const AuthException.unknown();
+  }
+
+  void _checkReason(String reason) {
+    if (reason == const_api.Details.loginAlreadyInUse) {
+      throw const AuthException.loginAlreadyInUse();
+    } else if (reason == const_api.Details.notValidLogin) {
+      throw const AuthException.notValidLogin();
+    } else if (reason == const_api.Details.noAccount) {
+      throw const AuthException.noAccountFound();
+    } else if (reason == const_api.Details.commonPassword ||
+        reason == const_api.Details.numericPassword ||
+        reason == const_api.Details.shortPassword) {
+      throw const AuthException.invalidPassword();
+    } else if (reason == const_api.Details.emptyField) {
+      throw const AuthException.someFieldIsEmpty();
+    } else if (reason == const_api.Details.wrongOrInvalidToken) {
+      throw const AuthException.invalidOrExpiredToken();
+    }
   }
 }

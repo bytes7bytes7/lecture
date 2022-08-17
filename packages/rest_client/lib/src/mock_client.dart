@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:common/dev.dart' as dev;
 
 import 'constants/api.dart' as const_api;
+import 'models/error_details.dart';
 import 'models/models.dart';
 import 'rest_client.dart';
 
@@ -41,11 +42,11 @@ class MockClient implements RestClient {
               error: RespError(
                 statusCode: 400,
                 message: 'Bad request syntax or unsupported method',
-                details: {
-                  const_api.login: [
-                    const_api.notValidLogin,
+                details: ErrorDetails(
+                  login: [
+                    const_api.Details.notValidLogin,
                   ],
-                },
+                ),
               ),
             );
           case 2:
@@ -53,11 +54,11 @@ class MockClient implements RestClient {
               error: RespError(
                 statusCode: 400,
                 message: 'Bad request syntax or unsupported method',
-                details: {
-                  const_api.login: [
-                    const_api.loginAlreadyInUse,
+                details: ErrorDetails(
+                  login: [
+                    const_api.Details.loginAlreadyInUse,
                   ],
-                },
+                ),
               ),
             );
           default:
@@ -136,11 +137,9 @@ class MockClient implements RestClient {
               error: RespError(
                 statusCode: 401,
                 message: 'No permission -- see authorization schemes',
-                details: {
-                  const_api.detail: [
-                    const_api.noAccount,
-                  ],
-                },
+                details: ErrorDetails(
+                  detail: const_api.Details.noAccount,
+                ),
               ),
             );
           default:
@@ -270,14 +269,10 @@ class MockClient implements RestClient {
             error: RespError(
               statusCode: 401,
               message: 'No permission -- see authorization schemes',
-              details: {
-                const_api.detail: [
-                  'Token is invalid or expired',
-                ],
-                const_api.code: [
-                  'token_not_valid',
-                ],
-              },
+              details: ErrorDetails(
+                detail: 'Token is invalid or expired',
+                code: 'token_not_valid',
+              ),
             ),
           );
         }

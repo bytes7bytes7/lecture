@@ -165,7 +165,7 @@ class AuthScreen extends ConsumerWidget {
           showSnackBar(
             context,
             l10n.loggedInSuccess(
-              ref.read(AppScope.get().authRepo).user.value.email ?? '?',
+              ref.read(AppScope.get().authRepo).user.value.login ?? '?',
             ),
           );
 

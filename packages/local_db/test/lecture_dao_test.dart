@@ -14,7 +14,7 @@ void main() {
         id: 101,
         firstName: 'first',
         lastName: 'last',
-        email: 'email@mail.ru',
+        login: 'email@mail.ru',
       ),
       topic: 'top',
       institution: 'inst',

@@ -36,6 +36,16 @@ const refresh = 'refresh';
 const access = 'access';
 const sentEmail = 'sent_email';
 
-const noAccount = 'No active account found with the given credentials';
-const loginAlreadyInUse = 'user with this phone already exists.';
-const notValidLogin = 'The phone number entered is not valid.';
+class Details {
+  Details._();
+
+  static const noAccount = 'No active account found with the given credentials';
+  static const loginAlreadyInUse = 'user with this phone already exists.';
+  static const notValidLogin = 'The phone number entered is not valid.';
+  static const shortPassword =
+      'This password is too short. It must contain at least 8 characters.';
+  static const commonPassword = 'This password is too common.';
+  static const numericPassword = 'This password is entirely numeric.';
+  static const emptyField = 'This field may not be null.';
+  static const wrongOrInvalidToken = 'Token is invalid or expired';
+}

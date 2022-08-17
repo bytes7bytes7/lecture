@@ -1,12 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../constants/api.dart' as const_api;
+import 'error_details.dart';
 
 part 'resp_error.g.dart';
 
 @JsonSerializable()
 class RespError {
-  RespError({
+  const RespError({
     this.statusCode,
     this.message,
     this.details,
@@ -19,7 +20,7 @@ class RespError {
   final String? message;
 
   @JsonKey(name: const_api.details)
-  final Map<String, List<String>>? details;
+  final ErrorDetails? details;
 
   factory RespError.fromJson(Map<String, dynamic> json) =>
       _$RespErrorFromJson(json);

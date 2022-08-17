@@ -23,7 +23,7 @@ mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
+  String? get login => throw _privateConstructorUsedError;
   String? get middleName => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $UserCopyWith<$Res> {
       {int id,
       String firstName,
       String lastName,
-      String? email,
+      String? login,
       String? middleName,
       String? token,
       String? avatar,
@@ -62,7 +62,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? id = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
-    Object? email = freezed,
+    Object? login = freezed,
     Object? middleName = freezed,
     Object? token = freezed,
     Object? avatar = freezed,
@@ -81,9 +81,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      login: login == freezed
+          ? _value.login
+          : login // ignore: cast_nullable_to_non_nullable
               as String?,
       middleName: middleName == freezed
           ? _value.middleName
@@ -114,7 +114,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {int id,
       String firstName,
       String lastName,
-      String? email,
+      String? login,
       String? middleName,
       String? token,
       String? avatar,
@@ -135,7 +135,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? id = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
-    Object? email = freezed,
+    Object? login = freezed,
     Object? middleName = freezed,
     Object? token = freezed,
     Object? avatar = freezed,
@@ -154,9 +154,9 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      login: login == freezed
+          ? _value.login
+          : login // ignore: cast_nullable_to_non_nullable
               as String?,
       middleName: middleName == freezed
           ? _value.middleName
@@ -185,7 +185,7 @@ class _$_User implements _User {
       {required this.id,
       required this.firstName,
       required this.lastName,
-      required this.email,
+      required this.login,
       this.middleName,
       this.token,
       this.avatar,
@@ -201,7 +201,7 @@ class _$_User implements _User {
   @override
   final String lastName;
   @override
-  final String? email;
+  final String? login;
   @override
   final String? middleName;
   @override
@@ -219,7 +219,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, middleName: $middleName, token: $token, avatar: $avatar, bookmarks: $bookmarks)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, login: $login, middleName: $middleName, token: $token, avatar: $avatar, bookmarks: $bookmarks)';
   }
 
   @override
@@ -230,7 +230,7 @@ class _$_User implements _User {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.login, login) &&
             const DeepCollectionEquality()
                 .equals(other.middleName, middleName) &&
             const DeepCollectionEquality().equals(other.token, token) &&
@@ -246,7 +246,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(login),
       const DeepCollectionEquality().hash(middleName),
       const DeepCollectionEquality().hash(token),
       const DeepCollectionEquality().hash(avatar),
@@ -270,7 +270,7 @@ abstract class _User implements User {
       {required final int id,
       required final String firstName,
       required final String lastName,
-      required final String? email,
+      required final String? login,
       final String? middleName,
       final String? token,
       final String? avatar,
@@ -285,7 +285,7 @@ abstract class _User implements User {
   @override
   String get lastName;
   @override
-  String? get email;
+  String? get login;
   @override
   String? get middleName;
   @override

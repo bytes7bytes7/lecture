@@ -12,6 +12,12 @@ class AuthException implements Exception {
   const factory AuthException.noAccountFound() = NoAccountFound;
 
   const factory AuthException.notValidLogin() = NotValidLogin;
+
+  const factory AuthException.invalidPassword() = InvalidPassword;
+
+  const factory AuthException.someFieldIsEmpty() = SomeFieldIsEmpty;
+
+  const factory AuthException.invalidOrExpiredToken() = InvalidOrExpiredToken;
 }
 
 class Unknown extends AuthException {
@@ -36,4 +42,16 @@ class NoAccountFound extends AuthException {
 
 class NotValidLogin extends AuthException {
   const NotValidLogin();
+}
+
+class InvalidPassword extends AuthException {
+  const InvalidPassword();
+}
+
+class SomeFieldIsEmpty extends AuthException {
+  const SomeFieldIsEmpty();
+}
+
+class InvalidOrExpiredToken extends AuthException {
+  const InvalidOrExpiredToken();
 }

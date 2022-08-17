@@ -9,14 +9,13 @@ part of 'resp_error.dart';
 RespError _$RespErrorFromJson(Map<String, dynamic> json) => RespError(
       statusCode: json['status_code'] as int?,
       message: json['message'] as String?,
-      details: (json['details'] as Map<String, dynamic>?)?.map(
-        (k, e) =>
-            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
-      ),
+      details: json['details'] == null
+          ? null
+          : ErrorDetails.fromJson(json['details'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RespErrorToJson(RespError instance) => <String, dynamic>{
       'status_code': instance.statusCode,
       'message': instance.message,
-      'details': instance.details,
+      'details': instance.details?.toJson(),
     };

@@ -78,11 +78,11 @@ class _SignUpOverlayState extends ConsumerState<SignUpOverlay> {
                     TextEditingController, FormFieldValidator<String>>>[
               Tuple6(
                 Icons.mail,
-                l10n.email,
+                l10n.login,
                 state is! AsyncLoading,
                 TextInputType.emailAddress,
                 _loginController,
-                (_) => emailValidator(
+                (_) => loginlValidator(
                   value: _loginController.text,
                   l10n: l10n,
                 ),
