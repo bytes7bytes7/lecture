@@ -28,6 +28,7 @@ const _conclusionPadding = EdgeInsets.symmetric(vertical: 20.0);
 enum _PopupCallback {
   addBookmark,
   goToAuthor,
+  edit,
 }
 
 class LectureScreen extends ConsumerStatefulWidget {
@@ -64,6 +65,8 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    final me = ref.read(AppScope.get().authRepo).user.value;
+
     // TODO: make request
     final lecture = Lecture.random();
 
@@ -96,6 +99,12 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
                 Icons.person_outline,
                 l10n.goToAuthor,
               ),
+              if (me.id == lecture.author.id)
+                Tuple3(
+                  _PopupCallback.edit,
+                  Icons.edit,
+                  l10n.edit,
+                ),
             ].map<PopupMenuItem<_PopupCallback>>((e) {
               // do NOT add navigation to onTap,
               // because it does NOT work until this menu closes
@@ -215,14 +224,22 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
   }
 
   void _onPopupSelected(Lecture lecture, _PopupCallback value) {
+    final manager = ref.read(AppScope.get().loggerManager);
+
     switch (value) {
       case _PopupCallback.addBookmark:
-        ref.read(AppScope.get().loggerManager).log('add bookmark');
+        manager.log('add bookmark');
         break;
       case _PopupCallback.goToAuthor:
-        ref.read(AppScope.get().loggerManager).log('go to the author');
+        manager.log('go to the author');
 
         AuthorRoute(aid: lecture.author.id).push(context);
+        break;
+      case _PopupCallback.edit:
+        manager.log('edit lecture');
+
+        Navigator.of(context).pop();
+        EditorInfoRoute(lid: lecture.id).push(context);
         break;
     }
   }
