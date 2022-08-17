@@ -38,7 +38,7 @@ class Editor extends StatelessWidget {
       controller: controller,
       focusNode: focus,
       scrollController: scroll,
-      scrollable: false,
+      scrollable: true,
       padding: _editorPadding,
       autoFocus: false,
       readOnly: readOnly,

@@ -11,6 +11,9 @@ import 'constants/app.dart' as const_app;
 import 'scope/app_scope.dart';
 
 void main() async {
+  // ensureInitialized must be first!
+  WidgetsFlutterBinding.ensureInitialized();
+
   final manager = SpreadQuillManager(const_app.loggerManagerName);
   final quills = <Quill>[];
 
@@ -35,7 +38,6 @@ void main() async {
 
   await manager.initialize(quills);
 
-  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,

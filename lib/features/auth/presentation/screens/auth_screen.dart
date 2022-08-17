@@ -7,6 +7,7 @@ import '../../../../scope/app_scope.dart';
 import '../../../common/common.dart';
 import '../../data/data.dart';
 import '../auth_controller.dart';
+import '../auth_overlay_notifier.dart';
 import '../overlays/overlays.dart';
 import '../widgets/widgets.dart';
 
@@ -171,6 +172,7 @@ class AuthScreen extends ConsumerWidget {
 
           break;
         case AuthState.loggedOut:
+          overlayNotifier.newState = AuthOverlayConfig.allOff();
           break;
         case AuthState.openRecover:
           overlayNotifier.newState = authConfig.copyWith(
@@ -192,7 +194,7 @@ class AuthScreen extends ConsumerWidget {
             openVerify: true,
           );
           break;
-        case AuthState.signedUp:
+        case AuthState.registered:
           overlayNotifier.newState = authConfig.copyWith(
             openVerify: true,
           );

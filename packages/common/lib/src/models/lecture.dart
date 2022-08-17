@@ -41,6 +41,8 @@ enum Status {
 }
 
 extension LectureX on Lecture {
+  String get beautifulID => 'id${id.toString().padLeft(8, '0')}';
+
   Rating getRating() {
     if (rating >= 4.0) {
       return Rating.excellent;

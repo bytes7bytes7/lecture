@@ -79,7 +79,7 @@ class _LectureScreenState extends ConsumerState<LectureScreen> {
             Navigator.of(context).pop();
           },
         ),
-        title: l10n.lecture,
+        title: lecture.beautifulID,
         canCopyTitle: true,
         suffix: PopupMenuButton<_PopupCallback>(
           onSelected: (value) => _onPopupSelected(lecture, value),

@@ -14,7 +14,7 @@ enum AuthState {
   openLogIn,
   openRegister,
   requestedRecover,
-  signedUp,
+  registered,
   verifiedRecover,
   verifiedRegister,
 }
@@ -56,7 +56,7 @@ class AuthController extends StateNotifier<AsyncValue<AuthState>> {
     _flow = AuthFlow.register;
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => _authRepo.register(login, password).then((_) => AuthState.signedUp),
+      () => _authRepo.register(login, password).then((_) => AuthState.registered),
     );
   }
 
